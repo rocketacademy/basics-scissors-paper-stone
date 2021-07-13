@@ -25,6 +25,17 @@ var main = function (input) {
     myOutputValue = `you draw`
   }
 
+  //input validation
+  //if user types in anything other that scissors, paper or stone
+  //inform user that they cannot do so
+  if(
+    input != `scissors` &&
+    input != `paper` &&
+    input != `stone`
+    ){
+      myOutputValue = `you can only enter scissors paper or stone, please try again`
+    }
+
   return myOutputValue;
 };
 
