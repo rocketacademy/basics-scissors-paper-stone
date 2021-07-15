@@ -5,7 +5,10 @@ var main = function (input) {
   console.log(`computer plays`, computerSPS);
 
   //default output value is you lose
-  var myOutputValue = 'you lose';
+  var myOutputValue = `The computer chose ${computerSPS}.<br>
+  You chose ${input}.<br><br>
+  You lose! Bummer.<br><br>
+  Now you can type "scissors" "paper" or "stone" to play another round.`;
 
   //if user plays scissors and computer plays paper
   //OR user plays paper and computer plays stone
@@ -16,13 +19,19 @@ var main = function (input) {
     (input == `paper` && computerSPS == `stone`) ||
     (input == `stone` && computerSPS == `scissors`)
   ){
-    myOutputValue = `you win`;
+    myOutputValue = `The computer chose ${computerSPS}.<br>
+    You chose ${input}.<br><br>
+    You win! Yay!<br><br>
+    Now you can type "scissors" "paper" or "stone" to play another round.`;
   }
 
-  //if user and computer play same
+  //if user and computer play sames
   //user draws
   if(input == computerSPS){
-    myOutputValue = `you draw`
+    myOutputValue = `The computer chose ${computerSPS}.<br>
+    You chose ${input}.<br><br>
+    You draw.<br><br>
+    Now you can type "scissors" "paper" or "stone" to play another round.`
   }
 
   //input validation
@@ -35,7 +44,7 @@ var main = function (input) {
     ){
       myOutputValue = `you can only enter scissors paper or stone, please try again`
     }
-
+  console.log(myOutputValue);
   return myOutputValue;
 };
 
@@ -63,4 +72,4 @@ var generateRandomSPS = function(){
     return `stone`;
   };  
   return `Oops there's a bug`
-}
+};
