@@ -1,4 +1,8 @@
 var main = function (input) {
+  if (inputValidation(input)) {
+    return `You entered ${input} which is not scissors, paper or stone. Please try again.`;
+  }
+
   var randNumber = randomNumGenerator();
   console.log(randNumber);
   var handFromProgram = playByProgram(randNumber);
@@ -8,6 +12,15 @@ var main = function (input) {
   return myOutputValue;
 };
 
+//to validate user input
+var inputValidation = function (userGuess) {
+  if (
+    !(userGuess == "scissors" || userGuess == "stone" || userGuess == "paper")
+  ) {
+    return true;
+  }
+};
+
 //to evaluate the winner
 var winningHand = function (userInput, programPlay) {
   if (userInput == programPlay) {
@@ -15,14 +28,14 @@ var winningHand = function (userInput, programPlay) {
   }
   if (
     (userInput == "scissors" && programPlay == "paper") ||
-    (userInput == "paper" && programPlay == "rock") ||
-    (userInput == "rock" && programPlay == "scissors")
+    (userInput == "paper" && programPlay == "stone") ||
+    (userInput == "stone" && programPlay == "scissors")
   ) {
     return "You win!";
   }
   if (
-    (userInput == "rock" && programPlay == "paper") ||
-    (userInput == "scissors" && programPlay == "rock") ||
+    (userInput == "stone" && programPlay == "paper") ||
+    (userInput == "scissors" && programPlay == "stone") ||
     (userInput == "paper" && programPlay == "scissors")
   ) {
     return "You lost!";
@@ -38,7 +51,7 @@ var playByProgram = function (randomNum) {
     return "paper";
   }
   if (randomNum == 3) {
-    return "rock";
+    return "stone";
   }
 };
 
