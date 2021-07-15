@@ -8,7 +8,7 @@ var main = function (input) {
   var handFromProgram = playByProgram(randNumber);
   var result = winningHand(input, handFromProgram);
 
-  var myOutputValue = `${result} You played ${input} and the program played ${handFromProgram}.`;
+  var myOutputValue = `You played ${input} while the the computer played ${handFromProgram}. <br><br> ${result} <br><br> Let's play again!!!`;
   return myOutputValue;
 };
 
@@ -31,14 +31,14 @@ var winningHand = function (userInput, programPlay) {
     (userInput == "paper" && programPlay == "stone") ||
     (userInput == "stone" && programPlay == "scissors")
   ) {
-    return "You win!";
+    return "Congrats, you win!";
   }
   if (
     (userInput == "stone" && programPlay == "paper") ||
     (userInput == "scissors" && programPlay == "stone") ||
     (userInput == "paper" && programPlay == "scissors")
   ) {
-    return "You lost!";
+    return "Oh no, you lost!";
   }
 };
 
