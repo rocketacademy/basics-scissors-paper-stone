@@ -35,6 +35,15 @@ var createEmojiSPS = function(SPS){
   if(SPS == `stone`){
     return `stone 👊	`;
   };
+  if(SPS == `reversed scissors`){
+    return `reversed scissors 👇	✌	`;
+  };
+  if(SPS == `reversed paper`){
+    return `reversed paper 👇	🖐	`;
+  };
+  if(SPS == `reversed stone`){
+    return `reversed stone 👇 👊	`;
+  };
   return `Oops there's a bug`;
 };
 
@@ -54,11 +63,17 @@ var main = function (input) {
   //if user plays scissors and computer plays paper
   //OR user plays paper and computer plays stone
   //OR user plays stone and computer plays scissors
+  //OR user plays reversed scissors and computer plays stone
+  //OR user plays reversed paper and computer plays scissors
+  //OR user plays reversed stone and computer plays paper
   //user wins
   if(
     (input == `scissors` && computerSPS == `paper`)||
     (input == `paper` && computerSPS == `stone`) ||
-    (input == `stone` && computerSPS == `scissors`)
+    (input == `stone` && computerSPS == `scissors`)||
+    (input == `reversed scissors` && computerSPS == `stone`) ||
+    (input == `reversed paper` && computerSPS == `scissors`) ||
+    (input == `reversed stone` && computerSPS == `paper`)
   ){
     myOutputValue = `The computer chose ${createEmojiSPS(computerSPS)}.<br>
     You chose ${createEmojiSPS(input)}.<br><br>
@@ -66,9 +81,12 @@ var main = function (input) {
     Now you can type "scissors" "paper" or "stone" to play another round.`;
   }
 
-  //if user and computer play sames
+  //if user and computer play same SPS
+  //OR same reversed SPS
   //user draws
-  if(input == computerSPS){
+  if(input == computerSPS ||
+    input == `reversed ${computerSPS}`
+    ){
     myOutputValue = `The computer chose ${createEmojiSPS(computerSPS)}.<br>
     You chose ${createEmojiSPS(input)}.<br><br>
     You draw.<br><br>
@@ -76,12 +94,16 @@ var main = function (input) {
   }
 
   //input validation
-  //if user types in anything other that scissors, paper or stone
+  //if user types in anything other that scissors, paper, stone,
+  //reversed scissors, reversed paper or reversed stone
   //inform user that they cannot do so
   if(
     input != `scissors` &&
     input != `paper` &&
-    input != `stone`
+    input != `stone` &&
+    input != `reversed scissors` &&
+    input != `reversed paper` &&
+    input != `reversed stone` 
     ){
       myOutputValue = `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
       Please try again.`
