@@ -21,7 +21,7 @@ var main = function (input) {
     (computerOption == "paper" && userOption == "stone") ||
     (computerOption == "stone" && userOption == "scissors")
   ) {
-    myOutputValue = `computer won!`;
+    myOutputValue = `You lose! Bummer. <br></br><br> Now you can type scissors paper or stone to play another round!</br>`;
   }
 
   if (userOption == computerOption) {
