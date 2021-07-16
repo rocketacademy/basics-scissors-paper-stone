@@ -8,8 +8,9 @@ var main = function (input) {
   var iconPlayer = iconLogo(input);
   console.log("iconPlayer", iconPlayer);
 
-  var draw = drawGame(input);
-  var win = playerWin(input);
+  var draw = drawGame(input, computerMove);
+  var win = playerWin(input, computerMove);
+  var tryAgain = invalid(input);
 
   var myOutputValue = `The computer played ${computerMove} ${iconComputer} .<br>You played ${input} ${iconPlayer}.<br>You lost ='( <br>Lets play another round!`;
   if (win == "yes") {
@@ -18,9 +19,9 @@ var main = function (input) {
   if (draw == "yes") {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>It's a draw!<br>Lets play another round!`;
   }
-  if (
-    input != "scissors" && input != "stone" && input != "paper" && input != "reversed scissors" && input != "reversed stone" && input != "reversed paper"
-  ) {myOutputValue = `Please type in scissors, paper or stone.`;}
+  if (tryAgain == "yes") {
+    myOutputValue = `Please type in scissors, paper or stone.`;
+  }
   return myOutputValue;
 };
 
@@ -36,48 +37,59 @@ var randomItem = function () {
   return programMove;
 };
 
-var drawGame = function (guess) {
-  var computerMove = randomItem();
+var drawGame = function (input, computerMove) {
   var answer = "no";
   if (
-    guess == computerMove ||
-    (guess == "reversed scissors" && computerMove == "scissors") ||
-    (guess == "reversed stone" && computerMove == "stone") ||
-    (guess == "reversed paper" && computerMove == "paper")
+    input == computerMove ||
+    (input == "reversed scissors" && computerMove == "scissors") ||
+    (input == "reversed stone" && computerMove == "stone") ||
+    (input == "reversed paper" && computerMove == "paper")
   ) {
     answer = "yes";
   }
   return answer;
 };
 
-var playerWin = function (guess) {
-  var computerMove = randomItem();
+var playerWin = function (input, computerMove) {
   var answer = "no";
   if (
-    guess == "scissors" ||
-    (guess == "reversed stone" && computerMove == "paper") ||
-    guess == "stone" ||
-    (guess == "reversed paper" && computerMove == "scissors") ||
-    guess == "paper" ||
-    (guess == "reversed scissors" && computerMove == "stone")
+    (input == "scissors" && computerMove == "paper") ||
+    (input == "reversed stone" && computerMove == "paper") ||
+    (input == "stone" && computerMove == "scissors") ||
+    (input == "reversed paper" && computerMove == "scissors") ||
+    (input == "paper" && computerMove == "stone") ||
+    (input == "reversed scissors" && computerMove == "stone")
   ) {
     answer = "yes";
   }
   return answer;
 };
 
-//var invalid = function (guess) {
-//if (
-   // input != "scissors" && input != "stone" && input != "paper" && input != "reversed scissors" && input != "reversed stone" && input != "reversed paper"
-}
+var invalid = function (input) {
+  var answer = "no";
+  if (
+    input != "scissors" &&
+    input != "stone" &&
+    input != "paper" &&
+    input != "reversed scissors" &&
+    input != "reversed stone" &&
+    input != "reversed paper"
+  ) {
+    answer = "yes";
+  }
+  return answer;
+};
 
 var iconLogo = function (look) {
   var logo = "none";
   if (look == "scissors" || look == "reversed scrissors") {
-    logo = "✂️";}
+    logo = "✂️";
+  }
   if (look == "paper" || look == "reversed paper") {
-    logo = "📜";}
+    logo = "📜";
+  }
   if (look == "stone" || look == "reversed stone") {
-    logo = "🗿";}
+    logo = "🗿";
+  }
   return logo;
 };
