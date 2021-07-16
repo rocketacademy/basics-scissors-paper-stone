@@ -14,14 +14,14 @@ var main = function (input) {
     (userOption == "paper" && computerOption == "stone") ||
     (userOption == "stone" && computerOption == "scissors")
   ) {
-    myOutputValue = `user won!`;
+    myOutputValue = `computer won!`;
   }
   if (
     (computerOption == "scissors" && userOption == "paper") ||
     (computerOption == "paper" && userOption == "stone") ||
     (computerOption == "stone" && userOption == "scissors")
   ) {
-    myOutputValue = `You lose! Bummer. <br></br><br> Now you can type scissors paper or stone to play another round!</br>`;
+    myOutputValue = `user won! you picked reversed ${input}`;
   }
 
   if (userOption == computerOption) {
