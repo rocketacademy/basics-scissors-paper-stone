@@ -1,146 +1,109 @@
-//Generate random number from one to three
-var generateOneToThree = function () {
+// Generate random integer limited to 3 different digits
+var generateInteger = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
-  var randomOneToThree = randomInteger + 1;
-  console.log(`randomOneToThree is ${randomOneToThree}`);
-  return randomOneToThree;
+  console.log(`random integer ${randomInteger}`);
+  return randomInteger;
 };
 
-var randomNumber = generateOneToThree();
-console.log(`randomNumber is ${randomNumber}`);
-
-//Assign random number to stone, paper or scissors
-var assignProgramChoice = function (randomNumber) {
-  var programChoice = "program choice not yet set";
-
-  if (randomNumber == 1) {
-    programChoice = "scissors ✂️";
+//Assign random numbers to scissors/paper/stone choices
+var assignChoice = function (randomInteger) {
+  if (randomInteger == 0) {
+    programChoice = `scissors ✂️`;
   }
-  if (randomNumber == 2) {
-    programChoice = "paper 🗒";
+  if (randomInteger == 1) {
+    programChoice = `paper 🗒`;
   }
-  if (randomNumber == 3) {
-    programChoice = "stone 🪨";
+  if (randomInteger == 2) {
+    programChoice = `stone 🗿`;
   }
-  console.log(`Program choice is ${programChoice}`);
+  console.log(`program choice is ${programChoice}`);
   return programChoice;
 };
 
-//Add emojis for corresponding input
+//Add emojis
 var addEmoji = function (input) {
-  var inputEmoji = input;
-  if (input == "paper") {
-    inputEmoji = "paper 🗒";
+  var renamedInput = input;
+
+  if (input == `scissors`) {
+    renamedInput = `scissors ✂️`;
   }
-  if (input == "stone") {
-    inputEmoji = "stone 🪨";
+  if (input == `paper`) {
+    renamedInput = `paper 🗒`;
   }
-  if (input == "scissors") {
-    inputEmoji = "scissors ✂️";
+  if (input == `stone`) {
+    renamedInput = `stone 🗿`;
   }
-  if (input == "reversed paper") {
-    inputEmoji = "reversed paper 🗒";
-  }
-  if (input == "reversed stone") {
-    inputEmoji = "reversed stone 🪨";
-  }
-  if (input == "reversed scissors") {
-    inputEmoji = "reversed scissors ✂️";
-  }
-  return inputEmoji;
+  console.log(`renamed input is ${renamedInput}`);
+  return renamedInput;
 };
 
-// //======== Standard SPS Game ========
-
+//=========Standard SPS Game ============
+//Output win or lose based on SPS game
 // var main = function (input) {
-//   //Error message: When use enters something other than scissors, paper or stone
-//   var inputEmoji = addEmoji(input);
-//   var programChoice = assignProgramChoice(generateOneToThree());
-//   var myOutputValue = `Opps! <br> You have entered something other than "stone", "paper" or "scissors". <br> Please try again!`;
+//   var renamedInput = addEmoji(input);
+//   var programChoice = assignChoice(generateInteger);
+//   var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play the game with me 😊.`;
 
-//   // Result: User wins if user chose paper and program chose stone, or if user chose stone and program chose scissors, or if user chose scissors and program chose paper
 //   if (
-//     (input == "paper" && programChoice == "stone 🪨") ||
-//     (input == "stone" && programChoice == "scissors ✂️") ||
-//     (input == "scissors" && programChoice == "paper 🗒")
+//     (programChoice == `scissors ✂️` && input == `paper`) ||
+//     (programChoice == `paper 🗒` && input == `stone`) ||
+//     (programChoice == `stone 🗿` && input == `scissors`)
 //   ) {
-//     myOutputValue = `You won! <br> I chose ${programChoice}... <br> ${inputEmoji} beats ${programChoice}!`;
+//     myOutputValue = `You lost! <br> I chose ${programChoice} and you chose ${renamedInput}. <br> Better luck next time!`;
 //   }
-
-//   //Result: User loses if user chose paper and program chose scissors, or if user chose scissors and program chose stone, or if user chose stone and program chose paper
 //   if (
-//     (input == "paper" && programChoice == "scissors ✂️") ||
-//     (input == "scissors" && programChoice == "stone 🪨") ||
-//     (input == "stone" && programChoice == "paper 🗒")
+//     (programChoice == `scissors ✂️` && input == `stone`) ||
+//     (programChoice == `stone 🗿` && input == `paper`) ||
+//     (programChoice == `paper 🗒` && input == `scissors`)
 //   ) {
-//     myOutputValue = `You lost! <br> I chose ${programChoice}, <br> ${programChoice} beats ${inputEmoji}!`;
+//     myOutputValue = `You won! <br> I chose ${programChoice} and you chose ${renamedInput}. <br> Congratulations 🎉!!`;
 //   }
-
-//   // Result: Draw if input is the same as program choice
-//   if (
-//     (input == "paper" && programChoice == "paper 🗒") ||
-//     (input == "scissors" && programChoice == "scissors ✂️") ||
-//     (input == "stone" && programChoice == "stone 🪨")
-//   ) {
-//     myOutputValue = `It's a draw! <br> I chose ${programChoice} too 🙌!`;
+//   if (programChoice == renamedInput) {
+//     myOutputValue = `It's a draw! <br> We both chose ${programChoice}! 🙌`;
 //   }
 //   return myOutputValue;
 // };
 
-//========== Reverse SPS game ===========
+//=========Reverse SPS Game ============
+//Did player lose in a reversed SPS game
+var didPlayerLoseReversed = function (programChoice, renamedInput) {
+  var lostSpsReversed =
+    !(
+      (programChoice == `scissors ✂️` && renamedInput == `paper 🗒`) ||
+      (programChoice == `paper 🗒` && renamedInput == `stone 🗿`) ||
+      (programChoice == `stone 🗿` && renamedInput == `scissors ✂️`)
+    ) && !(programChoice == renamedInput);
+  console.log(`Player lost reversed SPS game ${lostSpsReversed}`);
+  return lostSpsReversed;
+};
+
+//Did player win in a reversed SPS game
+var didPlayerWinReversed = function (programChoice, renamedInput) {
+  var wonSpsReversed =
+    !(
+      (programChoice == `scissors ✂️` && renamedInput == `stone 🗿`) ||
+      (programChoice == `stone 🗿` && renamedInput == `paper 🗒`) ||
+      (programChoice == `paper 🗒` && renamedInput == `scissors ✂️`)
+    ) && !(programChoice == renamedInput);
+  console.log(`Player won reversed SPS game ${wonSpsReversed}`);
+  return wonSpsReversed;
+};
+
+//Output win or lose for reversed SPS game
 var main = function (input) {
-  //Error message: When use enters something other than scissors, paper or stone
-  var inputEmoji = addEmoji(input);
-  var programChoice = assignProgramChoice(generateOneToThree());
-  var myOutputValue = `Opps! <br> You have entered something other than "stone", "paper", "scissors" or any of their reversed counterparts. <br> Please try again!`;
+  var renamedInput = addEmoji(input);
+  var programChoice = assignChoice(generateInteger());
+  var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play the game with me 😊.`;
 
-  // Result: User loses if user chose paper and program chose stone, or if user chose stone and program chose scissors, or if user chose scissors and program chose paper
-  if (
-    (input == "paper" && programChoice == "stone 🪨") ||
-    (input == "stone" && programChoice == "scissors ✂️") ||
-    (input == "scissors" && programChoice == "paper 🗒")
-  ) {
-    myOutputValue = `You lost! <br> <br> This is the reverse SPS game. <br> I chose ${programChoice}... <br> and unfortunately ${inputEmoji} does not beat ${programChoice}in this game! 😝`;
+  if (didPlayerLoseReversed(programChoice, renamedInput) == true) {
+    myOutputValue = `You lost! <br> <br> This is the reverse SPS game. <br> I chose ${programChoice}... <br> and unfortunately ${renamedInput} does not beat ${programChoice}in this game! 😝`;
   }
-
-  //Result: User wins if user chose paper and program chose scissors, or if user chose scissors and program chose stone, or if user chose stone and program chose paper
-  if (
-    (input == "paper" && programChoice == "scissors ✂️") ||
-    (input == "scissors" && programChoice == "stone 🪨") ||
-    (input == "stone" && programChoice == "paper 🗒")
-  ) {
-    myOutputValue = `You won! <br> <br> This is the reverse SPS game. <br> I chose ${programChoice}, <br> and sadly ${programChoice} does not beat ${inputEmoji} in this game 😐.`;
+  if (didPlayerWinReversed(programChoice, renamedInput) == true) {
+    myOutputValue = `Unbelievable... you won! <br> <br> You successfully reversed the outcome! <br> I chose ${programChoice} and did not see your ${renamedInput} coming! <br> You totally deserve this win!`;
   }
-
-  // Result: Draw if input is the same as program choice
-  if (
-    (input == "paper" && programChoice == "paper 🗒") ||
-    (input == "reversed paper" && programChoice == "paper 🗒") ||
-    (input == "scissors" && programChoice == "scissors ✂️") ||
-    (input == "reversed scissors" && programChoice == "scissors ✂️") ||
-    (input == "stone" && programChoice == "stone 🪨") ||
-    (input == "reversed stone" && programChoice == "stone 🪨")
-  ) {
-    myOutputValue = `It's a draw, whether you reversed it or not! <br> I chose ${programChoice} too 🙌!`;
-  }
-
-  // Result: User loses if user chose reverse paper and program chose stone, or if user chose reverse stone and program chose scissors, or if user chose reverse scissors and program chose paper
-  if (
-    (input == "reversed paper" && programChoice == "stone 🪨") ||
-    (input == "reversed stone" && programChoice == "scissors ✂️") ||
-    (input == "reversed scissors" && programChoice == "paper 🗒")
-  ) {
-    myOutputValue = `You lost! <br> <br> You could have won if only you didn't try to reverse the outcome! <br> I chose ${programChoice} and your ${inputEmoji} couldn't have beat that! <br> Better luck next time!`;
-  }
-
-  //Result: User wins if user chose reversed paper and program chose scissors, or if user chose reversed scissors and program chose stone, or if user chose reversed stone and program chose paper
-  if (
-    (input == "reversed paper" && programChoice == "scissors ✂️") ||
-    (input == "reversed scissors" && programChoice == "stone 🪨") ||
-    (input == "reversed stone" && programChoice == "paper 🗒")
-  ) {
-    myOutputValue = `Unbelievable... you won! <br> <br> You successfully reversed the outcome! <br> I chose ${programChoice} and did not see your ${inputEmoji} coming! <br> You totally deserve this win!`;
+  if (programChoice == renamedInput) {
+    myOutputValue = `It's a draw! <br> <br> We both chose ${programChoice}! <br> 🙌`;
   }
   return myOutputValue;
 };
