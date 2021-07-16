@@ -15,21 +15,12 @@ var main = function (input) {
   if (win == "yes") {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>You won!!!<br>Lets play another round!`;
   }
-
   if (draw == "yes") {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>It's a draw!<br>Lets play another round!`;
   }
-
   if (
-    input != "scissors" &&
-    input != "stone" &&
-    input != "paper" &&
-    input != "reversed scissors" &&
-    input != "reversed stone" &&
-    input != "reversed paper"
-  ) {
-    myOutputValue = `Please type in scissors, paper or stone.`;
-  }
+    input != "scissors" && input != "stone" && input != "paper" && input != "reversed scissors" && input != "reversed stone" && input != "reversed paper"
+  ) {myOutputValue = `Please type in scissors, paper or stone.`;}
   return myOutputValue;
 };
 
@@ -75,18 +66,18 @@ var playerWin = function (guess) {
   return answer;
 };
 
+//var invalid = function (guess) {
+//if (
+   // input != "scissors" && input != "stone" && input != "paper" && input != "reversed scissors" && input != "reversed stone" && input != "reversed paper"
+}
+
 var iconLogo = function (look) {
   var logo = "none";
   if (look == "scissors" || look == "reversed scrissors") {
-    logo = "✂️";
-  }
-
+    logo = "✂️";}
   if (look == "paper" || look == "reversed paper") {
-    logo = "📜";
-  }
-
+    logo = "📜";}
   if (look == "stone" || look == "reversed stone") {
-    logo = "🗿";
-  }
+    logo = "🗿";}
   return logo;
 };
