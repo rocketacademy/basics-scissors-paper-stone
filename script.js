@@ -78,32 +78,24 @@ var didPlayerLoseReversed = function (programChoice, renamedInput) {
   return lostSpsReversed;
 };
 
-//Did player win in a reversed SPS game
-var didPlayerWinReversed = function (programChoice, renamedInput) {
-  var wonSpsReversed =
-    !(
-      (programChoice == `scissors ✂️` && renamedInput == `stone 🗿`) ||
-      (programChoice == `stone 🗿` && renamedInput == `paper 🗒`) ||
-      (programChoice == `paper 🗒` && renamedInput == `scissors ✂️`)
-    ) && !(programChoice == renamedInput);
-  console.log(`Player won reversed SPS game ${wonSpsReversed}`);
-  return wonSpsReversed;
-};
-
 //Output win or lose for reversed SPS game
 var main = function (input) {
   var renamedInput = addEmoji(input);
   var programChoice = assignChoice(generateInteger());
   var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play the game with me 😊.`;
 
-  if (didPlayerLoseReversed(programChoice, renamedInput) == true) {
-    myOutputValue = `You lost! <br> <br> This is the reverse SPS game. <br> I chose ${programChoice}... <br> and unfortunately ${renamedInput} does not beat ${programChoice}in this game! 😝`;
-  }
-  if (didPlayerWinReversed(programChoice, renamedInput) == true) {
-    myOutputValue = `Unbelievable... you won! <br> <br> You successfully reversed the outcome! <br> I chose ${programChoice} and did not see your ${renamedInput} coming! <br> You totally deserve this win!`;
-  }
   if (programChoice == renamedInput) {
     myOutputValue = `It's a draw! <br> <br> We both chose ${programChoice}! <br> 🙌`;
   }
+  if (didPlayerLoseReversed(programChoice, renamedInput) == true) {
+    myOutputValue = `You lost! <br> <br> This is the reverse SPS game. <br> I chose ${programChoice}... <br> and unfortunately ${renamedInput} does not beat ${programChoice}in this game! 😝`;
+  }
+  if (
+    didPlayerLoseReversed(programChoice, renamedInput) == false &&
+    !(programChoice == renamedInput)
+  ) {
+    myOutputValue = `Unbelievable... you won! <br> <br> You successfully reversed the outcome! <br> I chose ${programChoice} and did not see your ${renamedInput} coming! <br> You totally deserve this win!`;
+  }
+
   return myOutputValue;
 };
