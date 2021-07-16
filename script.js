@@ -63,12 +63,12 @@ var playerWin = function (guess) {
   var computerMove = randomItem();
   var answer = "no";
   if (
-    (guess == "scissors" && computerMove == "paper") ||
-    (guess == "stone" && computerMove == "scissors") ||
-    (guess == "paper" && computerMove == "stone") ||
-    (guess == "reversed scissors" && computerMove == "stone") ||
+    guess == "scissors" ||
     (guess == "reversed stone" && computerMove == "paper") ||
-    (guess == "reversed paper" && computerMove == "scissors")
+    guess == "stone" ||
+    (guess == "reversed paper" && computerMove == "scissors") ||
+    guess == "paper" ||
+    (guess == "reversed scissors" && computerMove == "stone")
   ) {
     answer = "yes";
   }
