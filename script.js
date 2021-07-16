@@ -1,30 +1,16 @@
-// Randomly select a choice for computer
-var randomChoice = function () {
-  var choiceNumber = Math.ceil(Math.random() * 3);
-  var choiceText;
-  if (choiceNumber == 1) {
-    choiceText = 'scissors';
-  } else if (choiceNumber == 2) {
-    choiceText = 'paper';
-  } else if (choiceNumber == 3) {
-    choiceText = 'stone';
-  }
-  return choiceText;
-};
-
 // Main function
 var main = function (input) {
   var computerChoice = randomChoice();
   var reverseCheck;
 
   if (input == 'scissors' || input == 'paper' || input == 'stone') {
-    reverseCheck = false;
+    reverseCheck = 1;
   } else if (
     input == 'reversed scissors' ||
     input == 'reversed paper' ||
     input == 'reversed stone'
   ) {
-    reverseCheck = true;
+    reverseCheck = -1;
     if (input == 'reversed scissors') {
       input = 'scissors';
     } else if (input == 'reversed paper') {
@@ -70,7 +56,7 @@ var choiceToObject = function (choice) {
 };
 
 // Compare user's choice vs computer's choice
-var compareWinner = function (user, computer, reversed) {
+var compareWinner = function (user, computer, reverseCheck) {
   var score;
   if (user == computer) {
     score = 0;
@@ -79,17 +65,23 @@ var compareWinner = function (user, computer, reversed) {
     (user == 'paper' && computer == 'stone') ||
     (user == 'stone' && computer == 'scissors')
   ) {
-    if (reversed) {
-      score = -1;
-    } else {
-      score = 1;
-    }
+    score = 1 * reverseCheck;
   } else {
-    if (reversed) {
-      score = 1;
-    } else {
-      score = -1;
-    }
+    score = -1 * reverseCheck;
   }
   return score;
+};
+
+// Randomly select a choice for computer
+var randomChoice = function () {
+  var choiceNumber = Math.ceil(Math.random() * 3);
+  var choiceText;
+  if (choiceNumber == 1) {
+    choiceText = 'scissors';
+  } else if (choiceNumber == 2) {
+    choiceText = 'paper';
+  } else if (choiceNumber == 3) {
+    choiceText = 'stone';
+  }
+  return choiceText;
 };
