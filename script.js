@@ -36,70 +36,73 @@ var main = function (input) {
   var computerOption = generateRandomOption();
 
   if (input == "scissors" && computerOption == "scissors") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    It's a draw!`;
+    var myOutputValue = `The computer chose ${computerOption} ✌ <br>
+    You chose ${input} ✌ <br>
+    It's a draw! 😐`;
     return myOutputValue;
   }
 
   if (input == "scissors" && computerOption == "paper") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You win!`;
+    var myOutputValue = `The computer chose ${computerOption} ✋<br>
+    You chose ${input} ✌ <br>
+    You win! 😀`;
     return myOutputValue;
   }
 
   if (input == "scissors" && computerOption == "stone") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You lose!`;
+    var myOutputValue = `The computer chose ${computerOption} ✊<br>
+    You chose ${input} ✌ <br>
+    You lose! 😓`;
     return myOutputValue;
   }
 
   if (input == "paper" && computerOption == "scissors") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You lose!`;
+    var myOutputValue = `The computer chose ${computerOption} ✌<br>
+    You chose ${input} ✋ <br>
+    You lose! 😓`;
     return myOutputValue;
   }
 
   if (input == "paper" && computerOption == "paper") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    It's a draw!`;
+    var myOutputValue = `The computer chose ${computerOption} ✋<br>
+    You chose ${input} ✋ <br>
+    It's a draw! 😐`;
     return myOutputValue;
   }
 
   if (input == "paper" && computerOption == "stone") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You win!`;
+    var myOutputValue = `The computer chose ${computerOption} ✊<br>
+    You chose ${input} ✋ <br>
+    You win! 😀`;
     return myOutputValue;
   }
 
   if (input == "stone" && computerOption == "scissors") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You win!`;
+    var myOutputValue = `The computer chose ${computerOption} ✌<br>
+    You chose ${input} ✊ <br>
+    You win! 😀`;
     return myOutputValue;
   }
 
   if (input == "stone" && computerOption == "paper") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    You lose!`;
+    var myOutputValue = `The computer chose ${computerOption} ✋<br>
+    You chose ${input} ✊ <br>
+    You lose! 😓`;
     return myOutputValue;
   }
 
   if (input == "stone" && computerOption == "stone") {
-    var myOutputValue = `The computer chose ${computerOption} 
-    You chose ${input} 
-    It's a draw!`;
+    var myOutputValue = `The computer chose ${computerOption} ✊<br>
+    You chose ${input} ✊ <br>
+    It's a draw! 😐`;
     return myOutputValue;
   }
 
-  var myOutputValue =
-    "Sorry, there are only 3 input options: 'scissors', 'paper', or 'stone'. Please try again!";
+  var myOutputValue = `Sorry, there are only 3 input options:<br>
+    'scissors' ✌ <br>
+    'paper' ✋<br> 
+    'stone' ✊ <br> 
+    Please try again! 😉`;
 
   return myOutputValue;
 };
