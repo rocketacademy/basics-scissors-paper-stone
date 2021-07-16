@@ -13,13 +13,13 @@ var main = function (input) {
   var tryAgain = invalid(input);
 
   var myOutputValue = `The computer played ${computerMove} ${iconComputer} .<br>You played ${input} ${iconPlayer}.<br>You lost ='( <br>Lets play another round!`;
-  if (win == "yes") {
+  if (win) {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>You won!!!<br>Lets play another round!`;
   }
-  if (draw == "yes") {
+  if (draw) {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>It's a draw!<br>Lets play another round!`;
   }
-  if (tryAgain == "yes") {
+  if (tryAgain) {
     myOutputValue = `Please type in scissors, paper or stone.`;
   }
   return myOutputValue;
@@ -38,46 +38,34 @@ var randomItem = function () {
 };
 
 var drawGame = function (input, computerMove) {
-  var answer = "no";
-  if (
+  return (
     input == computerMove ||
     (input == "reversed scissors" && computerMove == "scissors") ||
     (input == "reversed stone" && computerMove == "stone") ||
     (input == "reversed paper" && computerMove == "paper")
-  ) {
-    answer = "yes";
-  }
-  return answer;
+  );
 };
 
 var playerWin = function (input, computerMove) {
-  var answer = "no";
-  if (
+  return (
     (input == "scissors" && computerMove == "paper") ||
     (input == "reversed stone" && computerMove == "paper") ||
     (input == "stone" && computerMove == "scissors") ||
     (input == "reversed paper" && computerMove == "scissors") ||
     (input == "paper" && computerMove == "stone") ||
     (input == "reversed scissors" && computerMove == "stone")
-  ) {
-    answer = "yes";
-  }
-  return answer;
+  );
 };
 
 var invalid = function (input) {
-  var answer = "no";
-  if (
+  return (
     input != "scissors" &&
     input != "stone" &&
     input != "paper" &&
     input != "reversed scissors" &&
     input != "reversed stone" &&
     input != "reversed paper"
-  ) {
-    answer = "yes";
-  }
-  return answer;
+  );
 };
 
 var iconLogo = function (look) {
