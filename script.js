@@ -1,3 +1,15 @@
+// Randomly select a choice for computer
+var randomChoice = function () {
+  var choiceNumber = Math.ceil(Math.random() * 3);
+  if (choiceNumber == 1) {
+    return "scissors";
+  } else if (choiceNumber == 2) {
+    return "paper";
+  } else if (choiceNumber == 3) {
+    return "stone";
+  }
+};
+
 var main = function (input) {
   var computerChoice = randomChoice();
   var reverseCheck;
@@ -58,17 +70,5 @@ var compareWinner = function (user, computer, reversed) {
     } else {
       return -1;
     }
-  }
-};
-
-// Randomly select a choice for computer
-var randomChoice = function () {
-  var choiceNumber = Math.ceil(Math.random() * 3);
-  if (choiceNumber == 1) {
-    return "scissors";
-  } else if (choiceNumber == 2) {
-    return "paper";
-  } else if (choiceNumber == 3) {
-    return "stone";
   }
 };
