@@ -6,7 +6,7 @@ var main = function (input) {
   return gameCondition(convertInput, translateRPS());
 };
 
-//Symbol Generation
+// Symbol Generation
 function symbolGenerator(input) {
   if (input == "scissors" || input == "reversedscissors") {
     return "✂️";
@@ -19,7 +19,7 @@ function symbolGenerator(input) {
   }
 }
 
-//Winning message
+// Winning message
 function winMessage(playerInput, comInput, playerIcon, comIcon) {
   return (
     "You Won! You have chose " +
@@ -32,7 +32,7 @@ function winMessage(playerInput, comInput, playerIcon, comIcon) {
   );
 }
 
-//Losing message
+// Losing message
 function loseMessage(playerInput, comInput, playerIcon, comIcon) {
   return (
     "You Lost! You have chose " +
@@ -45,7 +45,7 @@ function loseMessage(playerInput, comInput, playerIcon, comIcon) {
   );
 }
 
-//Draw message
+// Draw message
 function drawMessage(playerInput, comInput, playerIcon, comIcon) {
   return (
     `It's a Draw✏️! You have chose ` +
@@ -58,9 +58,9 @@ function drawMessage(playerInput, comInput, playerIcon, comIcon) {
   );
 }
 
-//Win Condition
+// Win Condition
 function gameCondition(user, com) {
-  //check input
+  // check input
   if (
     user == "stone" ||
     user == "reversedstone" ||
@@ -70,7 +70,7 @@ function gameCondition(user, com) {
     user == "reversedscissors"
   ) {
     if (com == "paper") {
-      //Computer is paper and user is scissors or reversedstone, user wins
+      // Computer is paper and user is scissors or reversedstone, user wins
       if (user == "scissors" || user == "reversedstone") {
         return winMessage(
           user,
@@ -79,7 +79,7 @@ function gameCondition(user, com) {
           symbolGenerator(com)
         );
       }
-      //Computer is paper and user is stone or reversed scissors, user loses
+      // Computer is paper and user is stone or reversed scissors, user loses
       else if (user == "stone" || user == "reversed scissors") {
         return loseMessage(
           user,
@@ -149,7 +149,7 @@ function gameCondition(user, com) {
   }
 }
 
-//Random RPS by function
+// Random RPS by function
 var translateRPS = function () {
   const list = ["scissors", "paper", "stone"];
   return list[Math.floor(Math.random() * 3)];
