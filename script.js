@@ -18,11 +18,15 @@ var main = function (input) {
   (input == `paper` && comChoice == `stone`) ||
   (input == `scissors` && comChoice == `paper`)
   ) {
-    myOutputValue = `I picked ` + input + ` and Computer picked ` + comChoice + `. I win! Hooray!`
+    myOutputValue = `I picked ${input}
+    <br><br>and Computer picked ${comChoice}.
+    <br><br>I win! Hooray!`
   }
 // draw conditions
   if (input == comChoice) {
-    myOutputValue = `I picked ` + input + ` and Computer picked ` + comChoice + `. Try Again!`
+    myOutputValue = `I picked ${input} 
+    <br><br>and Computer picked ${comChoice}.
+    <br><br>Try Again!`
   }
   console.log(input,comChoice)
   return myOutputValue
