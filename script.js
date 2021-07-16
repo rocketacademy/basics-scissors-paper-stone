@@ -8,8 +8,15 @@
 // SPS function randomises the computer choice
 function SPS() {
   var randomiser = Math.floor(Math.random() * 3); // using randomiser to pick a number
-  var computer = ["scissors", "paper", "stone"]; // putting the choices in an array
-  return computer[randomiser]; // returning the results of the randomised choice
+  var computer;
+  if (randomiser == 0) {
+    computer = "scissors";
+  } else if (randomiser == 1) {
+    computer = "paper";
+  } else if (randomiser == 2) {
+    computer = "stone";
+  }
+  return computer; // returning the results of the randomised choice
 }
 
 var main = function (input) {
