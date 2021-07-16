@@ -1,8 +1,5 @@
 var main = function (input) {
-  var computerNumber = rollDice();
-  console.log("computerNumber", computerNumber);
-
-  var computerMove = programPick(computerNumber);
+  var computerMove = randomItem();
   console.log("computer", computerMove);
 
   var iconComputer = iconLogo(computerMove);
@@ -11,24 +8,15 @@ var main = function (input) {
   var iconPlayer = iconLogo(input);
   console.log("iconPlayer", iconPlayer);
 
+  var draw = drawGame(input);
+  var win = playerWin(input);
+
   var myOutputValue = `The computer played ${computerMove} ${iconComputer} .<br>You played ${input} ${iconPlayer}.<br>You lost ='( <br>Lets play another round!`;
-  if (
-    (input == "scissors" && computerMove == "paper") ||
-    (input == "stone" && computerMove == "scissors") ||
-    (input == "paper" && computerMove == "stone") ||
-    (input == "reversed scissors" && computerMove == "stone") ||
-    (input == "reversed stone" && computerMove == "paper") ||
-    (input == "reversed paper" && computerMove == "scissors")
-  ) {
+  if (win == "yes") {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>You won!!!<br>Lets play another round!`;
   }
 
-  if (
-    input == computerMove ||
-    (input == "reversed scissors" && computerMove == "scissors") ||
-    (input == "reversed stone" && computerMove == "stone") ||
-    (input == "reversed paper" && computerMove == "paper")
-  ) {
+  if (draw == "yes") {
     myOutputValue = `The computer played ${computerMove} ${iconComputer}.<br>You played ${input} ${iconPlayer}.<br>It's a draw!<br>Lets play another round!`;
   }
 
@@ -45,25 +33,46 @@ var main = function (input) {
   return myOutputValue;
 };
 
-var rollDice = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomInteger = Math.floor(randomDecimal);
-  var diceNumber = randomInteger + 1;
-  return diceNumber;
-};
-
-var programPick = function (number) {
-  var programMove = "None";
-  if (number == 1) {
+var randomItem = function () {
+  var random = Math.floor(Math.random() * 3);
+  var programMove = "stone";
+  if (random == 1) {
     programMove = "scissors";
   }
-  if (number == 2) {
+  if (random == 2) {
     programMove = "paper";
   }
-  if (number == 3) {
-    programMove = "stone";
-  }
   return programMove;
+};
+
+var drawGame = function (guess) {
+  var computerMove = randomItem();
+  var answer = "no";
+  if (
+    guess == computerMove ||
+    (guess == "reversed scissors" && computerMove == "scissors") ||
+    (guess == "reversed stone" && computerMove == "stone") ||
+    (guess == "reversed paper" && computerMove == "paper")
+  ) {
+    answer = "yes";
+  }
+  return answer;
+};
+
+var playerWin = function (guess) {
+  var computerMove = randomItem();
+  var answer = "no";
+  if (
+    (guess == "scissors" && computerMove == "paper") ||
+    (guess == "stone" && computerMove == "scissors") ||
+    (guess == "paper" && computerMove == "stone") ||
+    (guess == "reversed scissors" && computerMove == "stone") ||
+    (guess == "reversed stone" && computerMove == "paper") ||
+    (guess == "reversed paper" && computerMove == "scissors")
+  ) {
+    answer = "yes";
+  }
+  return answer;
 };
 
 var iconLogo = function (look) {
