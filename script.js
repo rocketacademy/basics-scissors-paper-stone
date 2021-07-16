@@ -6,8 +6,10 @@ var main = function (input) {
   console.log(input, comChoice)
 
 //input validator
-  if (input != `scissors` | input != `paper` | input != `stone`){
-  return myOutputValue = `You entered ${input}, please enter scissors, paper or stone and try again`
+  if (
+    input != `scissors` | input != `paper` | input != `stone`)
+    {
+  myOutputValue = `You entered ${input}, please enter scissors, paper or stone and try again`
   }
 
 // winning conditions
