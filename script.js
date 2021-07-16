@@ -1,21 +1,26 @@
 var main = function (input) {
 
-  var myOutputValue = `you lose`;
+  var myOutputValue = `You lose, Try Again`;
 
   var comChoice = generateChoice();
   console.log(input, comChoice)
 
 //input validator
   if (
-    input != `scissors` | input != `paper` | input != `stone`)
+    input != `scissors` || input != `paper` || input != `stone` ||
+    input != `reversed scissors` || input != `reversed paper`||
+    input != `reversed stone`)
     {
   myOutputValue = `You entered ${input}, please enter scissors, paper or stone and try again`
   }
 
 // winning conditions
   if (
-  (input == `stone` && comChoice == `scissors`) ||
-  (input == `paper` && comChoice == `stone`) ||
+  (input == `stone` && comChoice == `scissors`) | 
+  (input == `reversed stone` && comChoice == `paper`) |
+  (input == `reversed paper` && comChoice == `scissors`) |
+  (input == `paper` && comChoice == `stone`) |
+  (input == `reversed scissors` && comChoice == `stone`) |
   (input == `scissors` && comChoice == `paper`)
   ) {
     myOutputValue = `I picked ${input}
