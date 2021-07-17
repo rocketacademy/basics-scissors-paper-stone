@@ -21,6 +21,7 @@ var main = function (input) {
       gameMode = "normal"; //Change game state to normal
       return 'Ah, having enough fun already. Now back to normal. To proceed, please key in "stone"/"paper"/"scissors".';
     }
+    input = input.toLowerCase(); //lowercase the inputs for processing
     var comOutput = randomGen(); //Get the random generated number
     var userInput = intInput(input); //Get int value of the user
     console.log("Com-output");
