@@ -11,6 +11,7 @@ var userName = "";
 var revMode = 1; // revMode off: 1, revMode on: -1
 var korMode = 0; // korMode off: 0, korMode on: 1
 var autoMode = 0; // autoMode off: 0, autoMode on: 1
+
 var totalGames = 0;
 var playerWon = 0;
 var compWon = 0;
@@ -97,7 +98,7 @@ var main = function (input) {
     return (
       "Welcome, " +
       userName +
-      ". <br> Please type 'scissors', 'paper', or 'stone' to start the game! <br> Alternatively, type 'reverse' or 'Korean' for the reverse or Korean game modes!"
+      ". <br> Please type 'scissors', 'paper', or 'stone' to start the game! <br> Alternatively, type 'reverse', 'korean' or 'auto' for the other game modes!"
     );
   }
 
@@ -145,7 +146,7 @@ var main = function (input) {
     input != HAND_PAP &&
     input != HAND_STO
   ) {
-    return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only.";
+    return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only. Alternatively, type 'reverse', 'korean' or 'auto' for the other game modes!";
   }
 
   // ASSIGN HAND, NUM, EMJ (0 SCI, 1 PAP, 2 STO)
@@ -235,7 +236,7 @@ var main = function (input) {
     userName +
     "'s Statistics 📊 <br> 🟡 Total Games: " +
     totalGames +
-    "<br> 🟡 Player-Computer-Draws: " +
+    "<br> 🟡 Player-Computer-Draw: " +
     playerWon +
     "-" +
     compWon +
