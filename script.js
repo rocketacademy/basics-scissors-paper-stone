@@ -1,3 +1,7 @@
+var currentPlayerWins = 0;
+var currentComputerWins = 0;
+var currentDraws = 0;
+
 // Generate random number 0 as Scissors , 1 as Paper or 2 as Stone
 var randomChoice = function () {
   var randomNumber = Math.floor(Math.random() * 3);
@@ -16,16 +20,12 @@ var PAPER = "paper";
 var STONE = "stone";
 
 // Gameplay
-
 var main = function (input) {
   var playerChoice = input;
-  console.log("input");
-  console.log(playerChoice);
-
+  console.log(playerChoice, "playerChoice");
   // Computer's choice
   var computerChoice = randomChoice();
-  console.log("Computer Choice");
-  console.log(computerChoice);
+  console.log(computerChoice, "Computer Choice");
 
   var myOutputValue = "Type Scissors or Paper or Stone to play";
   if (
@@ -33,13 +33,9 @@ var main = function (input) {
     (playerChoice == PAPER && computerChoice == SCISSORS) ||
     (playerChoice == STONE && computerChoice == PAPER)
   ) {
-    console.log("Lose");
-    myOutputValue =
-      "You chose " +
-      playerChoice +
-      "<br><br>Computer chose " +
-      computerChoice +
-      "<br><br> You Lose!";
+    currentComputerWins += 1;
+    console.log(currentComputerWins, "Computer Won");
+    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Lose! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
   }
 
   if (
@@ -47,23 +43,15 @@ var main = function (input) {
     (playerChoice == PAPER && computerChoice == STONE) ||
     (playerChoice == STONE && computerChoice == SCISSORS)
   ) {
-    console.log("Win");
-    myOutputValue =
-      "You chose " +
-      playerChoice +
-      "<br><br>Computer chose " +
-      computerChoice +
-      "<br><br> You Win!";
+    currentPlayerWins += 1;
+    console.log(currentPlayerWins, "Player Won");
+    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Win! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
   }
 
   if (playerChoice == computerChoice) {
-    console.log("Draw");
-    myOutputValue =
-      "You chose " +
-      playerChoice +
-      "<br><br>Computer chose " +
-      computerChoice +
-      "<br><br> You Draw!";
+    currentDraws += 1;
+    console.log(currentDraws, "Draws");
+    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Draw! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
   }
 
   return myOutputValue;
