@@ -11,10 +11,10 @@ var main = function (input) {
   console.log(`input`, input);
   console.log(`computer plays`, computerSPS);
   numTimesGamePlayed += 1;
-  var winLossInfo = generateWinLossInfo();
   var currentGameResult = gameLogic(input,computerSPS);
-
-  //default output value is you lose
+  var winLossInfo = generateWinLossInfo();
+  
+  //default output value
   var myOutputValue = `${winLossInfo}<br><br>
   ${currentGameResult}<br><br>
   Now you can type "scissors" "paper" or "stone" to play another round.`;
