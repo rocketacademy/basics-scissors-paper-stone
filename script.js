@@ -8,6 +8,7 @@ let scissorsPaperStone = function (input) {
   // 0 == scissors
   // 1 == paper
   // 2 == stone
+  // additional comments
   if (input == "scissors" || input == "paper" || input == "stone") {
     if (randomInteger == 0) {
       if (input == "scissors") {
