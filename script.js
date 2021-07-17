@@ -4,8 +4,20 @@ var numTimesComputerWins = 0;
 var numTimesDraw = 0;
 var numTimesGamePlayed = 0;
 
+//keep track of user name
+var isStartOfGame = true;
+var userName = 0;
+
 //MAIN FUNCTION
 var main = function (input) {
+
+  //collect user name as first input
+  if(isStartOfGame){
+    isStartOfGame = false;
+    userName = input;
+    return `Welcome ${userName}! Start playing by entering ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.`
+  };
+
   //computer plays scissors paper or stone
   var computerSPS = generateRandomSPS();
   console.log(`input`, input);
@@ -47,23 +59,16 @@ var main = function (input) {
 //generate information about win-loss record
 var generateWinLossInfo = function(){
   var winningPercentage = Math.floor((numTimesUserWins/numTimesGamePlayed)*100);
-  return `You won ${numTimesUserWins} times.<br>
+  return `${userName} won ${numTimesUserWins} times.<br>
   Computer won ${numTimesComputerWins} times.<br>
-  You drew ${numTimesDraw} times.
-  You win ${winningPercentage}% of the time.`;
+  Game drew ${numTimesDraw} times.
+  ${userName} wins ${winningPercentage}% of the time.`;
 };
 
 //SPS game logic and scoring
 var gameLogic = function(userPlays,computerPlays){
 
-  //WINNING CONDITIONS
-  //if user plays scissors and computer plays paper
-  //OR user plays paper and computer plays stone
-  //OR user plays stone and computer plays scissors
-  //OR user plays reversed scissors and computer plays stone
-  //OR user plays reversed paper and computer plays scissors
-  //OR user plays reversed stone and computer plays paper
-  //user wins
+  //Winning conditions
   if(
     (userPlays == `scissors` && computerPlays == `paper`)||
     (userPlays == `paper` && computerPlays == `stone`) ||
@@ -73,29 +78,27 @@ var gameLogic = function(userPlays,computerPlays){
     (userPlays == `reversed stone` && computerPlays == `paper`)
   ){
     numTimesUserWins += 1;
-    return `The computer chose ${createEmojiSPS(computerPlays)}.<br>
-    You chose ${createEmojiSPS(userPlays)}.<br><br>
-    You win! Yay!`;
+    return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+    ${userName} wins! Yay!`;
   };
 
-  //if user and computer play same SPS
-  //OR same reversed SPS
-  //user draws
+  //Draw conditions
   if(
     userPlays == computerPlays ||
     userPlays == `reversed ${computerPlays}`
     ){
       numTimesDraw += 1;
-      return `The computer chose ${createEmojiSPS(computerPlays)}.<br>
-    You chose ${createEmojiSPS(userPlays)}.<br><br>
-    You draw.`;
+      return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+    It's a draw.`;
   };
   
   //if not, assume computer wins
   numTimesComputerWins += 1;
-  return `The computer chose ${createEmojiSPS(computerPlays)}.<br>
-  You chose ${createEmojiSPS(userPlays)}.<br><br>
-  You lose.`;
+  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+  ${userName} lose.`;
 };
 
 
