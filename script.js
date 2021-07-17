@@ -10,6 +10,7 @@ var COMP_NAME = "comp";
 var userName = "";
 var revMode = 1; // revMode off: 1, revMode on: -1
 var korMode = 0; // korMode off: 0, korMode on: 1
+var autoMode = 0; // autoMode off: 0, autoMode on: 1
 var totalGames = 0;
 var playerWon = 0;
 var compWon = 0;
@@ -77,12 +78,18 @@ var compareHands = function (player, comp) {
 
 var main = function (input) {
   if (userName == "") {
-    // CHECK THAT PLAYER ENTERED NAME FIRST, NOT SPS
+    // CHECK THAT PLAYER ENTERED NAME FIRST, NOT SPS OR MODE
     if (
       input == HAND_SCI ||
       input == HAND_PAP ||
       input == HAND_STO ||
-      input == ""
+      input == "" ||
+      input == "reverse" ||
+      input == "reverse off" ||
+      input == "korean" ||
+      input == "korean off" ||
+      input == "auto" ||
+      input == "auto off"
     ) {
       return "⚠️ Please enter your name before starting the game!";
     }
@@ -98,6 +105,7 @@ var main = function (input) {
   if (input == "reverse") {
     revMode = -1;
     korMode = 0;
+    autoMode = 0;
     return "You are now in reverse mode. Enjoy! (Type 'reverse off' to return to normal mode)";
   }
   if (input == "reverse off") {
@@ -110,6 +118,7 @@ var main = function (input) {
     korMode = 1;
     currentWinner = "";
     revMode = 1;
+    autoMode = 0;
     return "You are now in Korean mode. Enjoy! (Type 'korean off' to return to normal mode)";
   }
   if (input == "korean off") {
@@ -117,42 +126,82 @@ var main = function (input) {
     return "You are now in normal mode. Enjoy!";
   }
 
+  // ACTIVATE/DEACTIVATE AUTO MODE
+  if (input == "auto") {
+    autoMode = 1;
+    revMode = 1;
+    korMode = 0;
+    return "You are now in Auto mode. Enjoy! (Type 'auto off' to return to normal mode)";
+  }
+  if (input == "auto off") {
+    autoMode = 0;
+    return "You are now in normal mode. Enjoy!";
+  }
+
   // VALIDATE INPUT
-  if (input != HAND_SCI && input != HAND_PAP && input != HAND_STO) {
+  if (
+    autoMode == 0 &&
+    input != HAND_SCI &&
+    input != HAND_PAP &&
+    input != HAND_STO
+  ) {
     return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only.";
   }
 
-  // ASSIGN COMPHAND AND COMPEMJ (0 SCI, 1 PAP, 2 STO)
-  var compNum = randComp();
-  var compHand;
-  var compEmj;
-  if (compNum == 0) {
-    compHand = HAND_SCI;
-    compEmj = EMJ_SCI;
-  }
-  if (compNum == 1) {
-    compHand = HAND_PAP;
-    compEmj = EMJ_PAP;
-  }
-  if (compNum == 2) {
-    compHand = HAND_STO;
-    compEmj = EMJ_STO;
-  }
+  // ASSIGN HAND, NUM, EMJ (0 SCI, 1 PAP, 2 STO)
+  var assignNumToHand = function (number) {
+    if (number == 0) {
+      return HAND_SCI;
+    }
+    if (number == 1) {
+      return HAND_PAP;
+    }
+    if (number == 2) {
+      return HAND_STO;
+    }
+  };
 
-  // ASSIGN PLAYERNUM AND PLAYEREMJ (0 SCI, 1 PAP, 2 STO)
+  var assignNumToEmj = function (number) {
+    if (number == 0) {
+      return EMJ_SCI;
+    }
+    if (number == 1) {
+      return EMJ_PAP;
+    }
+    if (number == 2) {
+      return EMJ_STO;
+    }
+  };
+
+  var assignHandToNum = function (hand) {
+    if (hand == HAND_SCI) {
+      return 0;
+    }
+    if (hand == HAND_PAP) {
+      return 1;
+    }
+    if (hand == HAND_STO) {
+      return 2;
+    }
+  };
+
+  var compNum = randComp();
+  var compHand = assignNumToHand(compNum);
+  var compEmj = assignNumToEmj(compNum);
+
   var playerNum;
   var playerEmj;
-  if (input == HAND_SCI) {
-    playerNum = 0;
-    playerEmj = EMJ_SCI;
+  var playerHand;
+
+  if (autoMode == 1) {
+    playerNum = randComp();
+    playerHand = assignNumToHand(playerNum);
+    playerEmj = assignNumToEmj(playerNum);
   }
-  if (input == HAND_PAP) {
-    playerNum = 1;
-    playerEmj = EMJ_PAP;
-  }
-  if (input == HAND_STO) {
-    playerNum = 2;
-    playerEmj = EMJ_STO;
+  if (autoMode == 0) {
+    playerHand = input;
+    playerNum = assignHandToNum(playerHand);
+    playerEmj = assignNumToEmj(playerNum);
   }
 
   // COMPARE HANDS
@@ -204,6 +253,9 @@ var main = function (input) {
   }
   if (korMode == 1) {
     modeMsg = "[KOREAN MODE] (Type 'korean off' to return to normal mode) <br>";
+  }
+  if (autoMode == 1) {
+    modeMsg = "[AUTO MODE] (Type 'auto off' to return to normal mode) <br>";
   }
 
   // FORMAT OUTPUT (KOREAN)
