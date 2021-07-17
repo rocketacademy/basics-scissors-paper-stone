@@ -12,11 +12,11 @@ var main = function (input) {
     return `Hi there ${username}, let's play a game of scissors,paper and stone. <br> To proceed, please key in "stone"/"paper"/"scissors".`;
   }
   if (gameState == "game-mode" || gameState == "game-reversed") {
-    if (input == "reverse") {
+    if (input.toLowerCase() == "reverse") {
       gameState = "game-reversed"; //Change game state to reverse
       return 'Shhh...Game reversed! To proceed, please key in "stone"/"paper"/"scissors".';
     }
-    if (input == "normal") {
+    if (input.toLowerCase() == "normal") {
       gameState = "game-mode"; //Change game state to normal mode
       gameMode = "normal"; //Change game state to normal
       return 'Ah, having enough fun already. Now back to normal. To proceed, please key in "stone"/"paper"/"scissors".';
