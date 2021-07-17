@@ -13,6 +13,7 @@ var totalGames = 0;
 var playerWon = 0;
 var compWon = 0;
 var drawWon = 0;
+var userName = "";
 
 // GENERATE RANDOM INTEGER (0-2) FOR COMPUTER
 var randComp = function () {
@@ -42,6 +43,26 @@ var compareHands = function (player, comp) {
 var main = function (input) {
   revMode = 1;
 
+  if (userName == "") {
+    // CHECK THAT PLAYER ENTERED NAME FIRST, NOT SPS
+    if (
+      input == HAND_SCI ||
+      input == HAND_PAP ||
+      input == HAND_STO ||
+      input == HAND_REV_SCI ||
+      input == HAND_REV_PAP ||
+      input == HAND_REV_STO
+    ) {
+      return "⚠️ Please enter your name before starting the game!";
+    }
+    userName = input;
+    return (
+      "Welcome, " +
+      userName +
+      ". Please type 'scissors', 'paper', or 'stone' to start the game!"
+    );
+  }
+
   // VALIDATE INPUT
   if (
     input != HAND_SCI &&
@@ -51,7 +72,7 @@ var main = function (input) {
     input != HAND_REV_PAP &&
     input != HAND_REV_STO
   ) {
-    return "Invalid input. Please type 'scissors', 'paper', or 'stone' only. <br> Or try 'reversed (your hand)' for the reversed mode.";
+    return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only. <br> Or try 'reversed (your hand)' for the reversed mode.";
   }
   // ASSIGN COMPHAND AND COMPEMJ (0 SCI, 1 PAP, 2 STO)
   var compNum = randComp();
@@ -97,7 +118,8 @@ var main = function (input) {
     " " +
     compEmj +
     ". <br>" +
-    "You chose " +
+    userName +
+    " chose " +
     input +
     " " +
     playerEmj +
@@ -112,7 +134,9 @@ var main = function (input) {
   var winPercentRound = Math.round(winPercent) / 100;
 
   var stats =
-    "📊 STATISTICS 📊 <br> 🟡 Total Games: " +
+    "📊 " +
+    userName +
+    "'s Statistics 📊 <br> 🟡 Total Games: " +
     totalGames +
     "<br> 🟡 Player-Computer-Draws: " +
     playerWon +
