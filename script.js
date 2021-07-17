@@ -31,7 +31,7 @@ var main = function (input) {
   ) {
     console.log("Comp Move:" + moves[compMove]);
     console.log("User Win");
-    return (
+    var winOutput =
       "The computer choose " +
       moves[compMove] +
       "<br>" +
@@ -41,8 +41,8 @@ var main = function (input) {
       "You WIN!" +
       "<br>" +
       "<br>" +
-      "Now you can type scissors, paper or stone to play another round!"
-    );
+      "Now you can type scissors, paper or stone to play another round!";
+    return winOutput;
   }
 
   //If User lose
@@ -53,7 +53,7 @@ var main = function (input) {
   ) {
     console.log("Comp Move:" + moves[compMove]);
     console.log("User Lose");
-    return (
+    var loseOutput =
       "The computer choose " +
       moves[compMove] +
       "<br>" +
@@ -63,8 +63,8 @@ var main = function (input) {
       "You lose!" +
       "<br>" +
       "<BR>" +
-      "Now you can type scissors, paper or stone to play another round!"
-    );
+      "Now you can type scissors, paper or stone to play another round!";
+    return loseOutput;
   }
 
   //(Reverse mode) If Tie
@@ -73,8 +73,8 @@ var main = function (input) {
     console.log("RUser Tie");
     return (
       "It is a tie. Try again hehe." +
-      "<BR>" +
-      "<BR>" +
+      "<br>" +
+      "<br>" +
       "Now you can type scissors, paper or stone to play another round!"
     );
   }
@@ -90,7 +90,7 @@ var main = function (input) {
   ) {
     console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Win");
-    return (
+    var rWinOutput =
       "The computer choose " +
       rMoves[rCompMove] +
       "<br>" +
@@ -100,8 +100,8 @@ var main = function (input) {
       "Lucky you. You WIN!" +
       "<br>" +
       "<br>" +
-      "Now you can type scissors, paper or stone to play another round!"
-    );
+      "Now you can type scissors, paper or stone to play another round!";
+    return rWinOutput;
   }
 
   // (Reverse mode) If User lose
@@ -115,7 +115,7 @@ var main = function (input) {
   ) {
     console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Lose");
-    return (
+    var rLoseOutput =
       "The computer choose " +
       rMoves[rCompMove] +
       "<br>" +
@@ -125,8 +125,8 @@ var main = function (input) {
       "Get good. You lose!" +
       "<br>" +
       "<br>" +
-      "Now you can type scissors, paper or stone to play another round!"
-    );
+      "Now you can type scissors, paper or stone to play another round!";
+    return rLoseOutput;
   }
 
   //Check moves
