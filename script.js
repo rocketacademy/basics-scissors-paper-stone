@@ -96,7 +96,7 @@ var ComputerChoice = function () {
   var output = "scissors";
   var randomNum = Math.random() * 3;
   var randomInt = Math.floor(randomNum) + 1;
-
+//dsfsdfjds
   if (randomInt == 2) {
     output = "paper";
   } else if (randomInt == 3) {
