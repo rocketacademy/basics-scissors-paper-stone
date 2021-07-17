@@ -4,7 +4,7 @@ var stone = "stone"
 var paper = "paper"
 
 //why must I use the work Main to mark out a function
-//getRandomObject
+
 
 var randomnumber = function(){
   var number = Math.floor(Math.random() * 2);
