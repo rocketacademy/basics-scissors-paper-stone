@@ -1,36 +1,43 @@
 var main = function (input) {
   var randomHand = calRandomHand();
+  console.log(randomHand);
+
   var myOutputValue =
     " You picked " +
     input +
+    "<br></br>" +
     " whereas we picked " +
     randomHand +
+    "<br></br>" +
     " You lost, please try again!";
 
-  if (calRandomHand() == "Paper" && input == "Scissors") {
+  if (
+    (randomHand == "Paper" && input == "Scissors") ||
+    (randomHand == "Scissors" && input == "Stone") ||
+    (randomHand == "Stone" && input == "Paper") ||
+    (input == " reversed Scissors" && randomHand == "Stone") ||
+    (input == "reversed Paper" && randomHand == "Scissors") ||
+    (input == "reversed Stone" && randomHand == "Paper")
+  ) {
     return "You Won!";
   }
-  if (calRandomHand() == "Scissors" && input == "Stone") {
-    return "You Won!";
-  }
-  if (calRandomHand() == "Stone" && input == "Paper") {
-    return "You Won!";
-  }
-  if (input == "Scissors" && calRandomHand() == "Paper") {
-    return "You Won!";
-  }
-  if (input == "Paper" && calRandomHand() == "Stone") {
-    return "You Won!";
-  }
-  if (input == "Stone" && calRandomHand() == "Scissors") {
-    return "You Won!";
-  }
-  if (input == calRandomHand()) {
-    return "DRAW";
-  }
-  if (input !== "Scissors" || input !== "Paper" || input !== "Stone") {
+
+  if (input !== "Scissors" && input !== "Paper" && input !== "Stone") {
     return "Please input Scissors Paper or Stone, all other values are void";
   }
+
+  if (input == randomHand) {
+    return "DRAW";
+  }
+
+  if (
+    (input == " reversed Paper " && randomHand == "Paper") ||
+    (input == " reversed Scissors " && randomHand == "Scissors") ||
+    (input == " reversed Stone " && randomHand == "Stone")
+  ) {
+    return "DRAW";
+  }
+
   return myOutputValue;
 };
 
