@@ -8,7 +8,11 @@ var HAND_REV_SCI = "reversed scissors";
 var HAND_REV_PAP = "reversed paper";
 var HAND_REV_STO = "reversed stone";
 
-var revMode = 1;
+var revMode = 1; // revMode on: 1, revMode off: -1 (on by default)
+var totalGames = 0;
+var playerWon = 0;
+var compWon = 0;
+var drawWon = 0;
 
 // GENERATE RANDOM INTEGER (0-2) FOR COMPUTER
 var randComp = function () {
@@ -19,13 +23,19 @@ var randComp = function () {
 
 // COMPARE PLAYER AND COMPUTER HANDS
 var compareHands = function (player, comp) {
-  var result = "You lose! Bummer.";
+  totalGames += 1;
   if (player - comp == -1 * revMode || player - comp == 2 * revMode) {
+    playerWon += 1;
     result = "You win! Hooray!";
+    return result;
   }
   if (player == comp) {
+    drawWon += 1;
     result = "Jinx! It's a draw!";
+    return result;
   }
+  compWon += 1;
+  var result = "You lose! Bummer.";
   return result;
 };
 
@@ -97,5 +107,22 @@ var main = function (input) {
     "<br>" +
     "<br>" +
     "Now you can type 'scissors', 'paper', or 'stone' to play another round! <br> Or try 'reversed (your hand)' for the reversed mode!";
-  return myOutputValue;
+
+  var winPercent = (playerWon / totalGames) * 10000;
+  var winPercentRound = Math.round(winPercent) / 100;
+
+  var stats =
+    "📊 STATISTICS 📊 <br> 🟡 Total Games: " +
+    totalGames +
+    "<br> 🟡 Player-Computer-Draws: " +
+    playerWon +
+    "-" +
+    compWon +
+    "-" +
+    drawWon +
+    "<br> 🟡 Winning Percentage: " +
+    winPercent +
+    "%";
+
+  return myOutputValue + "<br><br>" + stats;
 };
