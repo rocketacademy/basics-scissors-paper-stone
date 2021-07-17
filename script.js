@@ -9,8 +9,7 @@ var main = function (input) {
   console.log("iconPlayer", iconPlayer);
 
   var draw = drawGame(input, computerMove);
-  var win =
-    playerWin(input, computerMove) || playerWinReversed(input, computerMove);
+  var win = playerWin(input, computerMove);
   var tryAgain = invalid(input);
 
   var myOutputValue = `The computer played ${computerMove} ${iconComputer} .<br>You played ${input} ${iconPlayer}.<br>You lost ='( <br>Lets play another round!`;
@@ -42,7 +41,8 @@ var drawGame = function (input, computerMove) {
   return input.includes(computerMove);
 };
 
-/*var drawGameReversed = function (input, computerMove) {
+/*
+var drawGameReversed = function (input, computerMove) {
   return (
     (input == "reversed scissors" && computerMove == "scissors") ||
     (input == "reversed stone" && computerMove == "stone") ||
@@ -53,12 +53,16 @@ var drawGame = function (input, computerMove) {
 
 var playerWin = function (input, computerMove) {
   return (
-    (input == "scissors" && computerMove == "paper") ||
-    (input == "stone" && computerMove == "scissors") ||
-    (input == "paper" && computerMove == "stone")
+    ((input == "scissors" || input == "reversed stone") &&
+      computerMove == "paper") ||
+    ((input == "stone" || input == "reversed paper") &&
+      computerMove == "scissors") ||
+    ((input == "paper" || input == "reversed scissors") &&
+      computerMove == "stone")
   );
 };
 
+/*
 var playerWinReversed = function (input, computerMove) {
   return (
     (input == "reversed paper" && computerMove == "scissors") ||
@@ -66,6 +70,7 @@ var playerWinReversed = function (input, computerMove) {
     (input == "reversed scissors" && computerMove == "stone")
   );
 };
+*/
 
 var invalid = function (input) {
   return (
