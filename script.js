@@ -25,27 +25,24 @@ var main = function (input) {
   var compHand = getRandomValue();
   console.log(compHand);
 
-  // set display message if user lost
-  var myOutputValue = `You threw ${input}.<br> The computer threw ${compHand}.<br> Sorry, you lost!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
-
   // input validation
   if (
-    input != "scissors" ||
-    input != "paper" ||
-    input != "stone" ||
-    input != "reversed scissors" ||
-    input != "reversed paper" ||
-    input != "reversed stone"
+    input !== "scissors" ||
+    input !== "paper" ||
+    input !== "stone" ||
+    input !== "reversed scissors" ||
+    input !== "reversed paper" ||
+    input !== "reversed stone"
   ) {
     // set display message if input validation not met
-    myOutputValue = `Please enter "scissors" "paper" or "stone" to start playing!
+    var myOutputValue = `Please enter "scissors" "paper" or "stone" to start playing!
     <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
   }
 
   // check if user draw
-  if (input == compHand || input == "reversed ${getRandomValue}") {
+  if (input == compHand || input == `reversed ${compHand}`) {
     // set display message if user draw
-    return `You threw ${input}.<br> The computer threw ${compHand}.<br> Bummer, it's a draw!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+    myOutputValue = `You threw ${input}.<br> The computer threw ${compHand}.<br> Bummer, it's a draw!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
   }
 
   // check if user won
@@ -58,8 +55,19 @@ var main = function (input) {
     (input == "stone" && compHand == "scissors")
   ) {
     // set display message if user won
-    return `You threw ${input}.<br> The computer threw ${compHand}.<br> Congratulations, you won!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+    myOutputValue = `You threw ${input}.<br> The computer threw ${compHand}.<br> Congratulations, you won!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
   }
 
+  // set display message if user lost
+  if (
+    (input == "reversed scissors" && compHand == "paper") ||
+    (input == "reversed paper" && compHand == "stone") ||
+    (input == "reversed stone" && compHand == "scissors") ||
+    (input == "paper" && compHand == "scissors") ||
+    (input == "stone" && compHand == "paper") ||
+    (input == "scissors" && compHand == "stone")
+  ) {
+    myOutputValue = `You threw ${input}.<br> The computer threw ${compHand}.<br> Sorry, you lost!<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  }
   return myOutputValue;
 };
