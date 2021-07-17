@@ -34,8 +34,10 @@ var whoWins = function (input) {
 };
 // this is for the reversed game
 var ReversalWhoWins = function (input) {
+  console.log(`human uses ${input}`);
   var realInput = input.replace("reversed", "");
   var computerUse = computerHand();
+  console.log(`computer uses ${computerUse}`);
   var reversedComputerUse = `reversed ${computerUse}`;
   console.log(` reversed computer hand = ${reversedComputerUse}`);
   // these is if the computer loses
