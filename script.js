@@ -30,7 +30,7 @@ var main = function (input) {
 
   // INPUT WIN SCENARIO: rock beats scissors, paper beats rock, scissors beats paper
   if (
-    (inputLower == c1 && randOutcome == a) ||
+    !(inputLower == c1 && randOutcome == a) ||
     (inputLower == b1 && randOutcome == c) ||
     (inputLower == a1 && randOutcome == b)
   ) {
@@ -46,7 +46,7 @@ var main = function (input) {
 
   // COMPUTER WIN SCENARIO: rock beats scissors, paper beats rock, scissors beats paper
   if (
-    (inputLower == a1 && randOutcome == c) ||
+    !(inputLower == a1 && randOutcome == c) ||
     (inputLower == c1 && randOutcome == b) ||
     (inputLower == b1 && randOutcome == a)
   ) {
