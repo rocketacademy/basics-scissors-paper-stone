@@ -8,6 +8,8 @@ var HAND_REV_SCI = "reversed scissors";
 var HAND_REV_PAP = "reversed paper";
 var HAND_REV_STO = "reversed stone";
 
+var revMode = 1;
+
 // GENERATE RANDOM INTEGER (0-2) FOR COMPUTER
 var randComp = function () {
   var randNum = Math.random() * 3;
@@ -18,19 +20,7 @@ var randComp = function () {
 // COMPARE PLAYER AND COMPUTER HANDS
 var compareHands = function (player, comp) {
   var result = "You lose! Bummer.";
-  if (player - comp == -1 || player - comp == 2) {
-    result = "You win! Hooray!";
-  }
-  if (player == comp) {
-    result = "Jinx! It's a draw!";
-  }
-  return result;
-};
-
-// COMPARE PLAYER AND COMPUTER HANDS (REVERSED MODE)
-var compareHandsRev = function (player, comp) {
-  var result = "You lose! Bummer.";
-  if (player - comp == 1 || player - comp == -2) {
+  if (player - comp == -1 * revMode || player - comp == 2 * revMode) {
     result = "You win! Hooray!";
   }
   if (player == comp) {
@@ -40,6 +30,8 @@ var compareHandsRev = function (player, comp) {
 };
 
 var main = function (input) {
+  revMode = 1;
+
   // VALIDATE INPUT
   if (
     input != HAND_SCI &&
@@ -83,10 +75,11 @@ var main = function (input) {
     playerEmj = EMJ_STO;
   }
   // COMPARE HANDS ACCORDING TO NON-REVERSED OR REVERSED MODE
-  var finalResult = compareHands(playerNum, compNum);
   if (input == HAND_REV_SCI || input == HAND_REV_PAP || input == HAND_REV_STO) {
-    finalResult = compareHandsRev(playerNum, compNum);
+    revMode = -1;
   }
+  var finalResult = compareHands(playerNum, compNum);
+
   // FORMAT OUTPUT
   var myOutputValue =
     "The computer chose " +
