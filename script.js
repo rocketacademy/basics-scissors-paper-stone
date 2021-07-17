@@ -21,9 +21,12 @@ var main = function (input) {
   // Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
   var robotHands = generateRandomHands();
   // outputs whether the user won, the program won, or it's a draw.
-  var userWin = `You choose ${input}, Bot choose ${robotHands}, You Won!`;
-  var userLose = `You choose ${input}, Bot choose ${robotHands},You Lose! Hahaha`;
-  var draw = `You choose ${input}, Bot choose ${robotHands}, It's a draw!`;
+  var userWin = `You choose ${input}, <br> Bot choose ${robotHands}, <br> You Won!`;
+  var userLose = `You choose ${input}, <br> Bot choose ${robotHands}, <br> You Lose! Hahaha`;
+  var draw = `You choose ${input}, <br> Bot choose ${robotHands}, <br> It's a draw!`;
+  // Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again
+  var myOutputValue = `Please choose the following 3 options : <br> scissors <br> paper <br> stone <br> Please Try Again!`;
+
   if (robotHands == input) {
     return (myOutputValue = draw);
   }
@@ -43,6 +46,5 @@ var main = function (input) {
   ) {
     return (myOutputValue = userLose);
   }
-  return (myOutputValue = `Please choose the following 3 options : scissors, paper, stone`);
+  return myOutputValue;
 };
-// // Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again
