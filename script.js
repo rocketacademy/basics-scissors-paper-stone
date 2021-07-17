@@ -1,19 +1,19 @@
 var main = function (input) {
   //Thanks to Tinaes for teaching array
+  console.log("User: " + input);
   var moves = ["scissors", "paper", "stone"];
 
   var compMove = Math.floor(Math.random(moves) * moves.length); //Computer random moves
-  console.log("Comp Move:" + moves[compMove]);
 
   var rMoves = ["reversed scissors", "reversed paper", "reversed stone"];
 
-  var rCompMove = Math.floor(Math.random(rMoves) * rMoves.length); //Computer random moves
-  console.log("RComp Move:" + rMoves[rCompMove]);
+  var rCompMove = Math.floor(Math.random(rMoves) * rMoves.length); //RComputer random moves
 
   //Improve with .toLowerCase() to make input case insensitive!
 
   //If Tie
   if (input.toLowerCase() == moves[compMove]) {
+    console.log("Comp Move:" + moves[compMove]);
     console.log("Tie");
     return (
       "It is a tie." +
@@ -29,6 +29,7 @@ var main = function (input) {
     (input.toLowerCase() == "scissors" && moves[compMove] == "paper") ||
     (input.toLowerCase() == "paper" && moves[compMove] == "stone")
   ) {
+    console.log("Comp Move:" + moves[compMove]);
     console.log("User Win");
     return (
       "The computer choose " +
@@ -50,6 +51,7 @@ var main = function (input) {
     (input.toLowerCase() == "scissors" && moves[compMove] == "stone") ||
     (input.toLowerCase() == "paper" && moves[compMove] == "scissors")
   ) {
+    console.log("Comp Move:" + moves[compMove]);
     console.log("User Lose");
     return (
       "The computer choose " +
@@ -67,6 +69,7 @@ var main = function (input) {
 
   //(Reverse mode) If Tie
   if (input.toLowerCase() == rMoves[rCompMove]) {
+    console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Tie");
     return (
       "It is a tie. Try again hehe." +
@@ -85,6 +88,7 @@ var main = function (input) {
     (input.toLowerCase() == "reversed paper" &&
       rMoves[rCompMove] == "reversed scissors")
   ) {
+    console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Win");
     return (
       "The computer choose " +
@@ -109,6 +113,7 @@ var main = function (input) {
     (input.toLowerCase() == "reversed paper" &&
       rMoves[rCompMove] == "reversed stone")
   ) {
+    console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Lose");
     return (
       "The computer choose " +
