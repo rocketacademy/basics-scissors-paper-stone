@@ -15,9 +15,7 @@ var getRandomValue = function () {
   if (randomValue == 2) {
     return "paper";
   }
-  if (randomValue == 3) {
-    return "stone";
-  }
+  return "stone";
 };
 
 var main = function (input) {
