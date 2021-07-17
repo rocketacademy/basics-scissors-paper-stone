@@ -4,16 +4,21 @@ var HAND_STO = "stone";
 var EMJ_SCI = "✂️";
 var EMJ_PAP = "📄";
 var EMJ_STO = "🗿";
-var HAND_REV_SCI = "reversed scissors";
-var HAND_REV_PAP = "reversed paper";
-var HAND_REV_STO = "reversed stone";
+var PLAYER_NAME = "player";
+var COMP_NAME = "comp";
 
-var revMode = 1; // revMode on: 1, revMode off: -1 (on by default)
+var userName = "";
+var revMode = 1; // revMode off: 1, revMode on: -1
+var korMode = 0; // korMode off: 0, korMode on: 1
 var totalGames = 0;
 var playerWon = 0;
 var compWon = 0;
 var drawWon = 0;
-var userName = "";
+
+var currentWinner = "";
+var totalKorGames = 0;
+var playerKorWon = 0;
+var compKorWon = 0;
 
 // GENERATE RANDOM INTEGER (0-2) FOR COMPUTER
 var randComp = function () {
@@ -24,34 +29,60 @@ var randComp = function () {
 
 // COMPARE PLAYER AND COMPUTER HANDS
 var compareHands = function (player, comp) {
-  totalGames += 1;
+  // IF WIN
   if (player - comp == -1 * revMode || player - comp == 2 * revMode) {
+    if (korMode == 1) {
+      currentWinner = PLAYER_NAME;
+      return "🕹 Try to capture to computer in the next turn! <br><br>";
+    }
+    totalGames += 1;
     playerWon += 1;
-    result = "You win! Hooray!";
-    return result;
+    return "You win! Hooray! <br><br>";
   }
+
+  // IF DRAW
   if (player == comp) {
+    if (korMode == 1) {
+      if (currentWinner == "") {
+        return "No one attacks. Try again! <br><br>";
+      }
+      if (currentWinner != "") {
+        totalKorGames += 1;
+        if (currentWinner == PLAYER_NAME) {
+          playerKorWon += 1;
+          currentWinner = "";
+          return "You win! Hooray! <br><br>";
+        }
+        if (currentWinner == COMP_NAME) {
+          compKorWon += 1;
+          currentWinner = "";
+          return "You lose! Bummer <br><br>";
+        }
+      }
+    }
+    totalGames += 1;
     drawWon += 1;
-    result = "Jinx! It's a draw!";
-    return result;
+    return "Jinx! It's a draw! <br><br>";
   }
+
+  // IF LOSE
+  if (korMode == 1) {
+    currentWinner = COMP_NAME;
+    return "🕹 Avoid the computer's attack! <br><br>";
+  }
+  totalGames += 1;
   compWon += 1;
-  var result = "You lose! Bummer.";
-  return result;
+  return "You lose! Bummer. <br><br>";
 };
 
 var main = function (input) {
-  revMode = 1;
-
   if (userName == "") {
     // CHECK THAT PLAYER ENTERED NAME FIRST, NOT SPS
     if (
       input == HAND_SCI ||
       input == HAND_PAP ||
       input == HAND_STO ||
-      input == HAND_REV_SCI ||
-      input == HAND_REV_PAP ||
-      input == HAND_REV_STO
+      input == ""
     ) {
       return "⚠️ Please enter your name before starting the game!";
     }
@@ -59,21 +90,38 @@ var main = function (input) {
     return (
       "Welcome, " +
       userName +
-      ". Please type 'scissors', 'paper', or 'stone' to start the game!"
+      ". <br> Please type 'scissors', 'paper', or 'stone' to start the game! <br> Alternatively, type 'reverse' or 'Korean' for the reverse or Korean game modes!"
     );
   }
 
-  // VALIDATE INPUT
-  if (
-    input != HAND_SCI &&
-    input != HAND_PAP &&
-    input != HAND_STO &&
-    input != HAND_REV_SCI &&
-    input != HAND_REV_PAP &&
-    input != HAND_REV_STO
-  ) {
-    return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only. <br> Or try 'reversed (your hand)' for the reversed mode.";
+  // ACTIVATE/DEACTIVATE REVERSE MODE
+  if (input == "reverse") {
+    revMode = -1;
+    korMode = 0;
+    return "You are now in reverse mode. Enjoy! (Type 'reverse off' to return to normal mode)";
   }
+  if (input == "reverse off") {
+    revMode = 1;
+    return "You are now in normal mode. Enjoy!";
+  }
+
+  // ACTIVATE/DEACTIVATE KOREAN MODE
+  if (input == "korean") {
+    korMode = 1;
+    currentWinner = "";
+    revMode = 1;
+    return "You are now in Korean mode. Enjoy! (Type 'korean off' to return to normal mode)";
+  }
+  if (input == "korean off") {
+    korMode = 0;
+    return "You are now in normal mode. Enjoy!";
+  }
+
+  // VALIDATE INPUT
+  if (input != HAND_SCI && input != HAND_PAP && input != HAND_STO) {
+    return "⚠️ Invalid input. Please type 'scissors', 'paper', or 'stone' only.";
+  }
+
   // ASSIGN COMPHAND AND COMPEMJ (0 SCI, 1 PAP, 2 STO)
   var compNum = randComp();
   var compHand;
@@ -90,25 +138,24 @@ var main = function (input) {
     compHand = HAND_STO;
     compEmj = EMJ_STO;
   }
-  // ASSIGN PLAYERNUM AND PLAYEREMJ(0 SCI, 1 PAP, 2 STO)
+
+  // ASSIGN PLAYERNUM AND PLAYEREMJ (0 SCI, 1 PAP, 2 STO)
   var playerNum;
   var playerEmj;
-  if (input == HAND_SCI || input == HAND_REV_SCI) {
+  if (input == HAND_SCI) {
     playerNum = 0;
     playerEmj = EMJ_SCI;
   }
-  if (input == HAND_PAP || input == HAND_REV_PAP) {
+  if (input == HAND_PAP) {
     playerNum = 1;
     playerEmj = EMJ_PAP;
   }
-  if (input == HAND_STO || input == HAND_REV_STO) {
+  if (input == HAND_STO) {
     playerNum = 2;
     playerEmj = EMJ_STO;
   }
-  // COMPARE HANDS ACCORDING TO NON-REVERSED OR REVERSED MODE
-  if (input == HAND_REV_SCI || input == HAND_REV_PAP || input == HAND_REV_STO) {
-    revMode = -1;
-  }
+
+  // COMPARE HANDS
   var finalResult = compareHands(playerNum, compNum);
 
   // FORMAT OUTPUT
@@ -123,13 +170,9 @@ var main = function (input) {
     input +
     " " +
     playerEmj +
-    ". <br>" +
-    "<br>" +
-    finalResult +
-    "<br>" +
-    "<br>" +
-    "Now you can type 'scissors', 'paper', or 'stone' to play another round! <br> Or try 'reversed (your hand)' for the reversed mode!";
+    ". <br><br>";
 
+  // FORMAT OUTPUT (STATS)
   var winPercent = (playerWon / totalGames) * 10000;
   var winPercentRound = Math.round(winPercent) / 100;
   var statMessage = "Try harder! 😔";
@@ -150,8 +193,33 @@ var main = function (input) {
     "-" +
     drawWon +
     "<br> 🟡 Winning Percentage: " +
-    winPercent +
-    "%";
+    winPercentRound +
+    "% <br>";
 
-  return myOutputValue + "<br><br>" + stats + "<br>" + statMessage;
+  // FORMAT OUTPUT (MODE)
+  var modeMsg = "[NORMAL MODE] <br>";
+  if (revMode == -1) {
+    modeMsg =
+      "[REVERSE MODE] (Type 'reverse off' to return to normal mode) <br>";
+  }
+  if (korMode == 1) {
+    modeMsg = "[KOREAN MODE] (Type 'korean off' to return to normal mode) <br>";
+  }
+
+  // FORMAT OUTPUT (KOREAN)
+  if (korMode == 1) {
+    var korStats =
+      "📊 " +
+      userName +
+      "'s Statistics (Korean Mode) 📊 <br> 🟡 Total Games: " +
+      totalKorGames +
+      "<br> 🟡 Player-Computer: " +
+      playerKorWon +
+      "-" +
+      compKorWon;
+
+    return modeMsg + myOutputValue + finalResult + korStats;
+  }
+
+  return modeMsg + myOutputValue + finalResult + stats + statMessage;
 };
