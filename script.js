@@ -31,6 +31,8 @@ var main = function (input) {
     input != `reversed paper` &&
     input != `reversed stone` 
     ){
+      numTimesGamePlayed -= 1; //don't count error input as game played
+      numTimesComputerWins -= 1; //don't count error input as computer win
       myOutputValue = `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
       Please try again.`;
     };
