@@ -132,6 +132,11 @@ var main = function (input) {
 
   var winPercent = (playerWon / totalGames) * 10000;
   var winPercentRound = Math.round(winPercent) / 100;
+  var statMessage = "Try harder! 😔";
+
+  if (winPercentRound >= 50) {
+    statMessage = "Good going! 🥳";
+  }
 
   var stats =
     "📊 " +
@@ -148,5 +153,5 @@ var main = function (input) {
     winPercent +
     "%";
 
-  return myOutputValue + "<br><br>" + stats;
+  return myOutputValue + "<br><br>" + stats + "<br>" + statMessage;
 };
