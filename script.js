@@ -10,9 +10,7 @@ var main = function (input) {
   var myOutputValue = playGame(input.toLowerCase().trim(), SPS());
   return myOutputValue;
 };
-// global counter to count number of wins
-var wincounter = 0;
-var playcounter = 0;
+
 //function to generate random choice
 function SPS() {
   const hands = ["scissors", "paper", "stone"];
@@ -59,33 +57,23 @@ function cuteSelector(input) {
 
 //winning message
 function win(player, computer) {
-  wincounter++;
-  playcounter++;
   return `You won! You chose ${player}${cuteSelector(
     player
-  )} and the computer chose ${computer}${cuteSelector(
-    computer
-  )} <br> You won ${wincounter} times out of ${playcounter} plays `;
+  )} and the computer chose ${computer}${cuteSelector(computer)}  `;
 }
 
 //losing message
 function lose(player, computer) {
-  playcounter++;
   return `You lost! You chose ${player}${cuteSelector(
     player
-  )} and the computer chose ${computer}${cuteSelector(
-    computer
-  )} <br> You won ${wincounter} times out of ${playcounter} plays`;
+  )} and the computer chose ${computer}${cuteSelector(computer)} `;
 }
 
 //draw message
 function draw(player, computer) {
-  playcounter++;
   return `Draw! You chose ${player}${cuteSelector(
     player
-  )} and the computer chose ${computer}${cuteSelector(
-    computer
-  )} <br> You won ${wincounter} times out of ${playcounter} plays`;
+  )} and the computer chose ${computer}${cuteSelector(computer)} `;
 }
 
 //function to determine who wins the reversed game
