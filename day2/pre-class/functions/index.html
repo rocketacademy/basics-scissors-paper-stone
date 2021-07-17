@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Rocket Academy Basics</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+
+      #header {
+        text-align: center;
+      }
+
+      #container {
+        background-color: pink;
+        margin: 40px auto;
+        max-width: 800px;
+        padding: 38px 31px;
+      }
+
+      input {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 74%;
+      }
+
+      button {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
+        width: 25%;
+      }
+
+      #output-div {
+        background-color: lightgrey;
+        margin: 20px auto;
+        padding: 20px;
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 id="header">Rocket Academy Basics Functions🚀</h1>
+    <div id="container">
+      <h2>Greetings!</h2>
+      <p>Name:</p>
+      <input id="name-field" />
+      <button id="submit-button">Launch</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="greetings-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Kilometres to Miles-------------------------------------------->
+    <div id="container">
+      <h2>Metric Conversion</h2>
+      <p>Distance in Kilometres:</p>
+      <input id="distance-field" />
+      <button id="convert-button">Convert</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="kmToMiles-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Kilograms to Pounds-------------------------------------------->
+    <div id="container">
+      <h2>Kilograms to Pounds</h2>
+      <p>Mass in Kilograms:</p>
+      <input id="kgToPounds-field" />
+      <button id="kgToPounds-button">Convert</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="kgToPounds-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Number Doubler-------------------------------------------->
+    <div id="container">
+      <h2>Number Doubler</h2>
+      <p>Enter a number:</p>
+      <input id="number-field" />
+      <button id="number-button">Double!</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="number-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Area of a Circle-------------------------------------------->
+    <div id="container">
+      <h2>Area of a Circle Calculator</h2>
+      <p>Radius in Centimetres:</p>
+      <input id="circle-field" />
+      <button id="circle-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="circle-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Juice Wedding-------------------------------------------->
+    <div id="container">
+      <h2>Juice Wedding</h2>
+      <p>Number of Guests:</p>
+      <input id="juice-field" />
+      <button id="juice-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="juice-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------SG Hugs-------------------------------------------->
+    <div id="container">
+      <h2>SG Hugs</h2>
+      <p>Average Hug Duration in seconds</p>
+      <input id="hugs-field" />
+      <button id="hugs-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="hugs-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------House Paint-------------------------------------------->
+    <div id="container">
+      <h2>Painting Costs Calculator</h2>
+      <p>Cost of Paint per litre:</p>
+      <input id="paintCost-field" />
+      <button id="paintCost-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="paintCost-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Train Speed-------------------------------------------->
+    <div id="container">
+      <h2>Train Speed Calculator</h2>
+      <p>Delay in minutes:</p>
+      <input id="trainSpeed-field" />
+      <button id="trainSpeed-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="trainSpeed-div"></div>
+      </div>
+    </div>
+    <!--------------------------------------------Clock-------------------------------------------->
+    <div id="container">
+      <h2>Angle Calculator</h2>
+      <p>Number of Minutes Past 1pm</p>
+      <input id="clock-field" />
+      <button id="clock-button">Calculate</button>
+      <p>Output:</p>
+      <div id="output-div">
+        <div id="clock-div"></div>
+      </div>
+    </div>
+    <!-- Import program logic -->
+    <script src="script.js"></script>
+    <!-- Define button click functionality -->
+    <script>
+      var button = document.querySelector("#submit-button");
+      button.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#name-field");
+        var result = main(input.value);
+
+        // Display result in output element
+        document.querySelector("#greetings-div").innerHTML = result;
+
+        // Reset input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Kilometres to Miles--------------------------------------------
+      var button2 = document.querySelector("#convert-button");
+      button2.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#distance-field");
+        var result = convertKmToMiles(input.value);
+
+        // Display result in output element
+        document.querySelector("#kmToMiles-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Kilograms to Pounds--------------------------------------------
+      var button3 = document.querySelector("#kgToPounds-button");
+      button3.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#kgToPounds-field");
+        var result = convertKilosToPounds(input.value);
+
+        // Display result in output element
+        document.querySelector("#kgToPounds-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Number Doubler--------------------------------------------
+      var button4 = document.querySelector("#number-button");
+      button4.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#number-field");
+        var result = doubleNumber(input.value);
+
+        // Display result in output element
+        document.querySelector("#number-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Area of a Circle--------------------------------------------
+      var button5 = document.querySelector("#circle-button");
+      button5.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#circle-field");
+        var result = calcCircleArea(input.value);
+
+        // Display result in output element
+        document.querySelector("#circle-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Juice Wedding--------------------------------------------
+      var button6 = document.querySelector("#juice-button");
+      button6.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#juice-field");
+        var result = calcOranges(input.value);
+
+        // Display result in output element
+        document.querySelector("#juice-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------SG Hugs--------------------------------------------
+      var button7 = document.querySelector("#hugs-button");
+      button7.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#hugs-field");
+        var result = calcHugs(input.value);
+
+        // Display result in output element
+        document.querySelector("#hugs-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------House Paint--------------------------------------------
+      var button8 = document.querySelector("#paintCost-button");
+      button8.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#paintCost-field");
+        var result = calcPaintCost(input.value);
+
+        // Display result in output element
+        document.querySelector("#paintCost-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Train Speed--------------------------------------------
+      var button9 = document.querySelector("#trainSpeed-button");
+      button9.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#trainSpeed-field");
+        var result = calcTrainSpeed(input.value);
+
+        // Display result in output element
+        document.querySelector("#trainSpeed-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+
+      //--------------------------------------------Clock--------------------------------------------
+      var button10 = document.querySelector("#clock-button");
+      button10.addEventListener("click", function () {
+        // Set input and results value
+        var input = document.querySelector("#clock-field");
+        var result = calcAngle(input.value);
+
+        // Display result in output element
+        document.querySelector("#clock-div").innerHTML = result;
+
+        // Rest input value
+        input.value = "";
+      });
+    </script>
+  </body>
+</html>
