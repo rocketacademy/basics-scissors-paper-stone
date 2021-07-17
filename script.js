@@ -27,10 +27,11 @@ var inputValidation = function (input) {
     input !== "reversed scissors" ||
     input !== "reversed paper" ||
     input !== "reversed stone"
-  )
+  ) {
     // set display message if input validation not met
     return `Please enter "scissors" "paper" or "stone" to start playing!
     <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
+  }
 };
 
 var main = function (input) {
