@@ -6,7 +6,10 @@ var numTimesGamePlayed = 0;
 
 //keep track of user name
 var isStartOfGame = true;
-var userName = 0;
+var userName = ``;
+
+//keep track of game mode
+var gameMode = `default`;
 
 //MAIN FUNCTION
 var main = function (input) {
@@ -18,36 +21,42 @@ var main = function (input) {
     return `Welcome ${userName}! Start playing by entering ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.`
   };
 
-  //computer plays scissors paper or stone
-  var computerSPS = generateRandomSPS();
-  console.log(`input`, input);
-  console.log(`computer plays`, computerSPS);
-  numTimesGamePlayed += 1;
-  var currentGameResult = gameLogic(input,computerSPS);
-  var winLossInfo = generateWinLossInfo();
+  //run game logic depending on game mode
+  if(input == `reverse`){
+    gameMode = `reverse`;
+    return `You have changed game mode to ${gameMode}.`;
+  };
+  if (input == `default`){
+    gameMode = `default`
+    return`You have changed game mode to ${gameMode}.`;
+  };
   
-  //default output value
-  var myOutputValue = `${currentGameResult}<br><br>
-  ${winLossInfo}<br><br>
-  Now you can type "scissors" "paper" or "stone" to play another round.`;
-
   //input validation
-  //if user types in anything other that scissors, paper, stone,
-  //reversed scissors, reversed paper or reversed stone
-  //inform user that they cannot do so
   if(
     input != `scissors` &&
     input != `paper` &&
     input != `stone` &&
-    input != `reversed scissors` &&
-    input != `reversed paper` &&
-    input != `reversed stone` 
+    input != `reverse` &&
+    input != `default`
     ){
-      numTimesGamePlayed -= 1; //don't count error input as game played
-      numTimesComputerWins -= 1; //don't count error input as computer win
-      myOutputValue = `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
+      return `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
       Please try again.`;
     };
+
+  //computer plays scissors paper or stone
+  var computerPlays = generateRandomSPS();
+  console.log(`input`, input);
+  console.log(`computer plays`, computerPlays);
+  numTimesGamePlayed += 1;
+  var currentGameResult = generateCurrentGameLogic(input, computerPlays);
+  
+  var winLossInfo = generateWinLossInfo();
+  
+  //default output value
+  var myOutputValue = `Game mode: ${gameMode}<br><br>
+  ${currentGameResult}<br><br>
+  ${winLossInfo}<br><br>
+  Now you can type "scissors" "paper" or "stone" to play another round.`;
   
   console.log(`user games won`, numTimesUserWins);
   console.log(`computer games won`, numTimesComputerWins);
@@ -73,20 +82,25 @@ var generateWinLossInfo = function(){
     Game drew ${numTimesDraw} times.
     ${userName} wins ${winningPercentage}% of the time. Pretty good!`;
     };
-
 };
 
-//SPS game logic and scoring
-var gameLogic = function(userPlays,computerPlays){
+//generate game logic based on game mode
+var generateCurrentGameLogic = function(userPlays,computerPlays){
+  var currentGameLogic = defaultGameLogic(userPlays, computerPlays);
+  if(gameMode == `reverse`){
+    currentGameLogic = reverseGameLogic(userPlays, computerPlays);
+  };
+return currentGameLogic;
+};
+
+//default game logic and scoring
+var defaultGameLogic = function(userPlays,computerPlays){
 
   //Winning conditions
   if(
     (userPlays == `scissors` && computerPlays == `paper`)||
     (userPlays == `paper` && computerPlays == `stone`) ||
-    (userPlays == `stone` && computerPlays == `scissors`)||
-    (userPlays == `reversed scissors` && computerPlays == `stone`) ||
-    (userPlays == `reversed paper` && computerPlays == `scissors`) ||
-    (userPlays == `reversed stone` && computerPlays == `paper`)
+    (userPlays == `stone` && computerPlays == `scissors`)
   ){
     numTimesUserWins += 1;
     return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
@@ -96,9 +110,37 @@ var gameLogic = function(userPlays,computerPlays){
 
   //Draw conditions
   if(
-    userPlays == computerPlays ||
-    userPlays == `reversed ${computerPlays}`
-    ){
+    userPlays == computerPlays){
+      numTimesDraw += 1;
+      return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+    It's a draw.`;
+  };
+  
+  //if not, assume computer wins
+  numTimesComputerWins += 1;
+  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+  ${userName} loses.`;
+};
+
+//reverse game logic and scoring
+var reverseGameLogic = function(userPlays,computerPlays){
+
+  //Winning conditions
+  if(
+    (userPlays == `scissors` && computerPlays == `stone`) ||
+    (userPlays == `paper` && computerPlays == `scissors`) ||
+    (userPlays == `stone` && computerPlays == `paper`)
+  ){
+    numTimesUserWins += 1;
+    return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+    ${userName} wins! Yay!`;
+  };
+
+  //Draw conditions
+  if(userPlays == computerPlays){
       numTimesDraw += 1;
       return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
     ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
@@ -146,15 +188,6 @@ var createEmojiSPS = function(SPS){
   };
   if(SPS == `stone`){
     return `stone 👊	`;
-  };
-  if(SPS == `reversed scissors`){
-    return `reversed scissors 👇	✌	`;
-  };
-  if(SPS == `reversed paper`){
-    return `reversed paper 👇	🖐	`;
-  };
-  if(SPS == `reversed stone`){
-    return `reversed stone 👇 👊	`;
   };
   return `Oops there's a bug`;
 };
