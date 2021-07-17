@@ -27,8 +27,8 @@ var main = function (input) {
   var winLossInfo = generateWinLossInfo();
   
   //default output value
-  var myOutputValue = `${winLossInfo}<br><br>
-  ${currentGameResult}<br><br>
+  var myOutputValue = `${currentGameResult}<br><br>
+  ${winLossInfo}<br><br>
   Now you can type "scissors" "paper" or "stone" to play another round.`;
 
   //input validation
@@ -59,10 +59,21 @@ var main = function (input) {
 //generate information about win-loss record
 var generateWinLossInfo = function(){
   var winningPercentage = Math.floor((numTimesUserWins/numTimesGamePlayed)*100);
-  return `${userName} won ${numTimesUserWins} times.<br>
-  Computer won ${numTimesComputerWins} times.<br>
-  Game drew ${numTimesDraw} times.
-  ${userName} wins ${winningPercentage}% of the time.`;
+
+  if(winningPercentage < 50){
+    return `${userName} won ${numTimesUserWins} times.<br>
+    Computer won ${numTimesComputerWins} times.<br>
+    Game drew ${numTimesDraw} times.
+    ${userName} wins ${winningPercentage}% of the time. Keep trying!`;
+    };
+
+  if(winningPercentage >= 50){
+    return `${userName} won ${numTimesUserWins} times.<br>
+    Computer won ${numTimesComputerWins} times.<br>
+    Game drew ${numTimesDraw} times.
+    ${userName} wins ${winningPercentage}% of the time. Pretty good!`;
+    };
+
 };
 
 //SPS game logic and scoring
@@ -98,7 +109,7 @@ var gameLogic = function(userPlays,computerPlays){
   numTimesComputerWins += 1;
   return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
   ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-  ${userName} lose.`;
+  ${userName} loses.`;
 };
 
 
@@ -113,15 +124,12 @@ var generateRandomNum = function(){
 //generate random scissors paper or stone
 var generateRandomSPS = function(){
   var randomSPS = generateRandomNum()
-
   if (randomSPS == 1){
     return `scissors`;
   };
-
   if (randomSPS == 2){
     return `paper`; 
   };
-
   if (randomSPS == 3){
     return `stone`;
   };  
