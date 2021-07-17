@@ -8,8 +8,7 @@ var main = function (input) {
   var iconPlayer = iconLogo(input);
   console.log("iconPlayer", iconPlayer);
 
-  var draw =
-    drawGame(input, computerMove) || drawGameReversed(input, computerMove);
+  var draw = drawGame(input, computerMove);
   var win =
     playerWin(input, computerMove) || playerWinReversed(input, computerMove);
   var tryAgain = invalid(input);
@@ -40,16 +39,17 @@ var randomItem = function () {
 };
 
 var drawGame = function (input, computerMove) {
-  return input == computerMove;
+  return input.includes(computerMove);
 };
 
-var drawGameReversed = function (input, computerMove) {
+/*var drawGameReversed = function (input, computerMove) {
   return (
     (input == "reversed scissors" && computerMove == "scissors") ||
     (input == "reversed stone" && computerMove == "stone") ||
     (input == "reversed paper" && computerMove == "paper")
   );
 };
+*/
 
 var playerWin = function (input, computerMove) {
   return (
