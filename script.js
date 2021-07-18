@@ -1,3 +1,8 @@
+// set game mode
+var currentGameMode = "waiting for username";
+
+var userName = "";
+
 // win-loss record
 stateWinUser = 0;
 stateWinComp = 0;
@@ -155,7 +160,7 @@ var runCheckDraw = function (input) {
   return "FALSE:";
 };
 
-var main = function (input) {
+var playSPS = function (userName, input) {
   // generate value when submits button is clicked
   compHand = getRandomValue();
   console.log(compHand);
@@ -182,5 +187,15 @@ var main = function (input) {
   }
 
   console.log("numGamesPlayed", numGamesPlayed);
+};
+
+var main = function (input) {
+  if (currentGameMode == "waiting for username") {
+    userName = input;
+    currentGameMode = "SPS game";
+    var myOutputValue = `Hi ${userName}. Enter "scissors" "paper" or "stone" to begin game.`;
+  } else if (currentGameMode == "SPS game") {
+    myOutputValue = playSPS(userName, input);
+  }
   return myOutputValue;
 };
