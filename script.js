@@ -324,9 +324,119 @@
 //   return myOutputValue;
 // };
 
-//======SPS Game with Reverse Game Mode: Project Part 2 (More Comfortable)=======
+// //======SPS Game with Reverse Game Mode: Project Part 2 (More Comfortable)=======
+// // Specify global variable
+// var currentGameMode = `waiting for player name`;
+
+// // Create a function to change game mode based on input
+// var changeGameMode = function (userInput) {
+//   var gameMode = currentGameMode;
+//   if (userInput == `standard`) {
+//     gameMode = `standard game`;
+//   }
+//   if (userInput == `reversed`) {
+//     gameMode = `reversed game`;
+//   }
+//   console.log(`game mode is ${gameMode}`);
+//   return gameMode;
+// };
+
+// // Create a function to generate random scissors/paper/stone choices
+// var generateChoice = function () {
+//   var randomDecimal = Math.random() * 3;
+//   var randomInteger = Math.floor(randomDecimal);
+//   if (randomInteger == 0) {
+//     assignedChoice = `scissors`;
+//   }
+//   if (randomInteger == 1) {
+//     assignedChoice = `paper`;
+//   }
+//   if (randomInteger == 2) {
+//     assignedChoice = `stone`;
+//   }
+//   return assignedChoice;
+// };
+
+// // Create a function for standard game mode
+// var standardGame = function (userInput, programSelection) {
+//   var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' for the original game.`;
+
+//   if (userInput == `standard`) {
+//     message = `You are now in the standard game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the standard SPS game with me!`;
+//   }
+//   if (userInput == programSelection) {
+//     message = `It's a draw! <br> <br> This is the standard game. <br> <br> We both chose ${programSelection}! <br> You didn't copy my answer did you? 😜`;
+//   }
+//   if (
+//     (userInput == `scissors` && programSelection == `paper`) ||
+//     (userInput == `paper` && programSelection == `stone`) ||
+//     (userInput == `stone` && programSelection == `scissors`)
+//   ) {
+//     message = `You won! <br> <br> This is the standard game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Good job!`;
+//   }
+//   if (
+//     (userInput == `scissors` && programSelection == `stone`) ||
+//     (userInput == `stone` && programSelection == `paper`) ||
+//     (userInput == `paper` && programSelection == `scissors`)
+//   ) {
+//     message = `You lost! <br> <br> This is the standard game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Better luck next time!`;
+//   }
+//   return message;
+// };
+
+// // Create a function for reversed game mode
+// var reversedGame = function (userInput, programSelection) {
+//   var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' for the original game.`;
+
+//   if (userInput == `reversed`) {
+//     message = `You are now in the reversed game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the reversed SPS game with me!`;
+//   }
+//   if (userInput == programSelection) {
+//     message = `It's a draw! <br> <br> This is the reversed game. <br> <br> We both chose ${programSelection}! <br> You didn't copy my answer did you? 😜`;
+//   }
+//   if (
+//     (userInput == `scissors` && programSelection == `paper`) ||
+//     (userInput == `paper` && programSelection == `stone`) ||
+//     (userInput == `stone` && programSelection == `scissors`)
+//   ) {
+//     message = `You lost! <br> <br> This is the reversed game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Better luck next time!`;
+//   }
+//   if (
+//     (userInput == `scissors` && programSelection == `stone`) ||
+//     (userInput == `stone` && programSelection == `paper`) ||
+//     (userInput == `paper` && programSelection == `scissors`)
+//   ) {
+//     message = `You won! <br> <br> This is the reversed game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Good job!`;
+//   }
+
+//   return message;
+// };
+
+// // Specify what happens for the 3 game modes
+// var main = function (input) {
+//   var myOutputValue = ``;
+
+//   if (currentGameMode == `waiting for player name`) {
+//     playerName = input;
+//     currentGameMode = `standard game`;
+//     myOutputValue = `Welcome, ${playerName}! <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' to revert back to the original game.`;
+//   } else if (currentGameMode != `waiting for player name`) {
+//     currentGameMode = changeGameMode(input);
+//     programChoice = generateChoice();
+//     if (currentGameMode == `standard game`) {
+//       myOutputValue = standardGame(input, programChoice);
+//     }
+//     if (currentGameMode == `reversed game`) {
+//       myOutputValue = reversedGame(input, programChoice);
+//     }
+//   }
+//   return myOutputValue;
+// };
+
+//======SPS Game with Korean Game Mode: Project Part 2 (More Comfortable)=======
 // Specify global variables
 var currentGameMode = `waiting for player name`;
+var lastWonPlayer = `unassigned`;
 
 // Create a function to change game mode based on input
 var changeGameMode = function (userInput) {
@@ -334,8 +444,8 @@ var changeGameMode = function (userInput) {
   if (userInput == `standard`) {
     gameMode = `standard game`;
   }
-  if (userInput == `reversed`) {
-    gameMode = `reversed game`;
+  if (userInput == `korean`) {
+    gameMode = `korean game`;
   }
   console.log(`game mode is ${gameMode}`);
   return gameMode;
@@ -357,56 +467,89 @@ var generateChoice = function () {
   return assignedChoice;
 };
 
-// Create a function for standard game mode
-var standardGame = function (userInput, programSelection) {
-  var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' for the original game.`;
-
-  if (userInput == `standard`) {
-    message = `You are now in the standard game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the standard SPS game with me!`;
-  }
+// Create a function to derive the result of a standard SPS game
+var result = function (userInput, programSelection) {
+  var gameResult = ``;
   if (userInput == programSelection) {
-    message = `It's a draw! <br> <br> This is the standard game. <br> <br> We both chose ${programSelection}! <br> You didn't copy my answer did you? 😜`;
+    gameResult = `draw`;
   }
   if (
     (userInput == `scissors` && programSelection == `paper`) ||
     (userInput == `paper` && programSelection == `stone`) ||
     (userInput == `stone` && programSelection == `scissors`)
   ) {
-    message = `You won! <br> <br> This is the standard game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Good job!`;
+    gameResult = `win`;
   }
   if (
     (userInput == `scissors` && programSelection == `stone`) ||
     (userInput == `stone` && programSelection == `paper`) ||
     (userInput == `paper` && programSelection == `scissors`)
   ) {
+    gameResult = `lose`;
+  }
+  console.log(`user input ${userInput}`);
+  console.log(`program selection ${programSelection}`);
+  console.log(`game result ` + gameResult);
+  return gameResult;
+};
+
+// Create a function for standard game mode
+var standardGame = function (userInput, programSelection) {
+  var gameResult = result(userInput, programSelection);
+  var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'korean' to try our korean mode and 'standard' for the original game. <br> <br> --- What is the korean version of SPS? --- <br> In Korea, a two-player upgraded version exists by the name muk-jji-ppa. After showing their hands, the player with the winning throw shouts "muk-jji-ppa!" upon which both players throw again. If they throw differently (for example, rock and paper, or paper and scissors), whoever wins this second round shouts "muk-jji-ppa!" and thus the play continues until both players throw the same item (for example, rock and rock), at which point whoever was the last winner becomes the actual winner.`;
+
+  if (userInput == `standard`) {
+    message = `You are now in the standard game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the standard SPS game with me!`;
+  }
+  if (gameResult == `draw`) {
+    message = `It's a draw! <br> <br> This is the standard game. <br> <br> We both chose ${programSelection}! <br> You didn't copy my answer did you? 😜`;
+  }
+  if (gameResult == `win`) {
+    message = `You won! <br> <br> This is the standard game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Good job!`;
+  }
+  if (gameResult == `lose`) {
     message = `You lost! <br> <br> This is the standard game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Better luck next time!`;
   }
   return message;
 };
 
-// Create a function for reversed game mode
-var reversedGame = function (userInput, programSelection) {
-  var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' for the original game.`;
+// Create a function to update winning player for the last round
+var updateWinner = function (userInput, programSelection) {
+  var winner = `not yet assigned`;
+  gameResult = result(userInput, programSelection);
+  if (gameResult == `win`) {
+    winner = `YOU are`;
+  }
+  if (gameResult == `lose`) {
+    winner = `I am`;
+  }
+  console.log(`${winner} the winner from last round.`);
+  return winner;
+};
 
-  if (userInput == `reversed`) {
-    message = `You are now in the reversed game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the reversed SPS game with me!`;
+// Create a function for reversed game mode
+var koreanGame = function (
+  userInput,
+  programSelection,
+  gameResult,
+  lastWonPlayer
+) {
+  var message = `Sorry, I didn't get that. <br> <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'korean' to try our korean mode and 'standard' for the original game. <br> <br> --- What is the korean version of SPS? --- <br> In Korea, a two-player upgraded version exists by the name muk-jji-ppa. After showing their hands, the player with the winning throw shouts "muk-jji-ppa!" upon which both players throw again. If they throw differently (for example, rock and paper, or paper and scissors), whoever wins this second round shouts "muk-jji-ppa!" and thus the play continues until both players throw the same item (for example, rock and rock), at which point whoever was the last winner becomes the actual winner.`;
+
+  if (userInput == `korean`) {
+    message = `You are now in the korean game mode. <br> <br> Please type 'scissors', 'paper' or 'stone' to start the korean SPS game with me! <br> <br> --- How to win? --- <br> Once both players threw the same item, whoever won the last round becomes the actual winner.`;
   }
-  if (userInput == programSelection) {
-    message = `It's a draw! <br> <br> This is the reversed game. <br> <br> We both chose ${programSelection}! <br> You didn't copy my answer did you? 😜`;
+  if (gameResult == `lose`) {
+    message = `You chose ${userInput} and I chose ${programSelection}. <br> <br> You lost for this round, but that doesn't mean you'll lose this game. <br> Continue playing to see who the final winner is for this game of Korean SPS!`;
   }
-  if (
-    (userInput == `scissors` && programSelection == `paper`) ||
-    (userInput == `paper` && programSelection == `stone`) ||
-    (userInput == `stone` && programSelection == `scissors`)
-  ) {
-    message = `You lost! <br> <br> This is the reversed game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Better luck next time!`;
+  if (gameResult == `win`) {
+    message = `You chose ${userInput} and I chose ${programSelection}. <br> <br> You won for this round, but you're not yet the final winner. <br> Continue playing to see who wins this game of Korean SPS!`;
   }
-  if (
-    (userInput == `scissors` && programSelection == `stone`) ||
-    (userInput == `stone` && programSelection == `paper`) ||
-    (userInput == `paper` && programSelection == `scissors`)
-  ) {
-    message = `You won! <br> <br> This is the reversed game. <br> <br> You chose ${userInput} and I chose ${programSelection}. <br> Good job!`;
+  if (gameResult == `draw` && lastWonPlayer == `not yet assigned`) {
+    message = `You chose ${userInput} and I chose ${programSelection} too! <br> <br> It's a draw for this round, but there weren't any winners from the previous round(s), so there is no final winner yet. <br> <br> Continue playing for a chance to become the final winner!`;
+  }
+  if (gameResult == `draw` && lastWonPlayer != `not yet assigned`) {
+    message = `You chose ${userInput} and I chose ${programSelection} too! <br> <br> It's a draw! Which means... ${lastWonPlayer} the winner!`;
   }
 
   return message;
@@ -419,15 +562,24 @@ var main = function (input) {
   if (currentGameMode == `waiting for player name`) {
     playerName = input;
     currentGameMode = `standard game`;
-    myOutputValue = `Welcome, ${playerName}! <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'reversed' to try our reversed mode and 'standard' to revert back to the original game.`;
+    myOutputValue = `Welcome, ${playerName}! <br> Please type 'scissors', 'paper' or 'stone' to start playing the game with me 😊 <br> <br> You can also type 'korean' to try our korean mode and 'standard' to revert back to the original game. <br> <br> --- What is the korean version of SPS? --- <br> In Korea, a two-player upgraded version exists by the name muk-jji-ppa. After showing their hands, the player with the winning throw shouts "muk-jji-ppa!" upon which both players throw again. If they throw differently (for example, rock and paper, or paper and scissors), whoever wins this second round shouts "muk-jji-ppa!" and thus the play continues until both players throw the same item (for example, rock and rock), at which point whoever was the last winner becomes the actual winner.`;
   } else if (currentGameMode != `waiting for player name`) {
     currentGameMode = changeGameMode(input);
     programChoice = generateChoice();
+    gameOutcome = result(input, programChoice);
+    if (gameOutcome != `draw`) {
+      lastWonPlayer = updateWinner(input, programChoice);
+    }
     if (currentGameMode == `standard game`) {
       myOutputValue = standardGame(input, programChoice);
     }
-    if (currentGameMode == `reversed game`) {
-      myOutputValue = reversedGame(input, programChoice);
+    if (currentGameMode == `korean game`) {
+      myOutputValue = koreanGame(
+        input,
+        programChoice,
+        gameOutcome,
+        lastWonPlayer
+      );
     }
   }
   return myOutputValue;
