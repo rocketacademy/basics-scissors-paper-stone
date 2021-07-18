@@ -78,6 +78,13 @@ var drawOutcome = function (input) {
   return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Bummer ${userName}, it's a draw!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
 };
 
+// personalised message if user is doing well
+var getUserStreak = function (input) {
+  if (getWinUserPercent() > 70)
+    return `So far ${userName}, you've been winning ${stateWinUser} out of ${numGamesPlayed} times. Doing pretty good there!`;
+  return `So far ${userName}, you've been winning ${stateWinUser} out of ${numGamesPlayed} times. You can do better!`;
+};
+
 // functions to execute and message to display if user won
 var winOutcome = function (input) {
   // add count to number of games played
@@ -90,9 +97,10 @@ var winOutcome = function (input) {
   var winRate = getWinUserPercent();
   // get display message about win rate of comp
   var winRateComp = getWinCompPercent();
+  var userStreak = getUserStreak();
   console.log("stateWinUser", stateWinUser);
   // set display message if user won
-  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Congratulations ${userName}, you won!<br><br>${winRate}<br>${winRateComp}<br> ${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Congratulations ${userName}, you won!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>${userStreak}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
 };
 
 // functions to execute and message to display if user lost
@@ -108,10 +116,12 @@ var loseOutcome = function (input) {
   // get display message about win rate of comp
   var winRateComp = getWinCompPercent();
   console.log("stateWinComp", stateWinComp);
+  var userStreak = getUserStreak();
   // set display message if user lost
-  return `${userName} threw ${userHand}.<br> The computer threw ${compHand}.<br> Sorry ${userName}, you lost!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  return `${userName} threw ${userHand}.<br> The computer threw ${compHand}.<br> Sorry ${userName}, you lost!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>${userStreak}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
 };
 
+// set display message if input validation for username is met
 var welcomeUser = function (input) {
   userName = input;
   currentGameMode = "SPS game";
