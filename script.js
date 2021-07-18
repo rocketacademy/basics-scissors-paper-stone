@@ -11,6 +11,9 @@ var userName = ``;
 //keep track of game mode
 var gameMode = `default`;
 
+//keep track of most recent winner
+var mostRecentWinner = ``;
+
 //MAIN FUNCTION
 var main = function (input) {
 
@@ -18,26 +21,28 @@ var main = function (input) {
   if(isStartOfGame){
     isStartOfGame = false;
     userName = input;
-    return `Welcome ${userName}! Start playing by entering ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.`
+      return `Welcome ${userName}! Start playing by entering ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.`
   };
 
   //run game logic depending on game mode
   if(input == `reverse`){
-    gameMode = `reverse`;
-    return `You have changed game mode to ${gameMode}.`;
+     gameMode = `reverse`;
+      return `You have changed game mode to ${gameMode}.`;
   };
   if (input == `default`){
-    gameMode = `default`
-    return`You have changed game mode to ${gameMode}.`;
+      gameMode = `default`
+      return`You have changed game mode to ${gameMode}.`;
   };
-  
+  if (input == `korean`){
+      gameMode = `korean`
+      return`You have changed game mode to ${gameMode}.`;
+  };
+
   //input validation
   if(
     input != `scissors` &&
     input != `paper` &&
-    input != `stone` &&
-    input != `reverse` &&
-    input != `default`
+    input != `stone`
     ){
       return `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
       Please try again.`;
@@ -49,15 +54,14 @@ var main = function (input) {
   console.log(`computer plays`, computerPlays);
   numTimesGamePlayed += 1;
   var currentGameResult = generateCurrentGameLogic(input, computerPlays);
-  
   var winLossInfo = generateWinLossInfo();
-  
+    
   //default output value
   var myOutputValue = `Game mode: ${gameMode}<br><br>
   ${currentGameResult}<br><br>
   ${winLossInfo}<br><br>
-  Now you can type "scissors" "paper" or "stone" to play another round.`;
-  
+  Now you can type "scissors" "paper" or "stone" to play another round.`;  
+
   console.log(`user games won`, numTimesUserWins);
   console.log(`computer games won`, numTimesComputerWins);
   console.log(`number of games played`, numTimesGamePlayed);
@@ -90,10 +94,13 @@ var generateCurrentGameLogic = function(userPlays,computerPlays){
   if(gameMode == `reverse`){
     currentGameLogic = reverseGameLogic(userPlays, computerPlays);
   };
+  if(gameMode == `korean`){
+    currentGameLogic = koreanGameLogic(userPlays, computerPlays);
+  };
 return currentGameLogic;
 };
 
-//default game logic and scoring
+//DEFAULT GAME LOGIC AND SCORING
 var defaultGameLogic = function(userPlays,computerPlays){
 
   //Winning conditions
@@ -124,7 +131,7 @@ var defaultGameLogic = function(userPlays,computerPlays){
   ${userName} loses.`;
 };
 
-//reverse game logic and scoring
+//REVERSE GAME LOGIC AND SCORING
 var reverseGameLogic = function(userPlays,computerPlays){
 
   //Winning conditions
@@ -154,6 +161,47 @@ var reverseGameLogic = function(userPlays,computerPlays){
   ${userName} loses.`;
 };
 
+//KOREAN GAME LOGIC AND SCORING
+var koreanGameLogic = function(userPlays,computerPlays){
+
+  //Most recent winner conditions
+  if(
+    (userPlays == `scissors` && computerPlays == `paper`)||
+    (userPlays == `paper` && computerPlays == `stone`) ||
+    (userPlays == `stone` && computerPlays == `scissors`)
+  ){
+    mostRecentWinner = userName;
+    numTimesUserWins += 1;
+    return `${userName} won this round. It is ${userName}'s turn to attack.`
+  };
+  if(
+    (computerPlays == `scissors` && userPlays == `paper`)||
+    (computerPlays == `paper` && userPlays == `stone`) ||
+    (computerPlays == `stone` && userPlays == `scissors`)
+  ){
+    mostRecentWinner = `Computer`;
+    numTimesComputerWins += 1;
+    return `Computer won this round. It is Computer's turn to attack.`
+  };
+
+  //Ultimate winner conditions
+  if(userPlays == computerPlays){
+      if(mostRecentWinner == userName){
+        return `${userName} wins the game!`
+      };
+      if(mostRecentWinner == `Computer`){
+        return `Computer wins the game!`
+      };
+      numTimesDraw += 1;
+      return `No attacker yet. Keep playing`;
+  };
+  
+  //if not, assume computer wins
+  numTimesComputerWins += 1;
+  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+  ${userName} loses.`;
+};
 
 //generate random number from 1 to 3
 var generateRandomNum = function(){
