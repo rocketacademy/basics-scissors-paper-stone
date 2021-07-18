@@ -1,5 +1,23 @@
-//generate random number between 1 to 3 as computer choice
+
 var main = function (input){
+  // input validation
+var input; 
+var inputValue = ['stone', 'scissors', 'paper'];
+ if (inputValue.indexOf(input) <= -1){
+ 
+
+    output = "Your input must be either scissors, stone or paper. <br> It is case sensitive. <br> Please try again!!";
+
+    console.log ('input validation');
+    return output;
+
+    
+  } else { gameSuit
+  };
+
+
+//generate random number between 1 to 3 as computer choice
+
   var gameSuit = compChoice ();
  // var gameSuit = 'scissors'
   console.log ('gamesuite')
@@ -68,4 +86,4 @@ var compare = function (input, gameSuit) {
     console.log ('paper stone');}
 
   return output;
-  }
+  };
