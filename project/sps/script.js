@@ -1,108 +1,137 @@
 // Store string constants in variables
-var SCISSORS = 'scissors';
-var PAPER = 'paper';
-var STONE = 'stone';
-var REVERSED_SCISSORS = 'reversed scissors';
-var REVERSED_PAPER = 'reversed paper';
-var REVERSED_STONE = 'reversed stone';
+var SCISSORS = "scissors";
+var PAPER = "paper";
+var STONE = "stone";
+var REVERSED_SCISSORS = "reversed scissors";
+var REVERSED_PAPER = "reversed paper";
+var REVERSED_STONE = "reversed stone";
+var WIN = "win";
+var LOSE = "lose";
+var DRAW = "draw";
 
-var main = function (userShape) {
-  var regexpReversedChoice = /reversed (scissors|paper|stone)/;
-  var reversedMode = false;
-  var userResult = "";
-  var computerShape = getComputerShape();
+// Global variables
+var reversedMode = false;
+var userWins = 0;
+var computerWins = 0;
+var draws = 0;
+var regexpReversedChoice = /reversed (scissors|paper|stone)/;
 
-  // Check for reversed mode selection first and other invalid input
-  if (regexpReversedChoice.test(userShape)) {
+// Main
+var main = function (input) {
+  // Check for reversed mode selection first and invalid input
+  if (regexpReversedChoice.test(input)) {
     reversedMode = true;
     // Assign the capture group of the regex to user shape
-    userShape = userShape.match(regexpReversedChoice)[1];
-  } else if (
-    !(userShape == SCISSORS || userShape == PAPER || userShape == STONE)
-  ) {
-    return `You entered "${userShape}", please enter "${SCISSORS}", "${PAPER}" or "${STONE}" to play. Or add "reversed" before your choice (e.g."reversed scissors") for a different challenge.`;
+    input = input.match(regexpReversedChoice)[1];
   }
 
-  // Check if user wins against computer
-  if (
-    (userShape == SCISSORS && computerShape == PAPER) ||
-    (userShape == PAPER && computerShape == STONE) ||
-    (userShape == STONE && computerShape == SCISSORS)
-  ) {
-    // If reversed mode is on, then the results will be opposite
-    if (reversedMode) {
-      userResult = "lose";
-    } else {
-      userResult = "win";
-    }
+  // Check for other invalid input
+  if (!(input == SCISSORS || input == PAPER || input == STONE)) {
+    return `You entered "${input}", please enter "${SCISSORS}", "${PAPER}" or "${STONE}" to play. Or add "reversed" before your choice (e.g."reversed scissors") for a different challenge.`;
+  }
+  var computerShape = getComputerShape();
+  var userShape = getUserShape(input);
+  var result = didUserWin(userShape, computerShape, reversedMode);
+  var totalPlays = Number(userWins) + Number(computerWins) + Number(draws);
+
+  // Reset reversed mode
+  if (reversedMode) {
+    reversedMode = false;
   }
 
-  // Check if user loses against computer
-  if (
-    (userShape == SCISSORS && computerShape == STONE) ||
-    (userShape == PAPER && computerShape == SCISSORS) ||
-    (userShape == STONE && computerShape == PAPER)
-  ) {
-    // If reversed mode is on, then the results will be opposite
-    if (reversedMode) {
-      userResult = "win";
-    } else {
-      userResult = "lose";
-    }
-  }
-
-  // Check for a draw
-  if (userShape == computerShape) {
-    userResult = "draw";
-  }
-
-  return generateOutputMessage(userShape, computerShape, userResult);
+  return generateOutputMessage(
+    userShape,
+    computerShape,
+    result,
+    userWins,
+    totalPlays
+  );
 };
 
-function getComputerShape() {
-  var randomDecimal = Math.random() * 3;
-  var randomInteger = Math.floor(randomDecimal);
-  var shape = "";
-  switch (randomInteger) {
-    case 0:
-      shape = SCISSORS;
-      break;
-    case 1:
-      shape = PAPER;
-      break;
-    case 2:
-      shape = STONE;
-      break;
+// Modules
+
+// User Shape Generator
+function getUserShape(input) {
+  switch (input) {
+    case SCISSORS:
+      return 1;
+    case PAPER:
+      return 2;
+    case STONE:
+      return 3;
   }
-  return shape;
 }
 
+// Computer Shape Generator
+function getComputerShape() {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal) + 1;
+  return randomInteger;
+}
+
+// Emoji Generator
 function getEmoji(shape) {
   switch (shape) {
-    case SCISSORS:
+    case 1:
       return "&#x2702";
-    case PAPER:
+    case 2:
       return "&#x1F4C4";
-    case STONE:
+    case 3:
       return "&#x26F0";
   }
 }
 
-function generateOutputMessage(userShape, computerShape, result) {
-  var message = `&#x1F476 VS &#x1F916 <br>${getEmoji(userShape)} VS ${getEmoji(
-    computerShape
-  )}<br>`;
+// SPS Logic
+function didUserWin(userShape, computerShape, reversedMode) {
+  var difference = (Number(computerShape) - Number(userShape)) % 3;
+  if (difference == 0) {
+    draws += 1;
+    return DRAW;
+  }
+
+  if (reversedMode) {
+    switch (difference) {
+      case 1:
+        computerWins += 1;
+        return LOSE;
+      case 2:
+        userWins += 1;
+        return WIN;
+    }
+  } else {
+    switch (difference) {
+      case 1:
+        userWins += 1;
+        return WIN;
+      case 2:
+        computerWins += 1;
+        return LOSE;
+    }
+  }
+}
+
+// Output Message Generator
+function generateOutputMessage(
+  userShape,
+  computerShape,
+  result,
+  userWins,
+  totalPlays
+) {
+  var message = `&#x1F476 VS &#x1F916 <br>`;
+  message += `${getEmoji(userShape)} VS ${getEmoji(computerShape)}<br>`;
   switch (result) {
-    case "win":
+    case WIN:
       message += `You won! Congrats! &#x1F389`;
       break;
-    case "lose":
+    case LOSE:
       message += `You lose! Better luck next time! &#x1F340`;
       break;
     case "draw":
       message += `It's a draw! What are the odds!? &#x1F914`;
       break;
   }
-  message += `<br>Now you can type ${SCISSORS}, "${PAPER}" or "${STONE}" to play another round!<br>Or add "reversed" before your choice for a different challenge &#x1F648`;
+  message += `<br>You have won ${userWins}/${totalPlays} turns so far!<br>`;
+  message += `Now you can type ${SCISSORS}, "${PAPER}" or "${STONE}" to play another round!<br>Or add "reversed" before your choice for a different challenge &#x1F648`;
   return message;
 }
