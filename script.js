@@ -1,7 +1,7 @@
 //generate random number between 1 to 3 as computer choice
 var main = function (input){
   var gameSuit = compChoice ();
-  
+ // var gameSuit = 'scissors'
   console.log ('gamesuite')
   console.log (gameSuit)
 
@@ -19,36 +19,28 @@ var main = function (input){
  console.log ('computer choice')
  console.log (gameSuit)
   
-// comparing user input vs comp choice
+// Getting winner using compare function below
   var chooseWinner = compare(input, gameSuit);
   console.log ('compare result')
   console.log (chooseWinner)
   
   return chooseWinner;
 };  
-
+// Generate random number to determine computer choice
 var compChoice = function (input) {
   var randomNum = Math.floor(Math.random() * 3) + 1; 
   return randomNum
  
 };
-
+//Compare comp choice with user input
 var compare = function (input, gameSuit) {
   var output;
-  if (input == 'scissors' && gameSuit == 'scissors') {
-     output = 'It is a draw'
-    console.log ('same input');
-  } 
-
-  if (input == 'paper' && gameSuit == 'paper') {
+  
+  if (input == gameSuit){
     output = 'It is a draw'
-    console.log ('same input');
-
-  } 
-  if (input == 'stone' && gameSuit == 'stone') {
-    output = 'It is a draw'
-  console.log ('same input');} 
-
+  }
+  
+  
   if (input == 'scissors' && gameSuit == 'stone'){
   output = 'You lose'
   console.log ('scissors stone');
