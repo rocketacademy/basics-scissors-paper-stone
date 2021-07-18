@@ -90,17 +90,22 @@ return `${winLossMessage} Pretty good!`;
 
 //generate game logic based on game mode
 var generateCurrentGameLogic = function(userPlays,computerPlays){
-  var currentGameLogic = defaultGameLogic(userPlays, computerPlays);
-  if(gameMode == `reverse`){
-    currentGameLogic = reverseGameLogic(userPlays, computerPlays);
+  if(gameMode == `default`){
+    var currentGameLogic = defaultGameLogic(userPlays, computerPlays);
+  }else{
+      if(gameMode == `reverse`){
+      currentGameLogic = reverseGameLogic(userPlays, computerPlays);
+      }else{
+        if(gameMode == `korean`){
+          currentGameLogic = koreanGameLogic(userPlays, computerPlays);
+          }else{
+            if(gameMode == `computer`){
+              currentGameLogic = defaultGameLogic(generateRandomSPS(), computerPlays);
+            };
+          };
+      };
   };
-  if(gameMode == `korean`){
-    currentGameLogic = koreanGameLogic(userPlays, computerPlays);
-  };
-  if(gameMode == `computer`){
-    currentGameLogic = defaultGameLogic(generateRandomSPS(), computerPlays);
-  };
-return currentGameLogic;
+  return currentGameLogic;
 };
 
 //DEFAULT GAME LOGIC AND SCORING
@@ -115,18 +120,18 @@ var defaultGameLogic = function(userPlays,computerPlays){
     (userPlays == `stone` && computerPlays == `scissors`)
   ){
     numTimesUserWins += 1;
-    gamePlayMessage = `${gamePlayMessage}<br><br>${userName} wins! Yay!`;
+    return `${gamePlayMessage}<br><br>${userName} wins! Yay!`;
+  }else{
+    //Draw conditions
+    if(userPlays == computerPlays){
+        numTimesDraw += 1;
+        return `${gamePlayMessage}<br><br>It's a draw.`;
+      }else{
+        //if not, assume computer wins
+        numTimesComputerWins += 1;
+        return `${gamePlayMessage}<br><br>${userName} loses.`
+      };
   };
-
-  //Draw conditions
-  if(userPlays == computerPlays){
-      numTimesDraw += 1;
-      return `${gamePlayMessage}<br><br>It's a draw.`;
-  };
-  
-  //if not, assume computer wins
-  numTimesComputerWins += 1;
-  return `${gamePlayMessage}<br><br>${userName} loses.`;
 };
 
 //REVERSE GAME LOGIC AND SCORING
@@ -141,24 +146,22 @@ var reverseGameLogic = function(userPlays,computerPlays){
     (userPlays == `stone` && computerPlays == `paper`)
   ){
     numTimesUserWins += 1;
-    return `${gamePlayMessage}.<br><br>${userName} wins! Yay!`;
-  };
-
-  //Draw conditions
-  if(userPlays == computerPlays){
-      numTimesDraw += 1;
-      return `${gamePlayMessage}.<br><br>It's a draw.`;
-  };
-  
-  //if not, assume computer wins
-  numTimesComputerWins += 1;
-  return `${gamePlayMessage}.<br><br>
-  ${userName} loses.`;
+    return `${gamePlayMessage}<br><br>${userName} wins! Yay!`;
+  }else{
+    //Draw conditions
+    if(userPlays == computerPlays){
+        numTimesDraw += 1;
+        return `${gamePlayMessage}<br><br>It's a draw.`;
+      }else{
+        //if not, assume computer wins
+        numTimesComputerWins += 1;
+        return `${gamePlayMessage}<br><br>${userName} loses.`;
+    };
+  };  
 };
 
 //KOREAN GAME LOGIC AND SCORING
 var koreanGameLogic = function(userPlays,computerPlays){
-
   //Most recent winner conditions
   if(
     (userPlays == `scissors` && computerPlays == `paper`)||
@@ -168,35 +171,34 @@ var koreanGameLogic = function(userPlays,computerPlays){
     mostRecentWinner = userName;
     numTimesUserWins += 1;
     return `${userName} won this round. It is ${userName}'s turn to attack.`
-  };
-  if(
-    (computerPlays == `scissors` && userPlays == `paper`)||
-    (computerPlays == `paper` && userPlays == `stone`) ||
-    (computerPlays == `stone` && userPlays == `scissors`)
-  ){
-    mostRecentWinner = `Computer`;
-    numTimesComputerWins += 1;
-    return `Computer won this round. It is Computer's turn to attack.`
-  };
-
-  //Ultimate winner conditions
-  if(userPlays == computerPlays){
-      if(mostRecentWinner == userName){
-        return `${userName} wins the game!`
+  }else{
+      if(
+        (computerPlays == `scissors` && userPlays == `paper`)||
+        (computerPlays == `paper` && userPlays == `stone`) ||
+        (computerPlays == `stone` && userPlays == `scissors`)
+      ){
+        mostRecentWinner = `Computer`;
+        numTimesComputerWins += 1;
+        return `Computer won this round. It is Computer's turn to attack.`
+      }else{
+        //Ultimate winner conditions
+          if(userPlays == computerPlays){
+            if(mostRecentWinner == userName){
+              mostRecentWinner = ``;
+              return `${userName} wins the game!`
+            }else{
+                  if(mostRecentWinner == `Computer`){
+                    mostRecentWinner = ``;
+                    return `Computer wins the game!`
+                  }else{
+                      numTimesDraw += 1;
+                      return `No attacker yet. Keep playing`;
+                  };
+            };
+          };
       };
-      if(mostRecentWinner == `Computer`){
-        return `Computer wins the game!`
-      };
-      numTimesDraw += 1;
-      return `No attacker yet. Keep playing`;
   };
 };
-
-  // //COMPUTER VS COMPUTER MODE (default game logic)
-  // var computerVsComputerMode = function(userPlays,computerPlays){
-  //   userPlays = generateRandomSPS();
-  //   defaultGameLogic(userPlays,computerPlays);
-  // };
 
 //generate random number from 1 to 3
 var generateRandomNum = function(){
