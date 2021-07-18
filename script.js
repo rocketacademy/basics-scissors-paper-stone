@@ -1,6 +1,11 @@
+//Initialise State
 var currentPlayerWins = 0;
 var currentComputerWins = 0;
 var currentDraws = 0;
+var status = `Waiting for Player's Name`;
+
+//Player's Name
+var playerName = "";
 
 // Generate random number 0 as Scissors , 1 as Paper or 2 as Stone
 var randomChoice = function () {
@@ -19,39 +24,89 @@ var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
 
-// Gameplay
-var main = function (input) {
-  var playerChoice = input;
-  console.log(playerChoice, "playerChoice");
-  // Computer's choice
-  var computerChoice = randomChoice();
-  console.log(computerChoice, "Computer Choice");
-
-  var myOutputValue = "Type Scissors or Paper or Stone to play";
-  if (
-    (playerChoice == SCISSORS && computerChoice == STONE) ||
-    (playerChoice == PAPER && computerChoice == SCISSORS) ||
-    (playerChoice == STONE && computerChoice == PAPER)
-  ) {
-    currentComputerWins += 1;
-    console.log(currentComputerWins, "Computer Won");
-    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Lose! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
+//Convert input to choice
+var convertingInputToChoice = function (input) {
+  var playerChoice = `Invalid`;
+  if (input == `scissors`) {
+    playerChoice = SCISSORS;
   }
+  if (input == `paper`) {
+    playerChoice = PAPER;
+  }
+  if (input == `stone`) {
+    playerChoice = STONE;
+  }
+  return playerChoice;
+};
 
-  if (
+// Gameplay Boolean
+var playerWinsIf = function (playerChoice, computerChoice) {
+  var playerWins =
     (playerChoice == SCISSORS && computerChoice == PAPER) ||
     (playerChoice == PAPER && computerChoice == STONE) ||
-    (playerChoice == STONE && computerChoice == SCISSORS)
-  ) {
-    currentPlayerWins += 1;
-    console.log(currentPlayerWins, "Player Won");
-    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Win! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
+    (playerChoice == STONE && computerChoice == SCISSORS);
+  console.log(playerWins);
+  return playerWins;
+};
+
+var playerLoseIf = function (playerChoice, computerChoice) {
+  var playerLoses =
+    (playerChoice == SCISSORS && computerChoice == STONE) ||
+    (playerChoice == PAPER && computerChoice == SCISSORS) ||
+    (playerChoice == STONE && computerChoice == PAPER);
+  console.log(playerLoses);
+
+  return playerLoses;
+};
+
+var playerDrawIf = function (playerChoice, computerChoice) {
+  var playerDraws = playerChoice == computerChoice;
+  console.log(playerDraws);
+
+  return playerDraws;
+};
+
+var main = function (input) {
+  var myOutputValue = ``;
+  if (status == `Waiting for Player's Name`) {
+    playerName = input;
+    console.log(playerName, "Player Name");
+    status = "Playing Game";
+    console.log(status);
+    myOutputValue = `Hello ${playerName}! <br><br>Type in scissors or paper or stone to play`;
+  } else if ((status = "Playing game"));
+  {
+    //Player's Choice
+    var playerChoice = convertingInputToChoice(input);
+    console.log(playerChoice, "playerChoice");
+
+    // Computer's choice
+    var computerChoice = randomChoice();
+    console.log(computerChoice, "Computer Choice");
+
+    // Play history
+    var playHistroy = `<br><br>You chose ${playerChoice}, computer chose ${computerChoice}`;
+    console.log(playHistroy);
+
+    var didPlayerWin = playerWinsIf(playerChoice, computerChoice);
+    var didPlayerLose = playerLoseIf(playerChoice, computerChoice);
+    var didPlayerDraw = playerDrawIf(playerChoice, computerChoice);
+
+    //Score histroy
+    var scoreHistory = `<br><br>Player won: ${currentPlayerWins} | Computer won: ${currentComputerWins} | Draws ${currentDraws}.`;
   }
 
-  if (playerChoice == computerChoice) {
-    currentDraws += 1;
-    console.log(currentDraws, "Draws");
-    return `You chose ${playerChoice} <br><br>Computer chose ${computerChoice}. You Draw! <br><br>Current Player's win: ${currentPlayerWins}<br><br>Current Computer's win ${currentComputerWins}<br><br>Current Draws: ${currentDraws}`;
+  if (didPlayerWin == true) {
+    currentPlayerWins = currentPlayerWins + 1;
+    return (myOutputValue = `${playerName} won. ${playHistroy}, ${scoreHistory}`);
+  }
+  if (didPlayerLose == true) {
+    currentComputerWins = currentComputerWins + 1;
+    return (myOutputValue = `${playerName} lost. ${playHistroy}, ${scoreHistory}`);
+  }
+  if (didPlayerDraw == true) {
+    currentDraws = currentDraws + 1;
+    return (myOutputValue = `${playerName} draw. ${playHistroy}, ${scoreHistory}`);
   }
 
   return myOutputValue;
