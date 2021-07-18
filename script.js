@@ -55,35 +55,42 @@ var compare = function (input, gameSuit) {
   var output;
   
   if (input == gameSuit){
-    output = 'It is a draw'
+    output = 'Your input is ' + input +'. <br> computer input is ' + gameSuit +'. <br> It is a draw!'
   }
   
   
   if (input == 'scissors' && gameSuit == 'stone'){
-  output = 'You lose'
+  output = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Lose! <br><br> Try Again!!'
   console.log ('scissors stone');
   }
 
   
   if (input == 'scissors' && gameSuit == 'paper')
-  { output = 'You win'
+  { output = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Win! Yayyy! <br><br> Play again!'
   console.log('scissorpaper')}
 
-  if (input == 'stone' && gameSuit == 'scissors') { output = 'You win'}
+  if (input == 'stone' && gameSuit == 'scissors') { output = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Win! Yayyy! <br><br> Play again!'
+  }
 
   if (input == 'stone' && gameSuit== 'paper'){
-   output  = 'You lose'
-    console.log ('stone paper');}
+   output  = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Lose! <br><br> Try Again!!'
+
+  console.log ('stone paper');
+  }
 
     
   if (input == 'paper' && gameSuit == 'scissors')
-    { output = 'You lose'
-  console.log ('paper scissors');}
+    { output = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Lose! <br><br> Try Again!!'
+    
+    console.log ('paper scissors');
+  }
 
 
     if (input == 'paper' && gameSuit == 'stone') {
-      output ='You win'
-    console.log ('paper stone');}
+      output = 'Your input is ' + input +'. <br> Computer input is ' + gameSuit +'. <br> You Win! Yayyy! <br><br> Play again!'
+
+    console.log ('paper stone');
+  }
 
   return output;
   };
