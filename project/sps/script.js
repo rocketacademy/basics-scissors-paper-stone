@@ -83,7 +83,7 @@ function getEmoji(shape) {
 
 // SPS Logic
 function didUserWin(userShape, computerShape, reversedMode) {
-  var difference = (Number(computerShape) - Number(userShape)) % 3;
+  var difference = mod(Number(computerShape) - Number(userShape), 3);
   if (difference == 0) {
     draws += 1;
     return DRAW;
@@ -108,6 +108,12 @@ function didUserWin(userShape, computerShape, reversedMode) {
         return LOSE;
     }
   }
+}
+
+// Modulus Function
+function mod(n, m) {
+  var remainder = n % m;
+  return Math.floor(remainder >= 0 ? remainder : remainder + m);
 }
 
 // Output Message Generator
