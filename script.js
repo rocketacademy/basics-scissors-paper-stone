@@ -28,21 +28,26 @@ var main = function (input) {
   if(input == `reverse`){
      gameMode = `reverse`;
       return `You have changed game mode to ${gameMode}.`;
-  };
+    };
   if (input == `default`){
       gameMode = `default`
-      return`You have changed game mode to ${gameMode}.`;
-  };
+        return`You have changed game mode to ${gameMode}.`;
+    };
   if (input == `korean`){
       gameMode = `korean`
-      return`You have changed game mode to ${gameMode}.`;
-  };
+        return`You have changed game mode to ${gameMode}.`;
+    };
+  if (input == `computer`){
+      gameMode = `computer`
+        return`You have changed game mode to ${gameMode}.`;
+    };
 
   //input validation
   if(
     input != `scissors` &&
     input != `paper` &&
-    input != `stone`
+    input != `stone` &&
+    gameMode != `computer` // allow any input in computer game mode
     ){
       return `You can only enter ${createEmojiSPS(`scissors`)} ${createEmojiSPS(`paper`)} or ${createEmojiSPS(`stone`)}.<br>
       Please try again.`;
@@ -72,20 +77,15 @@ var main = function (input) {
 //generate information about win-loss record
 var generateWinLossInfo = function(){
   var winningPercentage = Math.floor((numTimesUserWins/numTimesGamePlayed)*100);
+  var winLossMessage = `${userName} won ${numTimesUserWins} times.<br>
+  Computer won ${numTimesComputerWins} times.<br>
+  Game drew ${numTimesDraw} times.
+  ${userName} wins ${winningPercentage}% of the time.`
 
   if(winningPercentage < 50){
-    return `${userName} won ${numTimesUserWins} times.<br>
-    Computer won ${numTimesComputerWins} times.<br>
-    Game drew ${numTimesDraw} times.
-    ${userName} wins ${winningPercentage}% of the time. Keep trying!`;
+    return `${winLossMessage} Keep trying!`;
     };
-
-  if(winningPercentage >= 50){
-    return `${userName} won ${numTimesUserWins} times.<br>
-    Computer won ${numTimesComputerWins} times.<br>
-    Game drew ${numTimesDraw} times.
-    ${userName} wins ${winningPercentage}% of the time. Pretty good!`;
-    };
+return `${winLossMessage} Pretty good!`;
 };
 
 //generate game logic based on game mode
@@ -97,11 +97,16 @@ var generateCurrentGameLogic = function(userPlays,computerPlays){
   if(gameMode == `korean`){
     currentGameLogic = koreanGameLogic(userPlays, computerPlays);
   };
+  if(gameMode == `computer`){
+    currentGameLogic = defaultGameLogic(generateRandomSPS(), computerPlays);
+  };
 return currentGameLogic;
 };
 
 //DEFAULT GAME LOGIC AND SCORING
 var defaultGameLogic = function(userPlays,computerPlays){
+  var gamePlayMessage = `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+  ${userName} chose ${createEmojiSPS(userPlays)}.`
 
   //Winning conditions
   if(
@@ -110,29 +115,24 @@ var defaultGameLogic = function(userPlays,computerPlays){
     (userPlays == `stone` && computerPlays == `scissors`)
   ){
     numTimesUserWins += 1;
-    return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-    ${userName} wins! Yay!`;
+    gamePlayMessage = `${gamePlayMessage}<br><br>${userName} wins! Yay!`;
   };
 
   //Draw conditions
-  if(
-    userPlays == computerPlays){
+  if(userPlays == computerPlays){
       numTimesDraw += 1;
-      return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-    It's a draw.`;
+      return `${gamePlayMessage}<br><br>It's a draw.`;
   };
   
   //if not, assume computer wins
   numTimesComputerWins += 1;
-  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-  ${userName} loses.`;
+  return `${gamePlayMessage}<br><br>${userName} loses.`;
 };
 
 //REVERSE GAME LOGIC AND SCORING
 var reverseGameLogic = function(userPlays,computerPlays){
+  var gamePlayMessage = `Computer chose ${createEmojiSPS(computerPlays)}.<br>
+  ${userName} chose ${createEmojiSPS(userPlays)}.`
 
   //Winning conditions
   if(
@@ -141,23 +141,18 @@ var reverseGameLogic = function(userPlays,computerPlays){
     (userPlays == `stone` && computerPlays == `paper`)
   ){
     numTimesUserWins += 1;
-    return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-    ${userName} wins! Yay!`;
+    return `${gamePlayMessage}.<br><br>${userName} wins! Yay!`;
   };
 
   //Draw conditions
   if(userPlays == computerPlays){
       numTimesDraw += 1;
-      return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-    ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-    It's a draw.`;
+      return `${gamePlayMessage}.<br><br>It's a draw.`;
   };
   
   //if not, assume computer wins
   numTimesComputerWins += 1;
-  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
+  return `${gamePlayMessage}.<br><br>
   ${userName} loses.`;
 };
 
@@ -195,13 +190,13 @@ var koreanGameLogic = function(userPlays,computerPlays){
       numTimesDraw += 1;
       return `No attacker yet. Keep playing`;
   };
-  
-  //if not, assume computer wins
-  numTimesComputerWins += 1;
-  return `Computer chose ${createEmojiSPS(computerPlays)}.<br>
-  ${userName} chose ${createEmojiSPS(userPlays)}.<br><br>
-  ${userName} loses.`;
 };
+
+  // //COMPUTER VS COMPUTER MODE (default game logic)
+  // var computerVsComputerMode = function(userPlays,computerPlays){
+  //   userPlays = generateRandomSPS();
+  //   defaultGameLogic(userPlays,computerPlays);
+  // };
 
 //generate random number from 1 to 3
 var generateRandomNum = function(){
