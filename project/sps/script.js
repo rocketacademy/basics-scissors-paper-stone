@@ -1,3 +1,11 @@
+// Store string constants in variables
+var SCISSORS = 'scissors';
+var PAPER = 'paper';
+var STONE = 'stone';
+var REVERSED_SCISSORS = 'reversed scissors';
+var REVERSED_PAPER = 'reversed paper';
+var REVERSED_STONE = 'reversed stone';
+
 var main = function (userShape) {
   var regexpReversedChoice = /reversed (scissors|paper|stone)/;
   var reversedMode = false;
@@ -10,16 +18,16 @@ var main = function (userShape) {
     // Assign the capture group of the regex to user shape
     userShape = userShape.match(regexpReversedChoice)[1];
   } else if (
-    !(userShape == "scissors" || userShape == "paper" || userShape == "stone")
+    !(userShape == SCISSORS || userShape == PAPER || userShape == STONE)
   ) {
-    return `You entered "${userShape}", please enter "scissors", "paper" or "stone" to play. Or add "reversed" before your choice (e.g."reversed scissors") for a different challenge.`;
+    return `You entered "${userShape}", please enter "${SCISSORS}", "${PAPER}" or "${STONE}" to play. Or add "reversed" before your choice (e.g."reversed scissors") for a different challenge.`;
   }
 
   // Check if user wins against computer
   if (
-    (userShape == "scissors" && computerShape == "paper") ||
-    (userShape == "paper" && computerShape == "stone") ||
-    (userShape == "stone" && computerShape == "scissors")
+    (userShape == SCISSORS && computerShape == PAPER) ||
+    (userShape == PAPER && computerShape == STONE) ||
+    (userShape == STONE && computerShape == SCISSORS)
   ) {
     // If reversed mode is on, then the results will be opposite
     if (reversedMode) {
@@ -31,9 +39,9 @@ var main = function (userShape) {
 
   // Check if user loses against computer
   if (
-    (userShape == "scissors" && computerShape == "stone") ||
-    (userShape == "paper" && computerShape == "scissors") ||
-    (userShape == "stone" && computerShape == "paper")
+    (userShape == SCISSORS && computerShape == STONE) ||
+    (userShape == PAPER && computerShape == SCISSORS) ||
+    (userShape == STONE && computerShape == PAPER)
   ) {
     // If reversed mode is on, then the results will be opposite
     if (reversedMode) {
@@ -57,13 +65,13 @@ function getComputerShape() {
   var shape = "";
   switch (randomInteger) {
     case 0:
-      shape = "scissors";
+      shape = SCISSORS;
       break;
     case 1:
-      shape = "paper";
+      shape = PAPER;
       break;
     case 2:
-      shape = "stone";
+      shape = STONE;
       break;
   }
   return shape;
@@ -71,11 +79,11 @@ function getComputerShape() {
 
 function getEmoji(shape) {
   switch (shape) {
-    case "scissors":
+    case SCISSORS:
       return "&#x2702";
-    case "paper":
+    case PAPER:
       return "&#x1F4C4";
-    case "stone":
+    case STONE:
       return "&#x26F0";
   }
 }
@@ -95,6 +103,6 @@ function generateOutputMessage(userShape, computerShape, result) {
       message += `It's a draw! What are the odds!? &#x1F914`;
       break;
   }
-  message += `<br>Now you can type "scissors", "paper" or "stone" to play another round!<br>Or add "reversed" before your choice for a different challenge &#x1F648`;
+  message += `<br>Now you can type ${SCISSORS}, "${PAPER}" or "${STONE}" to play another round!<br>Or add "reversed" before your choice for a different challenge &#x1F648`;
   return message;
 }
