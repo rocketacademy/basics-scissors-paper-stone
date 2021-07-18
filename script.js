@@ -80,9 +80,13 @@ var drawOutcome = function (input) {
 
 // personalised message if user is doing well
 var getUserStreak = function (input) {
-  if (getWinUserPercent() > 70)
+  if (getWinUserPercent() > 70) {
     return `So far ${userName}, you've been winning ${stateWinUser} out of ${numGamesPlayed} times. Doing pretty good there!`;
-  return `So far ${userName}, you've been winning ${stateWinUser} out of ${numGamesPlayed} times. You can do better!`;
+  }
+  if (getWinUserPercent() < 30) {
+    return `So far ${userName}, you've been winning ${stateWinUser} out of ${numGamesPlayed} times. You can do better!`;
+  }
+  return "";
 };
 
 // functions to execute and message to display if user won
