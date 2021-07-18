@@ -20,9 +20,9 @@ var userHand = 0;
 var getWinUserPercent = function () {
   var calcWinUserPercent = Math.floor((stateWinUser / numGamesPlayed) * 100);
   if (stateWinUser == 0) {
-    return `You have won 0 times.`;
+    return `${userName} has won 0 times.`;
   }
-  return `You have won ${stateWinUser} time(s), which is ${calcWinUserPercent}% of the time.`;
+  return `${userName} has won ${stateWinUser} time(s), which is ${calcWinUserPercent}% of the time.`;
 };
 
 // calculate win % of computer
@@ -62,22 +62,6 @@ var getRandomValue = function () {
   return "stone";
 };
 
-// input validation function
-var inputValidation = function (input) {
-  if (
-    input !== "scissors" ||
-    input !== "paper" ||
-    input !== "stone" ||
-    input !== "reversed scissors" ||
-    input !== "reversed paper" ||
-    input !== "reversed stone"
-  ) {
-    // set display message if input validation not met
-    return `Please enter "scissors" "paper" or "stone" to start playing!
-    <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
-  }
-};
-
 // draw outcome function
 var drawOutcome = function (input) {
   // add count to number of games played
@@ -91,7 +75,7 @@ var drawOutcome = function (input) {
   // get display message about win rate of comp
   var winRateComp = getWinCompPercent();
   // set display message if user draw
-  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Bummer, it's a draw!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Bummer ${userName}, it's a draw!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
 };
 
 // functions to execute and message to display if user won
@@ -108,7 +92,7 @@ var winOutcome = function (input) {
   var winRateComp = getWinCompPercent();
   console.log("stateWinUser", stateWinUser);
   // set display message if user won
-  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Congratulations, you won!<br><br>${winRate}<br>${winRateComp}<br> ${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Congratulations ${userName}, you won!<br><br>${winRate}<br>${winRateComp}<br> ${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
 };
 
 // functions to execute and message to display if user lost
@@ -125,7 +109,50 @@ var loseOutcome = function (input) {
   var winRateComp = getWinCompPercent();
   console.log("stateWinComp", stateWinComp);
   // set display message if user lost
-  return `You threw ${userHand}.<br> The computer threw ${compHand}.<br> Sorry, you lost!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+  return `${userName} threw ${userHand}.<br> The computer threw ${compHand}.<br> Sorry ${userName}, you lost!<br><br>${winRate}<br>${winRateComp}<br>${drawMessage}<br><br>Enter "scissors" "paper" or "stone" to play another round!`;
+};
+
+var welcomeUser = function (input) {
+  userName = input;
+  currentGameMode = "SPS game";
+  return `Welcome ${userName}! <br><br>Enter "scissors", "paper" or "stone" to start playing.`;
+};
+
+// input validation for username
+var inputValidationUser = function (input) {
+  if (runCheckInputUser(input) == "TRUE") {
+    return `Please enter your username to start playing.`;
+  }
+  return welcomeUser(input);
+};
+
+// validate input for username
+var runCheckInputUser = function (input) {
+  if (input == "") return "TRUE";
+  return "FALSE";
+};
+
+// input validation function
+var inputValidation = function (input) {
+  {
+    return `Please enter "scissors" "paper" or "stone" to start playing!
+    <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
+  }
+};
+
+// validate input
+var runCheckInput = function (input) {
+  if (
+    input == "" ||
+    input !== "scissors" ||
+    input !== "paper" ||
+    input !== "stone" ||
+    input !== "reversed scissors" ||
+    input !== "reversed paper" ||
+    input !== "reversed stone"
+  )
+    return "TRUE";
+  return "FALSE";
 };
 
 // check if user won
@@ -168,11 +195,8 @@ var playSPS = function (userName, input) {
   // set users input value for the round
   userHand = input;
 
-  // input validation
-  var myOutputValue = inputValidation();
-
   // if user draw
-  if (input == compHand || input == `reversed ${compHand}`) {
+  if (runCheckDraw(input) == "TRUE") {
     return drawOutcome();
   }
 
@@ -186,14 +210,18 @@ var playSPS = function (userName, input) {
     return loseOutcome();
   }
 
+  // input validation
+  if (runCheckInput(input) == "TRUE") {
+    return inputValidation();
+  }
+
   console.log("numGamesPlayed", numGamesPlayed);
 };
 
 var main = function (input) {
   if (currentGameMode == "waiting for username") {
-    userName = input;
-    currentGameMode = "SPS game";
-    var myOutputValue = `Hi ${userName}. Enter "scissors" "paper" or "stone" to begin game.`;
+    var myOutputValue = inputValidationUser(input);
+    console.log(runCheckInputUser);
   } else if (currentGameMode == "SPS game") {
     myOutputValue = playSPS(userName, input);
   }
