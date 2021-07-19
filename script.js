@@ -1,9 +1,96 @@
-var main = function (input) {
-  var convertInput = input.toLowerCase().replace(/\s/g, "");
-  console.log("user input");
-  console.log(convertInput);
 
-  return gameCondition(convertInput, translateRPS());
+//Add global states to include wins and draws
+var playerScore = 0;
+var comScore = 0;
+var drawScore = 0;
+
+//Add states for username and game mode
+var userName ='';
+var gameMode ='';
+
+//Game mode checker
+var gameModeState =0;
+
+//Add WinState for korean mode
+var playerLastWinState = 0;
+var comLastWinState = 0;
+var winnerState = 0;
+
+var main = function (input) {
+  //Convert input to lowercase and remove white space, allow for minor typos
+  var convertInput = input.toLowerCase().replace(/\s/g, "");
+
+  //Prints error message if input is not SPS or reversed SPS
+  var myOutputValue = `Please enter 'stone', 'paper' or 'scissors' <br>Current Score<br>User:${playerScore}<br>Com:${comScore}<br>Draws:${drawScore}`
+
+  //If userName is not set, use first input as username
+  if(userName==''){
+    if(input==''){
+      return `Please input something for your username`;
+    }
+    
+    userName = input;
+
+    return `Hi ${userName}, Please enter game mode to start playing.`
+  } 
+  
+  
+  //If mode is not selected, prompt to choose mode
+if(gameModeState==0){
+  if(gameMode==''){
+    if(gameModeState==0){
+      if(input!='normal'&&input!='reversed'&&input!='korean'&&input!='computer'){
+      return `Please select 'normal' ,'reversed','computer' or 'korean' mode`
+    }
+    gameMode= input;
+    return gameModeChecker(gameMode);
+     
+    }
+  }
+}
+
+//Change game mode anytime during other gameplays
+if(gameModeState ==1&&input=='change'){
+  gameModeState = 0;
+  gameMode ='';
+  return `You wanted to change mode? Please type new game mode that you want to play`
+}
+
+if(gameMode=='normal'){
+  //If Input is normal SPS, run normal SPS rules.
+  if(convertInput=='stone'|| convertInput =='paper'||convertInput =='scissors'){
+    myOutputValue = normalGame(convertInput,translateRPS());
+    }
+  else{
+    return `Please enter 'stone', 'paper' or 'scissors'`
+    }
+  }
+if(gameMode=='reversed'){
+  //If input includes reversed, then run reverse SPS rules
+  if (convertInput.indexOf('reversed')>-1){
+    if(convertInput == 'reversedstone' || convertInput == 'reversedpaper'||convertInput == 'reversedscissors'){
+    myOutputValue = reverseGame(convertInput,translateRPS());
+    }
+  }
+}
+
+if(gameMode=='korean'){
+  //Run normal game with korean rules
+  var koreanWinner = normalGame(convertInput,translateRPS());
+  return koreanWinner;
+}
+  
+if(gameMode=='computer'){
+  //Computer mode for auto selection
+  myOutputValue = normalGame(translateRPS(),translateRPS());
+}
+
+//Compare win loss with function
+var winLossCompare = winLossPerc(playerScore,comScore);
+
+  
+  
+return myOutputValue + `<br> ${winLossCompare} Play Again?`
 };
 
 // Symbol Generation
@@ -19,138 +106,128 @@ function symbolGenerator(input) {
   }
 }
 
-// Winning message
+// Winning message and add to playerScore
 function winMessage(playerInput, comInput, playerIcon, comIcon) {
+  playerScore +=1;
   return (
-    "You Won! You have chose " +
-    playerInput +
-    playerIcon +
-    " while the Computer chose " +
-    comInput +
-    comIcon +
-    "<br>Play Again?"
+    `You Won! You have chosen ${playerInput} ${playerIcon} while Computer chose ${comInput} ${comIcon}<br> Current Score<br>User:${playerScore}<br>Com:${comScore}<br>Draws:${drawScore}`
   );
 }
 
-// Losing message
+// Losing message and add to comScore
 function loseMessage(playerInput, comInput, playerIcon, comIcon) {
+  comScore+=1;
   return (
-    "You Lost! You have chose " +
-    playerInput +
-    playerIcon +
-    " while the Computer chose " +
-    comInput +
-    comIcon +
-    "<br>Play Again?"
+    `You Lost! You have chosen ${playerInput} ${playerIcon} while Computer chose ${comInput} ${comIcon}<br> Current Score<br>User:${playerScore}<br>Com:${comScore}<br>Draws:${drawScore}`
   );
 }
 
-// Draw message
+// Draw message and add to drawScore
 function drawMessage(playerInput, comInput, playerIcon, comIcon) {
+  drawScore+=1;
   return (
-    `It's a Draw✏️! You have chose ` +
-    playerInput +
-    playerIcon +
-    " while the Computer chose " +
-    comInput +
-    comIcon +
-    "<br>Play Again?"
+    `It's a Draw✏️ You have chosen ${playerInput} ${playerIcon} while Computer chose ${comInput} ${comIcon}<br> Current Score<br>User:${playerScore}<br>Com:${comScore}<br>Draws:${drawScore}`
   );
 }
 
-// Win Condition
-function gameCondition(user, com) {
-  // check input
-  if (
-    user == "stone" ||
-    user == "reversedstone" ||
-    user == "paper" ||
-    user == "reversed paper" ||
-    user == "scissors" ||
-    user == "reversedscissors"
-  ) {
-    if (com == "paper") {
-      // Computer is paper and user is scissors or reversedstone, user wins
-      if (user == "scissors" || user == "reversedstone") {
-        return winMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      }
-      // Computer is paper and user is stone or reversed scissors, user loses
-      else if (user == "stone" || user == "reversed scissors") {
-        return loseMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      } else {
-        return drawMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      }
+
+
+
+// Normal SPS Game function
+function normalGame(user, com) {
+  // If user chose stone and com is scissors, user wins
+  // If user chose paper and com is stone, user wins
+  // If user chose scissors and com is paper, user wins
+ 
+  if (((user == 'stone')&&(com=='scissors'))||((user=='paper')&&(com=='stone'))||((user=='scissors')&&(com=='paper'))){
+    //Play korean mode if gameMode is korean
+    if(gameMode=='korean'){
+      playerLastWinState = 1;
+      winnerState=1;
+      return `축하합니다! ${userName} Won! You chose ${user} while Computer chose ${com}! <br>Enter another input to Muk Jji Paa!`
     }
-    if (com == "scissors") {
-      if (user == "stone" || user == "reversedpaper") {
-        return winMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      } else if (user == "paper" || user == "reversedstone") {
-        return loseMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      } else {
-        return drawMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      }
-    }
-    if (com == "stone") {
-      if (user == "paper" || user == "reversedscissors") {
-        return winMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      } else if (user == "scissors" || user == "reversedpaper") {
-        return loseMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      } else {
-        return drawMessage(
-          user,
-          com,
-          symbolGenerator(user),
-          symbolGenerator(com)
-        );
-      }
-    }
-  } else {
-    return "Please enter scissors, paper or stone";
+    return winMessage(user,com,symbolGenerator(user),symbolGenerator(com))
   }
+  // If user chose paper and com is scissors, user lose
+  // If user chose scissors and com is stone, user lose
+  // If user chose stone and com is paper, user lose
+  if (((user == 'paper')&&(com=='scissors'))||((user=='scissors')&&(com=='stone'))||((user=='stone')&&(com=='paper'))){
+    //Play korean mode if gameMode is korean
+    if(gameMode=='korean'){
+      comLastWinState =1;
+      winnerState =1;
+      return `죄송합니다! Com Won! You chose ${user} while Computer chose ${com}!<br>Enter another input to fight back!`
+    }
+    return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+  }
+  //else it's a draw 
+  else {
+    //Play korean mode if gameMode is korean
+    if(gameMode=='korean'){
+      if(playerLastWinState==1&&winnerState==1){
+        winnerState=0;
+        return winMessage(user,com,symbolGenerator(user),symbolGenerator(com)) 
+      }
+      if(comLastWinState==1&&winnerState==1){
+        winnerState=0;
+        return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+      }
+      return `It's a draw! Try Again! Muk Jji Paa`
+    }
+    return drawMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+  }
+  }
+
+
+  // Reverse SPS Game function
+function reverseGame(user, com) {
+  // If user chose reversedpaper and com is scissors, user wins
+  // If user chose reversedscissors and com is stone, user wins
+  // If user chose reversedstone and com is paper, user wins 
+  if (((user == 'reversedpaper')&&(com=='scissors'))||((user=='reversedscissors')&&(com=='stone'))||((user=='reversedstone')&&(com=='paper'))){
+    return winMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+  }
+  // If user chose reversedstone and com is scissors, user lose
+  // If user chose reversedpaper and com is stone, user lose
+  // If user chose reversedscissors and com is paper, user lose
+  if (((user == 'reversedstone')&&(com=='scissors'))||((user=='reversedpaper')&&(com=='stone'))||((user=='reversedscissors')&&(com=='paper'))){
+    return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+  }
+  //else it's a draw 
+  else {
+    return drawMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+  }
+  }
+
+
+//Calculate win/loss percentage
+function winLossPerc(win,loss){
+  if((win/loss)>1){
+    return `You are doing great, ${userName}!`
+  }
+  if ((win/loss)<1){
+    return `Not doing so well ${userName}, Try Harder!`
+  }
+  else{
+    return `It is balanced...for now, you are like Thanos! ${userName}!`
+  }
+}
+
+//Game Mode Checker to change game mode in between
+function gameModeChecker(input){
+  gameModeState=1;
+  if(input =='korean'){
+    return `안녕하세요! Game mode is now korean!`
+  }
+  return `Game mode is now ${input}. Please enter input to start playing`
 }
 
 // Random RPS by function
 var translateRPS = function () {
+  return 'paper'
   const list = ["scissors", "paper", "stone"];
   return list[Math.floor(Math.random() * 3)];
 };
+
+
+
