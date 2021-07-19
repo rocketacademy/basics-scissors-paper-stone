@@ -24,7 +24,7 @@
         padding: 38px 31px;
       }
 
-      input {
+      input#name-field {
         font-size: 21px;
         line-height: 33px;
         margin: 0 0 23px 0;
@@ -56,37 +56,74 @@
       <br />
       <form name="game_mode">
         <p>Please select a version of Scissors Paper Stone to play.</p>
-        <input
-          type="radio"
-          id="normal"
-          name="game_mode"
-          value="normal"
-          checked
-        />
-        <label for="normal">Normal</label>
-        <input type="radio" id="reversed" name="game_mode" value="reversed" />
-        <label for="reversed">Reversed</label><br />
-        <input type="radio" id="korean" name="game_mode" value="korean" />
-        <label for="korean">Korean</label><br />
-        <input type="radio" id="computer" name="game_mode" value="computer" />
-        <label for="computer">Computer</label><br />
+        <label for="normal"
+          ><input
+            type="radio"
+            id="normal"
+            name="game_mode"
+            value="normal"
+            checked
+          />🕹️ Normal</label
+        ><br />
+        <label for="reversed"
+          ><input
+            type="radio"
+            id="reversed"
+            name="game_mode"
+            value="reversed"
+          />🔄 Reversed</label
+        ><br />
+        <label for="korean"
+          ><input
+            type="radio"
+            id="korean"
+            name="game_mode"
+            value="korean"
+          />🇰🇷 Korean</label
+        ><br />
+        <label for="computer"
+          ><input
+            type="radio"
+            id="computer"
+            name="game_mode"
+            value="computer"
+          />&#x1F916 Computer</label
+        ><br />
       </form>
       <form name="player_choice">
         <p>Please select a shape to play.</p>
-        <input
-          type="radio"
-          id="scissors"
-          name="player_choice"
-          value="scissors"
-        />
-        <label for="scissors">Scissors</label><br />
-        <input type="radio" id="paper" name="player_choice" value="paper" />
-        <label for="paper">Paper</label><br />
-        <input type="radio" id="stone" name="player_choice" value="stone" />
-        <label for="stone">Stone</label><br />
+        <label for="scissors"
+          ><input
+            type="radio"
+            id="scissors"
+            name="player_choice"
+            value="scissors"
+          />&#x2702 Scissors</label
+        ><br />
+        <label for="paper"
+          ><input
+            type="radio"
+            id="paper"
+            name="player_choice"
+            value="paper"
+          />&#x1F4C4 Paper</label
+        ><br />
+        <label for="stone"
+          ><input
+            type="radio"
+            id="stone"
+            name="player_choice"
+            value="stone"
+          />&#x26F0 Stone</label
+        ><br />
       </form>
-      <button id="submit-button">Play</button>
-      <p>Output:</p>
+      <div>
+        <br>
+        <button id="submit-button">Play</button>
+      </div>
+      <div>
+        <p>Output:</p>
+      </div>
       <div id="output-div"></div>
     </div>
     <!-- Import program logic -->
