@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Coding Basics</title>
+    <title>SPS | RA Basics</title>
     <style>
       * {
         box-sizing: border-box;
@@ -51,10 +51,41 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
-      <p>Input:</p>
-      <input id="input-field" />
+      <p>Name</p>
+      <input id="name-field" />
       <br />
-      <button id="submit-button">Submit</button>
+      <form name="game_mode">
+        <p>Please select a version of Scissors Paper Stone to play.</p>
+        <input
+          type="radio"
+          id="normal"
+          name="game_mode"
+          value="normal"
+          checked
+        />
+        <label for="normal">Normal</label>
+        <input type="radio" id="reversed" name="game_mode" value="reversed" />
+        <label for="reversed">Reversed</label><br />
+        <input type="radio" id="korean" name="game_mode" value="korean" />
+        <label for="korean">Korean</label><br />
+        <input type="radio" id="computer" name="game_mode" value="computer" />
+        <label for="computer">Computer</label><br />
+      </form>
+      <form name="player_choice">
+        <p>Please select a shape to play.</p>
+        <input
+          type="radio"
+          id="scissors"
+          name="player_choice"
+          value="scissors"
+        />
+        <label for="scissors">Scissors</label><br />
+        <input type="radio" id="paper" name="player_choice" value="paper" />
+        <label for="paper">Paper</label><br />
+        <input type="radio" id="stone" name="player_choice" value="stone" />
+        <label for="stone">Stone</label><br />
+      </form>
+      <button id="submit-button">Play</button>
       <p>Output:</p>
       <div id="output-div"></div>
     </div>
@@ -62,18 +93,17 @@
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button = document.querySelector("#submit-button");
+      var button = document.getElementById("submit-button");
       button.addEventListener("click", function () {
-        // Set result to input value
-        var input = document.querySelector("#input-field");
-        var result = main(input.value);
-
+        var name = document.getElementById("name-field").value;
+        var mode = document.forms["game_mode"].elements["game_mode"].value;
+        var choice =
+          document.forms["player_choice"].elements["player_choice"].value;
+        // Set result to output of main
+        var result = main(name, mode, choice);
         // Display result in output element
-        var output = document.querySelector("#output-div");
+        var output = document.getElementById("output-div");
         output.innerHTML = result;
-
-        // Reset input value
-        input.value = "";
       });
     </script>
   </body>
