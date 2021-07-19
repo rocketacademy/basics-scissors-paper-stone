@@ -141,6 +141,7 @@ function normalGame(user, com) {
   if (((user == 'stone')&&(com=='scissors'))||((user=='paper')&&(com=='stone'))||((user=='scissors')&&(com=='paper'))){
     //Play korean mode if gameMode is korean
     if(gameMode=='korean'){
+      //Update player winning status and record winning position
       playerLastWinState = 1;
       winnerState=1;
       return `축하합니다! ${userName} Won! You chose ${user} while Computer chose ${com}! <br>Enter another input to Muk Jji Paa!`
@@ -153,6 +154,7 @@ function normalGame(user, com) {
   if (((user == 'paper')&&(com=='scissors'))||((user=='scissors')&&(com=='stone'))||((user=='stone')&&(com=='paper'))){
     //Play korean mode if gameMode is korean
     if(gameMode=='korean'){
+      //Update computer winning status and record winning position
       comLastWinState =1;
       winnerState =1;
       return `죄송합니다! Com Won! You chose ${user} while Computer chose ${com}!<br>Enter another input to fight back!`
@@ -163,15 +165,21 @@ function normalGame(user, com) {
   else {
     //Play korean mode if gameMode is korean
     if(gameMode=='korean'){
+      //Both condition true and draw is obtained, player wins 
       if(playerLastWinState==1&&winnerState==1){
+        //Reset states
         winnerState=0;
-        return winMessage(user,com,symbolGenerator(user),symbolGenerator(com)) 
+        playerLastWinState=0;
+        return winMessage(user,com,symbolGenerator(user),symbolGenerator(com)) +`<br>${winLossPerc(playerScore,comScore)} Play Again?<br>Current Game Mode:${gameMode}`
       }
+      //Both condition true and draw is obtained, computer wins
       if(comLastWinState==1&&winnerState==1){
+        //Reset states
         winnerState=0;
-        return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))
+        comLastWinState=0;
+        return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))+`<br>${winLossPerc(playerScore,comScore)} Play Again?<br>Current Game Mode:${gameMode}`
       }
-      return `It's a draw! Try Again! Muk Jji Paa`
+      return `It's a draw! Try Again! Muk Jji Paa!`
     }
     return drawMessage(user,com,symbolGenerator(user),symbolGenerator(com))
   }
@@ -223,7 +231,7 @@ function gameModeChecker(input){
 
 // Random RPS by function
 var translateRPS = function () {
-  //return 'paper'
+  return 'paper'
   const list = ["scissors", "paper", "stone"];
   return list[Math.floor(Math.random() * 3)];
 };
