@@ -66,9 +66,8 @@ var main = function (input) {
       sps +
       "!";
   }
-
-  // Define error message (invalid input)
-  if (input != "scissors" || input != "paper" || input != "stone") {
+  // Define error message
+  if (input != "scissors" && input != "paper" && input != "stone") {
     console.log("invalid input");
     myOutputValue =
       'Invalid input! Kindly enter "scissors", "paper", or "stone"';
