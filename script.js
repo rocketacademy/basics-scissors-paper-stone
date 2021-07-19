@@ -19,13 +19,13 @@ var main = function (input) {
   ) {
     userCount = userCount + 1;
     myOutputValue =
-      `Isabella won! Isabella's score is ` +
+      `The computer chose ` +
+      computerOption +
+      `. <br> Isabella picked ` +
+      userOption +
+      `. </br> <br> </br> Isabella wins! Congrats. <br> </br> So for Isabella, you've been winning ` +
       userCount +
-      `. Computer score is ` +
-      computerCount +
-      `. Draw count is ` +
-      bothDraw +
-      `.`;
+      ` times. `;
   }
   if (
     (computerOption == "scissors" && userOption == "paper") ||
