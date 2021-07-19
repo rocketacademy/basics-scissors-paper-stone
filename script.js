@@ -8,7 +8,7 @@ var main = function (input) {
   var computerOption = computerChoice();
   console.log("computerOption", computerOption);
 
-  var myOutputValue = `you guessed ${input}, there are only three options stone, paper, scissors`;
+  var myOutputValue = `Hello ${input}, you can start by playing the game by inputting stone, paper, or scissors. Enjoy!`;
 
   // scissor beats paper, paper beats stone, stone beats scissors, draw
   // myOutputValue = user won, program won, or its a draw
@@ -19,7 +19,7 @@ var main = function (input) {
   ) {
     userCount = userCount + 1;
     myOutputValue =
-      `User won! User score is ` +
+      `Isabella won! Isabella's score is ` +
       userCount +
       `. Computer score is ` +
       computerCount +
@@ -34,7 +34,7 @@ var main = function (input) {
   ) {
     computerCount = computerCount + 1;
     myOutputValue =
-      `Computer won! User score is ` +
+      `Computer won! Isabella's score is ` +
       userCount +
       `. Computer score is ` +
       computerCount +
@@ -46,7 +46,7 @@ var main = function (input) {
   if (userOption == computerOption) {
     bothDraw = bothDraw + 1;
     myOutputValue =
-      `That was a tie! User score is ` +
+      `That was a tie! Isabella's score is ` +
       userCount +
       `. Computer score is ` +
       computerCount +
