@@ -1,3 +1,6 @@
+var userCount = 0;
+var computerCount = 0;
+var bothDraw = 0;
 var main = function (input) {
   // randomly chooses scissors, peper, or stone
   var userOption = input;
@@ -14,18 +17,42 @@ var main = function (input) {
     (userOption == "paper" && computerOption == "stone") ||
     (userOption == "stone" && computerOption == "scissors")
   ) {
-    myOutputValue = `computer won!`;
+    userCount = userCount + 1;
+    myOutputValue =
+      `User won! User score is ` +
+      userCount +
+      `. Computer score is ` +
+      computerCount +
+      `. Draw count is ` +
+      bothDraw +
+      `.`;
   }
   if (
     (computerOption == "scissors" && userOption == "paper") ||
     (computerOption == "paper" && userOption == "stone") ||
     (computerOption == "stone" && userOption == "scissors")
   ) {
-    myOutputValue = `user won! you picked reversed ${input}`;
+    computerCount = computerCount + 1;
+    myOutputValue =
+      `Computer won! User score is ` +
+      userCount +
+      `. Computer score is ` +
+      computerCount +
+      `. Draw count is ` +
+      bothDraw +
+      `.`;
   }
 
   if (userOption == computerOption) {
-    myOutputValue = `draw`;
+    bothDraw = bothDraw + 1;
+    myOutputValue =
+      `That was a tie! User score is ` +
+      userCount +
+      `. Computer score is ` +
+      computerCount +
+      `. Draw count is ` +
+      bothDraw +
+      `.`;
   }
   return myOutputValue;
 };
