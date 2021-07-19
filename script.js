@@ -1,60 +1,90 @@
-//Generate number
-var generateRandomSPS = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomNumber = Math.floor(randomDecimal);
-  var SPSNumber = randomNumber + 1;
-  //Link number to scissors/paper/stone
-  if (SPSNumber == 1) {
-    return `Scissors`;
-  }
-  if (SPSNumber == 2) {
-    return `Paper`;
-  }
-  if (SPSNumber == 3) {
-    return `Stone`;
-  }
-};
-//check if input == generated number
-var main = function (input) {
-  //Unecessay code?
-  //if ((input != `Scissors` || `Paper` || `Stone`)) {
-  //myOutputValue = `Please enter either "Scissors", "Paper" or "Stone". Please Try again. `;
-  //return myOutputValue;
-  //}
+//global variables
+var currentGameMode = `waiting for username`;
+var userName = ``;
+//Number Games of Won
+var numGamesPlayed = 0;
+console.log(numGamesPlayed);
+//Number of Games Played
+var numGamesWon = 0;
+console.log(numGamesWon);
 
-  // if input not equals to SPS, return message suggesting SPS and ask to try again
-  if (input != `Scissors` && input != `Stone` && input != `Paper`) {
-    myOutputValue = `Please enter either "Scissors", "Paper" or "Stone". Please Try again.`;
-  }
-  if (input == generateRandomSPS()) {
-    myOutputValue = `Oops, its a draw.`;
-    return myOutputValue;
-  }
-  //if input is scissors, beat paper and lose stone
-  if (input == `Scissors` && generateRandomSPS() == `Paper`) {
-    myOutputValue = `Congratulations, you won.`;
-    return myOutputValue;
-  }
-  if (input == `Scissors` && generateRandomSPS() == `Stone`) {
-    myOutputValue = `Unfortunately, you lost.`;
-    return myOutputValue;
-  }
-  //if input is Paper
-  if (input == `Paper` && generateRandomSPS() == `Stone`) {
-    myOutputValue = `Congratulations, you won.`;
-    return myOutputValue;
-  }
-  if (input == `Paper` && generateRandomSPS() == `Scissors`) {
-    myOutputValue = `Unfortunately, you lost.`;
-    return myOutputValue;
-  }
-  //if input is Stone
-  if (input == `Stone` && generateRandomSPS() == `Scissors`) {
-    myOutputValue = `Congratulations, you won.`;
-    return myOutputValue;
-  }
-  if (input == `Stone` && generateRandomSPS() == `Paper`) {
-    myOutputValue = `Unfortunately, you lost.`;
+var main = function (input) {
+  var myOutputValue = ``;
+  if (currentGameMode == `waiting for username`) {
+    //set the name
+    userName = input;
+    console.log(userName);
+    currentGameMode = `SPSGame`;
+
+    myOutputValue = `Hello ${userName}`;
+  } else if (currentGameMode == `SPSGame`) {
+    //Increase number of Games Played
+    numGamesPlayed += 1;
+
+    //SPS Generator
+    var SPSArray = ["Scissors", "Paper", "Stone"];
+    var randomSPS = Math.floor(Math.random() * SPSArray.length); //RandomSPS
+    console.log(SPSArray[randomSPS]);
+
+    //Player Beat Computer Function
+    var didPlayerBeatComputer = function (input) {
+      return (
+        (input == "Scissors" && SPSArray[randomSPS] == "Paper") ||
+        (input == "Paper" && SPSArray[randomSPS] == "Stone") ||
+        (input == "Stone" && SPSArray[randomSPS] == "Scissors") ||
+        (input == "ReversedScissors" && SPSArray[randomSPS] == "Stone") ||
+        (input == "ReversedStone" && SPSArray[randomSPS] == "Paper") ||
+        (input == "ReversedPaper" && SPSArray[randomSPS] == "Scissors")
+      );
+    };
+    if (didPlayerBeatComputer(input)) {
+      //Add to number of Games Won
+      numGamesWon += 1;
+    }
+    //created winrate within main function
+    var winrate = (numGamesWon / numGamesPlayed) * 100;
+    console.log(`numgameswon` + numGamesWon);
+    console.log(`numgamesplayed ` + numGamesPlayed);
+    myOutputValue = `Too bad ${userName}, you lost to the computer. <br><br> You chose ${input} while the computer chose ${SPSArray[randomSPS]}. <br><br>Your current win rate is ${winrate}%. <br><br>You have played ${numGamesPlayed} games and won ${numGamesWon} games.`;
+
+    //Player Draw Computer function
+    var didPlayerDrawComputer = function (input) {
+      return (
+        (input == "Scissors" && SPSArray[randomSPS] == "Scissors") ||
+        (input == "Paper" && SPSArray[randomSPS] == "Paper") ||
+        (input == "Stone" && SPSArray[randomSPS] == "Stone") ||
+        (input == "ReversedScissors" && SPSArray[randomSPS] == "Paper") ||
+        (input == "ReversedStone" && SPSArray[randomSPS] == "Scissors") ||
+        (input == "ReversedPaper" && SPSArray[randomSPS] == "Stone")
+      );
+    };
+
+    if (
+      input != "Scissors" &&
+      input != "Paper" &&
+      input != "Stone" &&
+      input != "ReversedScissors" &&
+      input != "ReversedPaper" &&
+      input != "ReversedStone"
+    ) {
+      myOutputValue =
+        "Please input Scissors, Paper or Stone. <br><br> For the reversed version, please input: ReversedScissors, ReversedPaper or ReversedStone.";
+      return myOutputValue;
+    }
+
+    if (didPlayerBeatComputer(input)) {
+      //Add to number of Games Won
+
+      myOutputValue = `Congratulations ${userName}, you beat the computer. <br><br> You chose ${input} while the computer chose ${SPSArray[randomSPS]}. <br><br>Your current win rate is ${winrate}%. <br><br>You have played ${numGamesPlayed} games and won ${numGamesWon} games.`;
+
+      return myOutputValue;
+    }
+
+    if (didPlayerDrawComputer(input)) {
+      myOutputValue = `Unlucky, ${userName}. You drew with the computer. <br><br> You chose ${input} while the computer chose ${SPSArray[randomSPS]}. <br><br>Your current win rate is ${winrate}%. <br><br>You have played ${numGamesPlayed} games and won ${numGamesWon} games.`;
+      return myOutputValue;
+    }
+
     return myOutputValue;
   }
   return myOutputValue;
