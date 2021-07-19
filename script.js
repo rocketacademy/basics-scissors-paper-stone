@@ -1,34 +1,155 @@
+var playerWinCount = 0;
+var cpuWinCount = 0;
+var tieCount = 0;
+var nameInput = 0;
+var gameMode = 0; // 1 = standard, 2 = korean, 3 = CPU
+var currentWinner = 0; // 1= player, 2= cpu
+//Name input message
+document.getElementById("output-div").innerHTML = "Please input your name!";
+
 var main = function (input) {
-  var myOutputValue = "hello world";
+  var myOutputValue;
   var playerInput = input;
-  //validate player input to be sissors paper or stone
-  console.log("validating");
-  if (
-    playerInput != "paper" &&
-    playerInput != "sissors" &&
-    playerInput != "stone"
-  ) {
+  //check player name input state
+  if (nameInput == 0) {
+    document.getElementById("header").innerHTML = "Welcome " + input + "!";
+    //Display message to select game option
     myOutputValue =
-      "Your input is not valid. Please enter 'sissors, 'paper' or 'stone'.";
+      'Type your game mode anytime to change: "Standard", "Korean" or "CPU".';
+    nameInput = 1;
     return myOutputValue;
   }
-  console.log("passed validation");
-  //generate and judge winner
-  var cpuInputCase = generateCpuInput();
-  var cpuInputSign = convertCpuInput(cpuInputCase);
-  var winner = judgeWinner(playerInput, cpuInputSign);
+  //game mode select and reset counters
 
-  //output winning message
-  if (winner == "player") {
-    myOutputValue = `Player wins! <br/> You played ${playerInput}. <br/> CPU played ${cpuInputSign}.`;
+  if (playerInput == "Standard") {
+    gameMode = 1;
+    myOutputValue = "Game mode is now Standard.";
+    resetCounter();
+    return myOutputValue;
   }
-  if (winner == "cpu") {
-    myOutputValue = `CPU wins! <br/> You played ${playerInput}.<br/> CPU played ${cpuInputSign}.`;
+  if (playerInput == "Korean") {
+    gameMode = 2;
+    myOutputValue = "Game mode is now Korean.";
+    resetCounter();
+    return myOutputValue;
   }
-  if (winner == "tie") {
-    myOutputValue = `It's a tie!<br/> You played ${playerInput}.<br/> CPU played ${cpuInputSign}.`;
+  if (playerInput == "CPU") {
+    gameMode = 3;
+    myOutputValue = "Game mode is now CPU.";
+    resetCounter();
+    return myOutputValue;
   }
-  return myOutputValue;
+
+  //Standard game//
+  if (gameMode == 1) {
+    //validate input
+    if (validateInput(playerInput)) {
+      myOutputValue =
+        "Your input is not valid. Please enter 'sissors, 'paper' or 'stone'.";
+      return myOutputValue;
+    }
+    var cpuInputCase = generateCpuInput();
+    var cpuInputSign = convertCpuInput(cpuInputCase);
+    var winner = judgeWinner(playerInput, cpuInputSign);
+
+    //output winning message
+    if (winner == "player") {
+      playerWinCount = playerWinCount + 1;
+      myOutputValue = `Player wins! <br/> You played ${playerInput}. <br/> CPU played ${cpuInputSign}. You have won ${playerWinCount} times!`;
+    }
+    if (winner == "cpu") {
+      cpuWinCount = cpuWinCount + 1;
+      myOutputValue = `CPU wins! <br/> You played ${playerInput}.<br/> CPU played ${cpuInputSign}. The CPU has won ${cpuWinCount} times!`;
+    }
+    if (winner == "tie") {
+      tieCount = tieCount + 1;
+      myOutputValue = `It's a tie!<br/> You played ${playerInput}.<br/> CPU played ${cpuInputSign}. There has been ${tieCount} ties!`;
+    }
+    return myOutputValue;
+  }
+  // End of standard game//
+
+  //Korean Game//
+  if (gameMode == 2) {
+    var mukPhrase = "Muk-jji-ppa!";
+    //validate input
+    if (validateInput(playerInput)) {
+      myOutputValue =
+        "Your input is not valid. Please enter 'sissors, 'paper' or 'stone'.";
+      return myOutputValue;
+    }
+    //Roll and judge
+    var cpuInputCase = generateCpuInput();
+    var cpuInputSign = convertCpuInput(cpuInputCase);
+    var winner = judgeWinner(playerInput, cpuInputSign);
+    //Output 1st Round
+    if (currentWinner == 0) {
+      if (winner == "player") {
+        currentWinner = 1;
+        myOutputValue = "You won! " + mukPhrase;
+        return myOutputValue;
+      }
+      if (winner == "cpu") {
+        currentWinner = 2;
+        myOutputValue = "CPU wins!" + mukPhrase;
+        return myOutputValue;
+      }
+      if (winner == "tie") {
+        currentWinner = 0;
+        myOutputValue = "It's a tie! Go again!";
+        return myOutputValue;
+      }
+    }
+    //Round two
+    //player won 1st
+    if (currentWinner == 1) {
+      currentWinner = 0;
+      if (playerInput == cpuInputSign) {
+        playerWinCount = playerWinCount + 1;
+        myOutputValue = `Player wins! <br/> You have won ${playerWinCount} times!`;
+        return myOutputValue;
+      }
+      myOutputValue = mukPhrase + "Go again!";
+      return myOutputValue;
+    }
+    //CPU won 1st
+    if (currentWinner == 2) {
+      currentWinner = 0; //reset winner
+      if (playerInput == cpuInputSign) {
+        cpuWinCount = cpuWinCount + 1;
+        myOutputValue = `CPU wins! <br/> CPU has won ${cpuWinCount} times!`;
+        return myOutputValue;
+      }
+
+      myOutputValue = mukPhrase + "Go again!";
+      return myOutputValue;
+    }
+  }
+  //End of Korean game//
+
+  //CPU game//
+  if (gameMode == 3) {
+    //CPUs rolling
+    var cpuOne = convertCpuInput(generateCpuInput());
+    var cpuTwo = convertCpuInput(generateCpuInput());
+    var winner = judgeWinner(cpuOne, cpuTwo);
+
+    //output winning message
+    if (winner == "player") {
+      playerWinCount = playerWinCount + 1;
+      myOutputValue = `CPU 1 wins! <br/> CPU 1 played ${cpuOne}. <br/> CPU 2 played ${cpuTwo}. CPU 1 have won ${playerWinCount} times!`;
+    }
+    if (winner == "cpu") {
+      cpuWinCount = cpuWinCount + 1;
+      myOutputValue = `CPU 2 wins! <br/> CPU 2 played ${cpuTwo}.<br/> CPU 1 played ${cpuOne}. The CPU 2 has won ${cpuWinCount} times!`;
+    }
+    if (winner == "tie") {
+      tieCount = tieCount + 1;
+      myOutputValue = `It's a tie!<br/> CPU 1 played ${cpuOne}.<br/> CPU 2 played ${cpuTwo}. There has been ${tieCount} ties!`;
+    }
+    return myOutputValue;
+  }
+  //End of CPU game//
 };
 
 //Creating random hand sign
@@ -54,7 +175,7 @@ var convertCpuInput = function (randomInteger) {
   return outputSign;
 };
 
-//Judgement outputs winning message.
+//Judgement outputs winning message.(player =1 cpu  =2)
 var judgeWinner = function (player, cpu) {
   var winner = "cpu"; // default cpu wins
   // sissor player wins when cpu is paper or draw when cpu sissors
@@ -65,7 +186,6 @@ var judgeWinner = function (player, cpu) {
     if (cpu == "sissors") {
       winner = "tie";
     } else {
-      console.log("passed sissors validation");
       return winner; //cut short
     }
   }
@@ -92,4 +212,21 @@ var judgeWinner = function (player, cpu) {
     }
   }
   return winner;
+};
+
+//validate player input to be sissors paper or stone, wrong input = true
+var validateInput = function (input) {
+  if (input != "paper" && input != "sissors" && input != "stone") {
+    return true;
+  }
+  return false;
+};
+
+// global counter reset function, used when modes change
+var resetCounter = function () {
+  playerWinCount = 0;
+  cpuWinCount = 0;
+  tieCount = 0;
+  currentWinner = 0;
+  return;
 };
