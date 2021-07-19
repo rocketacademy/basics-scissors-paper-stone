@@ -24,13 +24,15 @@ var main = function (input) {
   var myOutputValue = "Please input something"; //If it doesn't match with anything on top
   if (userChoose == aiChoose) {
     myOutputValue = "It's a draw.";
-  } else if (
+  }
+  if (
     (userChoose == "scissors" && aiChoose == "stone") || //Computer wins User
     (userChoose == "paper" && aiChoose == "scissors") ||
     (userChoose == "stone" && aiChoose == "paper")
   ) {
     myOutputValue = "You have lost";
-  } else if (
+  }
+  if (
     (userChoose == "stone" && aiChoose == "scissors") || // User wins Computer
     (userChoose == "scissors" && aiChoose == "paper") ||
     (userChoose == "paper" && aiChoose == "stone")
