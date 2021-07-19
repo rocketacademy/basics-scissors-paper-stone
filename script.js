@@ -50,10 +50,10 @@ if(gameModeState==0){
 }
 
 //Change game mode anytime during other gameplays
-if(gameModeState ==1&&input=='change'){
+if(gameModeState == 1&&input=='change'){
   gameModeState = 0;
   gameMode ='';
-  return `You wanted to change mode? Please type new game mode that you want to play`
+  return `Change game mode! Please enter game mode to continue playing`
 }
 
 if(gameMode=='normal'){
@@ -67,11 +67,10 @@ if(gameMode=='normal'){
   }
 if(gameMode=='reversed'){
   //If input includes reversed, then run reverse SPS rules
-  if (convertInput.indexOf('reversed')>-1){
-    if(convertInput == 'reversedstone' || convertInput == 'reversedpaper'||convertInput == 'reversedscissors'){
+  if(convertInput == 'stone' || convertInput == 'paper'||convertInput == 'scissors'){
     myOutputValue = reverseGame(convertInput,translateRPS());
-    }
-  }
+    
+  } 
 }
 
 if(gameMode=='korean'){
@@ -89,8 +88,8 @@ if(gameMode=='computer'){
 var winLossCompare = winLossPerc(playerScore,comScore);
 
   
-  
-return myOutputValue + `<br> ${winLossCompare} Play Again?`
+//Output message with win/loss state, score and current game mode
+return myOutputValue + `<br> ${winLossCompare} Play Again?<br>Current Game Mode: ${gameMode}`
 };
 
 // Symbol Generation
@@ -181,16 +180,16 @@ function normalGame(user, com) {
 
   // Reverse SPS Game function
 function reverseGame(user, com) {
-  // If user chose reversedpaper and com is scissors, user wins
-  // If user chose reversedscissors and com is stone, user wins
-  // If user chose reversedstone and com is paper, user wins 
-  if (((user == 'reversedpaper')&&(com=='scissors'))||((user=='reversedscissors')&&(com=='stone'))||((user=='reversedstone')&&(com=='paper'))){
+  // If user chose paper and com is scissors, user wins
+  // If user chose scissors and com is stone, user wins
+  // If user chose stone and com is paper, user wins 
+  if (((user == 'paper')&&(com=='scissors'))||((user=='scissors')&&(com=='stone'))||((user=='stone')&&(com=='paper'))){
     return winMessage(user,com,symbolGenerator(user),symbolGenerator(com))
   }
-  // If user chose reversedstone and com is scissors, user lose
-  // If user chose reversedpaper and com is stone, user lose
-  // If user chose reversedscissors and com is paper, user lose
-  if (((user == 'reversedstone')&&(com=='scissors'))||((user=='reversedpaper')&&(com=='stone'))||((user=='reversedscissors')&&(com=='paper'))){
+  // If user chose stone and com is scissors, user lose
+  // If user chose paper and com is stone, user lose
+  // If user chose scissors and com is paper, user lose
+  if (((user == 'stone')&&(com=='scissors'))||((user=='paper')&&(com=='stone'))||((user=='scissors')&&(com=='paper'))){
     return loseMessage(user,com,symbolGenerator(user),symbolGenerator(com))
   }
   //else it's a draw 
@@ -224,7 +223,7 @@ function gameModeChecker(input){
 
 // Random RPS by function
 var translateRPS = function () {
-  return 'paper'
+  //return 'paper'
   const list = ["scissors", "paper", "stone"];
   return list[Math.floor(Math.random() * 3)];
 };
