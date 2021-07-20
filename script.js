@@ -18,6 +18,7 @@ var main = function (input) {
   if (randomNumber == 2) {
     computerPicks = "paper";
   }
+
   console.log("computer picks", computerPicks);
   console.log("user input", input);
   var myOutputValue = "";
@@ -31,9 +32,9 @@ var main = function (input) {
   }
 
   if (
-    (computerPicks == "paper" && input == "rock") ||
+    (computerPicks == "paper" && input == "scissors") ||
     (computerPicks == "scissors" && input == "rock") ||
-    (computerPicks == "paper" && input == "scissors")
+    (computerPicks == "rock" && input == "paper")
   ) {
     myOutputValue = `The computer chose ${computerPicks}. You chose ${input}. You Won!`;
   }
@@ -41,6 +42,27 @@ var main = function (input) {
   if (computerPicks == input) {
     myOutputValue = `The computer chose ${computerPicks}. You chose ${input}. It's a tie!`;
   }
-
+  //reversed game
+  if (
+    (computerPicks == "paper" && input == "reversed rock") ||
+    (computerPicks == "scissors" && input == "reversed paper") ||
+    (computerPicks == "rock" && input == "reversed scissors")
+  ) {
+    myOutputValue = `The computer chose ${computerPicks}. You chose ${input}. You Won!`;
+  }
+  if (
+    (computerPicks == "paper" && input == "reversed scissors") ||
+    (computerPicks == "scissors" && input == "reversed rock") ||
+    (computerPicks == "rock" && input == "reversed paper")
+  ) {
+    myOutputValue = `The computer chose ${computerPicks}. You chose ${input}. You Lost!`;
+  }
+  if (
+    (computerPicks == "paper" && input == "reversed paper") ||
+    (computerPicks == "scissors" && input == "reversed scissors") ||
+    (computerPicks == "rock" && input == "reversed rock")
+  ) {
+    myOutputValue = `The computer chose ${computerPicks}. You chose ${input}. It's A Tie!`;
+  }
   return myOutputValue;
 };
