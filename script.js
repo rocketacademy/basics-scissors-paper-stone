@@ -1,44 +1,69 @@
 var main = function (input) {
-  // Input is unacceptable by default. If it is acceptable, the below if statements will change the output.
-  var myOutputValue = "Try again, please input rock, paper, or scissors";
   var computerInput = rockPaperScissors();
+  var myOutputValue = "Hello world. PLease input rock, paper , or scissors.";
+  // Input is unacceptable by default. If it is acceptable, the below if statements will change the output.
+
+  if (
+    (input == "rock" && computerInput == "paper") ||
+    (input == "scissors" && computerInput == "rock") ||
+    (input == "paper" && computerInput == "scissors") ||
+    (input == "reversed rock" && computerInput == "scissors") ||
+    (input == "reversed scissors" && computerInput == "paper") ||
+    (input == "reversed paper" && computerInput == "rock")
+  ) {
+    myOutputValue =
+      "The computer chose " +
+      computerInput +
+      ".<br>" +
+      "You chose " +
+      input +
+      ".<br><br>" +
+      "You lose! Bummer." +
+      "<br><br>" +
+      'Now you can type "scissors" "paper" or "stone" to play another round!';
+  }
 
   console.log("computer choice");
   console.log(computerInput);
 
   // If it is a draw.
-  if (input == computerInput) {
+  if (
+    input == computerInput ||
+    (input == "reversed rock" && computerInput == "rock") ||
+    (input == "reversed scissors" && computerInput == "scissors") ||
+    (input == "reversed paper" && computerInput == "paper")
+  ) {
     myOutputValue =
-      "It's a draw! you chose " +
+      "The computer chose " +
+      computerInput +
+      ".<br>" +
+      "You chose " +
       input +
-      " and computer chose " +
-      computerInput;
+      ".<br><br>" +
+      "You draw! Wow!" +
+      "<br><br>" +
+      'Now you can type "scissors" "paper" or "stone" to play another round!';
   }
 
   // if you win.
   if (
     (input == "rock" && computerInput == "scissors") ||
     (input == "scissors" && computerInput == "paper") ||
-    (input == "paper" && computerInput == "rock")
+    (input == "paper" && computerInput == "rock") ||
+    (input == "reversed rock" && computerInput == "paper") ||
+    (input == "reversed scissors" && computerInput == "rock") ||
+    (input == "reversed paper" && computerInput == "scissors")
   ) {
     myOutputValue =
-      "You have won! you chose " +
+      "The computer chose " +
+      computerInput +
+      ".<br>" +
+      "You chose " +
       input +
-      " and computer chose " +
-      computerInput;
-  }
-
-  // if you lose.
-  if (
-    (input == "rock" && computerInput == "paper") ||
-    (input == "scissors" && computerInput == "rock") ||
-    (input == "paper" && computerInput == "scissors")
-  ) {
-    myOutputValue =
-      "You have lost! you chose " +
-      input +
-      " and computer chose " +
-      computerInput;
+      ".<br><br>" +
+      "You win! Woohoo!" +
+      "<br><br>" +
+      'Now you can type "scissors" "paper" or "stone" to play another round!';
   }
   return myOutputValue;
 };
