@@ -6,7 +6,7 @@ var main = function (input) {
     " You picked " +
     input +
     "<br></br>" +
-    " whereas we picked " +
+    " Whereas we picked " +
     randomHand +
     "<br></br>" +
     " You lost, please try again!";
@@ -19,23 +19,17 @@ var main = function (input) {
     (input == "reversed Paper" && randomHand == "Scissors") ||
     (input == "reversed Stone" && randomHand == "Paper")
   ) {
-    return "You Won!";
-  }
-
-  if (input !== "Scissors" && input !== "Paper" && input !== "Stone") {
-    return "Please input Scissors Paper or Stone, all other values are void";
+    myOutputValue = "You Won!";
   }
 
   if (input == randomHand) {
-    return "DRAW";
-  }
-
-  if (
-    (input == " reversed Paper " && randomHand == "Paper") ||
-    (input == " reversed Scissors " && randomHand == "Scissors") ||
-    (input == " reversed Stone " && randomHand == "Stone")
-  ) {
-    return "DRAW";
+    myOutputValue = "DRAW!";
+  } else if (input == "reversed Paper" && randomHand == "Paper") {
+    myOutputValue = "DRAW";
+  } else if (input == "reversed Scissors" && randomHand == "Scissors") {
+    myOutputValue = "DRAW";
+  } else if (input == "reversed Stone" && randomHand == "Stone") {
+    myOutputValue = "DRAW";
   }
 
   return myOutputValue;
