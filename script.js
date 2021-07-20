@@ -95,7 +95,7 @@ var main = function (input) {
   console.log(currentGameMode);
   if (currentGameMode == "enter user name") {
     myOutputValue = setUserName(input);
-  } else if (currentGameMode == "Choose your mode") {
+  } else if (currentGameMode == "Choose your game") {
     myOutputValue = startGame(input);
   } else if (currentGameMode == "Normal") {
     myOutputValue = normalGame(input);
@@ -115,8 +115,8 @@ var main = function (input) {
 
 var setUserName = function (playerName) {
   userName = playerName;
-  currentGameMode = "Choose your mode";
-  var myOutputValue = `Hello ${userName}! Start by selecting (typing in) "Normal", "Reversed", "Korean", "AI"`;
+  currentGameMode = "Choose your game";
+  var myOutputValue = `Hello ${userName}! Please choose the game mode you'll like to play. <br><br>Type in "Normal", "Reversed", "Korean", "AI"`;
   return myOutputValue;
 };
 
