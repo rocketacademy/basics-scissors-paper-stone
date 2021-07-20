@@ -3,23 +3,31 @@ var comWonCount = 0;
 var userName = "";
 var startOfRound = true;
 var gameMode = "Waiting for user choice";
+var koreanSpsState = "first round";
+var roundWinner = "";
 
 var main = function (input) {
+  var myOutputValue = "";
+
   //for start of round, register user name
   if (startOfRound) {
     startOfRound = false;
     userName = input;
-    return `Welcome ${userName}! Please choose the game mode: <br><br> 1. Normal play <br><br> 2. Reversed play`;
+    return `Welcome ${userName}! Please choose the game mode: <br><br> 1. Normal play <br><br> 2. Reversed play <br><br> 3. Korean SPS <br><br> Enter the number choice.`;
   }
   //user choosing the game mode
   if (gameMode == "Waiting for user choice") {
     gameMode = gameModeProcess(input);
+    if (modeValidation(input)) {
+      gameMode = "Waiting for user choice";
+      return `You entered ${input} which is not one of the given choices (1, 2 or 3). ${userName}, please enter again.`;
+    }
     return `You have chosen ${gameMode}, let's start!`;
   }
 
   //process if the input is valid
   if (inputValidation(input)) {
-    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper or stone ${userName}, please try again.`;
+    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper or stone. ${userName}, please try again.`;
   }
 
   var randNumber = randomNumGenerator();
@@ -32,6 +40,10 @@ var main = function (input) {
   if (gameMode == "reversed play") {
     var result = reversedGameWinningHand(input, handFromProgram);
   }
+  if (gameMode == "korean SPS") {
+    myOutputValue = evaluateKoreanSPS(input, handFromProgram);
+    return `You are playing the Korean SPS version. <br><br> You played ${input} while the computer played ${handFromProgram}. <br><br> ${myOutputValue}`;
+  }
   console.log(userWonCount);
   console.log(comWonCount);
   var winPercent = (
@@ -42,7 +54,7 @@ var main = function (input) {
   if (userWonCount == 0 && comWonCount == 0) {
     winPercent = 0;
   }
-  var myOutputValue = `Hi ${userName}! You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> ${userName}'s winning percentage is ${winPercent}%. <br><br> Let's play again!!!`;
+  myOutputValue = `Hi ${userName}! You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> ${userName}'s winning percentage is ${winPercent}%. <br><br> Let's play again!!!`;
   return myOutputValue;
 };
 
@@ -53,6 +65,16 @@ var gameModeProcess = function (userInput) {
   }
   if (userInput == 2) {
     return `reversed play`;
+  }
+  if (userInput == 3) {
+    return `korean SPS`;
+  }
+};
+
+//to validate the user input for the game mode
+var modeValidation = function (userInput) {
+  if (!(userInput == "1" || userInput == "2" || userInput == "3")) {
+    return true;
   }
 };
 
@@ -112,6 +134,57 @@ var reversedGameWinningHand = function (userInput, programPlay) {
   ) {
     comWonCount++;
     return "You are playing the reversed game. <br><br> Oh no, you lost!";
+  }
+};
+
+//to evaluate the winner Korean SPS
+var evaluateKoreanSPS = function (userInput, programPlay) {
+  var resultOutput = "";
+  if (koreanSpsState == "first round") {
+    var firstRoundResult = winningHand(userInput, programPlay);
+    resultOutput = evaluate1stRound(firstRoundResult);
+    return resultOutput;
+  }
+
+  if (koreanSpsState == "after first round") {
+    var roundResult = winningHand(userInput, programPlay);
+    resultOutput = evaluateRoundWinner(roundResult);
+    if (roundResult == "It is a draw!") {
+      return `${resultOutput} The game has ended. ${roundWinner} have won the game.`;
+    }
+    return resultOutput;
+  }
+};
+
+//to evaluate first round of Korean SPS
+var evaluate1stRound = function (firstRoundResult) {
+  if (firstRoundResult == "It is a draw!") {
+    return `Your first round was a draw! Restarting first round...`;
+  }
+  if (firstRoundResult == "Congrats, you win!") {
+    koreanSpsState = "after first round";
+    roundWinner = userName;
+    return `You won the first round! You will call out for the next round.`;
+  }
+  if (firstRoundResult == "Oh no, you lost!") {
+    koreanSpsState = "after first round";
+    roundWinner = "Computer";
+    return `Computer won the first round ): The computer will call out for the next round.`;
+  }
+};
+
+//to evaluate the winner of subsequent rounds
+var evaluateRoundWinner = function (roundResult) {
+  if (roundResult == "It is a draw!") {
+    return `Both played the same!`;
+  }
+  if (roundResult == "Congrats, you win!") {
+    roundWinner = userName;
+    return `You won this round! You will call out for the next round.`;
+  }
+  if (roundResult == "Oh no, you lost!") {
+    roundWinner = "computer";
+    return `Computer won this round ): The computer will call out for the next round.`;
   }
 };
 
