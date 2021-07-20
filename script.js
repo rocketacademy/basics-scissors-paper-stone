@@ -12,60 +12,75 @@ var computerHand = function () {
     return `paper`;
   }
 };
-var whoWins = function (input) {
-  var computerUse = computerHand();
+var whoWins = function (input, computerUse) {
   console.log(`computer hand = ${computerUse}`);
   // this is if the computer wins
   if ((computerUse == `scissors` && input == `paper`) || (computerUse == `paper` && input == `stone`) || (computerUse == `stone` && input == `scissors`)) {
-    return `the computer chose ${computerUse}!<br>you chose ${input}!<br><br> YOU LOSE!<br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
+    computerWin = computerWin + 1;
+    console.log(`you lose`);
+    var outcome = `you lose!`;
   }
 
   // this is if the human wins
-  if ((input == `scissors` && computerUse == `paper`) || (input == `paper` && computerUse == `stone`) || (input == `stone` && computerUse == `scissors`)) {
-    return `You chose ${input}!<br> the computer chose ${computerUse}!<br><br>YOU WIN! <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+  else if ((input == `scissors` && computerUse == `paper`) || (input == `paper` && computerUse == `stone`) || (input == `stone` && computerUse == `scissors`)) {
+    humanWin = humanWin + 1;
+
+    console.log(`you win`);
+    var outcome = `you win!`;
   }
 
   //if there is a draw
-  if (input == computerUse) {
-    return `WOW THERE IS A DRAW!<br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
+  else if (input == computerUse) {
+    console.log(`draw`);
+    var outcome = `you drew with the computer`;
   }
   //if there is invalid input
-  return `u have entered an invalid input <br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
+
+  return outcome;
 };
 // this is for the reversed game
-var ReversalWhoWins = function (input) {
+var ReversalWhoWins = function (input, computerUse) {
   console.log(`human uses ${input}`);
-  var realInput = input.replace("reversed", "");
-  var computerUse = computerHand();
+
   console.log(`computer uses ${computerUse}`);
-  var reversedComputerUse = `reversed ${computerUse}`;
-  console.log(` reversed computer hand = ${reversedComputerUse}`);
+
   // these is if the computer loses
-  if ((reversedComputerUse == `reversed scissors` && input == `reversed paper`) || (reversedComputerUse == `reversed paper` && input == `reversed stone`) || (reversedComputerUse == `reversed stone` && input == `reversed scissors`)) {
-    return `the computer chose ${computerUse}!<br>you chose ${realInput}!<br><br> YOU WIN! <br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
+  if ((computerUse == `scissors` && input == `reversed paper`) || (computerUse == `paper` && input == `reversed stone`) || (computerUse == `stone` && input == `reversed scissors`)) {
+    humanWin = humanWin + 1;
+    console.log(`you win`);
+    var outcome = "you win!";
   }
 
   // this is if the human loses
-  if ((input == "reversed scissors" && reversedComputerUse == `reversed paper`) || (input == `reversed paper` && reversedComputerUse == `reversed stone`) || (input == `reversed stone` && reversedComputerUse == `reversed scissors`)) {
-    return `the computer chose ${computerUse}!<br>you chose ${realInput}!<br><br> YOU LOSE! <br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
+  if ((input == "reversed scissors" && computerUse == `paper`) || (input == `reversed paper` && computerUse == `stone`) || (input == `reversed stone` && computerUse == `scissors`)) {
+    computerWin = computerWin + 1;
+    console.log(`you lose`);
+    var outcome = "you lose!";
   }
 
   //if there is a draw
-  if (input == reversedComputerUse) {
-    return `WOW THERE IS A DRAW!<br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
+  if (input == "reversed " + computerUse) {
+    console.log(`draw`);
+    var outcome = "you drew with the computer ";
   }
-  //if there is invalid input
-  return `u have entered an invalid input<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
+  return outcome;
 };
+
+var computerWin = 0;
+var humanWin = 0;
 var main = function (input) {
-  console.log(`input= ${input}`);
+  var computerUse = computerHand();
   //the option to go reversed or stay normal remains here
   if (input == `reversed scissors` || input == `reversed stone` || input == `reversed paper`) {
-    var reversedwinner = ReversalWhoWins(input);
-    return reversedwinner;
+    var realInput = input.replace("reversed", "");
+    var reversedwinner = ReversalWhoWins(input, computerUse);
+    return reversedwinner + ` the computer chose ${computerUse} <br> you chose ${realInput} <br><br>Now you can type "scissors" "paper" or "stone" to play another round! the computer has won ${computerWin} times. You have won ${humanWin} times`;
+  } // if there is invalid input
+  if (input != "scissors" && input != "stone" && input != "paper") {
+    return " you have entered an invalid input";
   }
+  //here go normal
+  var winner = whoWins(input, computerUse);
 
-  var winner = whoWins(input);
-
-  return winner;
+  return winner + ` the computer chose ${computerUse} <br> you chose ${input} <br><br>Now you can type "scissors" "paper" or "stone" to play another round! the computer has won ${computerWin} times. You have won ${humanWin} times`;
 };
