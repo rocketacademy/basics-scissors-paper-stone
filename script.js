@@ -1,10 +1,19 @@
 var userWonCount = 0;
 var comWonCount = 0;
+var userName = "";
+var startOfRound = true;
 
 var main = function (input) {
-  //firstly, process if the input is valid
+  //for start of round, register user name
+  if (startOfRound) {
+    startOfRound = false;
+    userName = input;
+    return `Welcome ${userName}!`;
+  }
+
+  //process if the input is valid
   if (inputValidation(input)) {
-    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper, stone, reversed scissors, reversed paper or reversed stone. Please try again.`;
+    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper, stone, reversed scissors, reversed paper or reversed stone. ${userName}, please try again.`;
   }
 
   var randNumber = randomNumGenerator();
@@ -12,7 +21,7 @@ var main = function (input) {
   var handFromProgram = playByProgram(randNumber);
   var result = winningHand(input, handFromProgram);
 
-  //next, process if user wants to play reversed
+  //process if user wants to play reversed
   if (
     input == "reversed scissors" ||
     input == "reversed paper" ||
@@ -30,7 +39,7 @@ var main = function (input) {
   if (userWonCount == 0 && comWonCount == 0) {
     winPercent = 0;
   }
-  var myOutputValue = `You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> Your winning percentage is ${winPercent}%. Let's play again!!!`;
+  var myOutputValue = `Hi ${userName}! You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> ${userName}'s winning percentage is ${winPercent}%. <br><br> Let's play again!!!`;
   return myOutputValue;
 };
 
