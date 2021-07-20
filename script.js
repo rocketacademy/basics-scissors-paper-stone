@@ -67,13 +67,17 @@ var playerDrawIf = function (playerChoice, computerChoice) {
 };
 
 var main = function (input) {
-  var myOutputValue = ``;
+  var myOutputValue = `Invalid. Type in scissors or paper or stone to play;`;
   if (status == `Waiting for Player's Name`) {
     playerName = input;
     console.log(playerName, "Player Name");
     status = "Playing Game";
     console.log(status);
     myOutputValue = `Hello ${playerName}! <br><br>Type in scissors or paper or stone to play`;
+    if (!input) {
+      status = `Waiting for Player's Name`;
+      myOutputValue = "Key in your name to start";
+    }
   } else if ((status = "Playing game"));
   {
     //Player's Choice
@@ -88,25 +92,25 @@ var main = function (input) {
     var playHistroy = `<br><br>You chose ${playerChoice}, computer chose ${computerChoice}`;
     console.log(playHistroy);
 
+    //Score histroy
+    var scoreHistory = `<br><br>Player won: ${currentPlayerWins} | Computer won: ${currentComputerWins} | Draws ${currentDraws}.`;
+
     var didPlayerWin = playerWinsIf(playerChoice, computerChoice);
     var didPlayerLose = playerLoseIf(playerChoice, computerChoice);
     var didPlayerDraw = playerDrawIf(playerChoice, computerChoice);
-
-    //Score histroy
-    var scoreHistory = `<br><br>Player won: ${currentPlayerWins} | Computer won: ${currentComputerWins} | Draws ${currentDraws}.`;
   }
 
   if (didPlayerWin == true) {
     currentPlayerWins = currentPlayerWins + 1;
-    return (myOutputValue = `${playerName} won. ${playHistroy}, ${scoreHistory}`);
+    myOutputValue = `${playerName} won. ${playHistroy}, ${scoreHistory}`;
   }
   if (didPlayerLose == true) {
     currentComputerWins = currentComputerWins + 1;
-    return (myOutputValue = `${playerName} lost. ${playHistroy}, ${scoreHistory}`);
+    myOutputValue = `${playerName} lost. ${playHistroy}, ${scoreHistory}`;
   }
   if (didPlayerDraw == true) {
     currentDraws = currentDraws + 1;
-    return (myOutputValue = `${playerName} draw. ${playHistroy}, ${scoreHistory}`);
+    myOutputValue = `${playerName} draw. ${playHistroy}, ${scoreHistory}`;
   }
 
   return myOutputValue;
