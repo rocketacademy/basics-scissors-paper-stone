@@ -141,10 +141,10 @@ const main = (input) => {
   // game mode to execute
   switch (gameMode) {
     case "normal":
-      let normalGameOutput = normalModeGamePlay(input);
+      normalGameOutput = normalModeGamePlay(input);
       return normalGameOutput;
     case "reverse":
-      let reverseGameOutput = reverseModeGamePlay(input);
+      reverseGameOutput = reverseModeGamePlay(input);
       return reverseGameOutput;
   }
 };
