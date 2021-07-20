@@ -2,31 +2,34 @@ var userWonCount = 0;
 var comWonCount = 0;
 var userName = "";
 var startOfRound = true;
+var gameMode = "Waiting for user choice";
 
 var main = function (input) {
   //for start of round, register user name
   if (startOfRound) {
     startOfRound = false;
     userName = input;
-    return `Welcome ${userName}!`;
+    return `Welcome ${userName}! Please choose the game mode: <br><br> 1. Normal play <br><br> 2. Reversed play`;
+  }
+  //user choosing the game mode
+  if (gameMode == "Waiting for user choice") {
+    gameMode = gameModeProcess(input);
+    return `You have chosen ${gameMode}, let's start!`;
   }
 
   //process if the input is valid
   if (inputValidation(input)) {
-    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper, stone, reversed scissors, reversed paper or reversed stone. ${userName}, please try again.`;
+    return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper or stone ${userName}, please try again.`;
   }
 
   var randNumber = randomNumGenerator();
   console.log(randNumber);
   var handFromProgram = playByProgram(randNumber);
-  var result = winningHand(input, handFromProgram);
 
-  //process if user wants to play reversed
-  if (
-    input == "reversed scissors" ||
-    input == "reversed paper" ||
-    input == "reversed stone"
-  ) {
+  if (gameMode == "normal play") {
+    var result = winningHand(input, handFromProgram);
+  }
+  if (gameMode == "reversed play") {
     var result = reversedGameWinningHand(input, handFromProgram);
   }
   console.log(userWonCount);
@@ -43,17 +46,20 @@ var main = function (input) {
   return myOutputValue;
 };
 
+//to process the game mode
+var gameModeProcess = function (userInput) {
+  if (userInput == 1) {
+    return `normal play`;
+  }
+  if (userInput == 2) {
+    return `reversed play`;
+  }
+};
+
 //to validate user input
 var inputValidation = function (userGuess) {
   if (
-    !(
-      userGuess == "scissors" ||
-      userGuess == "stone" ||
-      userGuess == "paper" ||
-      userGuess == "reversed scissors" ||
-      userGuess == "reversed stone" ||
-      userGuess == "reversed paper"
-    )
+    !(userGuess == "scissors" || userGuess == "stone" || userGuess == "paper")
   ) {
     return true;
   }
@@ -85,24 +91,24 @@ var winningHand = function (userInput, programPlay) {
 //to evaluate the winner for reversed play
 var reversedGameWinningHand = function (userInput, programPlay) {
   if (
-    (userInput == "reversed scissors" && programPlay == "scissors") ||
-    (userInput == "reversed paper" && programPlay == "paper") ||
-    (userInput == "reversed stone" && programPlay == "stone")
+    (userInput == "scissors" && programPlay == "scissors") ||
+    (userInput == "paper" && programPlay == "paper") ||
+    (userInput == "stone" && programPlay == "stone")
   ) {
     return "It is a draw!";
   }
   if (
-    (userInput == "reversed scissors" && programPlay == "stone") ||
-    (userInput == "reversed paper" && programPlay == "scissors") ||
-    (userInput == "reversed stone" && programPlay == "paper")
+    (userInput == "scissors" && programPlay == "stone") ||
+    (userInput == "paper" && programPlay == "scissors") ||
+    (userInput == "stone" && programPlay == "paper")
   ) {
     userWonCount++;
     return "You are playing the reversed game. <br><br> Congrats, you win!";
   }
   if (
-    (userInput == "reversed stone" && programPlay == "scissors") ||
-    (userInput == "reversed scissors" && programPlay == "paper") ||
-    (userInput == "reversed paper" && programPlay == "stone")
+    (userInput == "stone" && programPlay == "scissors") ||
+    (userInput == "scissors" && programPlay == "paper") ||
+    (userInput == "paper" && programPlay == "stone")
   ) {
     comWonCount++;
     return "You are playing the reversed game. <br><br> Oh no, you lost!";
