@@ -1,3 +1,14 @@
+//user name to personalize the game
+var userName = "";
+
+//number of times player wins vs computer wins vs draws
+var mode = "";
+
+//set number of player wins, computer wins, draws to 0
+var numPlayerWins = 0;
+var numComputerWins = 0;
+var numDraws = 0;
+
 var main = function (input) {
   //computer choice
   var comChoice = generateComChoice();
@@ -26,7 +37,9 @@ var main = function (input) {
     return "The computer chose ${comChoice} and you chose ${input}. You lost! Try again!";
   }
   //input validation
-  return "Your input ${input} is invalid. Please only enter scissors, paper, or stone.";
+  else if (input != "scissors" || input != "paper" || input != "stone") {
+    return "Your input ${input} is invalid. Please only enter scissors, paper, or stone.";
+  }
 };
 
 //generate a random number between 0 and 3
