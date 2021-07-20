@@ -1,3 +1,6 @@
+var userWonCount = 0;
+var comWonCount = 0;
+
 var main = function (input) {
   //firstly, process if the input is valid
   if (inputValidation(input)) {
@@ -17,8 +20,17 @@ var main = function (input) {
   ) {
     var result = reversedGameWinningHand(input, handFromProgram);
   }
-
-  var myOutputValue = `You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> Let's play again!!!`;
+  console.log(userWonCount);
+  console.log(comWonCount);
+  var winPercent = (
+    (userWonCount * 100) /
+    (userWonCount + comWonCount)
+  ).toFixed(2);
+  //if the first round is a draw, since divide by 0 is NaN
+  if (userWonCount == 0 && comWonCount == 0) {
+    winPercent = 0;
+  }
+  var myOutputValue = `You played ${input} while the computer played ${handFromProgram}. <br><br> ${result} <br><br> Your winning percentage is ${winPercent}%. Let's play again!!!`;
   return myOutputValue;
 };
 
@@ -48,6 +60,7 @@ var winningHand = function (userInput, programPlay) {
     (userInput == "paper" && programPlay == "stone") ||
     (userInput == "stone" && programPlay == "scissors")
   ) {
+    userWonCount++;
     return "Congrats, you win!";
   }
   if (
@@ -55,6 +68,7 @@ var winningHand = function (userInput, programPlay) {
     (userInput == "scissors" && programPlay == "stone") ||
     (userInput == "paper" && programPlay == "scissors")
   ) {
+    comWonCount++;
     return "Oh no, you lost!";
   }
 };
@@ -73,6 +87,7 @@ var reversedGameWinningHand = function (userInput, programPlay) {
     (userInput == "reversed paper" && programPlay == "scissors") ||
     (userInput == "reversed stone" && programPlay == "paper")
   ) {
+    userWonCount++;
     return "You are playing the reversed game. <br><br> Congrats, you win!";
   }
   if (
@@ -80,6 +95,7 @@ var reversedGameWinningHand = function (userInput, programPlay) {
     (userInput == "reversed scissors" && programPlay == "paper") ||
     (userInput == "reversed paper" && programPlay == "stone")
   ) {
+    comWonCount++;
     return "You are playing the reversed game. <br><br> Oh no, you lost!";
   }
 };
