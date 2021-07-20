@@ -13,26 +13,33 @@ var main = function (input) {
   if (startOfRound) {
     startOfRound = false;
     userName = input;
-    return `Welcome ${userName}! Please choose the game mode: <br><br> 1. Normal play <br><br> 2. Reversed play <br><br> 3. Korean SPS <br><br> Enter the number choice.`;
+    return `Welcome ${userName}! Please choose the game mode: <br><br> 1. Normal play <br><br> 2. Reversed play <br><br> 3. Korean SPS <br><br> 4. Computer vs computer <br><br> Enter the number choice.`;
   }
   //user choosing the game mode
   if (gameMode == "Waiting for user choice") {
     gameMode = gameModeProcess(input);
+    //to see if the user input is one of the choices
     if (modeValidation(input)) {
       gameMode = "Waiting for user choice";
       return `You entered ${input} which is not one of the given choices (1, 2 or 3). ${userName}, please enter again.`;
     }
+    //for com vs com mode, need to prompt user just click submit
+    if (gameMode == "computer vs computer") {
+      return `You have chosen ${gameMode}, you can start by clicking submit without entering anything.`;
+    }
     return `You have chosen ${gameMode}, let's start!`;
   }
 
-  //process if the input is valid
-  if (inputValidation(input)) {
+  //process if the input is valid and exception for com vs com game mode
+  if (inputValidation(input) && !(gameMode == "computer vs computer")) {
     return `You entered ${input} which is not a valid input. Only the following are accepted: scissors, paper or stone. ${userName}, please try again.`;
   }
 
   var randNumber = randomNumGenerator();
+  var randNumber2 = randomNumGenerator();
   console.log(randNumber);
   var handFromProgram = playByProgram(randNumber);
+  var handFromProgram2 = playByProgram(randNumber2);
 
   if (gameMode == "normal play") {
     var result = winningHand(input, handFromProgram);
@@ -44,12 +51,18 @@ var main = function (input) {
     myOutputValue = evaluateKoreanSPS(input, handFromProgram);
     return `You are playing the Korean SPS version. <br><br> You played ${input} while the computer played ${handFromProgram}. <br><br> ${myOutputValue}`;
   }
+  if (gameMode == "computer vs computer") {
+    input = handFromProgram2;
+    var result = winningHand(handFromProgram, handFromProgram2);
+  }
   console.log(userWonCount);
   console.log(comWonCount);
+
   var winPercent = (
     (userWonCount * 100) /
     (userWonCount + comWonCount)
   ).toFixed(2);
+
   //if the first round is a draw, since divide by 0 is NaN
   if (userWonCount == 0 && comWonCount == 0) {
     winPercent = 0;
@@ -69,11 +82,21 @@ var gameModeProcess = function (userInput) {
   if (userInput == 3) {
     return `korean SPS`;
   }
+  if (userInput == 4) {
+    return `computer vs computer`;
+  }
 };
 
 //to validate the user input for the game mode
 var modeValidation = function (userInput) {
-  if (!(userInput == "1" || userInput == "2" || userInput == "3")) {
+  if (
+    !(
+      userInput == "1" ||
+      userInput == "2" ||
+      userInput == "3" ||
+      userInput == "4"
+    )
+  ) {
     return true;
   }
 };
