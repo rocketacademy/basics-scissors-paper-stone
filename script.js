@@ -5,7 +5,7 @@
 var roundsPlayerWin = 0;
 var roundsSystemWin = 0;
 var roundsDraw = 0;
-var gameMode = "Please key in your name!";
+var gameMode = `Please key in your name!`;
 var username = "";
 
 // create random number generator to represent the three actions
@@ -25,7 +25,8 @@ var generateRandomNumber = function () {
   return sps;
 };
 
-var spsGame = function (username, playerGuess) {
+///// THE BASIC SPS /////
+var normalGame = function (username, playerGuess) {
   var randomSPS = generateRandomNumber();
   var systemChoiceStatement = `Computer chose ${randomSPS}`;
   var inputChoiceStatement = `You chose ${playerGuess}`;
@@ -34,7 +35,6 @@ var spsGame = function (username, playerGuess) {
 
   var message = `${username}, something went wrong! <br> This round is not recorded. <br><br> Please try again with inputs "scissors", "paper" or "stone".`;
 
-  ///// THE BASIC SPS /////
   // win conditions
   if (
     (playerGuess == "scissors" && randomSPS == "paper") ||
@@ -60,8 +60,48 @@ var spsGame = function (username, playerGuess) {
     roundsDraw = roundsDraw + 1;
     message = `${username}, you draw! Another round!`;
   }
+  var totalGames = roundsPlayerWin + roundsSystemWin + roundsDraw;
+  var winningPercentage = ((100 * roundsPlayerWin) / totalGames).toFixed(2);
 
-  ///// THE REVERSED SPS /////
+  var goodOrBadStatement = function () {
+    if (winningPercentage > 50) {
+      return `You've win more than half the games! Pretty good!`;
+    } else if (winningPercentage < 50) {
+      return `You've win less than half the games! Try harder!`;
+    } else if ((winningPercentage = 50)) {
+      return `You've win exactly half the games!`;
+    }
+  };
+
+  return (
+    message +
+    "<br>" +
+    "<br>" +
+    systemChoiceStatement +
+    "<br>" +
+    inputChoiceStatement +
+    "<br>" +
+    "<br>" +
+    anotherRoundStatement +
+    "<br>" +
+    "<br>" +
+    `Rounds won: ${roundsPlayerWin}. <br> Round lost: ${roundsSystemWin}. <br> Rounds draw: ${roundsDraw}. <br> Winning percentage: ${winningPercentage}%` +
+    "<br>" +
+    "<br>" +
+    goodOrBadStatement()
+  );
+};
+
+///// THE REVERSED SPS /////
+var reverseGame = function (username, playerGuess) {
+  var randomSPS = generateRandomNumber();
+  var systemChoiceStatement = `Computer chose ${randomSPS}`;
+  var inputChoiceStatement = `You chose ${playerGuess}`;
+  var anotherRoundStatement = `Now you can type "scissors" "paper" or "stone" to play another round!`;
+  console.log(randomSPS);
+
+  var message = `${username}, something went wrong! <br> This round is not recorded. <br><br> Please try again with inputs "reversed scissors", "reversed paper" or "reversed stone".`;
+
   // win conditions
   if (
     (playerGuess == "reversed scissors" && randomSPS == "stone") ||
@@ -122,14 +162,32 @@ var spsGame = function (username, playerGuess) {
 var main = function (input) {
   var myOutputValue = ``;
 
-  if (gameMode == "Please key in your name!" && input == "") {
+  if (gameMode == `Please key in your name!` && input == ``) {
     myOutputValue = `Please key in your name!`;
-  } else if (gameMode == "Please key in your name!" && input !== "") {
+  } else if (gameMode == `Please key in your name!` && input !== ``) {
     username = input;
-    gameMode = `scissors paper stone!`;
-    myOutputValue = `Hello ${username}. <br> To play the game, key in "scissors", "paper" or "stone" and submit.`;
-  } else if ((gameMode = `scissors paper stone!`)) {
-    myOutputValue = spsGame(username, input);
+    gameMode = `chooseMode`;
+    myOutputValue = `Hello ${username}. <br> Enter your preferred mode, "normal" or "reverse".`;
+  }
+
+  if (gameMode == `chooseMode` && input !== `reverse` && input !== `normal`) {
+    myOutputValue = `Hello ${username}. <br> Enter your preferred mode, "normal" or "reverse".`;
+  } else if (gameMode == `chooseMode` && input == `normal`) {
+    gameMode = `normal`;
+    myOutputValue = `Hello ${username}. <br> You chose NORMAL mode!<br> Choose between "scissors", "paper" or "stone"`;
+  } else if (gameMode == `chooseMode` && input == `reverse`) {
+    gameMode = `reverse`;
+    myOutputValue = `You chose REVERSE mode!<br> Choose between "reversed scissors", "reversed paper" or "reversed stone"`;
+  } else if (gameMode == `normal` && input !== `reverse`) {
+    myOutputValue = normalGame(username, input);
+  } else if (gameMode == `reverse` && input !== `normal`) {
+    myOutputValue = reverseGame(username, input);
+  } else if (gameMode == `normal` && input == `reverse`) {
+    gameMode = `reverse`;
+    myOutputValue = `Hello ${username}. <br> You chose REVERSE mode!<br> Choose between "reversed scissors", "reversed paper" or "reversed stone"`;
+  } else if (gameMode == `reverse` && input == `normal`) {
+    gameMode = `normal`;
+    myOutputValue = `Hello ${username}. <br> You chose NORMAL mode!<br> Choose between "scissors", "paper" or "stone"`;
   }
   return myOutputValue;
 };
