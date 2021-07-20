@@ -1,8 +1,9 @@
 //DiceRoll Function
 //Declare constant
-const scissors = `scissors`;
-const paper = `paper`;
-const stone = `stone`;
+var scissors = `scissors`;
+var paper = `paper`;
+var stone = `stone`;
+var reverseStone = 
 
 var rollDice = function () {
   //determine max number here
