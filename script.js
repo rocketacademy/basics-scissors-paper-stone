@@ -1,6 +1,6 @@
 // Use Math to generate system's generated input for the game
 const getRandomHand = () => {
-  let systemGenerateNumber = 1 + Math.floor(Math.random() * 3);
+  const systemGenerateNumber = 1 + Math.floor(Math.random() * 3);
   if (systemGenerateNumber === 1) {
     return "scissors";
   } else if (systemGenerateNumber === 2) {
@@ -54,33 +54,61 @@ const drawCases = (userInput, showMeHand) =>
   (userInput.toLowerCase() === "reversed rock" && showMeHand === "rock") ||
   (userInput.toLowerCase() === "reversed paper" && showMeHand === "paper");
 
+//track scores
+let userWin = 0;
+let systemWin = 0;
+
+//define game mode
+let userName = "";
+let gameMode = "pending for username";
+
 // The game
 const main = (input) => {
-  let showMeHand = getRandomHand();
-  let userInput = input;
-
-  //If invalid input , return feedback.
-  if (invalidCases(userInput)) {
-    return `${iconForNoun(
-      userInput
-    )} is an invalid input, please type scissors/paper/rock to continue the game`;
-  }
-  //If both parties choose the same object, it's a draw.
-  else if (drawCases(userInput, showMeHand)) {
-    return `Draw, your ${iconForNoun(userInput)} vs system's ${iconForNoun(
-      showMeHand
-    )}`;
-  }
-  // User wins.
-  else if (winCases(userInput, showMeHand)) {
-    return `You won, your ${iconForNoun(
-      userInput
-    )} beats system's ${iconForNoun(showMeHand)}`;
+  if (gameMode == "pending for username") {
+    userName = input;
+    gameMode = "dice game";
+    return `Welcome ${userName}`;
   }
 
-  // System wins.
-  else
-    return `You lost, system's ${iconForNoun(
-      showMeHand
-    )} beats your ${iconForNoun(userInput)}`;
+  if (gameMode == "dice game") {
+    let showMeHand = getRandomHand();
+    let userInput = input;
+    let myOutputValue = "";
+
+    if (input === userInput)
+      if (invalidCases(userInput)) {
+        //If invalid input , return feedback.
+        return (myOutputValue = `${iconForNoun(
+          userInput
+        )} is an invalid input.\<br>\Please type scissors/paper/rock to continue the game`);
+      }
+      //If both parties choose the same object, it's a draw.
+      else if (drawCases(userInput, showMeHand)) {
+        return (myOutputValue = `Draw.\<br>\Your ${iconForNoun(
+          userInput
+        )} vs system's ${iconForNoun(
+          showMeHand
+        )}.\<br>\You: ${userWin}\<br>\System: ${systemWin}`);
+      }
+      // User wins.
+      else if (winCases(userInput, showMeHand)) {
+        //increment userWin score
+        userWin += 1;
+        return (myOutputValue = `You won.\<br>\Your ${iconForNoun(
+          userInput
+        )} beats system's ${iconForNoun(showMeHand)}.\<br>\
+        You: ${userWin}\<br>\System: ${systemWin}`);
+      }
+
+      // System wins.
+      else if (!winCases(userInput, showMeHand)) {
+        //increment systemWin score
+        systemWin += 1;
+        return (myOutputValue = `You lost.\<br>\ System's ${iconForNoun(
+          showMeHand
+        )} beats your ${iconForNoun(
+          userInput
+        )}.\<br>\You: ${userWin}\<br>\System: ${systemWin}`);
+      }
+  }
 };
