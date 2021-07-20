@@ -45,12 +45,46 @@
         padding: 20px;
         width: 100%;
       }
+
+      #name-div {
+        background-color: lightgrey;
+        margin: 10px auto;
+        padding: 20px;
+        width: 100%;
+      }
+
+      #name {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 9px;
+        width: 100%;
+      }
+
+      #nameButton {
+        font-size: 21px;
+        line-height: 33px;
+        margin: 0 0 23px 0;
+        padding: 0 6px;
+      }
+
+
+
+
+
     </style>
   </head>
 
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
+      <p>Name:</p>
+      <input id="name-field" />
+      <br />
+      <button id="submit-name-button">Submit your Name</button>
+      <p>Your Name:</p>
+      <div id="name-div"></div>
+
       <p>Input:</p>
       <input id="input-field" />
       <br />
@@ -62,6 +96,19 @@
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
+    //name
+    var nameButton = document.querySelector("#submit-name-button");
+    nameButton.addEventListener("click", function () {
+      var userName = document.querySelector("#name-field");
+      var nameResult = max(userName.value);
+
+    var nameOutput = document.querySelector("#name-div");
+      nameOutput.innerHTML = nameResult;
+      userName.value = "";
+    });
+
+
+    //output
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
