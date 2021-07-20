@@ -125,9 +125,8 @@ var main = function (input) {
   }
 
   // Korean Version
-  //most recent winner is the ultimate winner when there is a draw
+  // most recent winner is the ultimate winner when there is a draw
   if ((currentGameMode = "Korean version")) {
-    recentWinner = "";
     // user win
     if (
       (input == "scissors" && computerChoose == "paper") ||
@@ -146,15 +145,15 @@ var main = function (input) {
       myOutputValue = `Player ${userName}, you lose! <br> You choose: ${input} ${inputEmoji}. <br> The computer chooses: ${computerChoose} ${compEmoji}.  <br> You need to play again to decide the ultimate winner.`;
     } // if it's draw
     else if (input == computerChoose) {
-      if (recentWinner == "user") {
+      if (recentWinner == "") {
+        recentWinner = "";
+        myOutputValue = `It is a DRAW. <br> You choose: ${input} ${inputEmoji}. <br> The computer chooses: ${computerChoose} ${compEmoji}. <br> Since no one wins the previous round, please play again.`;
+      } else if (recentWinner == "user") {
         recentWinner = "";
         return (myOutputValue = `It is a DRAW. <br> You choose: ${input} ${inputEmoji}. <br> The computer chooses: ${computerChoose} ${compEmoji}. <br> Since you are the recent winner, you WIN. <br> Congratulations Player ${userName}, you are the ultimate winner of muk-jji-ppa! `);
       } else if (recentWinner == "computer") {
         recentWinner = "";
         return (myOutputValue = `It is a DRAW. <br> You choose: ${input} ${inputEmoji}. <br> The computer chooses: ${computerChoose} ${compEmoji}. <br> Since the computer is the recent winner, you LOST muk-jji-ppa! `);
-      } else if (recentWinner == "") {
-        recentWinner = "";
-        return (myOutputValue = `It is a DRAW. <br> You choose: ${input} ${inputEmoji}. <br> The computer chooses: ${computerChoose} ${compEmoji}. <br> Since no one wins the previous round, please play again.`);
       }
     }
   }
