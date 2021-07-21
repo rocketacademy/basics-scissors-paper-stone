@@ -34,21 +34,19 @@ var main = function (input) {
   }
 
   //If mode is not selected, prompt to choose mode
-  if (gameModeState == 0) {
-    if (gameMode == "") {
-      if (gameModeState == 0) {
-        if (
-          input != "normal" &&
-          input != "reversed" &&
-          input != "korean" &&
-          input != "computer"
-        ) {
-          return `Please select 'normal' ,'reversed','computer' or 'korean' mode`;
-        }
-        gameMode = input;
-        return gameModeChecker(gameMode);
-      }
+  if (gameModeState == 0 && gameMode == "") {
+    if (
+      input != "normal" &&
+      input != "reversed" &&
+      input != "korean" &&
+      input != "computer" &&
+      input != "word" &&
+      input != "dice"
+    ) {
+      return `Please select 'dice', 'word', 'normal' ,'reversed','computer' or 'korean' mode`;
     }
+    gameMode = input;
+    return gameModeChecker(gameMode);
   }
 
   //Change game mode anytime during other gameplays
@@ -56,6 +54,14 @@ var main = function (input) {
     gameModeState = 0;
     gameMode = "";
     return `Change game mode! Please enter game mode to continue playing`;
+  }
+
+  if (gameMode == "dice") {
+    myOutputValue = diceGame(input);
+  }
+
+  if (gameMode == "word") {
+    return secretWord(input);
   }
 
   if (gameMode == "normal") {
@@ -183,6 +189,7 @@ function normalGame(user, com) {
         //Reset states
         winnerState = 0;
         playerLastWinState = 0;
+
         return (
           winMessage(user, com, symbolGenerator(user), symbolGenerator(com)) +
           `<br>${winLossPerc(
@@ -257,6 +264,42 @@ function gameModeChecker(input) {
     return `안녕하세요! Game mode is now korean!`;
   }
   return `Game mode is now ${input}. Please enter input to start playing`;
+}
+
+//Word game mode
+function secretWord(input) {
+  var output = "hello world";
+  if (input == "papaya") {
+    output = "you wrote the secret phrase!";
+  }
+  return output;
+}
+
+//Dice game mode
+function rollDice() {
+  var randomDecimal = Math.random() * 6;
+
+  // Remove the decimal with the floor operation.
+  // This will be an integer from 0 to 5 inclusive.
+  var randomInteger = Math.floor(randomDecimal);
+
+  // Add 1 to get valid dice rolls of 1 through 6 inclusive.
+  var diceNumber = randomInteger + 1;
+  return diceNumber;
+}
+
+function diceGame(input) {
+  // Default output value is 'you lose'.
+  var randomDiceNumber = rollDice();
+  var myOutputValue = "you lose";
+
+  // If input matches randomDiceNumber, update output.
+  if (input == randomDiceNumber) {
+    myOutputValue = "you win";
+  }
+
+  // Return output.
+  return myOutputValue;
 }
 
 // Random RPS by function
