@@ -1,37 +1,64 @@
+var aiWins = 0;
+var userWins = 0;
+var totalGames = 0;
+var gameType = "UserName";
+console.log(gameType);
+
 var main = function (input) {
-  var randomHand = calRandomHand();
-  console.log(randomHand);
+  var myOutputValue = "";
 
-  var myOutputValue =
-    " You picked " +
-    input +
-    "<br></br>" +
-    " Whereas we picked " +
-    randomHand +
-    "<br></br>" +
-    " You lost, please try again!";
+  if (gameType == "UserName") {
+    gameType = "Basic";
+    myOutPutValue = "Hello " + input;
+  }
 
+  if (gameType == "Basic") {
+    var randomHand = calRandomHand();
+    console.log(randomHand);
+  }
   if (
     (randomHand == "Paper" && input == "Scissors") ||
     (randomHand == "Scissors" && input == "Stone") ||
-    (randomHand == "Stone" && input == "Paper") ||
-    (input == " reversed Scissors" && randomHand == "Stone") ||
-    (input == "reversed Paper" && randomHand == "Scissors") ||
-    (input == "reversed Stone" && randomHand == "Paper")
+    (randomHand == "Stone" && input == "Paper")
   ) {
-    myOutputValue = "You Won!";
+    userWins = userWins + 1;
+    myOutputValue =
+      "You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " You Won! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
+  } else if (input == randomHand) {
+    myOutputValue = myOutputValue =
+      "You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " DRAW! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
+  } else {
+    aiWins = aiWins + 1;
+    myOutputValue =
+      " You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " You lost, please try again! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
   }
-
-  if (input == randomHand) {
-    myOutputValue = "DRAW!";
-  } else if (input == "reversed Paper" && randomHand == "Paper") {
-    myOutputValue = "DRAW";
-  } else if (input == "reversed Scissors" && randomHand == "Scissors") {
-    myOutputValue = "DRAW";
-  } else if (input == "reversed Stone" && randomHand == "Stone") {
-    myOutputValue = "DRAW";
-  }
-
   return myOutputValue;
 };
 
@@ -56,4 +83,58 @@ var calRandomHand = function () {
     return "Paper";
   }
   return "Please try again.";
+};
+
+var calReversedSPS = function (input) {
+  var myOutPutValue = "";
+  var reversedRandomHand = calRandomHand();
+
+  if (
+    (input == "reversed Scissors" && reversedRandomHand == "Stone") ||
+    (input == "reversed Paper" && reversedRandomHand == "Scissors") ||
+    (input == "reversed Stone" && reversedRandomHand == "Paper")
+  ) {
+    userWins = userWins + 1;
+    myOutPutValue =
+      "You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " You Won! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
+  } else if (
+    (input == " reversed Scissors" && reversedRandomHand == "Scissors") ||
+    (input == "reversed Paper" && reversedRandomHand == "Paper") ||
+    (input == "reversed Stone" && reversedRandomHand == "Stone")
+  ) {
+    myOutputValue = myOutputValue =
+      "You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " DRAW! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
+  } else if (input == reversedRandomHand) {
+    aiWins = aiWins + 1;
+    myOutputValue =
+      " You picked " +
+      input +
+      "<br></br>" +
+      " Whereas we picked " +
+      randomHand +
+      "<br></br>" +
+      " You lost, please try again! AI Wins:" +
+      aiWins +
+      " UserWins:" +
+      userWins;
+  }
+  return myOutPutValue;
 };
