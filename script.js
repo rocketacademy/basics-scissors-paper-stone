@@ -26,7 +26,6 @@ var main = function (input) {
   var comSelect = getSPS(); //call com output of SPS
 
   var myOutputValue = "You lose!";
-  var reverseOutput = "You won!";
 
   // screening valid input
   if (
