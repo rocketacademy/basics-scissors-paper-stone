@@ -8,9 +8,8 @@ var PLAYER_NAME = "player";
 var COMP_NAME = "comp";
 
 var userName = "";
+var gameMode = "normal";
 var revMode = 1; // revMode off: 1, revMode on: -1
-var korMode = 0; // korMode off: 0, korMode on: 1
-var autoMode = 0; // autoMode off: 0, autoMode on: 1
 
 var totalGames = 0;
 var playerWon = 0;
@@ -31,9 +30,14 @@ var randComp = function () {
 
 // COMPARE PLAYER AND COMPUTER HANDS
 var compareHands = function (player, comp) {
+  if (gameMode == "reverse") {
+    revMode = -1;
+  } else {
+    revMode = 1;
+  }
   // IF WIN
   if (player - comp == -1 * revMode || player - comp == 2 * revMode) {
-    if (korMode == 1) {
+    if (gameMode == "korean") {
       currentWinner = PLAYER_NAME;
       return "🕹 Try to capture to computer in the next turn! <br><br>";
     }
@@ -44,7 +48,7 @@ var compareHands = function (player, comp) {
 
   // IF DRAW
   if (player == comp) {
-    if (korMode == 1) {
+    if (gameMode == "korean") {
       if (currentWinner == "") {
         return "No one attacks. Try again! <br><br>";
       }
@@ -68,7 +72,7 @@ var compareHands = function (player, comp) {
   }
 
   // IF LOSE
-  if (korMode == 1) {
+  if (gameMode == "korean") {
     currentWinner = COMP_NAME;
     return "🕹 Avoid the computer's attack! <br><br>";
   }
@@ -102,46 +106,39 @@ var main = function (input) {
     );
   }
 
-  // ACTIVATE/DEACTIVATE REVERSE MODE
-  if (input == "reverse") {
-    revMode = -1;
-    korMode = 0;
-    autoMode = 0;
-    return "You are now in reverse mode. Enjoy! (Type 'reverse off' to return to normal mode)";
-  }
-  if (input == "reverse off") {
-    revMode = 1;
-    return "You are now in normal mode. Enjoy!";
-  }
-
-  // ACTIVATE/DEACTIVATE KOREAN MODE
-  if (input == "korean") {
-    korMode = 1;
+  // RESET MODES
+  if (input == "reset") {
+    gameMode = "normal";
+    totalGames = 0;
+    playerWon = 0;
+    compWon = 0;
+    drawWon = 0;
     currentWinner = "";
-    revMode = 1;
-    autoMode = 0;
-    return "You are now in Korean mode. Enjoy! (Type 'korean off' to return to normal mode)";
-  }
-  if (input == "korean off") {
-    korMode = 0;
+    totalKorGames = 0;
+    playerKorWon = 0;
+    compKorWon = 0;
     return "You are now in normal mode. Enjoy!";
   }
 
-  // ACTIVATE/DEACTIVATE AUTO MODE
-  if (input == "auto") {
-    autoMode = 1;
-    revMode = 1;
-    korMode = 0;
-    return "You are now in Auto mode. Enjoy! (Type 'auto off' to return to normal mode)";
+  // ACTIVATE REVERSE MODE
+  if (input == "reverse") {
+    gameMode = "reverse";
+    return "You are now in reverse mode. Enjoy! (Type 'reset' to return to normal mode)";
   }
-  if (input == "auto off") {
-    autoMode = 0;
-    return "You are now in normal mode. Enjoy!";
+  // ACTIVATE KOREAN MODE
+  if (input == "korean") {
+    gameMode = "korean";
+    currentWinner = "";
+    return "You are now in Korean mode. Enjoy! (Type 'reset' to return to normal mode)";
+  }
+  // ACTIVATE AUTO MODE
+  if (input == "auto") {
+    return "You are now in Auto mode. Enjoy! (Type 'reset' to return to normal mode)";
   }
 
   // VALIDATE INPUT
   if (
-    autoMode == 0 &&
+    gameMode != "auto" &&
     input != HAND_SCI &&
     input != HAND_PAP &&
     input != HAND_STO
@@ -194,12 +191,11 @@ var main = function (input) {
   var playerEmj;
   var playerHand;
 
-  if (autoMode == 1) {
+  if (gameMode == "auto") {
     playerNum = randComp();
     playerHand = assignNumToHand(playerNum);
     playerEmj = assignNumToEmj(playerNum);
-  }
-  if (autoMode == 0) {
+  } else {
     playerHand = input;
     playerNum = assignHandToNum(playerHand);
     playerEmj = assignNumToEmj(playerNum);
@@ -248,19 +244,19 @@ var main = function (input) {
 
   // FORMAT OUTPUT (MODE)
   var modeMsg = "[NORMAL MODE] <br>";
-  if (revMode == -1) {
+  if (gameMode == "reverse") {
     modeMsg =
       "[REVERSE MODE] (Type 'reverse off' to return to normal mode) <br>";
   }
-  if (korMode == 1) {
+  if (gameMode == "korean") {
     modeMsg = "[KOREAN MODE] (Type 'korean off' to return to normal mode) <br>";
   }
-  if (autoMode == 1) {
+  if (gameMode == "auto") {
     modeMsg = "[AUTO MODE] (Type 'auto off' to return to normal mode) <br>";
   }
 
   // FORMAT OUTPUT (KOREAN)
-  if (korMode == 1) {
+  if (gameMode == "korean") {
     var korStats =
       "📊 " +
       userName +
