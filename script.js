@@ -134,10 +134,14 @@ var koreanGame = function (input, computerChoice) {
   } else {
     if (currentWinner == "") {
       return `Draw! You used ${input} and computer used ${computerChoice}`;
-    } else
-      return (
+    } else {
+      var koreanMessage =
         "We have a winner! <br><br>" +
-        `You used ${input} and the computer used ${computerChoice}, so the ultimate winner is ${currentWinner}!!!`
-      );
+        `You used ${input} and the computer used ${computerChoice}, so the ultimate winner is ${currentWinner}!!!`;
+      currentWinner == "";
+      return koreanMessage;
+    }
   }
 };
+
+//
