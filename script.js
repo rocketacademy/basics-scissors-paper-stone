@@ -21,8 +21,8 @@ var main = function (input) {
   console.log("result: " + gameResult);
   console.log("result format: " + rspFormat);
 
-  var formatInput = format();
-  console.log("format: " + formatInput);
+  var newFormat = format();
+  console.log("format: " + newFormat);
 
   //program compares generated rsp to choice
   //draw condition
@@ -31,7 +31,7 @@ var main = function (input) {
     (userInput == "paper" && gameResult == "paper") ||
     (userInput == "stone" && gameResult == "stone")
   ) {
-    return `You chose ${formatInput}. <br> The AI chose ${rspFormat}! <br> It's a draw. <br> Play again?`;
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}! <br> It's a draw. <br> Play again?`;
   }
   // win condition
   if (
@@ -39,7 +39,7 @@ var main = function (input) {
     (userInput == "paper" && gameResult == "stone") ||
     (userInput == "stone" && gameResult == "scissors")
   ) {
-    return `You chose ${formatInput}. <br> The AI chose ${rspFormat}! <br> You win. Play again?`;
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}! <br> You win. Play again?`;
   }
 
   // lose condition
@@ -48,13 +48,44 @@ var main = function (input) {
     (userInput == "paper" && gameResult == "scissors") ||
     (userInput == "stone" && gameResult == "paper")
   ) {
-    return `You chose ${formatInput}. <br> The AI chose ${rspFormat}!<br> You lose. Play again?`;
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}!<br> You lose. Play again?`;
   }
+  //**REVERSE GAME */
+  //draw condition
+  if (
+    (userInput == "reverse scissors" && gameResult == "scissors") ||
+    (userInput == "reverse paper" && gameResult == "paper") ||
+    (userInput == "reverse stone" && gameResult == "stone")
+  ) {
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}! <br> It's a draw. <br> Play again?`;
+  }
+  // lose condition
+  if (
+    (userInput == "reverse scissors" && gameResult == "paper") ||
+    (userInput == "reverse paper" && gameResult == "stone") ||
+    (userInput == "reverse stone" && gameResult == "scissors")
+  ) {
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}! <br> You lose. Play again?`;
+  }
+
+  // win condition
+  if (
+    (userInput == "reverse scissors" && gameResult == "stone") ||
+    (userInput == "reverse paper" && gameResult == "scissors") ||
+    (userInput == "reverse stone" && gameResult == "paper")
+  ) {
+    return `You chose ${newFormat}. <br> The AI chose ${rspFormat}!<br> You lose. Play again?`;
+  }
+  //**REVERSE GAME */
+
   // if wrong input, prompt user to try again
   else if (
     userInput != "scissors" ||
     userInput != "paper" ||
-    userInput != "stone"
+    userInput != "stone" ||
+    userInput != "reverse scissors" ||
+    userInput != "reverse paper" ||
+    userInput != "reverse stone"
   ) {
     return `Oops! You have input the wrong option. Please only type in "scissors" or "paper" or "stone" to join the game. Try again!`;
   }
@@ -95,6 +126,17 @@ var format = function () {
     newFormat = "paper 🗒";
   } else if (userInput == "stone") {
     newFormat = "stone O";
+  }
+
+  //convert reverse input
+  if (userInput == "reverse scissors") {
+    newFormat = "reverse scissors ✂️";
+  }
+  if (userInput == "reverse paper") {
+    newFormat = "reverse paper 🗒";
+  }
+  if (userInput == "reverse stone") {
+    newFormat = "reverse stone O";
   }
 
   console.log(newFormat);
