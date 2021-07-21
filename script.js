@@ -1,10 +1,14 @@
 // Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw. Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
 
 // Define 'scissors', 'paper', and 'stone' as variables
-
 var scissors = "scissors";
 var paper = "paper";
 var stone = "stone";
+
+// Add variable for win/lose game state
+var winCount = 0;
+var loseCount = 0;
+var drawCount = 0;
 
 // Create Random Scissors Paper Stone result
 var getSpsResult = function () {
@@ -38,13 +42,12 @@ var getSpsResult = function () {
   return spsResult;
 };
 
-// Add variable for win/lose game state
-
-var winCount = 0;
-var loseCount = 0;
-var drawCount = 0;
-var WinLoseHistory =
-  "wins:" + winCount + " lose:" + loseCount + "draw: " + drawCount;
+var WinLoseHistory = function () {
+  return "wins:" + winCount + " lose:" + loseCount + " draw: " + drawCount;
+};
+// Add current game mode, and variable for User Name
+var currentGameMode = "waiting for user name";
+var UserName = "";
 
 var main = function (input) {
   // Generate and define random SPS
@@ -52,63 +55,71 @@ var main = function (input) {
   console.log("sps");
   console.log(sps);
 
-  // Define winning message (win)
-  if (
-    (input == scissors && sps == paper) ||
-    (input == paper && sps == stone) ||
-    (input == stone && sps == scissors)
-  ) {
-    console.log("win");
-    winCount = winCount + 1;
-    myOutputValue =
-      "You win! You input " +
-      input +
-      " and your opponent chose " +
-      sps +
-      "! " +
-      WinLoseHistory;
-  }
+  // Get user to input username if not already done so
 
-  // Define losing message (lose)
-  if (
-    (input == paper && sps == scissors) ||
-    (input == stone && sps == paper) ||
-    (input == scissors && sps == stone)
-  ) {
-    console.log("lose");
-    loseCount = loseCount + 1;
-    myOutputValue =
-      "You lose!  You input " +
-      input +
-      " and your opponent chose " +
-      sps +
-      "! " +
-      WinLoseHistory;
-  }
+  if (currentGameMode == "waiting for user name") {
+    UserName = input;
+    // Switch game mode to 'dice game'
+    currentGameMode = "dice game";
+    var myOutputValue = "Hello " + UserName;
+    //return "Hello " + UserName;
+  } else if (currentGameMode == "dice game") {
+    if (input != scissors && input != paper && input != stone) {
+      console.log("invalid input");
+      myOutputValue =
+        'Invalid input! <br> Kindly enter "scissors", "paper", or "stone" <br>' +
+        WinLoseHistory();
+    } // Define winning message (win)
+    if (
+      (input == scissors && sps == paper) ||
+      (input == paper && sps == stone) ||
+      (input == stone && sps == scissors)
+    ) {
+      console.log("win");
+      winCount = winCount + 1;
+      myOutputValue =
+        "You win! <br> You input " +
+        input +
+        " and your opponent chose " +
+        sps +
+        "! <br>" +
+        WinLoseHistory();
+    }
 
-  // Define draw message (draw)
-  if (
-    (input == scissors && sps == scissors) ||
-    (input == paper && sps == paper) ||
-    (input == stone && sps == stone)
-  ) {
-    console.log("draw");
-    drawCount = drawCount + 1;
-    myOutputValue =
-      "Its a draw! You input " +
-      input +
-      " and your opponent chose " +
-      sps +
-      "! " +
-      WinLoseHistory;
-  }
-  // Define error message
-  if (input != scissors && input != paper && input != stone) {
-    console.log("invalid input");
-    myOutputValue =
-      'Invalid input! Kindly enter "scissors", "paper", or "stone" ' +
-      WinLoseHistory;
-  }
+    // Define losing message (lose)
+    if (
+      (input == paper && sps == scissors) ||
+      (input == stone && sps == paper) ||
+      (input == scissors && sps == stone)
+    ) {
+      console.log("lose");
+      loseCount = loseCount + 1;
+      myOutputValue =
+        "You lose! <br>  You input " +
+        input +
+        " and your opponent chose " +
+        sps +
+        "! <br>" +
+        WinLoseHistory();
+    }
 
+    // Define draw message (draw)
+    if (
+      (input == scissors && sps == scissors) ||
+      (input == paper && sps == paper) ||
+      (input == stone && sps == stone)
+    ) {
+      console.log("draw");
+      drawCount = drawCount + 1;
+      myOutputValue =
+        "Its a draw! <br> You input " +
+        input +
+        " and your opponent chose " +
+        sps +
+        "! <br>" +
+        WinLoseHistory();
+    }
+    // Define error message
+  }
   return myOutputValue;
 };
