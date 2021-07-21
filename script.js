@@ -1,5 +1,11 @@
 // Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw. Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
 
+// Define 'scissors', 'paper', and 'stone' as variables
+
+var scissors = "scissors";
+var paper = "paper";
+var stone = "stone";
+
 // Create Random Scissors Paper Stone result
 var getSpsResult = function () {
   // Generate a random decimal from 0 through 3, inclusive of 0 and exclusive of 3.
@@ -17,13 +23,13 @@ var getSpsResult = function () {
   var spsResult = "scissors, paper, or stone";
 
   if (spsNumberValue == 0) {
-    spsResult = "scissors";
+    spsResult = scissors;
   }
   if (spsNumberValue == 1) {
-    spsResult = "paper";
+    spsResult = paper;
   }
   if (spsNumberValue == 2) {
-    spsResult = "stone";
+    spsResult = stone;
   }
   console.log("spsResult");
   console.log(spsResult);
@@ -44,9 +50,9 @@ var main = function (input) {
 
   // Define winning message (win)
   if (
-    (input == "scissors" && sps == "paper") ||
-    (input == "paper" && sps == "stone") ||
-    (input == "stone" && sps == "scissors")
+    (input == scissors && sps == paper) ||
+    (input == paper && sps == stone) ||
+    (input == stone && sps == scissors)
   ) {
     console.log("win");
     myOutputValue =
@@ -54,9 +60,9 @@ var main = function (input) {
   }
   // Define draw message (draw)
   if (
-    (input == "scissors" && sps == "scissors") ||
-    (input == "paper" && sps == "paper") ||
-    (input == "stone" && sps == "stone")
+    (input == scissors && sps == scissors) ||
+    (input == paper && sps == paper) ||
+    (input == stone && sps == stone)
   ) {
     console.log("draw");
     myOutputValue =
@@ -67,7 +73,7 @@ var main = function (input) {
       "!";
   }
   // Define error message
-  if (input != "scissors" && input != "paper" && input != "stone") {
+  if (input != scissors && input != paper && input != stone) {
     console.log("invalid input");
     myOutputValue =
       'Invalid input! Kindly enter "scissors", "paper", or "stone"';
