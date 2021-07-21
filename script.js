@@ -8,7 +8,6 @@ var noDraws = 0;
 var computerWins = 0;
 var userWins = 0;
 var winrate = Math.floor(Number(userWins) / Number(noUserTries)) * Number(100);
-
 // Creating a variable for output
 var myOutputValue = "";
 
@@ -16,13 +15,17 @@ var main = function (input) {
   if (mode == "username request" && input != "") {
     // collect username
     username = input;
-    mode = "Game begins";
+    console.log("Username");
+    console.log(username);
+    mode = "SPS game";
+    console.log("current mode");
+    console.log(mode);
   } else {
     myOutputValue = "Hi! Please tell me your name to start playing.";
   }
   var computer = computerRoll();
   //any input other than rock, paper or scissors give this outputValue
-  if (mode == "Game begins") {
+  if (mode == "SPS game") {
     myOutputValue =
       "Hi " +
       username +
@@ -162,6 +165,9 @@ var main = function (input) {
       "Please input 'stone', 'paper' or 'scissors' to play again!";
   }
   // (2) Reversed Game
+  if (input == "reverse") {
+    mode = "reverse SPS game";
+  }
   // (2a) Reversed Win
   if (
     (input == "reversed scissors" && computer == "stone") ||
