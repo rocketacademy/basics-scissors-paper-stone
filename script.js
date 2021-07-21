@@ -12,12 +12,17 @@ var koreanComLose = 0;
 var reverseTie = 0;
 var reverseWin = 0;
 var reverseLose = 0;
+var prevWinner = 0;
+var prevMove = 0;
 
 var main = function (input) {
   // ENTER USERNAME
   var moves = generateMoves();
+  var comMoves = generateMoves();
+  console.log("com moves");
+  console.log(comMoves);
   var reverseMoves = generateReverseMoves();
-  var prevMove = lastMove + moves;
+  var prevMove = moves;
   console.log("moves");
   console.log(moves);
 
@@ -40,6 +45,9 @@ var main = function (input) {
     } else if (input == "normal") {
       currentGameMode = "normal";
       return (myOutputValue = "normal mode");
+    } else if (input == "computer") {
+      currentGameMode = "computer";
+      return (myOutputValue = "computer mode");
     }
   }
 
@@ -88,7 +96,12 @@ var main = function (input) {
   // REVERSE MODE
 
   if (currentGameMode == "reverse") {
-    if (input == reverseMoves) {
+    console.log("reverse mode started");
+    if (
+      (input == "scissors" && reverseMoves == "reverse scissors") ||
+      (input == "stone" && reverseMoves == "reverse stone") ||
+      (input == "paper" && reverseMoves == " reverse paper")
+    ) {
       reverseTie++;
       return (myOutputValue = `${userName} you chose ${input}. Computer chose ${reverseMoves}. <br></br> TIE. <br></br>  Win rate: ${reverseWin}, Lose rate: ${reverseLose}, Tie rate: ${reverseTie}. <br></br>
     
@@ -121,6 +134,10 @@ var main = function (input) {
       (input == "paper" && moves == "scissors")
     ) {
       koreanComTie++;
+      prevWinner = 1;
+      console.log("korean shit");
+      console.log(tie);
+      console.log(koreanComTie);
       return (myOutputValue = `${userName} you chose ${input}. Computer chose ${moves}. <br></br> 
       Your last move was ${prevMove} <br></br> It is Computer's turn! <br></br> Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. 
       <br></br> 
@@ -134,6 +151,10 @@ var main = function (input) {
       (input == "paper" && moves == "stone")
     ) {
       tie++;
+      prevWinner = 2;
+      console.log("korean shit 147");
+      console.log(tie);
+      console.log(koreanComTie);
       return (myOutputValue = `${userName} you chose ${input}.  Computer chose ${moves}. <br></br>  Your last move was ${prevMove} <br></br> It is your turn! <br></br> Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. 
       <br></br> 
       Com Win rate: ${koreanComWin}, Com Lose rate: ${koreanComLose}, Com Tie rate: ${koreanComTie}. <br></br> you're actually winning, wow MUK JJI PPA`);
@@ -141,17 +162,54 @@ var main = function (input) {
 
     // KOREAN END GAME; DRAW; REF TO LAST ROUND WINNER AS GAME WINNER
     // USED THE OVERALL TIE SCORES TO COME UP WITH 2 SCENARIOS OF EITHER THE USER OR COMPUTER WINNING
-    if (input == moves && koreanComTie > tie) {
+
+    if (input == moves && prevWinner == 0) {
       koreanComWin++;
       return (myOutputValue = `${userName} you chose ${input}.  Computer chose ${moves}. <br></br>  Your last move was ${prevMove} <br></br> COMPUTER WON!!! <br></br>  Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. 
       <br></br> 
       Com Win rate: ${koreanComWin}, Com Lose rate: ${koreanComLose}, Com Tie rate: ${koreanComTie}. <br></br> Computer won, too bad. Please 'reset'`);
     }
-    if (input == moves && tie > koreanComTie) {
+
+    if (input == moves && prevWinner == 1) {
+      koreanComWin++;
+      return (myOutputValue = `${userName} you chose ${input}.  Computer chose ${moves}. <br></br>  Your last move was ${prevMove} <br></br> COMPUTER WON!!! <br></br>  Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. 
+      <br></br> 
+      Com Win rate: ${koreanComWin}, Com Lose rate: ${koreanComLose}, Com Tie rate: ${koreanComTie}. <br></br> Computer won, too bad. Please 'reset'`);
+    }
+    if (input == moves && prevWinner == 2) {
       Win++;
+      console.log("user shit");
+      console.log(Win);
+      console.log(tie);
       return (myOutputValue = `${userName} you chose ${input}.  Computer chose ${moves}. <br></br>  Your last move was ${prevMove} <br></br> YOU WON!!! <br></br>  Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. 
       <br></br> 
       Com Win rate: ${koreanComWin}, Com Lose rate: ${koreanComLose}, Com Tie rate: ${koreanComTie}. <br></br> Computer won, too bad. Please 'reset'`);
+    }
+  }
+
+  // COM V COM
+  if (currentGameMode == "computer") {
+    if (comMoves == moves) {
+      tie++;
+      return (myOutputValue = `${userName} you chose ${comMoves}. Computer chose ${moves}. <br></br> TIE. <br></br> Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. <br></br>
+
+      computers tied`);
+    }
+    if (
+      (comMoves == "scissors" && moves == "stone") ||
+      (comMoves == "stone" && moves == "paper") ||
+      (comMoves == "paper" && moves == "scissors")
+    ) {
+      lose++;
+      return (myOutputValue = `${userName} you chose ${comMoves}. Computer chose ${moves}. <br></br> LOSE. <br></br> Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. <br></br> your com lost`);
+    }
+    if (
+      (comMoves == "scissors" && moves == "paper") ||
+      (comMoves == "stone" && moves == "scissors") ||
+      (comMoves == "paper" && moves == "stone")
+    ) {
+      win++;
+      return (myOutputValue = `${userName} you chose ${comMoves}. Computer chose ${moves}. <br></br> WIN. <br></br> Win rate: ${win}, Lose rate: ${lose}, Tie rate: ${tie}. <br></br> your com won`);
     }
   } else return "wtf u writing";
 };
