@@ -3,7 +3,29 @@
 var scissors = `scissors`;
 var paper = `paper`;
 var stone = `stone`;
-var reverseStone = 
+var reversedScissors = `reversed scissors`;
+var reversedPaper = `reversed paper`;
+var reversedStone = `reversed stone`;
+
+var currentMode = `pending inputs`;
+var userName = "";
+
+//how do i update this in real time?
+var userWins = 0;
+var compWins = 0;
+var trackwinloss = function (userWins, compWins) {
+  // if (userWins == 0 || compWins == 0) {
+  //   return `no one won`;
+  // } else 
+  if (userWins > compWins) {
+    return `You win ${userWins - compWins} more than the computer`;
+  } else if (userWins < compWins) {
+    return `The computer wins ${compWins - userWins} more than you`;
+  } else if (userWins == compWins) {
+    console.log(`user and comp wins : ${(userWins, compWins)}`);
+    return `you and the computer draw!`;
+  }
+};
 
 var rollDice = function () {
   //determine max number here
@@ -34,100 +56,54 @@ var main = function (input) {
   //Prevent caps errors
   input = input.toLowerCase();
   var myOutputValue = ``;
-  //declare result -> can't be global because we need it to change with every submit
-  var computerPlays = generateComputerResult();
-  console.log("generateComputerResult function");
-  console.log(computerPlays);
 
-  var standardMessage = `Computer: ${computerPlays}. <br> Your input: ${input}. <br> `;
-  console.log("std message");
-  console.log("before if", computerPlays, input);
+  if (currentMode == `pending inputs`) {
+    userName = input;
+    // now that we have the name, switch the mode
+    currentMode = "game mode";
+    myOutputValue = "Hello " + userName;
+  } else if (currentMode == "game mode") {
+    var computerPlays = generateComputerResult();
+    console.log("generateComputerResult function");
+    console.log(computerPlays);
+    var winloss = trackwinloss(userWins, compWins);
 
-  if (
-    (input == scissors && computerPlays == paper) ||
-    (input == paper && computerPlays == stone) ||
-    (input == stone && computerPlays == scissors)
-  ) {
-    myOutputValue = `${standardMessage} you win! <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
-    console.log("if statement", myOutputValue);
-  } else if (input == scissors || input == paper || input == stone) {
-    myOutputValue = `${standardMessage} <br> you lose! <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
-    console.log("else if statement", computerPlays, input);
-    // Reverse Game
-    // You decide to prank your friends and create an SPS game where the rules are reversed: scissors beat stone, stone beats paper, and paper beats scissors. Create a version where the rules are reversed. The user can choose to try their luck at reversed mode by adding the word "reversed" to their choice. For example: "reversed stone".
-  } else if (
-    (input == `reversed ${scissors}` && computerPlays == stone) ||
-    (input == `reversed ${paper}` && computerPlays == scissors) ||
-    (input == `reversed ${stone}` && computerPlays == paper)
-  ) {
-    myOutputValue = `reversal! you won!`;
-  } else if (
-    input == `reversed ${scissors}`||
-    input == `reversed ${paper}`||
-    input == `reversed ${stone}`
-  ) {
-    myOutputValue = `reversal! you lost!!`;
-  } else {
-    myOutputValue = `Please input "scissors", "paper" or "stone".`;
-    console.log("else statement", computerPlays, input);
+    var standardMessage = `hi ${userName}, Computer: ${computerPlays}. <br> Your input: ${input}. <br> Win-loss tracker : ${winloss}<br>`;
+
+    if (
+      (input == scissors && computerPlays == paper) ||
+      (input == paper && computerPlays == stone) ||
+      (input == stone && computerPlays == scissors)
+    ) {
+      myOutputValue = `you win! <br>${standardMessage} Now you can type "scissors", "paper" or "stone" to play another round!`;
+      userWins = userWins + 1;
+      console.log("if statement", myOutputValue);
+    } else if (input == scissors || input == paper || input == stone) {
+      myOutputValue = `you lose! <br> ${standardMessage} <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
+      compWins = compWins + 1;
+      console.log("else if statement", computerPlays, input);
+
+      // Reverse Game
+    } else if (
+      (input == reversedScissors && computerPlays == stone) ||
+      (input == reversedPaper && computerPlays == scissors) ||
+      (input == reversedStone && computerPlays == paper)
+    ) {
+      myOutputValue = `reversal! you won!`;
+      userWins = userWins + 1;
+    } else if (
+      input == reversedScissors ||
+      input == reversedPaper ||
+      input == reversedStone
+    ) {
+      myOutputValue = `reversal! you lost!!`;
+      compWins = compWins + 1;
+    } else {
+      myOutputValue = `Please input "scissors", "paper" or "stone".`;
+      console.log("else statement", computerPlays, input);
+    }
   }
+  console.log("std msg" + computerPlays, input);
+
   return myOutputValue;
 };
-
-//////////////////////////////////////////////////////////////////////////
-//Using ONLY IF Statements
-// //DiceRoll Function
-// var rollDice = function () {
-//   //determine max number here
-//   return 1;
-//   return Math.floor(Math.random() * 3) + 1;
-// };
-
-// // Define computer result.
-// var SPS = function () {
-//   var computerResult = rollDice();
-//   var computerPlays = "try again";
-//   if (computerResult == 1) {
-//     var computerPlays = "error";
-//     computerPlays = `scissors`;
-//     return computerPlays;
-//   }
-//   if (computerResult == 2) {
-//     computerPlays = `paper`;
-//     return computerPlays;
-//   }
-//   if (computerResult == 3) {
-//     computerPlays = `stone`;
-//     return computerPlays;
-//   }
-//   return computerPlays;
-// };
-
-// //main function
-// var main = function (input) {
-//   var myOutputValue = `Please input "scissors", "paper" or "stone"`;
-//   //declare result -> can't be global because we need it to change with every submit
-//   var computerPlays = SPS();
-//   console.log("SPS function");
-//   console.log(computerPlays);
-
-//   var standardMessage = `Computer: ${computerPlays}. <br> Your input: ${input}. <br> `;
-//   console.log("std message");
-//   console.log(computerPlays);
-//   //this losting IF-statement has to run first so that it will run if the last condition is not met. This is setting the output twice, which is inefficient. This might also cause an unexpected outcome????????
-//   if (input == "scissors" || input == "paper" || input == "stone") {
-//     myOutputValue = `${standardMessage} <br> you lose! <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
-//   }
-
-//   if (
-//     (input == `scissors` && computerPlays == `paper`) ||
-//     (input == `paper` && computerPlays == `stone`) ||
-//     (input == `stone` && computerPlays == `scissors`)
-//   ) {
-//     myOutputValue = ` ${standardMessage} you win! <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
-//     console.log("IF Statement");
-//     console.log(myOutputValue);
-//   }
-
-//   return myOutputValue;
-// };
