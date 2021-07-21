@@ -51,57 +51,72 @@ var generateComputerResult = function () {
   return computerPlays;
 };
 
+
+var generateStdMsg = function (userName, computerPlays, input, winloss){
+ return `hi ${userName}, Computer: ${computerPlays}. <br> Your input: ${input}. <br> Win-loss tracker : ${winloss}<br>`;
+};
+var playNormalGame = function (input,computerPlays, standardMessage){
+if (
+  (input == scissors && computerPlays == paper) ||
+  (input == paper && computerPlays == stone) ||
+  (input == stone && computerPlays == scissors)
+) {
+  myOutputValue = `you win! <br>${standardMessage} Now you can type "scissors", "paper" or "stone" to play another round!`;
+  userWins = userWins + 1;
+  console.log("if statement", myOutputValue);
+} else if (input == scissors || input == paper || input == stone) {
+  myOutputValue = `you lose! <br> ${standardMessage} <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
+  compWins = compWins + 1;
+  console.log("else if statement", computerPlays, input);
+}
+};
+var playReversedGame = function (input,computerPlays)
+{if ((input == reversedScissors && computerPlays ==  stone) ||
+    (input == reversedPaper && computerPlays == scissors) ||
+    (input == reversedStone && computerPlays == paper)
+  ) {
+    myOutputValue = `reversal! you won!`;
+    userWins = userWins + 1;
+  } else if (
+    input == reversedScissors ||
+    input == reversedPaper ||
+    input == reversedStone
+  ) {
+    myOutputValue = `reversal! you lost!!`;
+    compWins = compWins + 1;
+  } else {
+    myOutputValue = `Please input "scissors", "paper" or "stone".`;
+    console.log("else statement", computerPlays, input);
+  }
+};
+
+
 //main function
 var main = function (input) {
   //Prevent caps errors
   input = input.toLowerCase();
   var myOutputValue = ``;
 
+  var computerPlays = generateComputerResult();
+  console.log("generateComputerResult function");
+  console.log(computerPlays);
+  var winloss = trackwinloss(userWins, compWins);
+
+  var standardMessage = generateStdMsg (userName, computerPlays, input, winloss)
+  //determine the game mode
   if (currentMode == `pending inputs`) {
     userName = input;
     // now that we have the name, switch the mode
-    currentMode = "game mode";
+    currentMode = "normal game mode";
     myOutputValue = "Hello " + userName;
-  } else if (currentMode == "game mode") {
-    var computerPlays = generateComputerResult();
-    console.log("generateComputerResult function");
-    console.log(computerPlays);
-    var winloss = trackwinloss(userWins, compWins);
+    console.log (`current normal mode: ${currentMode}`)
 
-    var standardMessage = `hi ${userName}, Computer: ${computerPlays}. <br> Your input: ${input}. <br> Win-loss tracker : ${winloss}<br>`;
-
-    if (
-      (input == scissors && computerPlays == paper) ||
-      (input == paper && computerPlays == stone) ||
-      (input == stone && computerPlays == scissors)
-    ) {
-      myOutputValue = `you win! <br>${standardMessage} Now you can type "scissors", "paper" or "stone" to play another round!`;
-      userWins = userWins + 1;
-      console.log("if statement", myOutputValue);
-    } else if (input == scissors || input == paper || input == stone) {
-      myOutputValue = `you lose! <br> ${standardMessage} <br> Now you can type "scissors", "paper" or "stone" to play another round!`;
-      compWins = compWins + 1;
-      console.log("else if statement", computerPlays, input);
-
-      // Reverse Game
-    } else if (
-      (input == reversedScissors && computerPlays == stone) ||
-      (input == reversedPaper && computerPlays == scissors) ||
-      (input == reversedStone && computerPlays == paper)
-    ) {
-      myOutputValue = `reversal! you won!`;
-      userWins = userWins + 1;
-    } else if (
-      input == reversedScissors ||
-      input == reversedPaper ||
-      input == reversedStone
-    ) {
-      myOutputValue = `reversal! you lost!!`;
-      compWins = compWins + 1;
-    } else {
-      myOutputValue = `Please input "scissors", "paper" or "stone".`;
-      console.log("else statement", computerPlays, input);
-    }
+  } else if (input =='reverse'){
+    currentMode = 'reversed';
+    console.log (`current mode: ${currentMode}`)
+    myOutputValue = playReversedGame (input,computerPlays, standardMessage)
+  } else if (currentMode == 'normal game mode'){
+    myOutputValue = playNormalGame (input,computerPlays,standardMessage)
   }
   console.log("std msg" + computerPlays, input);
 
