@@ -1,5 +1,6 @@
 var userScore = 0; 
 var computerScore = 0;
+var newUserName = "username";
 
 var rockPaperScissors = function () {
   var randomInteger = Math.random() * 3;
@@ -20,18 +21,17 @@ var rockPaperScissors = function () {
 };
 
 var max = function(userName) {
-  var userName = userName; 
-  return userName; 
+  newUserName = userName;
+  return newUserName; 
 };
 
 var main = function (input) {
   var myOutputValue = ""
   var computerInput = rockPaperScissors ();
-  var userN = max();
+  var userN = newUserName;
 
   console.log("Computer choose...");
   console.log(computerInput);
-  console.log(max());
   console.log(input);
 
   if ((input !== "rock") || (input !== "scissors") || (input !== "paper")
@@ -41,7 +41,7 @@ var main = function (input) {
   
 // draw
 if (input.includes(computerInput)){
-    myOutputValue = userN + ", it's a draw! <br><br> You choose " + input + 
+    myOutputValue = nameResult + ", it's a draw! <br><br> You choose " + input + 
     " and computer chose " + computerInput + "<br><br> So far, your score is " + userScore + "/" + (userScore + computerScore) + " turns. Pretty good!";
   }
 // player wins
