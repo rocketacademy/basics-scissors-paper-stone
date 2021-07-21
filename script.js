@@ -1,17 +1,23 @@
+var startingPoint = 0;
+var losingPoint = 0;
+var drawPoint = 0;
+var userName = "";
+
 var main = function (input) {
-  if (
-    input != "scissor" &&
-    input != "paper" &&
-    input != "rock" &&
-    input != "reversedscissor" &&
-    input != "reversed paper" &&
-    input != "reversedrock"
-  ) {
-    return 'Please input 1 of "scissors", "paper", or "stone" to play the game.';
-    // Side enote: recall what "return" statements do? <--ans: it exits the current function and returns the values that are included in the return statement.
-    // This implies that if the return statement in line 107 is triggered, the rest of the code (from line 109 onwards) won't be executed becos we would've exited from the function.
+  var userName = input;
+  var messageToUser = `Hello ${userName}, Please input 1 of "scissor", "paper", or "rock" to play the game.`;
+  if (userName == input) {
+    if (
+      input != "scissor" &&
+      input != "paper" &&
+      input != "rock" &&
+      input != "reversedscissor" &&
+      input != "reversed paper" &&
+      input != "reversed rock"
+    ) {
+      return messageToUser;
+    }
   }
-  // when this labelofresult is removed, it will fail not unless i place a randomSelection = generateNumber() on row 18
 
   var compResult = function generateNumber() {
     var randomResult = Math.floor(Math.random() * 3); // formula for getting random number
@@ -26,39 +32,67 @@ var main = function (input) {
     if (randomResult === 2) {
       randomSelection = "rock";
     }
+    return randomSelection;
   };
   // Now I have the labels and now I should get the result logics
-  var randomSelection = compResult();
+
+  var apple = compResult();
+  console.log("apple", apple);
+
   // creating a function to filter results for draw, win and lose
+  var gameResult = function (input) {
+    if (randomSelection === `rock` && input === "paper") {
+      startingPoint = startingPoint + 1;
+      losingPoint = losingPoint + 1;
 
-  var gameResult = function finalResult() {
-    var result = `You lose! Bummer. Now you can type "scissors" "paper" or "stone" to play another round!`;
-
+      result = `You win! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
+    if (randomSelection === `rock` && input === "scissor") {
+      losingPoint = losingPoint + 1;
+      result = `You lose! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
+    if (randomSelection === `paper` && input === "scissor") {
+      startingPoint = startingPoint + 1;
+      result = `You win! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
+    if (randomSelection === `paper` && input === "rock") {
+      losingPoint = losingPoint + 1;
+      result = `You lose! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
+    if (randomSelection === `scissor` && input === "rock") {
+      startingPoint = startingPoint + 1;
+      result = `You win! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
+    if (randomSelection === `scissor` && input === "paper") {
+      losingPoint = losingPoint + 1;
+      result = `You lose! your losing point was ${losingPoint} and your winning point was ${startingPoint}`;
+    }
     if (randomSelection === input) {
-      result = `It is a draw. Bummer. Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `Rock ` && input === `paper`) {
-      result = `You win and chose ${input}, Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `Rock ` && input === `scissors`) {
-      result = `You lose! Bummer. Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `paper ` && input === `scissors`) {
-      result = `You win and chose ${input}, Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `paper ` && input === `rock`) {
-      result = `You lose! Bummer. Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `scissor` && input === `rock`) {
-      result = `You win! Bummer. Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (randomSelection === `scissor` && input === `paper`) {
-      result = `You lose and chose ${input}, Now you can type "scissors" "paper" or "stone" to play another round!`;
+      drawPoint = drawPoint + 1;
+      result = `It was a draw!`;
     }
     return result;
   };
+
+  var calculateTheLogicToWin = function () {
+    var toWin = 5;
+    var minimum = 0;
+    var message = "keep trying, get more winning points!";
+    if (startingPoint >= toWin) {
+      if (startingPoint === `5`) {
+        message = `You are doing fine`;
+      }
+    }
+    if (startingPoint <= minimum) {
+      message = "You are doing not so well";
+    }
+    return message;
+  };
+
   // final display
-  var robotResult = compResult(input);
-  var humanResult = gameResult(input); //works fine
-  return `The computer chose ${randomSelection} ! </br> </br> ${humanResult}`;
+
+  var robotresult = "The computer chose " + compResult(input);
+  var humanResult = gameResult(input);
+  var currentPoint = calculateTheLogicToWin();
+  return humanResult + `<br><br>` + currentPoint + `<br><br>` + robotresult;
 };
