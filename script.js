@@ -1,10 +1,20 @@
 
 // add a win loss record, output draws and winning percentage
-var currentGameMode = `Please enter a user name!`
+
+var STONE = `stone`;
+var SCISSORS = `scissors`;
+var PAPER = `paper`;
+var REVERSED_SCISSORS = `reversed scissors`;
+var REVERSED_PAPER = `reversed paper`;
+var REVERSED_STONE = `reversed stone`;
+
 var totalGamesWon = 0;
 var totalComWins = 0;
 var totalGamesPlayed = 0;
 var totalDrawGamesPlayed = 0;
+var userName = ``;
+var spsGame = `regular`
+var currentGameMode = `enter user name`
 
 var getWinRateInfo = function () {
   var winRate = Math.floor(totalGamesWon/totalGamesPlayed *100);
@@ -23,14 +33,14 @@ var getWinRateInfo = function () {
 var generateChoice = function() {
   var randomComChoice = randomNumber();
   if (randomComChoice == 1) {
-    return `scissors`;
+    return SCISSORS;
   }
 
   if (randomComChoice == 2) {
-    return `paper`;
+    return PAPER;
   }
 
-  else { return`stone`;
+  else { return STONE;
   }
 
 }
@@ -48,48 +58,65 @@ var randomNumber = function () {
 }
 var main = function (input) {
 
-  var myOutputValue = `You lose, Try Again`;
+  var myOutputValue = `You lose, Try Again!`;
+
+  if (currentGameMode == `enter user name`) {
+
+    userName = prompt(`Please enter a username`);
+
+    currentGameMode = `regular`;
+
+    return myOutputValue = `Hello ` + userName + ` Please enter scissors, paper or stone to start the game.`;
+  } else if (currentGameMode = `regular`) {
 
   var comChoice = generateChoice();
   console.log(input, comChoice)
 
 //input validator
   if (
-    input != `scissors` || input != `paper` || input != `stone` ||
-    input != `reversed scissors` || input != `reversed paper`||
-    input != `reversed stone`)
+    input != SCISSORS && input != PAPER && input != STONE)
+    // input != REVERSED_PAPER || input != REVERSED_SCISSORS||
+    // input != REVERSED_STONE);
     {
-  myOutputValue = `You entered ${input}, please enter scissors, paper or stone and try again`
-  }
-
+    return myOutputValue = `You entered ${input}, please enter scissors, paper or stone and try again`
+  } 
+  
 // winning conditions
   if (
-  (input == `stone` && comChoice == `scissors`) | 
-  (input == `reversed stone` && comChoice == `paper`) |
-  (input == `reversed paper` && comChoice == `scissors`) |
-  (input == `paper` && comChoice == `stone`) |
-  (input == `reversed scissors` && comChoice == `stone`) |
+  (input == `stone` && comChoice == `scissors`) || 
+  (input == `reversed stone` && comChoice == `paper`) ||
+  (input == `reversed paper` && comChoice == `scissors`) ||
+  (input == `paper` && comChoice == `stone`) ||
+  (input == `reversed scissors` && comChoice == `stone`) ||
   (input == `scissors` && comChoice == `paper`)
   ) {
     totalGamesWon +=1;
     var winratemes= getWinRateInfo();
-    myOutputValue = `I picked ${input}
+    return myOutputValue = `Hi ${userName} 
+    <br><br>You picked ${input}
     <br><br>and Computer picked ${comChoice}.
-    <br><br>I win! Hooray! 
+    <br><br>You win! Hooray! 
     <br><br> ${winratemes}`
   }
 // draw conditions
   if (input == comChoice) {
     totalDrawGamesPlayed += 1;
     var winratemes= getWinRateInfo();
-    myOutputValue = `I picked ${input} 
+    return myOutputValue = `Hi ${userName} 
+    <br><br>You picked ${input} 
     <br><br>and Computer picked ${comChoice}.
     <br><br>Try Again! 
     <br><br> ${winratemes}`
-
   }
   
   console.log(input,comChoice)
   totalGamesPlayed += 1;
-  return myOutputValue
+  var winratemes= getWinRateInfo();
+  return myOutputValue = `Hi ${userName} 
+  <br><br>You lose! You picked ${input}
+  <br><br>and Computer picked ${comChoice}.
+  <br><br>Try Again! 
+  <br><br>${winratemes}`
+}
+
 }
