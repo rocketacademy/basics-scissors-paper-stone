@@ -1,17 +1,33 @@
+// Setting the default gamestate to inform user to input
+var mode = "username request";
+var username = "";
+
 // Winrate records
 var noUserTries = 0;
 var noDraws = 0;
 var computerWins = 0;
 var userWins = 0;
-var winrate = Math.floor(
-  (Number(userWins) / Number(noUserTries)) * Number(100)
-);
+var winrate = Math.floor(Number(userWins) / Number(noUserTries)) * Number(100);
+
+// Creating a variable for output
 var myOutputValue = "";
 
 var main = function (input) {
+  if (mode == "username request" && input != "") {
+    // collect username
+    username = input;
+    mode = "Game begins";
+  } else {
+    myOutputValue = "Hi! Please tell me your name to start playing.";
+  }
   var computer = computerRoll();
   //any input other than rock, paper or scissors give this outputValue
-  var myOutputValue = "Please input 'stone', 'paper' or 'scissors' to play.";
+  if (mode == "Game begins") {
+    myOutputValue =
+      "Hi " +
+      username +
+      "! Let's play! Please input 'stone', 'paper' or 'scissors' to play.";
+  }
   // (1) Classic game
   // (1a) Classic Win
   if (
@@ -35,7 +51,9 @@ var main = function (input) {
       "Nice one!" +
       "<br>" +
       "<br>" +
-      "(1) Your winrate is " +
+      "(1) " +
+      username +
+      ", your winrate is " +
       winrate +
       "% with " +
       userWins +
@@ -78,7 +96,9 @@ var main = function (input) {
       "Better luck next time!" +
       "<br>" +
       "<br>" +
-      "(1) Your winrate is " +
+      "(1) " +
+      username +
+      ", your winrate is " +
       winrate +
       "% with " +
       userWins +
@@ -118,7 +138,9 @@ var main = function (input) {
       "No winners this time!" +
       "<br>" +
       "<br>" +
-      "(1) Your winrate is " +
+      "(1) " +
+      username +
+      ", your winrate is " +
       winrate +
       "% with " +
       userWins +
