@@ -64,20 +64,27 @@ var main = function (input) {
   var PCpick = randomPick();
   console.log("PC Pick: " + PCpick);
   var defaultMessage = getDefaultMessage(playerPick, PCpick);
-  if ((playerPick == PCpick)|| (playerPick == REVSCISSORS && PCpick == SCISSORS) || (playerPick == REVSTONE && PCpick == STONE) || (playerPick == REVPAPER && PCpick == PAPER)) {
-    numDraws += 1;
-    return `${defaultMessage} <br><br> It is a draw! <br><br> ${getWinLossMsg()}`;
-  }
+  if ((input != "scissors" || input != "paper" || input != "stone" || input != "Reversed scissors" || input != "Reversed stone" || input != "Reversed paper")){
+    return `Please input the following <br><br> scissors | paper | stone | Reversed scissors | Reversed stone | Reversed paper`}else{
+      if (playerPick == PCpick) {
+        numDraws += 1;
+        return `${defaultMessage} <br><br> It is a draw! <br><br> ${getWinLossMsg()}`;
+      }else{
+        if (doesPlayerWin(playerPick, PCpick)) {
+          numPlayerWins += 1;
+          return `${defaultMessage} <br><br> Player wins! <br><br> ${getWinLossMsg()}`;
+        }
+       }
+      }
+
+
+    
+  
   // add condition for reverse, if ... else
-  if (doesPlayerWin(playerPick, PCpick)) {
-    numPlayerWins += 1;
-    return `${defaultMessage} <br><br> Player wins! <br><br> ${getWinLossMsg()}`;
-  }
-  numPCWins += 1;
-  return `${defaultMessage} <br><br> Computer Wins! <br><br> ${getWinLossMsg()} `;
+ 
+
 
   //Reverse game
-};
 
 //random function
 var SCISSORS = "scissors";
