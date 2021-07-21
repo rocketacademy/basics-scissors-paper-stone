@@ -6,39 +6,44 @@ var playerTotalCounter = 0;
 var playerUsername = 0;
 var versionInput = 0;
 var recentWinner = 0;
+var inputMode = 0;
 
 var main = function (input) {
   var computerInput = rockPaperScissors();
   var myOutputValue = 0;
 
   // If there are no inputs yet, prompt to input username
-  if (playerTotalCounter == 0 && playerUsername == 0 && versionInput == 0) {
+  if (inputMode == 0) {
     myOutputValue = "Hello world. Please input username.";
   }
 
-  // Tie breaker variable ccreated for use when previous result is draw
+  // Tie breaker variable created for use when previous result is draw
   var koreanTieBreaker = 0;
 
   // If player username has been input but version is empty and game has not started, request user to input normal, korean, or computer.
-  if (playerTotalCounter == 0 && !(playerUsername == 0) && versionInput == 0) {
-    myOutputValue =
-      "Hello " +
-      playerUsername +
-      ". Please input 'normal', 'korean' , or 'computer'.";
+  if (inputMode == "username") {
+    // if input is valid
     if (input == "normal" || input == "korean" || input == "computer") {
       versionInput = input;
+      inputMode = "game";
       myOutputValue =
         "Hello " +
         playerUsername +
         ". We are playing " +
         versionInput +
         " mode. Please input rock, paper , or scissors.";
+    } else {
+      myOutputValue =
+        "Hello " +
+        playerUsername +
+        ". Please input 'normal', 'korean' , or 'computer'.";
     }
   }
 
   // if it is the first input, playTotalCount will be zero and username is zero. Take the first input as username.
-  if (playerTotalCounter == 0 && playerUsername == 0 && !(input == 0)) {
+  if (inputMode == 0 && !(input == 0)) {
     playerUsername = input;
+    inputMode = "username";
     myOutputValue =
       "Hello " +
       playerUsername +
