@@ -93,7 +93,10 @@ var iconLogo = function (look) {
 var main = function (input) {
   var myOutputValue = "";
   console.log(currentGameMode);
-  if (currentGameMode == "enter user name") {
+  if (input == "refresh") {
+    currentGameMode = "Choose your game";
+    myOutputValue = `Hello ${userName}! Please choose the game mode you'll like to play. <br><br>Type in "Normal", "Reversed", "Korean", "AI"`;
+  } else if (currentGameMode == "enter user name") {
     myOutputValue = setUserName(input);
   } else if (currentGameMode == "Choose your game") {
     myOutputValue = startGame(input);
