@@ -31,8 +31,10 @@ var randomItem = function () {
 
 // NORMAL mode
 var playNormalMode = function (userName, input) {
-  currentGameMode = "scissor paper stone game";
-  myOutputValue = `Welcome, Player ${userName}! <br> You are now in NORMAL mode of scissor paper stone. <br> Please enter 'scissors', 'paper', or 'stone' to play the game.`;
+  if ((currentGameMode = "scissor paper stone game")) {
+    myOutputValue = `Welcome, Player ${userName}! <br> You are now in NORMAL mode of scissor paper stone. <br> Please enter 'scissors', 'paper', or 'stone' to play the game.`;
+  }
+
   var computerChoose = randomItem();
 
   // assigning emojis to the icon
@@ -227,10 +229,10 @@ var main = function (input) {
   } else if (input == "korean") {
     //korean version
     currentGameMode = "Korean version";
-  }
-  if (input !== "scissors" && input !== "paper" && input !== "stone") {
+  } else if (input !== "scissors" && input !== "paper" && input !== "stone") {
     // only 3 input options, and ask user to try again
     myOutputValue = `ERROR! Invalid input. Please only type 'scissors', 'paper', or 'stone' to play another round!`;
+    return myOutputValue;
   }
   if (currentGameMode == "scissor paper stone game") {
     myOutputValue = playNormalMode(userName, input);
