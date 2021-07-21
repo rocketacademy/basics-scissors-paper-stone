@@ -8,6 +8,7 @@ var gameMode = "waiting for username";
 var username = "";
 var playCount = 0;
 var winCount = 0;
+var mjpWin = "no one"; // korean SPS winner
 
 // SPS function randomises the computer choice
 function SPS() {
@@ -112,7 +113,6 @@ function reversePlay(comPlay, input) {
 
 // ================= KOREAN SPS =====================
 function koreanSPS(comPlay, input) {
-  var mjpWin = ""; // initialise winner
   myOutputValue =
     "Hello " +
     username +
@@ -127,7 +127,7 @@ function koreanSPS(comPlay, input) {
   ) {
     // winner is user
     mjpWin = username;
-    myOutputValue = `<u>${gameMode}</u><br><br>You played ${input}. <br> Computer played ${comPlay}. <br><br>The round ends when both players draw. Play again?`;
+    myOutputValue = `<u>${gameMode}</u><br><br>You played ${input}. <br> Computer played ${comPlay}. <br>${mjpWin} wins.<br><br>The round ends when both players draw. Play again?`;
   } else if (
     // else if player loses
     (input == "scissors" && comPlay == "stone") ||
@@ -135,8 +135,8 @@ function koreanSPS(comPlay, input) {
     (input == "stone" && comPlay == "paper")
   ) {
     // winner is computer
-    mjpWin = "computer";
-    myOutputValue = `<u>${gameMode}</u><br><br>You played ${input}. <br> Computer played ${comPlay}. <br><br>The round ends when both players draw. Play again?`;
+    mjpWin = "Computer";
+    myOutputValue = `<u>${gameMode}</u><br><br>You played ${input}. <br> Computer played ${comPlay}. <br>${mjpWin} wins.<br><br>The round ends when both players draw. Play again?`;
   }
   // if player chose the same as com
   else if (input == comPlay) {
