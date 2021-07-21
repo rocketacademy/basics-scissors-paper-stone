@@ -1,3 +1,13 @@
+// Winrate records
+var noUserTries = 0;
+var noDraws = 0;
+var computerWins = 0;
+var userWins = 0;
+var winrate = Math.floor(
+  (Number(userWins) / Number(noUserTries)) * Number(100)
+);
+var myOutputValue = "";
+
 var main = function (input) {
   var computer = computerRoll();
   //any input other than rock, paper or scissors give this outputValue
@@ -9,6 +19,11 @@ var main = function (input) {
     (input == "paper" && computer == "stone") ||
     (input == "stone" && computer == "scissors")
   ) {
+    noUserTries = noUserTries + 1;
+    userWins = userWins + 1;
+    winrate = Math.floor(
+      (Number(userWins) / Number(noUserTries)) * Number(100)
+    );
     myOutputValue =
       "You won! You picked " +
       input +
@@ -20,6 +35,25 @@ var main = function (input) {
       "Nice one!" +
       "<br>" +
       "<br>" +
+      "(1) Your winrate is " +
+      winrate +
+      "% with " +
+      userWins +
+      " wins!" +
+      "!" +
+      "<br>" +
+      "<br>" +
+      "(2) Computer's winrate is " +
+      (100 - winrate) +
+      "% with " +
+      computerWins +
+      " wins.." +
+      "<br>" +
+      "<br>" +
+      "(3) Number of draws = " +
+      noDraws +
+      "<br>" +
+      "<br>" +
       "Please input 'stone', 'paper' or 'scissors' to play again!";
   }
   // (1b) Classic Loss
@@ -28,6 +62,11 @@ var main = function (input) {
     (input == "paper" && computer == "scissors") ||
     (input == "stone" && computer == "paper")
   ) {
+    noUserTries = noUserTries + 1;
+    computerWins = computerWins + 1;
+    winrate = Math.floor(
+      (Number(userWins) / Number(noUserTries)) * Number(100)
+    );
     myOutputValue =
       "You lost! You picked " +
       input +
@@ -39,6 +78,25 @@ var main = function (input) {
       "Better luck next time!" +
       "<br>" +
       "<br>" +
+      "(1) Your winrate is " +
+      winrate +
+      "% with " +
+      userWins +
+      " wins!" +
+      "!" +
+      "<br>" +
+      "<br>" +
+      "(2) Computer's winrate is " +
+      (100 - winrate) +
+      "% with " +
+      computerWins +
+      " wins.." +
+      "<br>" +
+      "<br>" +
+      "(3) Number of draws = " +
+      noDraws +
+      "<br>" +
+      "<br>" +
       "Please input 'stone', 'paper' or 'scissors' to play again!";
   }
   // (1c) Classic Draw
@@ -47,6 +105,8 @@ var main = function (input) {
     (input == "paper" && computer == "paper") ||
     (input == "stone" && computer == "stone")
   ) {
+    noUserTries = noUserTries + 1;
+    noDraws = noDraws + 1;
     myOutputValue =
       "It's a draw! You picked " +
       input +
@@ -56,6 +116,25 @@ var main = function (input) {
       "<br>" +
       "<br>" +
       "No winners this time!" +
+      "<br>" +
+      "<br>" +
+      "(1) Your winrate is " +
+      winrate +
+      "% with " +
+      userWins +
+      " wins!" +
+      "!" +
+      "<br>" +
+      "<br>" +
+      "(2) Computer's winrate is " +
+      (100 - winrate) +
+      "% with " +
+      computerWins +
+      " wins.." +
+      "<br>" +
+      "<br>" +
+      "(3) Number of draws = " +
+      noDraws +
       "<br>" +
       "<br>" +
       "Please input 'stone', 'paper' or 'scissors' to play again!";
