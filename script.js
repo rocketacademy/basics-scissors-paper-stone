@@ -1,26 +1,51 @@
+//Adding username
+var userName = "";
+
+//Wins and total games played
+var numWins = 0;
+var numTotalGames = 0;
+
 var main = function (input) {
   //Thanks to Tinaes for teaching array
-  console.log("User: " + input);
+  console.log(userName + ": " + input);
   var moves = ["scissors", "paper", "stone"];
 
-  var compMove = Math.floor(Math.random(moves) * moves.length); //Computer random moves
+  var compMove = Math.floor(Math.random() * moves.length); //Computer random moves
 
   var rMoves = ["reversed scissors", "reversed paper", "reversed stone"];
 
-  var rCompMove = Math.floor(Math.random(rMoves) * rMoves.length); //RComputer random moves
+  var rCompMove = Math.floor(Math.random() * rMoves.length); //RComputer random moves
 
+  //Setting username with the main input (reference from solution)
+  if (!userName) {
+    //Need to be first action if not will not execute
+    if (!input) {
+      //What to do if no input yet.
+      return "Please input something as your username!";
+    }
+    userName = input;
+    return (
+      "Welcome Player " +
+      userName +
+      "!<br>Type scissors, paper or stone to play!"
+    );
+  }
   //Improve with .toLowerCase() to make input case insensitive!
 
   //If Tie
   if (input.toLowerCase() == moves[compMove]) {
     console.log("Comp Move:" + moves[compMove]);
     console.log("Tie");
-    return (
-      "It is a tie." +
-      "<BR>" +
+    numTotalGames = numTotalGames + 1;
+    var tieOutput =
+      "It is a tie. <br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games Won<BR>" +
       "<br>" +
-      "Now you can type scissors, paper or stone to play another round!"
-    );
+      "Now you can type scissors, paper or stone to play another round!";
+    return tieOutput;
   }
 
   //If User wins
@@ -31,14 +56,22 @@ var main = function (input) {
   ) {
     console.log("Comp Move:" + moves[compMove]);
     console.log("User Win");
+    numWins = numWins + 1;
+    numTotalGames = numTotalGames + 1;
     var winOutput =
       "The computer choose " +
       moves[compMove] +
       "<br>" +
-      "You choose " +
+      "Player " +
+      userName +
+      " choose " +
       input +
       "<br>" +
-      "You WIN!" +
+      "You WIN! <br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games Won." +
       "<br>" +
       "<br>" +
       "Now you can type scissors, paper or stone to play another round!";
@@ -53,14 +86,21 @@ var main = function (input) {
   ) {
     console.log("Comp Move:" + moves[compMove]);
     console.log("User Lose");
+    numTotalGames = numTotalGames + 1;
     var loseOutput =
       "The computer choose " +
       moves[compMove] +
       "<br>" +
-      "You choose " +
+      "Player " +
+      userName +
+      " choose " +
       input +
       "<br>" +
-      "You lose!" +
+      "You lose! <br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games Won." +
       "<br>" +
       "<BR>" +
       "Now you can type scissors, paper or stone to play another round!";
@@ -71,10 +111,15 @@ var main = function (input) {
   if (input.toLowerCase() == rMoves[rCompMove]) {
     console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Tie");
+    numTotalGames = numTotalGames + 1;
     return (
-      "It is a tie. Try again hehe." +
-      "<br>" +
-      "<br>" +
+      "You found the hidden game.<br><br>It is a tie. Try again hehe." +
+      "<br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games Won" +
+      "<br><br>" +
       "Now you can type scissors, paper or stone to play another round!"
     );
   }
@@ -90,16 +135,23 @@ var main = function (input) {
   ) {
     console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Win");
+    numWins = numWins + 1;
+    numTotalGames = numTotalGames + 1;
     var rWinOutput =
-      "The computer choose " +
+      "You found the hidden game.<br><br>The computer choose " +
       rMoves[rCompMove] +
-      "<br>" +
-      "You choose " +
+      "<br><br>" +
+      "Challenger " +
+      userName +
+      " choose " +
       input +
-      "<br>" +
-      "Lucky you. You WIN!" +
-      "<br>" +
-      "<br>" +
+      "<br><br>" +
+      "Lucky you. You WIN!<br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games WON!";
+    "<br><br>" +
       "Now you can type scissors, paper or stone to play another round!";
     return rWinOutput;
   }
@@ -115,16 +167,23 @@ var main = function (input) {
   ) {
     console.log("RComp Move:" + rMoves[rCompMove]);
     console.log("RUser Lose");
+    numTotalGames = numTotalGames + 1;
     var rLoseOutput =
-      "The computer choose " +
+      "You found the hidden game.<br><br>The computer choose " +
       rMoves[rCompMove] +
-      "<br>" +
-      "You choose " +
+      "<br><br>" +
+      "Challenger " +
+      userName +
+      " choose " +
       input +
-      "<br>" +
-      "Get good. You lose!" +
-      "<br>" +
-      "<br>" +
+      "<br><br>" +
+      "Get good! You lose!" +
+      "<br><br>" +
+      numWins +
+      " of " +
+      numTotalGames +
+      " Games Won";
+    "<br><br>" +
       "Now you can type scissors, paper or stone to play another round!";
     return rLoseOutput;
   }
