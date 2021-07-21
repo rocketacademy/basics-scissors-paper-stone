@@ -1,6 +1,7 @@
 // set game mode
 var currentGameMode = "waiting for username";
 
+// store userName
 var userName = "";
 
 // win-loss record
@@ -34,14 +35,6 @@ var getWinCompPercent = function () {
   return `Computer has won ${stateWinComp} time(s) which is ${calcWinCompPercent}% of the time.`;
 };
 
-// set display message for number of draws
-var getDrawMessage = function () {
-  if (stateDraw == 0) {
-    return `Number of draws is 0.`;
-  }
-  return `Number of draws is ${stateDraw}`;
-};
-
 // generate random number
 var getRandomNumber = function () {
   // generate random whole number from 1 to 3
@@ -60,6 +53,14 @@ var getRandomValue = function () {
     return "paper";
   }
   return "stone";
+};
+
+// set display message for number of draws
+var getDrawMessage = function () {
+  if (stateDraw == 0) {
+    return `Number of draws is 0.`;
+  }
+  return `Number of draws is ${stateDraw}`;
 };
 
 // draw outcome function
@@ -146,18 +147,38 @@ var runCheckInputUser = function (input) {
   return "FALSE";
 };
 
-// input validation function
-var inputValidation = function (input) {
-  {
-    return `Please enter "scissors" "paper" or "stone" to start playing!
-    <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
+// set game mode
+var setGameMode = function (userName, input) {
+  if (input == "reverse") {
+    currentGameMode = "reversed SPS game";
+    return `Hey ${userName}, initializing ${currentGameMode}.`;
   }
+  if (input == "normal") {
+    currentGameMode = "SPS game";
+    return `Hey ${userName}, initializing ${currentGameMode}.`;
+  }
+};
+
+// set display message if input is reverse
+// var startReverse = function (userName, input) {
+//   if (input == "reverse") {
+//     currentGameMode = "reversed SPS game";
+//     return `Welcome ${userName}! <br><br>Initialising reversed game mode.`;
+//   }
+//   currentGameMode = "SPS game";
+// };
+
+// input validation function
+var inputValidation = function (userName, input) {
+  return `Please enter "scissors" "paper" or "stone" to start playing!
+    <br><br> Like a challenge? <br>Begin your entry with "reversed"<space> to try your hand at a reversed Scissors Paper Stone game!`;
 };
 
 // validate input
 var runCheckInput = function (input) {
   if (
     input == "" ||
+    input !== "reverse" ||
     input !== "scissors" ||
     input !== "paper" ||
     input !== "stone" ||
@@ -184,6 +205,32 @@ var runCheckWin = function (input) {
 
 // check if user lost
 var runCheckLost = function (input) {
+  if (
+    ((input == "reversed stone" || input == "paper") &&
+      compHand == "scissors") ||
+    ((input == "reversed scissors" || input == "stone") &&
+      compHand == "paper") ||
+    ((input == "reversed paper" || input == "scissors") && compHand == "stone")
+  )
+    return "TRUE";
+  return "FALSE";
+};
+
+// check if user lost for reverse mode
+var runCheckLostReverse = function (input) {
+  if (
+    ((input == "reversed paper" || input == "stone") &&
+      compHand == "scissors") ||
+    ((input == "reversed stone" || input == "scissors") &&
+      compHand == "paper") ||
+    ((input == "reversed scissors" || input == "paper") && compHand == "stone")
+  )
+    return "TRUE";
+  return "FALSE";
+};
+
+// check if user won for reverse mode
+var runCheckWinReverse = function (input) {
   if (
     ((input == "reversed stone" || input == "paper") &&
       compHand == "scissors") ||
@@ -232,12 +279,57 @@ var playSPS = function (userName, input) {
   console.log("numGamesPlayed", numGamesPlayed);
 };
 
+var playSPSReverse = function (userName, input) {
+  // generate value when submits button is clicked
+  compHand = getRandomValue();
+  console.log(compHand);
+
+  // set users input value for the round
+  userHand = input;
+
+  // if user draw
+  if (runCheckDraw(input) == "TRUE") {
+    return drawOutcome();
+  }
+
+  // if user won
+  if (runCheckWinReverse(input) == "TRUE") {
+    return winOutcome();
+  }
+
+  // check if user lost
+  if (runCheckLostReverse(input) == "TRUE") {
+    return loseOutcome();
+  }
+
+  // input validation
+  if (runCheckInput(input) == "TRUE") {
+    return inputValidation();
+  }
+};
+
 var main = function (input) {
+  var myOutputValue = "";
+  // startReverse(userName, input);
+
   if (currentGameMode == "waiting for username") {
-    var myOutputValue = inputValidationUser(input);
-    console.log(runCheckInputUser);
-  } else if (currentGameMode == "SPS game") {
+    myOutputValue = inputValidationUser(input);
+    console.log(currentGameMode);
+    // } else if ((currentGameMode = "reversed SPS game")) {
+    //   myOutputValue = playSPSReverse(userName, input);
+  } else if (currentGameMode == "reversed SPS game") {
+    myOutputValue = playSPSReverse(userName, input);
+  }
+  if (currentGameMode == "SPS game") {
     myOutputValue = playSPS(userName, input);
   }
+  if (input == "reverse" || input == "normal") {
+    myOutputValue = setGameMode(userName, input);
+  }
+  console.log(currentGameMode);
+
   return myOutputValue;
 };
+
+// modify text to confirm initializing of different game mode and values to enter
+// add return text for all on initializing different game modes
