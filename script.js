@@ -1,11 +1,29 @@
-//SPS PART 1, FAITH
-//draw ==, default outcome = lose,
-// winning outcomes = (UI paper and CS stone) or (UI stone and CS scissors) or (UI scissors and CS paper)
+//FAITH: SPS PART 1 + PART 2 More Comfortable, Reverse Game Mode
+
+var userWin = 0;
+var comWin = 0;
+var numDraws = 0;
+var currentGameMode = "waiting for user name";
+var userName;
+
+var main = function (input) {
+  var myOutputValue = "";
+
+  if (currentGameMode == "waiting for user name") {
+    userName = input; // set the name
+    currentGameMode = "SPS game"; // now that we have the name, switch the mode
+
+    myOutputValue = "Hello " + userName;
+  } else if (currentGameMode == "SPS game") {
+    myOutputValue = playSPSgame(input);
+  }
+
+  return myOutputValue;
+};
 
 // get random integer
 var getSPS = function () {
   var randomFloat = Math.random() * 3;
-  console.log(randomFloat);
   var resultInteger = Math.ceil(randomFloat);
   var computerChoice;
 
@@ -22,9 +40,8 @@ var getSPS = function () {
   return computerChoice;
 };
 
-var main = function (input) {
+var playSPSgame = function (input) {
   var comSelect = getSPS(); //call com output of SPS
-
   var myOutputValue = "You lose!";
 
   // screening valid input
@@ -36,11 +53,8 @@ var main = function (input) {
     input != "reverse stone" &&
     input != "reverse paper"
   ) {
-    myOutputValue =
-      "There are only 3 possible inputs: scissors, paper or stone. Please try again!";
+    return "There are only 3 possible inputs: scissors, paper or stone. Please try again!";
   }
-
-  // more comfortable: Reverse SPS
 
   if (input == comSelect || input == "reverse " + comSelect) {
     //draw
@@ -57,10 +71,28 @@ var main = function (input) {
   ) {
     myOutputValue = "You win!";
   }
-  // more comfortable: Formatting
-  var finalOutput = `The computer chose ${comSelect}.<br>
-  You chose ${input}.<br>
-  ${myOutputValue}<br>`;
 
-  return finalOutput;
+  var uCRatio = userVsCom(myOutputValue);
+  return `The computer chose ${comSelect}.<br>
+  You chose ${input}.<br>
+  ${myOutputValue} <br><br>
+  ${uCRatio}`;
+};
+
+var userVsCom = function (fOutput) {
+  if (fOutput == "You win!") {
+    userWin += 1;
+  }
+
+  if (fOutput == "You lose!") {
+    comWin += 1;
+  }
+
+  if (fOutput == "It's a draw!") {
+    numDraws += 1;
+  }
+
+  return ` 
+  You've won ${userWin} / ${Number(userWin + comWin + numDraws)} times. <br><br>
+  Not bad, ${userName}!`;
 };
