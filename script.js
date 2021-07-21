@@ -1,33 +1,15 @@
-var main = function (input) {
-  //SPS PART 1, FAITH
-  //assign user input to an integer between 1-3, representative of scissors paper stone
-  // only 3 possible outcomes: win, lose, or draw
+//SPS PART 1, FAITH
+//draw ==, default outcome = lose,
+// winning outcomes = (UI paper and CS stone) or (UI stone and CS scissors) or (UI scissors and CS paper)
 
-  if (input == "scissors" || input == "reverse scissors") {
-    var inputNum = 1;
-  }
-
-  if (input == "stone" || input == "reverse stone") {
-    inputNum = 2;
-  }
-
-  if (input == "paper" || input == "reverse paper") {
-    inputNum = 3;
-  }
-
-  //if user input = stone:  3-2=1 (scissors,win), 2-3=-1 (paper,lose)
-  // if user input = scissors: 1-3 = -2(paper,win), 1-2=-1(stone,lose)
-  // if user input = paper: 3-2=1 (stone,win), 3-1=2 (scissors, lose)
-  // draw outcome always ==
-  // winning outcomes = 1,1,-2
-  // losing outcomes = -1,-1,2
-
-  // get random number that can be assigned to each scissors paper stone, that will represent program choice
+// get random integer
+var getSPS = function () {
   var randomFloat = Math.random() * 3;
   console.log(randomFloat);
   var resultInteger = Math.ceil(randomFloat);
+  var computerChoice;
 
-  // output computer choice of SPS tagged from random generated integer
+  // assign integer to SPS
   if (resultInteger == 1) {
     computerChoice = "scissors";
   }
@@ -37,40 +19,47 @@ var main = function (input) {
   if (resultInteger == 3) {
     computerChoice = "paper";
   }
+  return computerChoice;
+};
 
-  // screening
-  if (inputNum != 1 && inputNum != 2 && inputNum != 3) {
-    var myOutputValue =
+var main = function (input) {
+  var comSelect = getSPS(); //call com output of SPS
+
+  var myOutputValue = "You lose!";
+  var reverseOutput = "You won!";
+
+  // screening valid input
+  if (
+    input != "scissors" &&
+    input != "stone" &&
+    input != "paper" &&
+    input != "reverse scissors" &&
+    input != "reverse stone" &&
+    input != "reverse paper"
+  ) {
+    myOutputValue =
       "There are only 3 possible inputs: scissors, paper or stone. Please try again!";
   }
 
   // more comfortable: Reverse SPS
 
-  if (inputNum - resultInteger == 1 || inputNum - resultInteger == -2) {
-    myOutputValue = "You win!";
-    var reverseOutput = "You lost!";
-  }
-
-  if (inputNum - resultInteger == 0) {
+  if (input == comSelect || input == "reverse " + comSelect) {
+    //draw
     myOutputValue = "It's a draw!";
-    reverseOutput = "It's a draw!";
-  }
-  if (inputNum - resultInteger == -1 || inputNum - resultInteger == 2) {
-    myOutputValue = "You lose!";
-    reverseOutput = "You won!";
   }
 
-  // setting up for reverse output based on input
   if (
-    input == "reverse scissors" ||
-    input == "reverse stone" ||
-    input == "reverse paper"
+    // win
+    ((input == "paper" || input == "reverse scissors") &&
+      comSelect == "stone") ||
+    ((input == "stone" || input == "reverse paper") &&
+      comSelect == "scissors") ||
+    ((input == "scissors" || input == "reverse stone") && comSelect == "paper")
   ) {
-    myOutputValue = reverseOutput;
+    myOutputValue = "You win!";
   }
-
   // more comfortable: Formatting
-  var finalOutput = `The computer chose ${computerChoice}.<br>
+  var finalOutput = `The computer chose ${comSelect}.<br>
   You chose ${input}.<br>
   ${myOutputValue}<br>`;
 
