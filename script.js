@@ -128,7 +128,6 @@ var main = function (input) {
     (input == "paper" && computer == "paper") ||
     (input == "stone" && computer == "stone")
   ) {
-    noUserTries = noUserTries + 1;
     noDraws = noDraws + 1;
     myOutputValue =
       "It's a draw! You picked " +
@@ -165,9 +164,6 @@ var main = function (input) {
       "Please input 'stone', 'paper' or 'scissors' to play again!";
   }
   // (2) Reversed Game
-  if (input == "reverse") {
-    mode = "reverse SPS game";
-  }
   // (2a) Reversed Win
   if (
     (input == "reversed scissors" && computer == "stone") ||
