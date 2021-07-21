@@ -8,6 +8,7 @@ var roundsDraw = 0;
 var gameMode = `Please key in your name!`;
 var username = "";
 var prevWinner = ``;
+var comOrPlayer = `player`;
 
 // create random number generator to represent the three actions
 var generateRandomNumber = function () {
@@ -266,21 +267,45 @@ var main = function (input) {
   } else if (
     gameMode == `normal` &&
     input !== `reverse` &&
-    input !== `korean`
+    input !== `korean` &&
+    comOrPlayer == `player`
   ) {
     myOutputValue = normalGame(username, input);
   } else if (
     gameMode == `reverse` &&
     input !== `normal` &&
-    input !== `korean`
+    input !== `korean` &&
+    comOrPlayer == `player`
   ) {
     myOutputValue = reverseGame(username, input);
   } else if (
     gameMode == `korean` &&
     input !== `normal` &&
-    input !== `reverse`
+    input !== `reverse` &&
+    comOrPlayer == `player`
   ) {
     myOutputValue = koreanGame(username, input);
+  } else if (
+    gameMode == `normal` &&
+    input !== `reverse` &&
+    input !== `korean` &&
+    comOrPlayer == `com`
+  ) {
+    myOutputValue = normalGame(username, generateRandomNumber()); //only normal game works
+  } else if (
+    gameMode == `reverse` &&
+    input !== `normal` &&
+    input !== `korean` &&
+    comOrPlayer == `com`
+  ) {
+    myOutputValue = reverseGame(username, `reversed ` + generateRandomNumber()); //dont work
+  } else if (
+    gameMode == `korean` &&
+    input !== `normal` &&
+    input !== `reverse` &&
+    comOrPlayer == `com`
+  ) {
+    myOutputValue = koreanGame(username, generateRandomNumber()); //dont work
   } else if (gameMode == `normal` && input == `reverse`) {
     gameMode = `reverse`;
     myOutputValue = `Hello ${username}. <br> You chose REVERSE mode!<br> Choose between "reversed scissors", "reversed paper" or "reversed stone"`;
@@ -299,6 +324,21 @@ var main = function (input) {
   } else if (gameMode == `korean` && input == `reverse`) {
     gameMode = `reverse`;
     myOutputValue = `Hello ${username}. <br> You chose REVERSE mode!<br> Choose between "reversed scissors", "reversed paper" or "reversed stone"`;
+  }
+
+  ////// HERE IS EDITED
+  if (
+    (gameMode == `normal` || gameMode == `reverse` || gameMode == `korean`) &&
+    input == `com`
+  ) {
+    comOrPlayer = `com`;
+    myOutputValue = `You chose to have computer to make a guess for you. Now click submit to continue with the game`;
+  } else if (
+    (gameMode == `normal` || gameMode == `reverse` || gameMode == `korean`) &&
+    input == `player`
+  ) {
+    comOrPlayer = `player`;
+    myOutputValue = `You chose to have make your own guess. Now click type your guess and submit to continue with the game`;
   }
   return myOutputValue;
 };
