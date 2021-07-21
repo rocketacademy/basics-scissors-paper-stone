@@ -3,39 +3,70 @@ var userTally = 0;
 var computerTally = 0;
 var rounds = 0;
 var userName = '';
-var userChoice;
+var gameModeChoice = '';
+var gameModeText = '';
+var gameModeMessage = `Please select a game mode: <br>
+    Enter "1" for regular Scissors Paper Stone <br>
+    Enter "2" for reversed Scissors Paper Stone <br>
+    Enter "3" for Korean Scissors Paper Stone <br>
+    Enter "4" for computer vs computer Scissors Paper Stone`;
+var mostRecentWinner = '';
 
 // Main function
 var main = function (input) {
-  // Check if user name is empty
+  // Prompt user name
   if (userName == '') {
     if (input == '') {
       return `Please input your name!`;
     } else {
       userName = input;
+      return `Welcome ${input}! <br>` + gameModeMessage;
     }
-    return `Welcome ${input}! Now let's play a game of Scissors Paper Stone!`;
   } else {
-    // Beginning of game
-    if (
-      input == 'scissors' ||
-      input == 'paper' ||
-      input == 'stone' ||
-      input == 'reversed scissors' ||
-      input == 'reversed paper' ||
-      input == 'reversed stone'
-    ) {
-      var reverseCheck = checkReverse(input);
-      var computerChoice = randomChoice();
-      var scoring = compareWinner(userChoice, computerChoice, reverseCheck);
-      return outputMessage(scoring, userChoice, computerChoice);
+    // Prompt game mode
+    if (gameModeChoice == '') {
+      if (Number.isNaN(Number(input)) || input > 4 || input < 1) {
+        return `Invalid input! <br>` + gameModeMessage;
+      } else {
+        gameModeChoice = Number(input);
+        if (gameModeChoice == 1) {
+          gameModeText = 'regular Scissors Paper Stone';
+        } else if (gameModeChoice == 2) {
+          gameModeText = 'reversed Scissors Paper Stone';
+        } else if (gameModeChoice == 3) {
+          gameModeText = 'Korean Scissors Paper Stone';
+        } else if (gameModeChoice == 4) {
+          gameModeText = 'computer vs computer Scissors Paper Stone';
+        }
+      }
+      return `You have selected ${gameModeText}. <br> Enter "scissors", "paper", or "stone" to play.`;
     } else {
-      return `"${input}" is not an option. Please enter either "scissors", "paper", or "stone" (lower case).`;
+      if (input == 'scissors' || input == 'paper' || input == 'stone') {
+        var userChoice = input;
+        var reverseCheck = 1;
+        var computerChoice = randomChoice();
+        if (gameModeChoice == 2) {
+          reverseCheck = -1;
+        }
+        if (gameModeChoice == 4) {
+          userChoice = randomChoice();
+        }
+        var scoring = compareWinner(userChoice, computerChoice, reverseCheck);
+        return outputMessage(
+          scoring,
+          userChoice,
+          computerChoice,
+          gameModeChoice
+        );
+      } else {
+        return `"${input}" is not an option. Please enter either "scissors", "paper", or "stone" (lower case).`;
+      }
     }
   }
 };
 
 // Check reverse or normal game
+// This function is no longer used after making Reverse a standalone game mode
 var checkReverse = function (input) {
   var reverseCheck;
   if (input == 'scissors' || input == 'paper' || input == 'stone') {
@@ -52,20 +83,22 @@ var checkReverse = function (input) {
 };
 
 // Output message
-var outputMessage = function (score, userChoice, computerChoice) {
-  var message;
+var outputMessage = function (score, userChoice, computerChoice, mode) {
+  var baseMessage;
   var addOnMessage;
+  var comVsComMessage = '';
   var userEmoji = choiceToObject(userChoice);
   var computerEmoji = choiceToObject(computerChoice);
-
-  if (score == 0) {
-    message = `You chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br>It's a draw!`;
-  } else if (score == 1) {
-    message = `You chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br> You win!`;
-  } else if (score == -1) {
-    message = `You chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br> You lose!`;
+  if (mode == 4) {
+    comVsComMessage = `(selected by computer) `;
   }
-
+  if (score == 0) {
+    baseMessage = `You ${comVsComMessage}chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br>It's a draw!`;
+  } else if (score == 1) {
+    baseMessage = `You ${comVsComMessage}chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br> You win!`;
+  } else if (score == -1) {
+    baseMessage = `You ${comVsComMessage}chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br> You lose!`;
+  }
   if (userTally / rounds >= 0.7) {
     addOnMessage = `Wow you are doing great!`;
   } else if (userTally / rounds <= 0.3) {
@@ -73,16 +106,15 @@ var outputMessage = function (score, userChoice, computerChoice) {
   } else {
     addOnMessage = ``;
   }
-
-  message =
-    message +
+  baseMessage =
+    baseMessage +
     `<br><br> So far ${userName} has played ${rounds} games. ${userName} has won ${userTally} games (win rate = ${
       (userTally / rounds) * 100
     }%) and the computer has won ${computerTally} games (win rate = ${
       (computerTally / rounds) * 100
     }%). <br>` +
     addOnMessage;
-  return message;
+  return baseMessage;
 };
 
 // Convert choice to emoji object
