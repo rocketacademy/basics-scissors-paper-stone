@@ -138,10 +138,9 @@ var koreanGame = function (input, computerChoice) {
       var koreanMessage =
         "We have a winner! <br><br>" +
         `You used ${input} and the computer used ${computerChoice}, so the ultimate winner is ${currentWinner}!!!`;
-      currentWinner == "";
+      currentWinner = "";
+      console.log(currentWinner);
       return koreanMessage;
     }
   }
 };
-
-//
