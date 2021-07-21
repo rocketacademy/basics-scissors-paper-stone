@@ -97,16 +97,22 @@ var computerWin = 0;
 var humanWin = 0;
 var main = function (input) {
   var computerUse = computerHand();
+  //the option to let the computer play for u starts here
+  if (input == `computer`) {
+    var urHand = computerHand();
+    var winner = whoWins(urHand, computerUse);
+    return winner + ` the computer chose ${computerUse}.<br> you were assigned ${urHand}. <br><br>the computer has won ${computerWin} times. You have won ${humanWin} times. `;
+  }
   //the option to go reversed or stay normal remains here
-  if (input == `reversed scissors` || input == `reversed stone` || input == `reversed paper`) {
+  else if (input == `reversed scissors` || input == `reversed stone` || input == `reversed paper`) {
     var realInput = input.replace("reversed", "");
     var reversedwinner = ReversalWhoWins(input, computerUse);
     return reversedwinner + ` the computer chose ${computerUse} <br> you chose ${realInput} <br><br>Now you can type "scissors" "paper" or "stone" to play another round! the computer has won ${computerWin} times. You have won ${humanWin} times. the most recent winner is ${possibleChampion}`;
   } // if there is invalid input
-  if (input != "scissors" && input != "stone" && input != "paper") {
+  else if (input != "scissors" && input != "stone" && input != "paper") {
     return " you have entered an invalid input";
   }
   //here go normal
-  var winner = whoWins(input, computerUse);
+  else var winner = whoWins(input, computerUse);
   return winner + ` the computer chose ${computerUse} <br> you chose ${input} <br><br>Now you can type "scissors" "paper" or "stone" to play another round! the computer has won ${computerWin} times. You have won ${humanWin} times. the most recent winner is ${possibleChampion}`;
 };
