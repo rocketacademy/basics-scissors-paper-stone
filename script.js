@@ -38,15 +38,19 @@ var getSpsResult = function () {
   return spsResult;
 };
 
+// Add variable for win/lose game state
+
+var winCount = 0;
+var loseCount = 0;
+var drawCount = 0;
+var WinLoseHistory =
+  "wins:" + winCount + " lose:" + loseCount + "draw: " + drawCount;
+
 var main = function (input) {
   // Generate and define random SPS
   var sps = getSpsResult();
   console.log("sps");
   console.log(sps);
-
-  // Define default message (lose)
-  var myOutputValue =
-    "You lose!  You input " + input + " and your opponent chose " + sps + "!";
 
   // Define winning message (win)
   if (
@@ -55,9 +59,33 @@ var main = function (input) {
     (input == stone && sps == scissors)
   ) {
     console.log("win");
+    winCount = winCount + 1;
     myOutputValue =
-      "You win! You input " + input + " and your opponent chose " + sps + "!";
+      "You win! You input " +
+      input +
+      " and your opponent chose " +
+      sps +
+      "! " +
+      WinLoseHistory;
   }
+
+  // Define losing message (lose)
+  if (
+    (input == paper && sps == scissors) ||
+    (input == stone && sps == paper) ||
+    (input == scissors && sps == stone)
+  ) {
+    console.log("lose");
+    loseCount = loseCount + 1;
+    myOutputValue =
+      "You lose!  You input " +
+      input +
+      " and your opponent chose " +
+      sps +
+      "! " +
+      WinLoseHistory;
+  }
+
   // Define draw message (draw)
   if (
     (input == scissors && sps == scissors) ||
@@ -65,18 +93,21 @@ var main = function (input) {
     (input == stone && sps == stone)
   ) {
     console.log("draw");
+    drawCount = drawCount + 1;
     myOutputValue =
       "Its a draw! You input " +
       input +
       " and your opponent chose " +
       sps +
-      "!";
+      "! " +
+      WinLoseHistory;
   }
   // Define error message
   if (input != scissors && input != paper && input != stone) {
     console.log("invalid input");
     myOutputValue =
-      'Invalid input! Kindly enter "scissors", "paper", or "stone"';
+      'Invalid input! Kindly enter "scissors", "paper", or "stone" ' +
+      WinLoseHistory;
   }
 
   return myOutputValue;
