@@ -99,12 +99,16 @@ var outputMessage = function (score, userChoice, computerChoice, mode) {
   } else if (score == -1) {
     baseMessage = `You ${comVsComMessage}chose ${userEmoji}. <br> The computer chose ${computerEmoji}. <br> You lose!`;
   }
-  if (userTally / rounds >= 0.7) {
-    addOnMessage = `Wow you are doing great!`;
-  } else if (userTally / rounds <= 0.3) {
-    addOnMessage = `Keep going! You will get better!`;
+  if (score == 0 && mode == 3 && mostRecentWinner != '') {
+    addOnMessage = `The ultimate  winner is ${mostRecentWinner}!`;
   } else {
-    addOnMessage = ``;
+    if (userTally / rounds >= 0.7) {
+      addOnMessage = `Wow you are doing great!`;
+    } else if (userTally / rounds <= 0.3) {
+      addOnMessage = `Keep going! You will get better!`;
+    } else {
+      addOnMessage = ``;
+    }
   }
   baseMessage =
     baseMessage +
@@ -147,8 +151,10 @@ var compareWinner = function (user, computer, reverseCheck) {
   rounds++;
   if (score == 1) {
     userTally++;
+    mostRecentWinner = 'YOU';
   } else if (score == -1) {
     computerTally++;
+    mostRecentWinner = 'COMPUTER';
   }
   return score;
 };
