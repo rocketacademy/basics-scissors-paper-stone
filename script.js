@@ -37,7 +37,8 @@ var normalSPS = function (userChoose) {
   // If player chooses the same as the computer
 
   if (userChoose == aiChoose) {
-    myOutputValue = "It's a draw.";
+    totalPlays = totalPlays + 1;
+    myOutputValue = "It's a draw. Try again";
   }
   // If Com wins user
   else if (
@@ -45,7 +46,7 @@ var normalSPS = function (userChoose) {
     (userChoose == "paper" && aiChoose == "scissors") ||
     (userChoose == "stone" && aiChoose == "paper")
   ) {
-    myOutputValue = "You have lost";
+    myOutputValue = "You have lost. Try again";
     totalPlays = totalPlays + 1;
     comScore = comScore + 1;
     console.log(comScore);
@@ -59,15 +60,30 @@ var normalSPS = function (userChoose) {
     totalPlays = totalPlays + 1;
     userScore = userScore + 1;
     console.log(userScore);
-    myOutputValue = "You have won! <br> You have won " + userScore + " times";
+    myOutputValue =
+      "You have won! <br><br> You have won " +
+      userScore +
+      " out of " +
+      totalPlays +
+      " times";
+  }
+  if (userChoose == "score check") {
+    myOutputValue =
+      " You have won " + userScore + " out of " + totalPlays + " times";
   }
   return myOutputValue;
 };
 
 /// Reverse SPS game mode ///
-var reverseSPS = function (userChoose, aiChoose) {
+var reverseSPS = function (userChoose) {
+  var myOutputValue =
+    "You are now playing Reverse Scissors Paper Stone. <br><br>The rules have changed! <br><br> Please input either 'Scissors', 'Paper' or 'Stone'. ";
+  var aiChoose = comPlays();
+  console.log("Com chooses " + aiChoose);
+  console.log("user chooses " + userChoose);
   if (userChoose == aiChoose) {
-    myOutputValue = "It's a draw.";
+    totalPlays = totalPlays + 1;
+    myOutputValue = "It's a draw! Try again ";
   }
   if (
     (userChoose == "stone" && aiChoose == "scissors") || //Computer wins User
@@ -88,10 +104,25 @@ var reverseSPS = function (userChoose, aiChoose) {
     userScore = userScore + 1;
     console.log(userScore);
     myOutputValue =
-      "You have won! <br><br> You have won " + userScore + " times";
+      "You have won! <br><br> You have won " +
+      userScore +
+      " out of " +
+      totalPlays +
+      " times ";
   }
+  if (userChoose == "score check") {
+    myOutputValue =
+      " You have won " + userScore + " out of " + totalPlays + " times";
+  }
+
   return myOutputValue;
 };
+
+// ///  Checking your score ///
+// var scoreCheck = function () {
+//   myOutputValue =
+//     " You have won " + userScore + " out of " + totalPlays + " times";
+// };
 
 var main = function (input) {
   var myOutputValue = "";
@@ -103,27 +134,27 @@ var main = function (input) {
     myOutputValue =
       "Hi " +
       userName +
-      " <br><br> Please Choose a mode. <br> <br>''Normal' or ' Reverse' ";
+      " <br><br> Please Choose a mode. <br> <br>'Normal' or ' Reverse' ";
+  }
+  // Choosing Game Mode
+  if (input == "normal") {
+    currentGameMode = "normal";
+  } else if (input == "reverse") {
+    currentGameMode = "reverse";
+  }
+  console.log("Playing " + currentGameMode);
+  // Run the specific game the user wants
 
-    /// Choosing a game mode ///
-    currentGameMode = "choosing Game Mode";
+  if (currentGameMode == "normal") {
+    myOutputValue = normalSPS(input);
+  }
+  if (currentGameMode == "reverse") {
+    myOutputValue = reverseSPS(input);
   }
 
-  if (currentGameMode == "choosing Game Mode") {
-    if (input == "normal") {
-      currentGameMode = "normal";
-      myOutputValue = normalSPS(input);
-    } else if (input == "reverse") {
-      currentGameMode = "reverse";
-      myOutputValue = reverseSPS(input);
-    }
-    console.log("Current game mode " + currentGameMode);
-  }
+  // if (input == "score check") {
+  //   myOutputValue = scoreCheck();
+  // }
+
   return myOutputValue;
 };
-
-// ///  Checking your score ///
-// if (input == "score check") {
-//   myOutputValue =
-//     " You have won " + userScore + " out of " + totalPlays + " times";
-//}
