@@ -1,18 +1,20 @@
 //Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw.
 
-// [Part 02] Add state to your program such that it keeps track of the number of times the user has won and the number of times the computer has won. Output this win-loss record in a format you like in the program output. You can also output the number of draws and/or each party's winning percentage if you'd like.
-
 //Global variables
+var currentGameMode = "waiting for user name";
+var userName = "";
 var comScore = 0;
 var userScore = 0;
 var totalPlays = 0;
+var aiChoose = 0;
+var userChoose = 0;
 
-// Randomise what the computer chooses from "Scissors, Paper + Stone".
-var randomAction = function () {
-  // Generate a number from 0 through 3, inclusive of 0 and exclusive of 3
+/// Com play SPS action Function ///
+//Assigning a number to each of the action. Eg. Scissors = 0, Paper = 1, Stone = 2
+var comPlays = function () {
   var randomNumber = Math.floor(Math.random() * 3);
   if (randomNumber == 0) {
-    var computerChoose = "scissors"; //Assigning a number to each of the action. Eg. Scissors = 0, Paper = 1, Stone = 2
+    var computerChoose = "scissors";
   }
   if (randomNumber == 1) {
     var computerChoose = "paper";
@@ -23,15 +25,17 @@ var randomAction = function () {
   return computerChoose;
 };
 
-var main = function (input) {
+/// Normal SPS game mode ///
+var normalSPS = function (input) {
   var aiChoose = randomAction();
   console.log("computer chooses " + aiChoose);
   var userChoose = input;
   console.log("user chooses " + userChoose);
-  var myOutputValue = "Please input something"; //If it doesn't match with anything on top
-  if (input == "score check") {
-    myOutputValue =
-      " You have won " + userScore + " out of " + totalPlays + " times";
+  var myOutputValue =
+    "You are now playing Scissors Paper Stone. <br> Please input either 'Scissors'/ 'Paper' / 'Stone'. "; //Telling the user SPS game mode.
+
+  if (input == "Normal") {
+    currentGameMode = "Normal";
   }
   if (userChoose == aiChoose) {
     myOutputValue = "It's a draw.";
@@ -54,8 +58,131 @@ var main = function (input) {
     totalPlays = totalPlays + 1;
     userScore = userScore + 1;
     console.log(userScore);
-    myOutputValue = "You have won! You have won " + userScore + " times";
+    myOutputValue = "You have won! <br> You have won " + userScore + " times";
+  }
+  return myOutputValue;
+};
+
+/// Reverse SPS game mode ///
+var reverseSPS = function (input) {
+  if (input == "Normal") {
+    currentGameMode = "Normal";
+  }
+  if (userChoose == aiChoose) {
+    myOutputValue = "It's a draw.";
+  }
+  if (
+    (userChoose == "stone" && aiChoose == "scissors") || //Computer wins User
+    (userChoose == "scissors" && aiChoose == "paper") ||
+    (userChoose == "paper" && aiChoose == "stone")
+  ) {
+    myOutputValue = "Aww. You have lost";
+    totalPlays = totalPlays + 1;
+    comScore = comScore + 1;
+    console.log(comScore);
+  }
+  if (
+    (userChoose == "scissors" && aiChoose == "stone") || // User wins Computer
+    (userChoose == "paper" && aiChoose == "scissors") ||
+    (userChoose == "stone" && aiChoose == "paper")
+  ) {
+    totalPlays = totalPlays + 1;
+    userScore = userScore + 1;
+    console.log(userScore);
+    myOutputValue = "You have won! <br> You have won " + userScore + " times";
+  }
+  return myOutputValue;
+};
+
+// /// Korean SPS game mode ///
+// var koreanSPS = function (input) {
+//   if (input == "Normal") {
+//     currentGameMode = "Normal";
+//   }
+//   if (userChoose == aiChoose) {
+//     myOutputValue = "It's a draw.";
+//   }
+//   if (
+//     (userChoose == "stone" && aiChoose == "scissors") || //Computer wins User
+//     (userChoose == "scissors" && aiChoose == "paper") ||
+//     (userChoose == "paper" && aiChoose == "stone")
+//   ) {
+//     myOutputValue = "Aww. You have lost";
+//     totalPlays = totalPlays + 1;
+//     comScore = comScore + 1;
+//     console.log(comScore);
+//   }
+//   if (
+//     (userChoose == "scissors" && aiChoose == "stone") || // User wins Computer
+//     (userChoose == "paper" && aiChoose == "scissors") ||
+//     (userChoose == "stone" && aiChoose == "paper")
+//   ) {
+//     totalPlays = totalPlays + 1;
+//     userScore = userScore + 1;
+//     console.log(userScore);
+//     myOutputValue = "You have won! <br> You have won " + userScore + " times";
+//   }
+//   return myOutputValue;
+// };
+
+// /// Choosing which game mode to play ///
+// var gameMode = function (input) {
+//   if (input == "Normal") {
+//     currentGameMode = "Normal";
+//     normalSPS();
+//   }
+//   if (input == "Computer") {
+//     currentGameMode = "Computer";
+//   }
+//   if (input == "Korean") {
+//     currentGameMode = "Korean";
+//   }
+//   if (input == "Reverse") {
+//     currentGameMode = "Reverse";
+//     reverseSPS();
+//   }
+// };
+
+var main = function (input) {
+  var myOutputValue = "";
+  var input = input.toLowerCase();
+  /// Creating a username ///
+  if (currentGameMode == "waiting for user name") {
+    userName = input;
+    console.log("Hi " + userName);
+    myOutputValue =
+      "Hi " +
+      userName +
+      " <br> Please Choose a mode. ''Normal' / 'Computer' / 'Korean' /' Reverse' ";
+
+    /// Choosing a game mode ///
+    currentGameMode = "choosing Game Mode";
   }
 
+  if (currentGameMode == "choosing Game Mode") {
+    //myOutputValue =;
+    if (input == "Normal") {
+      currentGameMode = "Normal";
+      console.log(currentGameMode);
+      //normalSPS();
+    }
+    if (input == "Computer") {
+      currentGameMode = "Computer";
+    }
+    if (input == "Korean") {
+      currentGameMode = "Korean";
+    }
+    if (input == "Reverse") {
+      currentGameMode = "Reverse";
+      //reverseSPS();
+    }
+    console.log("Current game mode " + currentGameMode);
+  }
+
+  ///  Checking your score ///
+  if (input == "score check") {
+    myOutputValue =
+      " You have won " + userScore + " out of " + totalPlays + " times";
+  }
   return myOutputValue;
 };
