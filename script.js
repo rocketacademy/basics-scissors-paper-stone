@@ -32,15 +32,15 @@
 
 //a. Number Generator, assign a number to a (SPS)var
 
+// this assigns a string to the fn (SPS)
 var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
 
-//HELPER FUNCTION TO MAKE COMPUTER OUTPUT GENERATOR
+//Random number generator
 var ComputerOutput = function () {
   var randomNum = Math.floor(Math.random() * 3);
-  randomNum = randomNum + 1;
-
+  //Assign number to object.
   //IF 0, ASSIGNED 0 = SCISSORS
   if (randomNum == 0) {
     return SCISSORS;
