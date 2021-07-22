@@ -39,6 +39,7 @@ var STONE = "stone";
 
 //Random number generator
 var ComputerOutput = function () {
+  //Generate a random decimal from 0 through 3, inclusive of 0 and exclusive of 3.
   var randomNum = Math.floor(Math.random() * 3);
   //Assign number to object.
   //IF 0, ASSIGNED 0 = SCISSORS
@@ -50,7 +51,9 @@ var ComputerOutput = function () {
     return PAPER;
   }
   //ELSE IF
-  return STONE;
+  if (randomNum == 2) {
+    return STONE;
+  }
 };
 
 //b. List possible outcomes (wins/loss)
