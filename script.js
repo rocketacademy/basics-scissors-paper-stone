@@ -17,21 +17,37 @@ var drawCount = 0;
 
 var main = function (input) {
   // input validation
+ console.log (main);
+  if (currentGameMode == 'waiting for user name'){
+    // set the name
+    console.log ('current game mode');
+    userName = input;
 
-//var inputValue = [SCISSORS, STONE, PAPER, reversedScissors, reversedStone, reversedPaper];
-  if (
-    input !== SCISSORS &&
-    input !== STONE &&
-    input !== PAPER &&
-    input !== reversedPaper &&
-    input !== reversedScissors &&
-    input !== reversedStone) {    
+    // Now as we have the name, change gamemode to psp game.
 
-    console.log ('input validation');
-    output = "Your input must be all lower case! <br><br> Your choices are scissors, stone, paper, reversed scissors, reversed stone or reversed paper. <br><br> It is case sensitive. <br> <br> Please try again!!"; 
-    return output
+    currentGameMode = 'sps game';
+
+    output = 'Hello, ' + userName + ', Welcome to Scissors Paper Stone! <br> <br> Please enter scissors, paper, stone, reversed scissors, reversed paper or reversed stone. <br><br> ATTENTION: please use lower case only.';
+    return output;
+
+  } else if (currentGameMode == 'sps game') {
+   // sps game logic
+   //var inputValue = [SCISSORS, STONE, PAPER, reversedScissors, reversedStone, reversedPaper];
+  
+  
+    if (
+      input !== SCISSORS &&
+      input !== STONE &&
+      input !== PAPER &&
+      input !== reversedPaper &&
+      input !== reversedScissors &&
+      input !== reversedStone) {    
+
+      console.log ('input validation');
+      output = "Your input must be all lower case! <br><br> Your choices are scissors, stone, paper, reversed scissors, reversed stone or reversed paper. <br><br> It is case sensitive. <br> <br> Please try again!!"; 
+      return output
     }
-
+  };
  
   //var compChoice = genRandomNum();
   var compChoice = 'scissors'
@@ -137,6 +153,3 @@ var compare = function (input, compChoice){
        
   return output;
 };
-
-
-
