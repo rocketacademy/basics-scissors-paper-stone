@@ -6,10 +6,14 @@ var reversedScissors = 'reversed scissors'
 var reversedStone = 'reversed stone'
 var reversedPaper = 'reversed paper'
 
-//global variable for holding score
+//global variable for holding score and name
+var userName = '';
+var currentGameMode = 'waiting for user name';
+var compCount = 0;
+var userCount = 0;
+var drawCount = 0;
 
-var compScore = 0
-var userScore = 0
+
 
 var main = function (input) {
   // input validation
@@ -29,8 +33,8 @@ var main = function (input) {
     }
 
  
-  var compChoice = genRandomNum();
-  //var compChoice = 'scissors'
+  //var compChoice = genRandomNum();
+  var compChoice = 'scissors'
   // to test 
   console.log ('computer input')
   console.log (compChoice)
@@ -75,22 +79,28 @@ var compare = function (input, compChoice){
   var output;
 
   if (input == compChoice){
-      output = 'Your input is ' + input +'. <br> computer input is ' + compChoice +'. <br> It is a draw!'
-  
+
+      drawCount = drawCount + 1;
+      output = 'Your input is ' + input +'. <br> computer input is ' + compChoice +'. <br> It is a draw! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount 
+
   } else if (
       input == SCISSORS && compChoice == STONE ||
       input == STONE && compChoice== PAPER ||
       input == PAPER && compChoice == SCISSORS){
       
-      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try Again!!'
+      compCount = compCount + 1;
+      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try Again!! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount
+
       console.log ('basic winning');
 
   } else if (
       input == SCISSORS && compChoice == PAPER ||
       input == STONE && compChoice == SCISSORS ||
       input == PAPER && compChoice == STONE ){
-           
-      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Win! Yayyy! <br><br> Play again!'
+      
+      userCount = userCount + 1  
+      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Win! Yayyy! <br><br> Play again! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount
+      
       console.log('basic losing');
    
   // Reversed PSP 
@@ -99,7 +109,8 @@ var compare = function (input, compChoice){
       input == reversedStone && compChoice == STONE||
       input == reversedPaper && compChoice == PAPER){
 
-      output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw!'
+      drawCount = drawCount + 1  
+      output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount
 
       console.log ('it is a draw');
   
@@ -108,7 +119,8 @@ var compare = function (input, compChoice){
       input == reversedStone && compChoice == PAPER||
       input == reversedPaper && compChoice == SCISSORS) {
 
-      output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' +compChoice+'. <br> You Win! Yayy! <br><br> Play Again!!'
+      userCount = userCount + 1
+      output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' +compChoice+'. <br> You Win! Yayy! <br><br> Play Again!! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount
       console.log ('yaayy winning');
   
   } else if (
@@ -116,7 +128,8 @@ var compare = function (input, compChoice){
       input == reversedStone && compChoice == SCISSORS||
       input == reversedPaper && compChoice == STONE) { 
         
-      output = 'Your input is ' + input +'. <br> Computer input is reversed ' + compChoice+'. <br> You Lose! <br><br> Try again!'
+      compCount = compCount + 1  
+      output = 'Your input is ' + input +'. <br> Computer input is reversed ' + compChoice+'. <br> You Lose! <br><br> Try again! <br><br> Your score: <br> Draw = ' + drawCount + '<br> Win = ' + userCount + '<br> Lose = ' + compCount
 
       console.log('oh no losing');
 
