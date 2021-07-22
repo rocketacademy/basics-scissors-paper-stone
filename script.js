@@ -32,13 +32,15 @@
 
 //a. Number Generator, assign a number to a (SPS)var
 
-//HELPER FUNCTION TO MAKE COMPUTER OUTPUT GENERATOR
 var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
 
+//HELPER FUNCTION TO MAKE COMPUTER OUTPUT GENERATOR
 var ComputerOutput = function () {
   var randomNum = Math.floor(Math.random() * 3);
+  randomNum = randomNum + 1;
+
   //IF 0, ASSIGNED 0 = SCISSORS
   if (randomNum == 0) {
     return SCISSORS;
@@ -58,6 +60,7 @@ var COM = ComputerOutput();
 console.log("Computer Object is " + COM);
 
 //WIN Function (COMPUTATIONS)
+//This fn will run to see if PlayerWins = True
 var PlayerWINS = function (input, COM) {
   return (
     (input == SCISSORS && COM == PAPER) ||
@@ -65,8 +68,7 @@ var PlayerWINS = function (input, COM) {
     (input == STONE && COM == SCISSORS)
   );
 };
-
-//Lose FN
+//Lose FN run to see if PlayerLOSES = True
 var PlayerLOSES = function (input, COM) {
   return (
     (input == PAPER && COM == SCISSORS) ||
@@ -75,7 +77,7 @@ var PlayerLOSES = function (input, COM) {
   );
 };
 // draw function
-
+//Draw FN to see if PlayerDraws = True
 var PlayerDRAWS = function (input, COM) {
   return (input = COM);
 };
@@ -85,13 +87,14 @@ var main = function (input) {
   if (input != SCISSORS && input != PAPER && input != STONE) {
     return "please input a valid input (Scissors, Paper, Stone.)";
   }
+  //IF abouve Function is True, Return "outcome"
   if (PlayerWINS(input, COM)) {
     return "you win";
   }
-  if (PlayerDRAWS(input, COM)) {
-    return "you draw";
+  if (PlayerLOSES(input, COM)) {
+    return "you lost";
   }
-  return "you lose";
+  return "it is a draw";
 };
 
 // if (input != "scissors" && input != "paper" && input != "stone");
