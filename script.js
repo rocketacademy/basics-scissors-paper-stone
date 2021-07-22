@@ -1,7 +1,3 @@
-var main = function (input) {
-  var myOutputValue = "hello world";
-  return myOutputValue;
-};
 //git add (script.js)
 //git commit -m (comment of what changes you added)
 //add the new changes to github, git push origin master
@@ -37,12 +33,14 @@ var main = function (input) {
 //a. Number Generator, assign a number to a (SPS)var
 
 //HELPER FUNCTION TO MAKE COMPUTER OUTPUT GENERATOR
-GenerateComputerOutput = function () {
+var GenerateNumForComputerOutput = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
   var randomNum = randomInteger + 1;
   return randomNum;
-
+};
+var ComputerOutput = function () {
+  var ComputersRandomiser = GenerateNumForComputerOutput();
   //IF 0, ASSIGNED 0 = SCISSORS
   if (randomNum == 1) {
     return SCISSORS;
@@ -110,3 +108,7 @@ var main = function (input) {
   PlayerLOSES(PlayerInput, COM);
   return "you lose";
 };
+//git add (script.js)
+//git commit -m (comment of changes added)
+//add the new changes to github, git push origin master
+//$ git push https://github.com/quahzhengjie/basics-scissors-paper-stone.git
