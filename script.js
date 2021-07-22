@@ -33,32 +33,29 @@
 //a. Number Generator, assign a number to a (SPS)var
 
 //HELPER FUNCTION TO MAKE COMPUTER OUTPUT GENERATOR
-var GenerateNumForComputerOutput = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomInteger = Math.floor(randomDecimal);
-  var randomNum = randomInteger + 1;
-  return randomNum;
-};
+var SCISSORS = "scissors";
+var PAPER = "paper";
+var STONE = "stone";
+
 var ComputerOutput = function () {
-  var ComputersRandomiser = GenerateNumForComputerOutput();
+  var randomNum = Math.floor(Math.random() * 3);
   //IF 0, ASSIGNED 0 = SCISSORS
-  if (randomNum == 1) {
+  if (randomNum == 0) {
     return SCISSORS;
   }
   //IF 1
-  if (randomNum == 2) {
+  if (randomNum == 1) {
     return PAPER;
   }
   //ELSE IF
-  if (randomNum == 3) {
-    return STONE;
-  }
+  return STONE;
 };
 
 //b. List possible outcomes (wins/loss)
 //CREATE A HELPER FUNCTION FOR EACH OUTCOMES. A. WIN/B. LOSE/ Draw
 
-var COM = GenerateComputerOutput();
+var COM = ComputerOutput();
+console.log("Computer Object is " + COM);
 
 //WIN Function (COMPUTATIONS)
 var PlayerWINS = function (input, COM) {
@@ -82,31 +79,22 @@ var PlayerLOSES = function (input, COM) {
 var PlayerDRAWS = function (input, COM) {
   return (input = COM);
 };
-
-//MAIN.
-
-var main = function (input) {
-  if (input != "scissors" && input != "paper" && input != "stone");
-  {
-    return "Your input is invalid, kindly enter scissors paper or stone.";
-  }
-  if (PlayerWINS(PlayerInput, COM)) {
-    return "yay";
-  }
-  PlayerLOSES(PlayerInput, COM);
-  return "you lose";
-};
 //Main (Determines OUTPUT - with Helper Fn)
 var main = function (input) {
-  if (input != "scissors" && input != "paper" && input != "stone");
-  {
-    return "Your input is invalid, kindly enter scissors paper or stone.";
+  //Input Validation
+  if (input != SCISSORS && input != PAPER && input != STONE) {
+    return "you failed";
   }
-  if (PlayerWINS(PlayerInput, COM)) {
-    return "yay";
-  }
-  PlayerLOSES(PlayerInput, COM);
-  return "you lose";
+
+  // if (input != "scissors" && input != "paper" && input != "stone");
+  // {
+  //   return "Your input is invalid, kindly enter scissors paper or stone.";
+  // }
+  // if (PlayerWINS(PlayerInput, COM)) {
+  //   return "yay";
+  // }
+  // PlayerLOSES(PlayerInput, COM);
+  // return "you lose";
 };
 //git add (script.js)
 //git commit -m (comment of changes added)
