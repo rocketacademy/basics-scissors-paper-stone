@@ -83,19 +83,26 @@ var PlayerDRAWS = function (input, COM) {
 var main = function (input) {
   //Input Validation
   if (input != SCISSORS && input != PAPER && input != STONE) {
-    return "you failed";
+    return "please input a valid input (Scissors, Paper, Stone.)";
   }
-
-  // if (input != "scissors" && input != "paper" && input != "stone");
-  // {
-  //   return "Your input is invalid, kindly enter scissors paper or stone.";
-  // }
-  // if (PlayerWINS(PlayerInput, COM)) {
-  //   return "yay";
-  // }
-  // PlayerLOSES(PlayerInput, COM);
-  // return "you lose";
+  if (PlayerWINS(input, COM)) {
+    return "you win";
+  }
+  if (PlayerDRAWS(input, COM)) {
+    return "you draw";
+  }
+  return "you lose";
 };
+
+// if (input != "scissors" && input != "paper" && input != "stone");
+// {
+//   return "Your input is invalid, kindly enter scissors paper or stone.";
+// }
+// if (PlayerWINS(PlayerInput, COM)) {
+//   return "yay";
+// }
+// PlayerLOSES(PlayerInput, COM);
+// return "you lose";
 //git add (script.js)
 //git commit -m (comment of changes added)
 //add the new changes to github, git push origin master
