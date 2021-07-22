@@ -62,9 +62,9 @@ let systemWin = 0;
 let userName = "";
 let gameMode = "pending for username";
 
-// normal mode game play
+// normal and reverse mode game play
 
-const normalModeGamePlay = (userInput) => {
+const normalReversedGamePlay = (userInput, isReversed) => {
   let showMeHand = getRandomHand();
 
   if (invalidCases(userInput)) {
@@ -76,42 +76,14 @@ const normalModeGamePlay = (userInput) => {
     return myOutputValue[1](userInput, showMeHand, userWin, systemWin);
   }
   // User wins.
-  else if (winCases(userInput, showMeHand)) {
+  else if (isReversed ^ winCases(userInput, showMeHand)) {
     //increment userWin score
     userWin += 1;
     return myOutputValue[2](userInput, showMeHand, userWin, systemWin);
   }
 
   // System wins.
-  else if (!winCases(userInput, showMeHand)) {
-    //increment systemWin score
-    systemWin += 1;
-    return myOutputValue[3](userInput, showMeHand, userWin, systemWin);
-  }
-};
-
-// reverse mode game play
-
-const reverseModeGamePlay = (userInput) => {
-  let showMeHand = getRandomHand();
-
-  if (invalidCases(userInput)) {
-    //If invalid input , return feedback.
-    return myOutputValue[0](userInput);
-  }
-  //If both parties choose the same object, it's a draw.
-  else if (drawCases(userInput, showMeHand)) {
-    return myOutputValue[1](userInput, showMeHand, userWin, systemWin);
-  }
-  // User wins.
-  else if (!winCases(userInput, showMeHand)) {
-    //increment userWin score
-    userWin += 1;
-    return myOutputValue[2](userInput, showMeHand, userWin, systemWin);
-  }
-
-  // System wins.
-  else if (winCases(userInput, showMeHand)) {
+  else if (!(isReversed ^ winCases(userInput, showMeHand))) {
     //increment systemWin score
     systemWin += 1;
     return myOutputValue[3](userInput, showMeHand, userWin, systemWin);
@@ -124,27 +96,24 @@ const main = (input) => {
   if (gameMode == "pending for username") {
     userName = input;
     gameMode = "normal";
-    return `Welcome ${userName}`;
+    return `Welcome ${userName}. You may play normal or reverse game.`;
   }
 
-  //user input to switch to reverse game mode
-  if (gameMode == "normal" && input.toLowerCase() == "reverse") {
+  //user input to switch game mode
+  if (
+    (gameMode !== "pending for username" && input.toLowerCase() == "reverse") ||
+    input.toLowerCase() == "normal"
+  ) {
     gameMode = input.toLowerCase();
-    return `Welcome to reverse mode`;
-  }
-
-  //user input to switch to normal game mode
-  if (gameMode == "reverse" && input.toLowerCase() == "normal") {
-    gameMode = input.toLowerCase();
-    return `Welcome to normal mode`;
+    return `Welcome to ${input.toLowerCase()} mode`;
   }
   // game mode to execute
   switch (gameMode) {
     case "normal":
-      normalGameOutput = normalModeGamePlay(input);
+      normalGameOutput = normalReversedGamePlay(input, false);
       return normalGameOutput;
     case "reverse":
-      reverseGameOutput = reverseModeGamePlay(input);
+      reverseGameOutput = normalReversedGamePlay(input, true);
       return reverseGameOutput;
   }
 };
