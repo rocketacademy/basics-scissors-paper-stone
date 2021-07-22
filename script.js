@@ -33,27 +33,16 @@ var generateComputerResult = function () {
   }
   return computerPlays;
 };
-//generate base msg
+//generate base output message
 var generateStdMsg = function (userName, computerPlays, input) {
   return `Hello ${userName} :) Good game! <br> The computer played: ${computerPlays}. <br> You played: ${input}.`;
 };
-//generate overall result tracker
+//generate overall result tracker --> this works in console.loh but not in the output :(
 var userWins = 0;
 var compWins = 0;
-//THIS GOT ERROR :(
+
 var trackOverallResult = function (userWins, compWins) {
-  var overallResult;
-  if (userWins > compWins) {
-    overallResult = `<br>You win (${
-      (userWins / (userWins + compWins)) * 100
-    }% more than the computer`;
-  } else if (userWins < compWins) {
-    overallResult = `<br>The computer wins ${
-      (userWins / (userWins + compWins)) * 100
-    }% more than you`;
-  } else if (userWins == compWins) {
-    overallResult = `<br>You and the computer draw!`;
-  }
+  var overallResult = `You won ${userWins} rounds and the computer won ${compWins} rounds`;
   return overallResult;
 };
 
@@ -142,81 +131,59 @@ var playReversedGame = function (
 };
 
 //======================== KOREAN MUKJJIPPA =========================
-
-// ============== Using modes to determine the second round (Buggy) ==============
-var mukJjiPpaMode = false;
+var mukJjiPpaWinner = ``;
 
 var playKoreanGame = function (input, computerPlays, standardMessage) {
   var myOutputValue;
-  var koreanUserWins = 0;
-  var koreanCompWins = 0;
-  // default mukJjiPpaMode is false
-  if (
-    //user wins
+
+  //user wins
+  if (mukJjiPpaWinner == `` &&
+  (
     (input == scissors && computerPlays == paper) ||
     (input == paper && computerPlays == stone) ||
     (input == stone && computerPlays == scissors)
-  ) {
+  )
+   ) {
     myOutputValue = `${standardMessage} <br>USER shouts Muk-Jji-Ppa!`;
-    mukJjiPpaMode = true;
-    koreanUserWins = koreanUserWins + 1;
-    console.log(`user wins. mukJjiPpaMode`, mukJjiPpaMode);
-  } else if (
+    mukJjiPpaWinner = `user`;
+    console.log(`user wins first part of korean MJP`);
+
     //computer wins
+  } else if (mukJjiPpaWinner == `` && (
     (computerPlays == scissors && input == paper) ||
     (computerPlays == paper && input == stone) ||
     (computerPlays == stone && input == scissors)
-  ) {
+  ) ) {
     myOutputValue = `${standardMessage} <br>COMPUTER shouts: Muk-Jji-Ppa!`;
-    mukJjiPpaMode = true;
-    koreanCompWins = koreanCompWins + 1;
-  
-  } else if ( //draw
-    input == computerPlays) {
+    mukJjiPpaWinner = `com`;
+
+    //draw
+  } else if (mukJjiPpaWinner == `` && input == computerPlays) {
     myOutputValue = `${standardMessage} It's a draw. Please input "scissors", "paper" or "stone" to try again.`;
-    mukJjiPpaMode = false;
-   
+
     //input validation
-    } else if (input != scissors &&
-    input != paper &&
-    input != stone
-  ) {myOutputValue = `You're playing Muk-Jji-Ppa! Please input "scissors", "paper" or "stone".`;
-    mukJjiPpaMode = false;
-    console.log(`input validation statement: comp plays ${computerPlays}, you play${input} & mukJjiPpaMode is ${mukJjiPpaMode}`)
+  } else if (mukJjiPpaWinner == `` && input != scissors && input != paper && input != stone) {
+    myOutputValue = `You're playing Muk-Jji-Ppa! Please input "scissors", "paper" or "stone".`;
+    console.log(
+      `input validation statement: comp plays ${computerPlays}, you played ${input}`
+    )
+    //if draw, and user was the last to win, total user winnings +1
+  } else if (mukJjiPpaWinner == `user` && input == computerPlays) {
+    mukJjiPpaWinner = ``;
+    myOutputValue = `${standardMessage}<br> You win Muk Jji Ppa!`;
+    userWins = userWins+1;
+
+    //if draw and computer was the last to win, total computer winnings +1
+  } else if (mukJjiPpaWinner == `com` && input == computerPlays) {
+    myOutputValue = `${standardMessage}<br> Computer wins Muk Jji Ppa!`;
+    mukJjiPpaWinner = ``;
+  } else if (
+    (mukJjiPpaWinner == `user` || mukJjiPpaWinner == `com`) &&
+    input != computerPlays
+  ) {
+    myOutputValue = `${standardMessage}<br> No one won. Try again!`;
+    mukJjiPpaWinner = ``;
   }
-  //if mukjjippa mode is true and user was the last to win, total user winnings +1
-  if (mukJjiPpaMode == true) {
-    if (koreanUserWins == 1 && input == computerPlays) {
-      userWins = userWins + 1;
-      myOutputValue = `${standardMessage}<br> You win Muk Jji Ppa!. ${koreanWinner}`;
-      // mukJjiPpaMode = false;
-      koreanUserWins =0;
-
-  //if mukjjippa mode is true and computer was the last to win, total computer winnings +1
-    } else if (koreanCompWins == 1 && input == computerPlays) {
-      compWins = compWins + 1;
-      myOutputValue = `${standardMessage}<br> Computer wins Muk Jji Ppa!${koreanWinner}`;
-      // mukJjiPpaMode = false;
-      koreanCompWins = 0;
-
-    } else {myOutputValue = `${standardMessage}<br> No one won. Try again!`;
-    }
-  
-  var trackKoreanWinner = function (userWins, compWins) {
-    if (userWins > compWins) {
-      koreanWinner = `<br> Overall winner is ${userName}. You won ${
-        (userWins / (userWins + compWins)) * 100
-      }% of the time`;
-    } else if (userWins < compWins) {
-      koreanWinner = `<br> Overall winner is computer. Computer won ${
-        (userWins / (userWins + compWins)) * 100
-      }% of the time`;
-    } else if ((userWins = compWins)) {
-      koreanWinner = `<br> It's a draw overall!`;
-    }
-    return koreanWinner;
-  };
-  var koreanWinner = trackKoreanWinner(userWins, compWins);
 
   return myOutputValue;
 };
@@ -294,26 +261,105 @@ var main = function (input) {
     //start of actual game
   } else if (currentMode == "normal game mode") {
     console.log(`current mode: ${currentMode}`);
-    myOutputValue =
-      playNormalGame(input, computerPlays, standardMessage) + overallResult;
+    myOutputValue = `${
+      playNormalGame(input, computerPlays, standardMessage)}, <br>${overallResult}`;
     //introduce reversed game mode
   } else if (currentMode == "reversed") {
     console.log(`current mode: ${currentMode}`);
-    myOutputValue =
-      playReversedGame(input, computerPlays, standardMessage) + overallResult;
+    myOutputValue = `${
+       playReversedGame(input, computerPlays, standardMessage)}, <br>${overallResult}`;
     // introduce muk-jji-ppa game mode
   } else if (currentMode == `mukJjiPpa`) {
     console.log(`current mode: ${currentMode}`);
-    myOutputValue =
-      playKoreanGame(input, computerPlays, standardMessage) + overallResult;
+    myOutputValue = `${
+      playKoreanGame(input, computerPlays, standardMessage)} <br>${overallResult}`;
   } else if (currentMode == `com v com`) {
     console.log(`current mode: ${currentMode}`);
-    myOutputValue =
-      playCOMvCOMgame(input, computerPlays, standardMessage) + overallResult;
+    myOutputValue = `${
+      playCOMvCOMgame(input, computerPlays, standardMessage)}<br> ${overallResult}`;
   }
 
   var overallResult = trackOverallResult(userWins, compWins);
-  console.log(`User and comp wins : ${(userWins, compWins)}`);
+  console.log(`User and comp wins : ${(userWins, compWins,overallResult)}`);
 
   return myOutputValue;
 };
+
+// IGNORE THE BOTTOM HERE 
+// ============== Using modes to determine the second round (Buggy) ==============
+// var mukJjiPpaMode = false;
+
+// var playKoreanGame = function (input, computerPlays, standardMessage) {
+//   var myOutputValue;
+//   var koreanUserWins = 0;
+//   var koreanCompWins = 0;
+//   // default mukJjiPpaMode is false
+//   if (
+//     //user wins
+//     (input == scissors && computerPlays == paper) ||
+//     (input == paper && computerPlays == stone) ||
+//     (input == stone && computerPlays == scissors)
+//   ) {
+//     myOutputValue = `${standardMessage} <br>USER shouts Muk-Jji-Ppa!`;
+//     mukJjiPpaMode = true;
+//     koreanUserWins = koreanUserWins + 1;
+//     console.log(`user wins. mukJjiPpaMode`, mukJjiPpaMode);
+//   } else if (
+//     //computer wins
+//     (computerPlays == scissors && input == paper) ||
+//     (computerPlays == paper && input == stone) ||
+//     (computerPlays == stone && input == scissors)
+//   ) {
+//     myOutputValue = `${standardMessage} <br>COMPUTER shouts: Muk-Jji-Ppa!`;
+//     mukJjiPpaMode = true;
+//     koreanCompWins = koreanCompWins + 1;
+
+//   } else if ( //draw
+//     input == computerPlays) {
+//     myOutputValue = `${standardMessage} It's a draw. Please input "scissors", "paper" or "stone" to try again.`;
+//     mukJjiPpaMode = false;
+
+//     //input validation
+//     } else if (input != scissors &&
+//     input != paper &&
+//     input != stone
+//   ) {myOutputValue = `You're playing Muk-Jji-Ppa! Please input "scissors", "paper" or "stone".`;
+//     mukJjiPpaMode = false;
+//     console.log(`input validation statement: comp plays ${computerPlays}, you play${input} & mukJjiPpaMode is ${mukJjiPpaMode}`)
+//   }
+//   //if mukjjippa mode is true and user was the last to win, total user winnings +1
+//   if (mukJjiPpaMode == true) {
+//     if (koreanUserWins == 1 && input == computerPlays) {
+//       userWins = userWins + 1;
+//       myOutputValue = `${standardMessage}<br> You win Muk Jji Ppa!. ${koreanWinner}`;
+//       // mukJjiPpaMode = false;
+//       koreanUserWins =0;
+
+//   //if mukjjippa mode is true and computer was the last to win, total computer winnings +1
+//     } else if (koreanCompWins == 1 && input == computerPlays) {
+//       compWins = compWins + 1;
+//       myOutputValue = `${standardMessage}<br> Computer wins Muk Jji Ppa!${koreanWinner}`;
+//       // mukJjiPpaMode = false;
+//       koreanCompWins = 0;
+
+//     } else {myOutputValue = `${standardMessage}<br> No one won. Try again!`;
+//     }
+
+//   var trackKoreanWinner = function (userWins, compWins) {
+//     if (userWins > compWins) {
+//       koreanWinner = `<br> Overall winner is ${userName}. You won ${
+//         (userWins / (userWins + compWins)) * 100
+//       }% of the time`;
+//     } else if (userWins < compWins) {
+//       koreanWinner = `<br> Overall winner is computer. Computer won ${
+//         (userWins / (userWins + compWins)) * 100
+//       }% of the time`;
+//     } else if ((userWins = compWins)) {
+//       koreanWinner = `<br> It's a draw overall!`;
+//     }
+//     return koreanWinner;
+//   };
+//   var koreanWinner = trackKoreanWinner(userWins, compWins);
+
+//   return myOutputValue;
+// };
