@@ -34,7 +34,7 @@ var sps = function (userInput) {
   ) {
     scoreUser = scoreUser + 1;
     return (
-      "you won! you chose " +
+      "You won! you chose " +
       userInput +
       ". " +
       "<br><br>" +
@@ -119,7 +119,22 @@ var sps = function (userInput) {
   }
 };
 
+//username
+var currentGameMode = "Waiting for Username.";
+var userName = input;
+
 var main = function (input) {
+  //user to put in username
+  if (currentGameMode == "waiting for user name") {
+    // set the name
+
+    // now that we have the name, switch the mode
+    currentGameMode = "scissors paper stone game";
+    myOutputValue = "Hello " + userName;
+  } else if (currentGameMode == "scissors paper stone game") {
+    // scissors paper stone game logic
+  }
+
   if (
     input != "Scissors" &&
     input != "Paper" &&
