@@ -1,27 +1,95 @@
 //Final version of the game. This one compares the names of the input with a number generated that has been converted to either Rock, Paper, or Scissors
+
+//Global variables to count wins and losses
+var winCounter = 0;
+var lossCounter = 0;
+var drawCounter = 0;
+
+var currentMode = "standing by for username";
+var userName = "";
+
+//MAIN FUNCTION
 var main = function (input) {
-  console.log(">>>Start of Program");
-  if (input == "") {
+  console.log(">>>Running Program. Current mode: " + currentMode);
+
+  //Step 2normal: Running normal game of Rock Paper Scissors
+  if (currentMode == "waiting for player mode choice" && input == "Normal") {
     var myOutputValue =
-      "Let's play a game!" +
-      "<br/>" +
-      "Choose Rock, Paper, or Scissors, then type it into the input." +
+      "Your game mode is now: 'Normal'. Now, type 'Rock', 'Paper', or 'Scissors' into the input." +
       "<br/>" +
       "<br/>" +
-      " Paper > Rock, Scissors > Paper, Rock > Scissors." +
+      " Remember: Paper > Rock, Scissors > Paper, Rock > Scissors." +
       "<br/>" +
       "<br/>" +
       " Let's see who wins!";
-  } else {
-    var rNG = randomNumberGenerator();
-    var convertedToItem = rngConversion(rNG);
-    var myOutputValue = actualGame(input, convertedToItem);
+    currentMode = "Normal";
+    console.log(
+      ". Player Name: " + userName + ". Mode changed to: " + currentMode
+    );
   }
-  console.log("<<<End of program");
+
+  //Step 2korean: Running korean version of RPS
+  if (currentMode == "waiting for player mode choice" && input == "Korean") {
+    currentMode = "Korean";
+    var myOutputValue =
+      "Your game mode is now: 'Korean'. Now, type 'Rock', 'Paper', or 'Scissors' into the input.";
+    console.log(
+      ". Player Name: " + userName + ". Mode changed to: " + currentMode
+    );
+  }
+
+  //Step 1a
+  if (input == "") {
+    //Displays default message with empty input box
+    console.log("WELCOME working. Current mode: " + currentMode);
+    return "Hello, please enter your name to start.";
+  }
+
+  //Step 1b
+  if (input !== "" && currentMode == "standing by for username") {
+    //Display rules of game
+    userName = input; //Player sets name
+    currentMode = "waiting for player mode choice";
+    var myOutputValue = //Output message to choose game mode
+      "Hi " +
+      userName +
+      "! Let's play a game of Rock, Paper, Scissors!" +
+      "<br/>" +
+      "There are two game types: Normal or Korean. First, choose your game mode by typing in 'Normal' or 'Korean'.";
+    console.log(
+      "Name saved. Player Name: " + userName + ". Current mode: " + currentMode
+    );
+  }
+
+  //Choosing what functions run depending on Game Mode entered
+  //Normal game mode
+  if (currentMode == "Normal" && input !== "Normal") {
+    var myOutputValue = normalGame(input);
+  }
+  if (currentMode == "Korean") {
+    var myOutputValue = koreanGame();
+  }
   return myOutputValue;
 };
 
-//Generation of the number
+//Function for Normal Game mode
+var normalGame = function (input) {
+  if (input == "Rock" || input == "Paper" || input == "Scissors") {
+    var rNG = randomNumberGenerator();
+    var convertedToItem = rngConversion(rNG);
+    var myOutputValue = actualGame(input, convertedToItem);
+    return myOutputValue;
+  }
+};
+//Function for Korean Game mode
+var koreanGame = function () {
+  var myOutputValue =
+    "Just Kidding! No Korean mode because IDK how to code it yet.";
+  console.log("<<<End of Program.");
+  return myOutputValue;
+};
+
+//Generating a number
 var randomNumberGenerator = function () {
   var randomNumber = Math.random() * 3;
   var numberCleanedUp = Math.floor(randomNumber);
@@ -29,7 +97,7 @@ var randomNumberGenerator = function () {
   return numberCleanedUp;
 };
 
-//Assigning an item to each generated number
+//Assigning an item to each generated number ("Rock" - 0, "Paper" - 1, or "Scissors" - 2)
 var rngConversion = function (numberCleanedUp) {
   if (numberCleanedUp == 0) {
     var generatedItem = "Rock";
@@ -49,27 +117,81 @@ var actualGame = function (input, generatedItem) {
   console.log("Running game.");
   var user = input;
   var program = generatedItem;
+  //Code for stalemate condition & output message
   if (user == program) {
+    drawCounter = drawCounter + 1;
     var myOutputValue =
-      "It's a draw! You chose " + input + ", and we chose " + generatedItem;
-  } else if (user !== program) {
-    var myOutputValue =
-      "You lose! Want to try again? You chose " +
+      "It's a draw, " +
+      userName +
+      "! You chose " +
       input +
       ", and we chose " +
-      generatedItem;
+      generatedItem +
+      "." +
+      "<br/>" +
+      "<br/>" +
+      "Your current tally is: " +
+      "<br/>" +
+      "Wins   - " +
+      winCounter +
+      "<br/>" +
+      "Losses - " +
+      lossCounter +
+      "<br/>" +
+      "Draws  - " +
+      drawCounter;
   }
-  if (user == "Scissors" && program == "Paper") {
+  //Code for winning conditions & output message
+  if (
+    (user == "Scissors" && program == "Paper") ||
+    (user == "Paper" && program == "Rock") ||
+    (user == "Rock" && program == "Scissors")
+  ) {
+    winCounter = winCounter + 1;
     var myOutputValue =
-      "A WINNER IS YOU! You chose " + input + ", and we chose " + generatedItem;
-  }
-  if (user == "Paper" && program == "Rock") {
+      "Congratulations, " +
+      userName +
+      ", A WINNER IS YOU! You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      "." +
+      "<br/>" +
+      "<br/>" +
+      "Your current tally is: " +
+      "<br/>" +
+      "Wins   - " +
+      winCounter +
+      "<br/>" +
+      "Losses - " +
+      lossCounter +
+      "<br/>" +
+      "Draws  - " +
+      drawCounter;
+
+    //Code for losing conditions & output message
+  } else if (user !== program) {
+    lossCounter = lossCounter + 1;
     var myOutputValue =
-      "A WINNER IS YOU! You chose " + input + ", and we chose " + generatedItem;
-  }
-  if (user == "Rock" && program == "Scissors") {
-    var myOutputValue =
-      "A WINNER IS YOU! You chose " + input + ", and we chose " + generatedItem;
+      "Sorry, " +
+      userName +
+      ", you lose! Want to try again? You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      "." +
+      "<br/>" +
+      "<br/>" +
+      "Your current tally is: " +
+      "<br/>" +
+      "Wins   - " +
+      winCounter +
+      "<br/>" +
+      "Losses - " +
+      lossCounter +
+      "<br/>" +
+      "Draws  - " +
+      drawCounter;
   }
   console.log("Game complete.");
   return myOutputValue;
