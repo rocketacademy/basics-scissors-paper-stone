@@ -57,18 +57,23 @@ var gameStart = function (userName, userGuess) {
 
 var main = function (input) {
   var myOutputValue = "";
-  // Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again
-  if (Number.isNaN(Number(input)) == false) {
-    myOutputValue =
-      "Sorry! Please enter the following 3 options: <br> scissors <br> paper <br> stone <br> Please Try Again!.";
-    return myOutputValue;
+  if (currentGameMode != "sps game" && input == "") {
+    return (myOutputValue = `Hi! Please tell me your name to start playing.`);
+  } else if (Number.isNaN(Number(input)) == false) {
+    return (myOutputValue = `Sorry! Please enter the following 3 options: <br> scissors <br> paper <br> stone <br> Please Try Again!.`);
   }
   if (currentGameMode == "waiting for user name") {
     userName = input;
     currentGameMode = "sps game";
-    myOutputValue = `Hello ${userName}! Let's play Scissors,Paper,Stone!`;
-  } else if (currentGameMode == "sps game") {
-    myOutputValue = gameStart(userName, input);
+    return (myOutputValue = `Hello ${userName}! Let's play Scissors,Paper,Stone!`);
+  }
+  if (
+    currentGameMode == "sps game" &&
+    (input == scissors || input == stone || input == paper)
+  ) {
+    return (myOutputValue = gameStart(userName, input));
+  } else {
+    return (myOutputValue = `Error! You can only type the following 3 options: <br> scissors <br> paper <br> stone <br> Please Try Again!. `);
   }
   return myOutputValue;
 };
