@@ -8,22 +8,13 @@ var userName = "";
 var main = function (input) {
   var myOutputValue = "";
 
+  // adding mode to input username
   if (gameType == "Username") {
     gameType = "Basic";
     userName = input;
-    return `' Hi ${userName} , welcome to BasicSPS Mode!'`;
+    return `' Hi ${userName} , welcome to BasicSPS Mode! Key'`;
   }
-  // reversed game trial
-  //  if (input == "reversed") {
-  //  gameType = "Reversed";
-  //return `'Hi ${userName} welcome to Reversed SPS Mode! Try to win with reversed rules!`;
-  //}
-
-  //if (gameType == "Reversed") {
-  //var spsReversed = calspsReversed();
-  //return spsReversed;
-  //}
-
+  // basic sps game mode
   if (gameType == "Basic") {
     var spsBasic = calspsBasic(input);
     return spsBasic;
@@ -32,11 +23,12 @@ var main = function (input) {
   return myOutputValue;
 };
 
+//calculate a random number
 var calRandomNum = function () {
   var randomNumber = Math.floor(Math.random() * 3) + 1;
   return randomNumber;
 };
-
+// uses random number to assign Scissors,papers or stone and generate a random hand
 var calRandomHand = function () {
   var totalNumVariables = 3;
   var randomVariable = calRandomNum(totalNumVariables);
@@ -51,7 +43,7 @@ var calRandomHand = function () {
   }
   return "Please try again.";
 };
-
+// houses the whole function of SPS basic game including return statements
 var calspsBasic = function (input) {
   var compHand = calRandomHand();
   console.log(compHand);
@@ -72,24 +64,3 @@ var calspsBasic = function (input) {
     return `${userName} You choose ${input} <br></br> Computer got ${compHand} <br></br> It was a LOSS!  <br></br> UserWins: ${userWins} <br></br> AiWins: ${aiWins} <br></br> Please try again!`;
   }
 };
-
-//var calspsReversed = function (input) {
-//var reversedCompHand = calRandomHand();
-//console.log(reversedCompHand);
-
-//if (input == reversedCompHand) {
-//return `Reversed <br></br> ${userName} You choose ${input} <br></br> Computer got ${reversedCompHand} <br></br> It was a DRAW!  <br></br> UserWins: ${userWins} <br></br> AiWins: ${aiWins} <br></br> Please try again!`;
-//} else if (
-//(input == "Scissors" && reversedCompHand == "Stone") ||
-//(input == "Paper" && reversedCompHand == "Scissors") ||
-//(input == "Stone" && reversedCompHand == "Paper")
-//) {
-//userWins = userWins + 1;
-//return `Reversed <br></br> ${userName} You choose ${input} <br></br> Computer got ${reversedCompHand} <br></br> It was a Win!  <br></br> UserWins: ${userWins} <br></br> AiWins: ${aiWins} <br></br> Please try again!`;
-//} else if (input !== "Scissors" && input !== "Paper" && input !== "Stone") {
-//return "Please key in appropriate response. <br></br> Scissors , Paper or Stone";
-//} else {
-//aiWins = aiWins + 1;
-//return `Reversed <br></br> ${userName} You choose ${input} <br></br> Computer got ${reversedCompHand} <br></br> It was a LOSS!  <br></br> UserWins: ${userWins} <br></br> AiWins: ${aiWins} <br></br> Please try again!`;
-//}
-//};
