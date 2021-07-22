@@ -6,13 +6,16 @@ var reversedScissors = 'reversed scissors'
 var reversedStone = 'reversed stone'
 var reversedPaper = 'reversed paper'
 
+//global variable for holding score
 
+var compScore = 0
+var userScore = 0
 
 var main = function (input) {
   // input validation
 
 //var inputValue = [SCISSORS, STONE, PAPER, reversedScissors, reversedStone, reversedPaper];
-if (
+  if (
     input !== SCISSORS &&
     input !== STONE &&
     input !== PAPER &&
@@ -20,14 +23,15 @@ if (
     input !== reversedScissors &&
     input !== reversedStone) {    
 
-   console.log ('input validation');
-   output = "Your input must be all lower case! <br><br> Your choices are scissors, stone, paper, reversed scissors, reversed stone or reversed paper. <br><br> It is case sensitive. <br> <br> Please try again!!"; 
+    console.log ('input validation');
+    output = "Your input must be all lower case! <br><br> Your choices are scissors, stone, paper, reversed scissors, reversed stone or reversed paper. <br><br> It is case sensitive. <br> <br> Please try again!!"; 
     return output
     }
-  var playerInput = input;
+
+ 
   var compChoice = genRandomNum();
- // var compChoice = 'scissors'
- // to test 
+  //var compChoice = 'scissors'
+  // to test 
   console.log ('computer input')
   console.log (compChoice)
 
@@ -70,77 +74,54 @@ return result;
 var compare = function (input, compChoice){
   var output;
 
-if (input == compChoice){
-    output = 'Your input is ' + input +'. <br> computer input is ' + compChoice +'. <br> It is a draw!'
+  if (input == compChoice){
+      output = 'Your input is ' + input +'. <br> computer input is ' + compChoice +'. <br> It is a draw!'
   
-} else if (input == SCISSORS && compChoice ==   STONE){
-    output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try Again!!'
-  console.log ('scissors stone');
-
-} else if (input == SCISSORS && compChoice== PAPER)
-  { 
-    output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Win! Yayyy! <br><br> Play again!'
-  console.log('scissorpaper')
-
-} else if (input == STONE && compChoice== SCISSORS) { 
-  output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Win! Yayyy! <br><br> Play again!'
-  
-} else if (input == STONE && compChoice== PAPER){
-   output  = 'Your input is ' + input +'. <br> Computer input is ' + compChoice +'. <br> You Lose! <br><br> Try Again!!'
-
-  console.log ('stone paper');
-
-} else if (input == PAPER && compChoice == SCISSORS) {
-   output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice +'. <br> You Lose! <br><br> Try Again!!'
-    
-    console.log ('paper scissors');
-
-} else if (input == PAPER && compChoice == STONE) {
-  output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice  +'. <br> You Win! Yayyy! <br><br> Play again!'
+  } else if (
+      input == SCISSORS && compChoice == STONE ||
+      input == STONE && compChoice== PAPER ||
+      input == PAPER && compChoice == SCISSORS){
       
-    console.log ('paper stone');
+      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try Again!!'
+      console.log ('basic winning');
 
-// Reversed PSP 
-} else if (input == reversedScissors && compChoice == SCISSORS) {
-  output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw!'
+  } else if (
+      input == SCISSORS && compChoice == PAPER ||
+      input == STONE && compChoice == SCISSORS ||
+      input == PAPER && compChoice == STONE ){
+           
+      output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Win! Yayyy! <br><br> Play again!'
+      console.log('basic losing');
+   
+  // Reversed PSP 
+  } else if (
+      input == reversedScissors && compChoice == SCISSORS ||
+      input == reversedStone && compChoice == STONE||
+      input == reversedPaper && compChoice == PAPER){
 
-  console.log ('reversed scissors scissors');
-  
-} else if (input == reversedStone && compChoice == STONE){
-  output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw!'
-  
-} else if (input == reversedPaper && compChoice == PAPER){
-  output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw!'
+      output = 'Your input is ' + input +'. <br> computer input is ' + 'reversed ' + compChoice +'. <br> It is a draw!'
 
-} else if (input == reversedScissors && compChoice == STONE){
-  output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' +compChoice+'. <br> You Win! Yayy! <br><br> Play Again!!'
-  console.log ('reversed scissors stone');
+      console.log ('it is a draw');
   
-} else if (input == reversedScissors && compChoice== PAPER)
-  { output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try again!'
-  console.log('reversed scissorpaper')
+  } else if (
+      input == reversedScissors && compChoice == STONE ||
+      input == reversedStone && compChoice == PAPER||
+      input == reversedPaper && compChoice == SCISSORS) {
 
-} else if (input == reversedStone && compChoice == SCISSORS) 
-  { output = 'Your input is ' + input +'. <br> Computer input is ' + compChoice+'. <br> You Lose! <br><br> Try again!'
+      output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' +compChoice+'. <br> You Win! Yayy! <br><br> Play Again!!'
+      console.log ('yaayy winning');
   
-  console.log ('reversed stone scissors');
+  } else if (
+      input == reversedScissors && compChoice== PAPER || 
+      input == reversedStone && compChoice == SCISSORS||
+      input == reversedPaper && compChoice == STONE) { 
+        
+      output = 'Your input is ' + input +'. <br> Computer input is reversed ' + compChoice+'. <br> You Lose! <br><br> Try again!'
 
-} else if (input == reversedStone && compChoice == PAPER)
-  { output  = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' + compChoice +'. <br> You Win!! Yayy! <br><br> Play Again!!'
+      console.log('oh no losing');
 
-  console.log ('reversed stone paper');
-  
-} else if (input == reversedPaper && compChoice == SCISSORS)
-  { output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' + compChoice +'. <br> You Win! Yayy! <br><br> Play Again!!'
-    
-    console.log ('reversed paper scissors');
-  
-} else if (input == reversedPaper && compChoice == STONE) 
-  { output = 'Your input is ' + input +'. <br> Computer input is ' + 'reversed ' + compChoice
- +'. <br> You Lose! <br><br> Try again!'
-      
-    console.log ('reversed paper stone');
-  }
+  };
+       
   return output;
 };
 
