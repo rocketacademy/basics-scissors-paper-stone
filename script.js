@@ -25,18 +25,18 @@ const myOutputValue = [
     `${iconForNoun(
       a
     )} is an invalid input.\<br>\Please type scissors/paper/rock to continue the game`),
-  (draw = (a, b, c, d) =>
+  (draw = (a, b, c, d, e) =>
     `Draw.\<br>\Your ${iconForNoun(a)} vs system's ${iconForNoun(
       b
-    )}.\<br>\You: ${c}\<br>\System: ${d}`),
-  (win = (a, b, c, d) => `You won.\<br>\Your ${iconForNoun(
+    )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}`),
+  (win = (a, b, c, d, e) => `You won.\<br>\Your ${iconForNoun(
     a
   )} beats system's ${iconForNoun(b)}.\<br>\
-        You: ${c}\<br>\System: ${d}`),
-  (lose = (a, b, c, d) =>
+        You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}`),
+  (lose = (a, b, c, d, e) =>
     `You lost.\<br>\ System's ${iconForNoun(b)} beats your ${iconForNoun(
       a
-    )}.\<br>\You: ${c}\<br>\System: ${d}`),
+    )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}`),
 ];
 
 // All invalid cases of user's input
@@ -58,6 +58,10 @@ const drawCases = (d, e) => d.toLowerCase() === e;
 let userWin = 0;
 let systemWin = 0;
 
+//track winner
+const winnerOfGame = () =>
+  systemWin > userWin ? "System" : systemWin < userWin ? "You" : "Nobody";
+
 //define game mode
 let userName = "";
 let gameMode = "pending for username";
@@ -73,20 +77,23 @@ const normalReversedGamePlay = (userInput, isReversed) => {
   }
   //If both parties choose the same object, it's a draw.
   else if (drawCases(userInput, showMeHand)) {
-    return myOutputValue[1](userInput, showMeHand, userWin, systemWin);
+    winner = winnerOfGame();
+    return myOutputValue[1](userInput, showMeHand, userWin, systemWin, winner);
   }
   // User wins.
   else if (isReversed ^ winCases(userInput, showMeHand)) {
     //increment userWin score
     userWin += 1;
-    return myOutputValue[2](userInput, showMeHand, userWin, systemWin);
+    winner = winnerOfGame();
+    return myOutputValue[2](userInput, showMeHand, userWin, systemWin, winner);
   }
 
   // System wins.
   else if (!(isReversed ^ winCases(userInput, showMeHand))) {
     //increment systemWin score
     systemWin += 1;
-    return myOutputValue[3](userInput, showMeHand, userWin, systemWin);
+    winner = winnerOfGame();
+    return myOutputValue[3](userInput, showMeHand, userWin, systemWin, winner);
   }
 };
 
