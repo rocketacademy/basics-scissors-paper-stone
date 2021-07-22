@@ -63,6 +63,7 @@ var main = function (input) {
   //Step 1a
   if (input == "") {
     //Displays default message with empty input box
+    currentMode = "standing by for username";
     console.log("WELCOME working. Current mode: " + currentMode);
     return "Hello, please enter your name to start.";
   }
@@ -86,11 +87,9 @@ var main = function (input) {
   //Choosing what functions run depending on Game Mode entered
   //Normal game mode
   if (currentMode == "Normal" && input !== "Normal") {
-    counterReset();
     var myOutputValue = normalGame(input);
   }
   if (currentMode == "Korean" && input !== "Korean") {
-    counterReset();
     var myOutputValue = koreanGame(input);
   }
   return myOutputValue;
@@ -138,7 +137,7 @@ var rngConversion = function (numberCleanedUp) {
   return generatedItem;
 };
 
-//Normal Rock Paper Scissors calculations
+//Normal Rock Paper Scissors (RPS) calculations
 var normalRPS = function (input, generatedItem) {
   console.log("Running normal game.");
   var user = input;
@@ -224,12 +223,100 @@ var normalRPS = function (input, generatedItem) {
 };
 
 var counterReset = function () {
-  //Many thanks to Dong Kun for teaching me this!
+  //Many thanks to Dong Kun for teaching me this! Resets counter.
   winCounter = 0;
   lossCounter = 0;
   drawCounter = 0;
 };
 
+//Korean Rock Paper Scissors (RPS) calculations
+var koreanRPS = function (input, generatedItem) {
+  console.log("Running Korean game.");
+  var user = input;
+  var program = generatedItem;
+  //Stalemate on first round
+  if (user == program && winCounter == 0 && lossCounter == 0) {
+    var myOutputValue =
+      "Round one is a draw! Game reset. You chose " +
+      input +
+      ", and we chose " +
+      generatedItem;
+    console.log("Counters");
+  }
+  //Player wins first round
+  if (
+    (user == "Scissors" && program == "Paper") ||
+    (user == "Paper" && program == "Rock") ||
+    (user == "Rock" && program == "Scissors")
+  ) {
+    winCounter = winCounter + 1;
+    var myOutputValue =
+      "You've won this round! You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      ". You need to draw the next round to win the game!";
+  } else if (user !== program) {
+    //Program wins first round
+    lossCounter = lossCounter + 1;
+    var myOutputValue =
+      "You've lost this round. If the next round is a draw, you lose the game! You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      ".";
+  }
+  //Player wins second round with a draw
+  if (user == program && winCounter == 1 && lossCounter == 0) {
+    drawCounter = drawCounter + 1;
+    var myOutputValue =
+      "Congratulations, " +
+      userName +
+      "! You've won Muk-jji-ppa! You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      ".";
+    counterReset();
+  }
+  //Program wins second round with a draw
+  if (user == program && lossCounter == 1 && winCounter == 0) {
+    drawCounter = drawCounter + 1;
+    var myOutputValue =
+      "You lose this game of Muk-jji-ppa! Want to try again? You chose " +
+      input +
+      ", and we chose " +
+      generatedItem +
+      ".";
+    counterReset();
+  }
+  //No winners conditions
+  if (
+    winCounter == 2 || //If player wins twice in a row, reset game
+    lossCounter == 2 || //If program wins twice in a row, reset game
+    (winCounter == 1 && lossCounter == 1) //If round 1 is a win, but round 2 is a loss
+  ) {
+    var myOutputValue =
+      "Round two is invalid, resulting in no winner of Muk-jji-ppa. Try again?";
+    counterReset();
+  }
+  console.log(
+    ". Player item vs program item: " + input + " vs. " + generatedItem
+  );
+  console.log("Player Name: " + userName + ". Current mode: " + currentMode);
+  console.log(
+    "Counter status (Win-Loss-Draw): " +
+      winCounter +
+      "-" +
+      lossCounter +
+      "-" +
+      drawCounter
+  );
+  console.log("Game complete.");
+  return myOutputValue;
+};
+
+/*WORK IN PROGRESS
 //Allows for mode change between games
 var inGameModeChanger = function (input) {
   if ((currentMode = "Korean" && input == "Normal")) {
@@ -248,60 +335,4 @@ var inGameModeChanger = function (input) {
   }
   return myOutputValue;
 };
-
-//Korean Rock Paper Scissors calculations
-var koreanRPS = function (input, generatedItem) {
-  console.log("Running normal game.");
-  var user = input;
-  var program = generatedItem;
-  //Player wins first round
-  if (
-    (user == "Scissors" && program == "Paper") ||
-    (user == "Paper" && program == "Rock") ||
-    (user == "Rock" && program == "Scissors")
-  ) {
-    winCounter = winCounter + 1;
-    var myOutputValue =
-      "You've won round 1 of 2! You chose " +
-      input +
-      ", and we chose " +
-      generatedItem +
-      ". You need to draw the next round to win the game!";
-  }
-  //Player wins second round with a draw
-  if (user == program && winCounter == 1) {
-    drawCounter = drawCounter + 1;
-    var myOutputValue =
-      "Congratulations, " +
-      userName +
-      "! You've won Muk-jji-ppa! You chose " +
-      input +
-      ", and we chose " +
-      generatedItem +
-      ".";
-    counterReset();
-  }
-  //Program wins first round
-  if (user !== program && lossCounter == 0) {
-    lossCounter = lossCounter + 1;
-    var myOutputValue =
-      "You lose round 1 of 2. If the next round is a draw, you lose the game! You chose " +
-      input +
-      ", and we chose " +
-      generatedItem +
-      ".";
-  }
-  //Program wins second round with a draw
-  if (user == program && lossCounter == 1) {
-    drawCounter = drawCounter + 1;
-    var myOutputValue =
-      "You lose this game of Muk-jji-ppa! Want to try again? You chose " +
-      input +
-      ", and we chose " +
-      generatedItem +
-      ".";
-    counterReset();
-  }
-  console.log("Game complete.");
-  return myOutputValue;
-};
+*/
