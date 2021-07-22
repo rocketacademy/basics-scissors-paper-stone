@@ -37,7 +37,7 @@ var generateComputerResult = function () {
 var generateStdMsg = function (userName, computerPlays, input) {
   return `Hello ${userName} :) Good game! <br> The computer played: ${computerPlays}. <br> You played: ${input}.`;
 };
-//generate overall result tracker --> this works in console.loh but not in the output :(
+//generate overall result tracker --> this works in console.log but not in the output :(
 var userWins = 0;
 var compWins = 0;
 
