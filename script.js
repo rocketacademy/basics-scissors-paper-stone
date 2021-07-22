@@ -26,22 +26,22 @@ var comPlays = function () {
 };
 
 /// Normal SPS game mode ///
-var normalSPS = function (input) {
-  var aiChoose = randomAction();
-  console.log("computer chooses " + aiChoose);
-  var userChoose = input;
-  console.log("user chooses " + userChoose);
-  var myOutputValue =
-    "You are now playing Scissors Paper Stone. <br> Please input either 'Scissors'/ 'Paper' / 'Stone'. "; //Telling the user SPS game mode.
 
-  if (input == "Normal") {
-    currentGameMode = "Normal";
-  }
+var normalSPS = function (userChoose) {
+  //Telling the user SPS game mode.
+  var myOutputValue =
+    "You are now playing Scissors Paper Stone. <br><br> Please input either 'Scissors', 'Paper' or 'Stone'. ";
+  var aiChoose = comPlays();
+  console.log("Com chooses " + aiChoose);
+  console.log("user chooses " + userChoose);
+  // If player chooses the same as the computer
+
   if (userChoose == aiChoose) {
     myOutputValue = "It's a draw.";
   }
-  if (
-    (userChoose == "scissors" && aiChoose == "stone") || //Computer wins User
+  // If Com wins user
+  else if (
+    (userChoose == "scissors" && aiChoose == "stone") ||
     (userChoose == "paper" && aiChoose == "scissors") ||
     (userChoose == "stone" && aiChoose == "paper")
   ) {
@@ -50,8 +50,9 @@ var normalSPS = function (input) {
     comScore = comScore + 1;
     console.log(comScore);
   }
-  if (
-    (userChoose == "stone" && aiChoose == "scissors") || // User wins Computer
+  // If User wins computer
+  else if (
+    (userChoose == "stone" && aiChoose == "scissors") ||
     (userChoose == "scissors" && aiChoose == "paper") ||
     (userChoose == "paper" && aiChoose == "stone")
   ) {
@@ -64,10 +65,7 @@ var normalSPS = function (input) {
 };
 
 /// Reverse SPS game mode ///
-var reverseSPS = function (input) {
-  if (input == "Normal") {
-    currentGameMode = "Normal";
-  }
+var reverseSPS = function (userChoose, aiChoose) {
   if (userChoose == aiChoose) {
     myOutputValue = "It's a draw.";
   }
@@ -89,63 +87,15 @@ var reverseSPS = function (input) {
     totalPlays = totalPlays + 1;
     userScore = userScore + 1;
     console.log(userScore);
-    myOutputValue = "You have won! <br> You have won " + userScore + " times";
+    myOutputValue =
+      "You have won! <br><br> You have won " + userScore + " times";
   }
   return myOutputValue;
 };
 
-// /// Korean SPS game mode ///
-// var koreanSPS = function (input) {
-//   if (input == "Normal") {
-//     currentGameMode = "Normal";
-//   }
-//   if (userChoose == aiChoose) {
-//     myOutputValue = "It's a draw.";
-//   }
-//   if (
-//     (userChoose == "stone" && aiChoose == "scissors") || //Computer wins User
-//     (userChoose == "scissors" && aiChoose == "paper") ||
-//     (userChoose == "paper" && aiChoose == "stone")
-//   ) {
-//     myOutputValue = "Aww. You have lost";
-//     totalPlays = totalPlays + 1;
-//     comScore = comScore + 1;
-//     console.log(comScore);
-//   }
-//   if (
-//     (userChoose == "scissors" && aiChoose == "stone") || // User wins Computer
-//     (userChoose == "paper" && aiChoose == "scissors") ||
-//     (userChoose == "stone" && aiChoose == "paper")
-//   ) {
-//     totalPlays = totalPlays + 1;
-//     userScore = userScore + 1;
-//     console.log(userScore);
-//     myOutputValue = "You have won! <br> You have won " + userScore + " times";
-//   }
-//   return myOutputValue;
-// };
-
-// /// Choosing which game mode to play ///
-// var gameMode = function (input) {
-//   if (input == "Normal") {
-//     currentGameMode = "Normal";
-//     normalSPS();
-//   }
-//   if (input == "Computer") {
-//     currentGameMode = "Computer";
-//   }
-//   if (input == "Korean") {
-//     currentGameMode = "Korean";
-//   }
-//   if (input == "Reverse") {
-//     currentGameMode = "Reverse";
-//     reverseSPS();
-//   }
-// };
-
 var main = function (input) {
   var myOutputValue = "";
-  var input = input.toLowerCase();
+  input = input.toLowerCase();
   /// Creating a username ///
   if (currentGameMode == "waiting for user name") {
     userName = input;
@@ -153,36 +103,27 @@ var main = function (input) {
     myOutputValue =
       "Hi " +
       userName +
-      " <br> Please Choose a mode. ''Normal' / 'Computer' / 'Korean' /' Reverse' ";
+      " <br><br> Please Choose a mode. <br> <br>''Normal' or ' Reverse' ";
 
     /// Choosing a game mode ///
     currentGameMode = "choosing Game Mode";
   }
 
   if (currentGameMode == "choosing Game Mode") {
-    //myOutputValue =;
-    if (input == "Normal") {
-      currentGameMode = "Normal";
-      console.log(currentGameMode);
-      //normalSPS();
-    }
-    if (input == "Computer") {
-      currentGameMode = "Computer";
-    }
-    if (input == "Korean") {
-      currentGameMode = "Korean";
-    }
-    if (input == "Reverse") {
-      currentGameMode = "Reverse";
-      //reverseSPS();
+    if (input == "normal") {
+      currentGameMode = "normal";
+      myOutputValue = normalSPS(input);
+    } else if (input == "reverse") {
+      currentGameMode = "reverse";
+      myOutputValue = reverseSPS(input);
     }
     console.log("Current game mode " + currentGameMode);
   }
-
-  ///  Checking your score ///
-  if (input == "score check") {
-    myOutputValue =
-      " You have won " + userScore + " out of " + totalPlays + " times";
-  }
   return myOutputValue;
 };
+
+// ///  Checking your score ///
+// if (input == "score check") {
+//   myOutputValue =
+//     " You have won " + userScore + " out of " + totalPlays + " times";
+//}
