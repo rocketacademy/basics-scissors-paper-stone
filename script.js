@@ -9,33 +9,23 @@
 var numOfUserWinning = 0;
 var numOfProgramWinnning = 0;
 var numOfDraws = 0;
+var isGameStarted = false;
 var userName = "";
 
-var inputName = function (userName) {
+var main = function (input) {
+  if (!isGameStarted) {
+    return startGame(input);
+  }
+  return gameTime(input);
+};
+var startGame = function (userName) {
   if (userName == "") {
-    return "please input username";
+    return "please input a username :) ";
   }
-  if (userName != "") {
-    return "lets start";
-  }
+  isGameStarted = true;
+  return "hello " + userName + " lets start the game! ";
 };
-
-var programGenerator = function () {
-  var randomProgramGuess = generateRandomInteger();
-  if (randomProgramGuess == 1) {
-    return "scissors";
-  }
-  if (randomProgramGuess == 2) {
-    return "paper";
-  }
-  if (randomProgramGuess == 3) {
-    return "stone";
-  }
-  return "oops try another one";
-};
-
-var main = function (userGuess) {
-  inputName(userGuess);
+var gameTime = function (userGuess) {
   //Validation
   if (
     userGuess != "stone" &&
@@ -45,7 +35,7 @@ var main = function (userGuess) {
     userGuess != "reversed paper" &&
     userGuess != "reversed scissors"
   ) {
-    return userGuess + " error, plese try again";
+    return userGuess + " error, please input scissors / paper / stone ";
   }
 
   var isReversed = true;
@@ -63,11 +53,11 @@ var main = function (userGuess) {
     userGuess = "scissors";
   }
 
-  var programGuess = programGenerator();
+  var programGuess = generateRandomHand();
 
   if (userGuess == programGuess) {
     numOfDraws += 1;
-    return "it's draw " + numOfDraws;
+    return "it's draw, you guess draw for " + numOfDraws + " times";
   }
   if (userGuess == "scissors" && programGuess == "paper" && !isReversed) {
     //return userGuess + " VS " + programGuess + " you win";
@@ -78,7 +68,7 @@ var main = function (userGuess) {
       programGuess +
       " you win, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -91,7 +81,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -104,7 +94,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -117,7 +107,7 @@ var main = function (userGuess) {
       programGuess +
       " you win, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -129,7 +119,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -141,7 +131,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -153,7 +143,7 @@ var main = function (userGuess) {
       programGuess +
       " you win, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -166,7 +156,7 @@ var main = function (userGuess) {
       programGuess +
       " you win, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -179,7 +169,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose, your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -192,7 +182,7 @@ var main = function (userGuess) {
       programGuess +
       " you lose,your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -204,7 +194,7 @@ var main = function (userGuess) {
       programGuess +
       " you win,your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -217,7 +207,7 @@ var main = function (userGuess) {
       programGuess +
       " you win,your score is " +
       numOfUserWinning +
-      "computer score is " +
+      " computer score is " +
       numOfProgramWinnning
     );
   }
@@ -225,8 +215,18 @@ var main = function (userGuess) {
   return userGuess + " VS " + programGuess + " you lose";
 };
 
+var generateRandomHand = function () {
+  var randomProgramGuess = generateRandomInteger(3);
+  if (randomProgramGuess == 1) {
+    return "scissors";
+  } else if (randomProgramGuess == 2) {
+    return "paper";
+  }
+  return "stone";
+};
+
 var generateRandomInteger = function (max) {
-  var randomDecimal = Math.random() * 3;
+  var randomDecimal = Math.random() * max;
   var randomInteger = Math.floor(randomDecimal) + 1;
   return randomInteger;
 };
