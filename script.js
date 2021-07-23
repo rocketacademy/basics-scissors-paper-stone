@@ -74,6 +74,9 @@ var main = function (input) {
 
 //Function for Normal Game mode
 var normalGame = function (input) {
+  if (inputValidation(input)) {
+    return "Please enter 'Rock', 'Paper', or 'Scissors'.";
+  }
   if (input == "Rock" || input == "Paper" || input == "Scissors") {
     var rNG = randomNumberGenerator();
     var convertedToItem = rngConversion(rNG);
@@ -83,6 +86,9 @@ var normalGame = function (input) {
 };
 //Function for Korean Game mode
 var koreanGame = function (input) {
+  if (inputValidation(input)) {
+    return "Please enter 'Rock', 'Paper', or 'Scissors'.";
+  }
   if (input == "Rock" || input == "Paper" || input == "Scissors") {
     var rNG = randomNumberGenerator();
     var convertedToItem = rngConversion(rNG);
@@ -213,6 +219,18 @@ var koreanRPS = function (input, generatedItem) {
   );
   console.log("Game complete.");
   return myOutputValue;
+};
+
+//Function to Validate Inputs during game
+/* Thanks again to Dong Kun for teaching me!
+After player selects game mode:
+- input that is not recognised will return error message
+*/
+var inputValidation = function (input) {
+  if (input !== ("Rock" || "Paper" || "Scissors" || "Korean" || "Normal")) {
+    return true; //If function detects none of the above, TRUE will return. TRUE makes whatever coded steps run.
+  }
+  return false;
 };
 
 /*WORK IN PROGRESS
