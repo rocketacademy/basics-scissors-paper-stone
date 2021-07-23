@@ -38,7 +38,7 @@ const myOutputValue = [
       a
     )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`),
   (koreandraw = (a, b, c, d, e) =>
-    `${draw(a, b, c, d, e)}\<br>\ Ultimate winner is ${winner}.`),
+    `${draw(a, b, c, d, e)}\<br>\ Ultimate winner is ${e}.`),
 ];
 
 // All invalid cases of user's input
@@ -46,71 +46,62 @@ const invalidCases = (a) =>
   a.toLowerCase() !== "paper" &&
   a.toLowerCase() !== "rock" &&
   a.toLowerCase() !== "scissors";
-
 // All cases where user wins
 const winCases = (b, c) =>
   (b.toLowerCase() === "paper" && c === "rock") ||
   (b.toLowerCase() === "rock" && c === "scissors") ||
   (b.toLowerCase() === "scissors" && c === "paper");
-
 // All cases where both parties choose the same object.
 const drawCases = (d, e) => d.toLowerCase() === e;
-
-//track scores
-let userWin = 0;
-let systemWin = 0;
-
-//track winner
-const winnerOfGame = () =>
-  systemWin > userWin ? "System" : systemWin < userWin ? "You" : "Nobody";
-
-//define default game mode as pending for username
-let userName = "";
-let gameMode = "pending for username";
 
 // normal reverse korean mode game play
 const normalReversedKoreanGamePlay = (userInput, isReversed, isKorean) => {
   let showMeHand = getRandomHand();
-
+  //If invalid input , return feedback.
   if (invalidCases(userInput)) {
-    //If invalid input , return feedback.
     return myOutputValue[0](userInput);
   }
   //If both parties choose the same object, it's a draw.
   else if (drawCases(userInput, showMeHand)) {
     winner = winnerOfGame();
-    console.log(`draw: ${userInput},${showMeHand}`);
-
+    //console.log(`draw: ${userInput},${showMeHand}`);
     //return ultimate winner declaration when it is korean mode
     return isKorean
       ? myOutputValue[4](userInput, showMeHand, userWin, systemWin, winner)
       : myOutputValue[1](userInput, showMeHand, userWin, systemWin, winner);
   }
-
   // User wins.
   else if (isReversed ^ winCases(userInput, showMeHand)) {
     //increment userWin score
     userWin += 1;
     winner = winnerOfGame();
-    console.log(`win: ${userInput},${showMeHand}`);
+    //console.log(`win: ${userInput},${showMeHand}`);
     return myOutputValue[2](userInput, showMeHand, userWin, systemWin, winner);
   }
-
   // System wins.
   else if (!(isReversed ^ winCases(userInput, showMeHand))) {
     //increment systemWin score
     systemWin += 1;
     winner = winnerOfGame();
-    console.log(`lose: ${userInput},${showMeHand}`);
+    //console.log(`lose: ${userInput},${showMeHand}`);
     return myOutputValue[3](userInput, showMeHand, userWin, systemWin, winner);
   }
 };
 
+//track scores
+let userWin = 0;
+let systemWin = 0;
+//track winner
+const winnerOfGame = () =>
+  systemWin > userWin ? "System" : systemWin < userWin ? "You" : "Nobody";
 //reset Game when switch mode
 const resetGame = () => {
   userWin = 0;
   systemWin = 0;
 };
+//define default game mode as pending for username
+let userName = "";
+let gameMode = "pending for username";
 
 // Main game
 const main = (input) => {
@@ -120,7 +111,6 @@ const main = (input) => {
     gameMode = "normal";
     return `Welcome ${userName}.\<br>\You may choose to play normal, reverse, or korean game.`;
   }
-
   //user input to switch game mode
   if (
     input.toLowerCase() == "reverse" ||
