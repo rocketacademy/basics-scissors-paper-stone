@@ -38,8 +38,8 @@ var main = function(input){
   var NPC = startGame();
   var myOutputValue = "hello! your input does not seem to be valid, please try again with either scissors, paper, or stone";
   }
+ 
   
-   
 
   if (
     (input == SCISSORS && NPC == PAPER) ||
