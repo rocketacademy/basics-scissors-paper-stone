@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Coding Basics</title>
+    <title>SPS | RA Basics</title>
     <style>
       * {
         box-sizing: border-box;
@@ -24,7 +24,7 @@
         padding: 38px 31px;
       }
 
-      input {
+      input.text {
         font-size: 21px;
         line-height: 33px;
         margin: 0 0 23px 0;
@@ -51,29 +51,114 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
-      <p>Input:</p>
-      <input id="input-field" />
+      <input class="text" id="name-field" placeholder="Please enter your name."/>
       <br />
-      <button id="submit-button">Submit</button>
-      <p>Output:</p>
+      <form name="game_mode">
+        <p>Please select a game to play.</p>
+        <label for="normal"
+          ><input
+            type="radio"
+            id="normal"
+            name="game_mode"
+            value="normal"
+            checked
+          />🕹️ Normal Scissors Paper Stone</label
+        ><br />
+        <label for="reversed"
+          ><input
+            type="radio"
+            id="reversed"
+            name="game_mode"
+            value="reversed"
+          />🔄 Reversed Scissors Paper Stone</label
+        ><br />
+        <label for="korean"
+          ><input
+            type="radio"
+            id="korean"
+            name="game_mode"
+            value="korean"
+          />🇰🇷 Korean Scissors Paper Stone</label
+        ><br />
+        <label for="computer"
+          ><input
+            type="radio"
+            id="computer"
+            name="game_mode"
+            value="Computer"
+          />&#x1F916 Computer Scissors Paper Stone</label
+        ><br />
+        <label for="word"
+          ><input
+            type="radio"
+            id="word"
+            name="game_mode"
+            value="word"
+          />❓ Guess the Secret Word</label
+        ><br />
+        <label for="dice"
+          ><input
+            type="radio"
+            id="dice"
+            name="game_mode"
+            value="dice"
+          />🎲 Guess the Die Roll</label
+        ><br />
+      </form>
+      <form name="player_choice">
+        <p>Please select a shape to play for Scissors Paper Stone.</p>
+        <label for="scissors"
+          ><input
+            type="radio"
+            id="scissors"
+            name="player_choice"
+            value="1"
+            checked
+          />&#x2702 Scissors</label
+        ><br />
+        <label for="paper"
+          ><input
+            type="radio"
+            id="paper"
+            name="player_choice"
+            value="2"
+          />&#x1F4C4 Paper</label
+        ><br />
+        <label for="stone"
+          ><input
+            type="radio"
+            id="stone"
+            name="player_choice"
+            value="3"
+          />&#x26F0 Stone</label
+        ><br />
+      </form>
+      <br>
+      <input class="text" id="guess-field" placeholder="Please guess the secret word or die roll."/>
+      <div>
+        <button id="submit-button">Play</button>
+      </div>
+      <div>
+        <p>Output:</p>
+      </div>
       <div id="output-div"></div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button = document.querySelector("#submit-button");
+      var button = document.getElementById("submit-button");
       button.addEventListener("click", function () {
-        // Set result to input value
-        var input = document.querySelector("#input-field");
-        var result = main(input.value);
-
+        var name = document.getElementById("name-field").value;
+        var mode = document.forms["game_mode"].elements["game_mode"].value;
+        var choice =
+          document.forms["player_choice"].elements["player_choice"].value;
+        var guess = document.getElementById("guess-field").value;
+        // Set result to output of main
+        var result = main(name, mode, choice, guess);
         // Display result in output element
-        var output = document.querySelector("#output-div");
+        var output = document.getElementById("output-div");
         output.innerHTML = result;
-
-        // Reset input value
-        input.value = "";
       });
     </script>
   </body>
