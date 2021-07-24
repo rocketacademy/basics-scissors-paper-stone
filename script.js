@@ -20,26 +20,28 @@ const iconForNoun = (hand) => {
 };
 
 // all output messages
-const myOutputValue = [
-  (invalid = (a) =>
-    `${iconForNoun(
-      a
-    )} is an invalid input.\<br>\Please type scissors/paper/rock to continue the game.`),
-  (draw = (a, b, c, d, e) =>
-    `Draw.\<br>\Your ${iconForNoun(a)} vs system's ${iconForNoun(
-      b
-    )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`),
-  (win = (a, b, c, d, e) => `You won.\<br>\Your ${iconForNoun(
+const invalidMessage = (a) =>
+  `${iconForNoun(
     a
-  )} beats system's ${iconForNoun(b)}.\<br>\
-        You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`),
-  (lose = (a, b, c, d, e) =>
-    `You lost.\<br>\ System's ${iconForNoun(b)} beats your ${iconForNoun(
-      a
-    )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`),
-  (koreandraw = (a, b, c, d, e) =>
-    `${draw(a, b, c, d, e)}\<br>\ Ultimate winner is ${e}.`),
-];
+  )} is an invalid input.\<br>\Please type scissors/paper/rock to continue the game.`;
+const drawMessage = (a, b, c, d, e) =>
+  `Draw.\<br>\Your ${iconForNoun(a)} vs system's ${iconForNoun(
+    b
+  )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`;
+const winMessage = (a, b, c, d, e) => `You won.\<br>\Your ${iconForNoun(
+  a
+)} beats system's ${iconForNoun(b)}.\<br>\
+        You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`;
+const loseMessage = (a, b, c, d, e) =>
+  `You lost.\<br>\ System's ${iconForNoun(b)} beats your ${iconForNoun(
+    a
+  )}.\<br>\You: ${c}\<br>\System: ${d}.\<br>\Winning so far is ${e}.`;
+const koreanDrawMessage = (a, b, c, d, e) =>
+  `${drawMessage(a, b, c, d, e)}\<br>\ Ultimate winner is ${e}.`;
+const koreanWinMessage = (a, b, c, d, e) =>
+  `${winMessage(a, b, c, d, e)}\<br>\ You shout "muk-jji-ppa!".`;
+const koreanLoseMessage = (a, b, c, d, e) =>
+  `${loseMessage(a, b, c, d, e)}\<br>\ System shouts "muk-jji-ppa!".`;
 
 // All invalid cases of user's input
 const invalidCases = (a) =>
@@ -57,34 +59,36 @@ const drawCases = (d, e) => d.toLowerCase() === e;
 // normal reverse korean mode game play
 const normalReversedKoreanGamePlay = (userInput, isReversed, isKorean) => {
   let showMeHand = getRandomHand();
+  let winner;
   //If invalid input , return feedback.
   if (invalidCases(userInput)) {
-    return myOutputValue[0](userInput);
+    return invalidMessage(userInput);
   }
   //If both parties choose the same object, it's a draw.
   else if (drawCases(userInput, showMeHand)) {
     winner = winnerOfGame();
-    //console.log(`draw: ${userInput},${showMeHand}`);
     //return ultimate winner declaration when it is korean mode
     return isKorean
-      ? myOutputValue[4](userInput, showMeHand, userWin, systemWin, winner)
-      : myOutputValue[1](userInput, showMeHand, userWin, systemWin, winner);
+      ? koreanDrawMessage(userInput, showMeHand, userWin, systemWin, winner)
+      : drawMessage(userInput, showMeHand, userWin, systemWin, winner);
   }
   // User wins.
   else if (isReversed ^ winCases(userInput, showMeHand)) {
     //increment userWin score
     userWin += 1;
     winner = winnerOfGame();
-    //console.log(`win: ${userInput},${showMeHand}`);
-    return myOutputValue[2](userInput, showMeHand, userWin, systemWin, winner);
+    return isKorean
+      ? koreanWinMessage(userInput, showMeHand, userWin, systemWin, winner)
+      : winMessage(userInput, showMeHand, userWin, systemWin, winner);
   }
   // System wins.
   else if (!(isReversed ^ winCases(userInput, showMeHand))) {
     //increment systemWin score
     systemWin += 1;
     winner = winnerOfGame();
-    //console.log(`lose: ${userInput},${showMeHand}`);
-    return myOutputValue[3](userInput, showMeHand, userWin, systemWin, winner);
+    return isKorean
+      ? koreanLoseMessage(userInput, showMeHand, userWin, systemWin, winner)
+      : loseMessage(userInput, showMeHand, userWin, systemWin, winner);
   }
 };
 
@@ -124,13 +128,10 @@ const main = (input) => {
   // game mode to execute
   switch (gameMode) {
     case "normal":
-      normalGameOutput = normalReversedKoreanGamePlay(input, false, false);
-      return normalGameOutput;
+      return normalReversedKoreanGamePlay(input, false, false);
     case "reverse":
-      reverseGameOutput = normalReversedKoreanGamePlay(input, true, false);
-      return reverseGameOutput;
+      return normalReversedKoreanGamePlay(input, true, false);
     case "korean":
-      koreanGameOutput = normalReversedKoreanGamePlay(input, false, true);
-      return koreanGameOutput;
+      return normalReversedKoreanGamePlay(input, false, true);
   }
 };
