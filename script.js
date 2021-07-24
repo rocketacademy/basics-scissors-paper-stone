@@ -51,6 +51,10 @@ var conditionList = function (input) {
     );
   else if (input == "scissors" && randomAns == "paper")
     return (
-      "You Win!" + input + "vs" + randomAns + "(your choice vs computer choice)"
+      "Horray You Win!" +
+      input +
+      "vs" +
+      randomAns +
+      "(your choice vs computer choice)"
     );
 };
