@@ -25,14 +25,25 @@ var getRandomObject = function () {
  * @param {string} computerObject
  */
 var doesPlayerBeatComputer = function (playerObject, computerObject) {
-  return (
+  // return (
+  //   (playerObject == SCISSORS && computerObject == PAPER) ||
+  //   (playerObject == PAPER && computerObject == STONE) ||
+  //   (playerObject == STONE && computerObject == SCISSORS) ||
+  //   (playerObject == REVERSED_SCISSORS && computerObject == STONE)||
+  //   (playerObject == REVERSED_PAPER && computerObject == SCISSORS)||
+  //   (playerObject == REVERSED_STONE && computerObject == PAPER)
+  // );
+  if (
     (playerObject == SCISSORS && computerObject == PAPER) ||
     (playerObject == PAPER && computerObject == STONE) ||
     (playerObject == STONE && computerObject == SCISSORS) ||
     (playerObject == REVERSED_SCISSORS && computerObject == STONE)||
     (playerObject == REVERSED_PAPER && computerObject == SCISSORS)||
     (playerObject == REVERSED_STONE && computerObject == PAPER)
-  );
+    ) {
+      return true
+    }
+    return false
 };
 /**
  * Set a fn that will return an icon based on a  given object
