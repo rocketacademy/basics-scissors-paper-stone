@@ -80,21 +80,21 @@ if (currentGameMode == ORIGINAL){
 // if the game is a draw
 if (userSign == computerSign){
   gameCount += 1; // Add 1 to total games played
-  return `${genericOutput} <br>The game is a draw! ${username} has won ${winCount/gameCount} times against the computer.`;
+  return `${genericOutput} <br>The game is a draw! ${username} has won ${winCount + ' of ' + gameCount}  times against the computer.`;
   // if player wins against computer
 } else if (userSign == SCISSORS && computerSign == PAPER
 || userSign == PAPER && computerSign == STONE
 || userSign == STONE && computerSign == SCISSORS){
   gameCount += 1; // Add 1 to total games played
   winCount += 1; // Add 1 to games won against computer
-  return `${genericOutput} <br>You won! ${username} has won ${winCount/gameCount} times against the computer.`;
+  return `${genericOutput} <br>You won! ${username} has won ${winCount + ' of ' + gameCount} times against the computer.`;
 }
 // if player loses against computer
 else if (userSign == SCISSORS && computerSign == STONE
 || userSign == PAPER && computerSign == SCISSORS
 || userSign == STONE && computerSign == PAPER){
   gameCount += 1; // Add 1 to total games played
-  return `${genericOutput} <br>You lost! ${username} has won ${winCount/gameCount} times against the computer.`
+  return `${genericOutput} <br>You lost! ${username} has won ${winCount + ' of ' + gameCount} times against the computer.`
 }}
 // ================== Reverse Sps =====================
 var userSign = input
@@ -106,14 +106,14 @@ if (currentGameMode == REVERSE){
 // if game is draw
 if (userSign == computerSign){
   gameCount += 1; // Add 1 to total games played
-  return `${genericOutput} <br>The game is a draw! ${username} has won ${winCount/gameCount} times against the computer.`;
+  return `${genericOutput} <br>The game is a draw! ${username} has won ${winCount + ' of ' + gameCount}  times against the computer.`;
 }
 // if player loses agaisnt computer
 else if (userSign == SCISSORS && computerSign == PAPER
 || userSign == PAPER && computerSign == STONE
 || userSign == STONE && computerSign == SCISSORS){
   gameCount += 1; // Add 1 to total games played
-  return `${genericOutput} <br>You lost! ${username} has won ${winCount/gameCount} times against the computer.`;
+  return `${genericOutput} <br>You lost! ${username} has won ${winCount + ' of ' + gameCount} times against the computer.`;
 }
 //if player wins against computer
 else if (userSign == SCISSORS && computerSign == STONE
@@ -121,7 +121,7 @@ else if (userSign == SCISSORS && computerSign == STONE
 || userSign == STONE && computerSign == PAPER){
   gameCount += 1; // Add 1 to total games played
   winCount += 1; // Add 1 to games won against computer
-  return `${genericOutput} <br>You won! ${username} has won ${winCount/gameCount} times against the computer.`}
+  return `${genericOutput} <br>You won! ${username} has won ${winCount + ' of ' + gameCount}  times against the computer.`}
 }
 // ================== Korean Sps =====================  
 var userSign = input
@@ -155,12 +155,12 @@ else if (userSign == SCISSORS && computerSign == STONE
 if (initialMjpWinner == 'computer'
 && userSign == computerSign) {
   gameCount += 1; // Add 1 to total games played
-return `${genericOutput} <br> You lost! ${username} has won ${winCount/gameCount} times against the computer.`}
+return `${genericOutput} <br> You lost! ${username} has won ${winCount + ' of ' + gameCount}  times against the computer.`}
 
 if (initialMjpWinner == username
 && userSign == computerSign) {
   gameCount += 1; // Add 1 to total games played
   winCount += 1; // Add 1 to games won against computer
-return `${genericOutput} <br> ${username} has won ${winCount/gameCount} times against the computer.`}
+return `${genericOutput} <br> ${username} has won ${winCount + ' of ' + gameCount}  times against the computer.`}
 }
 return myOutputValue};
