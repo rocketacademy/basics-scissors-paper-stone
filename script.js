@@ -1,5 +1,6 @@
 var currentMode = 'Pending User Name'; 
 var userName = '' ;
+var chooseCurrentGame = '';
 
 var generateTotalPlays = 0 ;
 var generateWinTracker = 0 ;   
@@ -12,21 +13,18 @@ var playSPS = function (userName, input) {
 
 // SPS game logic 
   var computerOutput = generateOutput ();
-  generateTotalPlays = generateTotalPlays + 1 
+  generateTotalPlays += 1 
 
   console.log ('computer output')
   console.log (computerOutput)
 
-// why does win loss tracker not update immediately like generateTotalPlays   
-
-  var genericOutput = '<br>'+' You chose: '+input+'<br>Computer chose: '
-  +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
-  generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
-  + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
 
     if (input == computerOutput){
-      generateDrawTracker = generateDrawTracker + 1 
-      message = "DRAW" + genericOutput 
+      generateDrawTracker += 1 
+      message = "DRAW" + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times';  
     }
 
 //wins
@@ -34,8 +32,11 @@ var playSPS = function (userName, input) {
   (input == "paper" && computerOutput == "stone") || 
   (input == "stone" && computerOutput == "scissors")){
      
-      generateWinTracker = generateWinTracker + 1 
-      message = "Winner" + genericOutput
+      generateWinTracker += 1 
+      message = "Congrats "+userName+". You are a winner" + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
     }
 
 //losses 
@@ -43,8 +44,11 @@ var playSPS = function (userName, input) {
     (input == "paper" && computerOutput == "scissors") || 
     (input == "stone" && computerOutput == "paper")){
       
-      generateLossTracker = generateLossTracker + 1 
-      message = "Loser" + genericOutput
+      generateLossTracker += 1 
+      message = "You lose,"+userName+"." + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
     }
 
   else message = 'Typo error: try again. '+'<br>'+
@@ -58,28 +62,30 @@ var playReverse = function (userName, input) {
 
 // Reverse game logic 
   var computerOutput = generateOutput ();
-  generateTotalPlays = generateTotalPlays + 1 
+  generateTotalPlays += 1 
 
   console.log ('computer output')
   console.log (computerOutput)
 
-  var genericOutput = '<br>'+' You chose: '+input+'<br>Computer chose: '
-  +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
-  generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
-  + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
-
     if (input == computerOutput){
       generateDrawTracker = generateDrawTracker + 1 
-      message = "DRAW" + genericOutput 
+      message = "DRAW" + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times';  
     }
+
 
 //wins
   else if ((input == "reversed scissors" && computerOutput == "stone") 
     || (input == "reversed paper" && computerOutput == "scissors")
     || (input == "reversed stone" && computerOutput == "paper")){
      
-      generateWinTracker = generateWinTracker + 1 
-      message = "Winner" + genericOutput
+      generateWinTracker += 1 
+      message = "Congrats "+userName+". You are a winner" + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
     }
 
 //losses 
@@ -87,12 +93,15 @@ var playReverse = function (userName, input) {
     || (input == "reversed paper" && computerOutput == "stone")
     || (input == "reversed stone" && computerOutput == "scissors")){
       
-      generateLossTracker = generateLossTracker + 1 
-      message = "Loser" + genericOutput
+      generateLossTracker += 1 
+      message = "You lose,"+userName+"." + '<br>'+' You chose: '+input+'<br>Computer chose: '
+      +computerOutput+'<br><br>'+' Win-Loss record: '+'<br>'+' Computer: ' +
+      generateLossTracker +'<br>'+' User: ' + generateWinTracker +'<br>'+'Draw: '
+      + generateDrawTracker + '<br><br>' + 'You have played a total of: ' + generateTotalPlays + ' times'; 
     }
 
   else message = 'Typo error: try again. '+'<br>'+
-  'Inputs: scissors, paper or stone'
+  'Inputs: reversed scissors, reversed paper or reversed stone'
 
   return message ;
 }; 
@@ -103,19 +112,30 @@ console.log (generateTotalPlays)
 
 
 var main = function (input) {
+ 
+  console.log (currentMode)
+
   var myOutputValue = ''; 
+
 
   if (currentMode == 'Pending User Name') {
     userName = input ; 
-    currentMode = 'SPS' ; 
-    myOutputValue = 'Welcome '+userName+ '. Begin play by selecting game mode: SPS or Reverse';
+    currentMode = "Select Game" ; 
+    return myOutputValue = 'Welcome '+userName+ '. Begin play by selecting game mode: SPS or Reverse';
   } 
-  
-  else if (currentMode == 'SPS') {
-    myOutputValue = playSPS (userName, input);
+
+  if (currentMode == 'Select Game') {
+   chooseCurrentGame = input ;
+    currentMode = 'Play'
+    return
   } 
-  else if (currentMode == 'Reverse') {
-    myOutputValue = playReverse (userName, input);
+
+   if (chooseCurrentGame == 'SPS' && currentMode == 'Play') {
+    return myOutputValue = playSPS (userName, input);
+  }
+
+  if (chooseCurrentGame == 'Reverse' && currentMode == 'Play') {
+    return myOutputValue = playReverse (userName, input);
   }
 
   return myOutputValue;
