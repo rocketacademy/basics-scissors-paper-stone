@@ -11,50 +11,132 @@ var generateRandomRPS = function () {
   else if (randomNum == 3) return "scissors";
 };
 
+var roundCount = 0;
+var winCount = 0;
+
 var conditionList = function (input) {
   var randomAns = generateRandomRPS();
-  if (input == randomAns)
+  if (input == randomAns) {
+    roundCount = roundCount + 1;
     return (
-      "Draw!" + input + "vs" + randomAns + "(your choice vs computer choice)"
-    );
-  else if (input == "rock" && randomAns == "paper")
-    return (
-      "You Lose! Computer Wins" +
-      input +
-      "vs" +
+      "The computer chooses" +
       randomAns +
-      "(your choice vs computer choice)"
-    );
-  else if (input == "rock" && randomAns == "scissors")
-    return (
-      "You Win!" + input + "vs" + randomAns + "(your choice vs computer choice)"
-    );
-  else if (input == "paper" && randomAns == "rock")
-    return (
-      "You Win" + input + "and" + randomAns + "(your choice vs computer choice)"
-    );
-  else if (input == "paper" && randomAns == "scissors")
-    return (
-      "You Lose! Computer Wins" +
+      "<br>" +
+      "You chose" +
       input +
-      "vs" +
-      randomAns +
-      "(your choice vs computer choice)"
+      "<br>" +
+      "Draw!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
     );
-  else if (input == "scissors" && randomAns == "rock")
+  } else if (input == "rock" && randomAns == "paper") {
+    roundCount = roundCount + 1;
     return (
-      "You Lose! Computer Wins" +
-      input +
-      "vs" +
+      "The computer chooses" +
       randomAns +
-      "(your choice vs computer choice)"
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Lose!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
     );
-  else if (input == "scissors" && randomAns == "paper")
+  } else if (input == "rock" && randomAns == "scissors") {
+    roundCount = roundCount + 1;
+    winCount = winCount + 1;
     return (
-      "Horray You Win!" +
-      input +
-      "vs" +
+      "The computer chooses" +
       randomAns +
-      "(your choice vs computer choice)"
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Win!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
     );
+  } else if (input == "paper" && randomAns == "rock") {
+    roundCount = roundCount + 1;
+    winCount = winCount + 1;
+    return (
+      "The computer chooses" +
+      randomAns +
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Win!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
+    );
+  } else if (input == "paper" && randomAns == "scissors") {
+    roundCount = roundCount + 1;
+    return (
+      "The computer chooses" +
+      randomAns +
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Lose!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
+    );
+  } else if (input == "scissors" && randomAns == "rock") {
+    roundCount = roundCount + 1;
+    return (
+      "The computer chooses" +
+      randomAns +
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Lose!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
+    );
+  } else if (input == "scissors" && randomAns == "paper") {
+    roundCount = roundCount + 1;
+    winCount = winCount + 1;
+    return (
+      "The computer chooses" +
+      randomAns +
+      "<br>" +
+      "You chose" +
+      input +
+      "<br>" +
+      "You Win!" +
+      "<br>" +
+      "So far you have been winning" +
+      winCount +
+      "/" +
+      roundCount +
+      "turns. Great Job!"
+    );
+  }
 };
