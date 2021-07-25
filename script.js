@@ -1,5 +1,5 @@
 var currentGameMode = "pending user's name input";
-
+var myOutputValue = "";
 var userName = "";
 
 var computerSpsWinCounter = 0;
@@ -7,25 +7,24 @@ var userSpsWinCounter = 0;
 
 var finalWinner = function () {
   if (computerSpsWinCounter > userSpsWinCounter) {
-    return "I won!! You still want to continue? Heehee...";
+    myOutputValue = "I won!! You still want to continue? Heehee...";
   }
   if (computerSpsWinCounter < userSpsWinCounter) {
-    return "Okay, you win for now! Let's continue the game";
+    myOutputValue = "Okay, you win for now! Let's continue the game";
   } else {
-    return "We are tie!";
+    myOutputValue = "We are tie!";
   }
 };
 
 var main = function (input) {
-  var myOutputValue = "";
   ////Now IMMEDIATELY on the onset, when the MAIN starts running, we do not want the players to enter rubbish so we put the below if condition FIRST to run (also for input validation).
   if (currentGameMode == "pending user's name input") {
-    username = input;
+    userName = input;
     currentGameMode = "The sPs Game begins!";
     myOutputValue =
       "Hello " +
       userName +
-      "!" +
+      " ! " +
       "Let's start playing! Enter scissors, paper or stone (in lowercase) to begin!" +
       "<br>" +
       "RULES:" +
@@ -54,12 +53,12 @@ var main = function (input) {
     //compare the computer's objects vs players' and determine who wins.
     //we now put in the rest of the  conditions for a draw and losing/winning the s ,p ,s game below,
     if (userSpsObject == computerSpsObject) {
-      computerSpsWinCounter = computerSpsWinCounter + 1;
-      userSpsWinCounter = userSpsWinCounter + 1;
+      computerSpsWinCounter = computerSpsWinCounter + 0;
+      userSpsWinCounter = userSpsWinCounter + 0;
       myOutputValue =
         "It’s a draw " +
         userName +
-        "! No fighting!" +
+        " ! No fighting!" +
         "<br>" +
         "You played " +
         userSpsObject +
@@ -71,11 +70,11 @@ var main = function (input) {
         "<br>" +
         "You have " +
         userSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "And, I have " +
         computerSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "<br>" +
         finalWinner;
@@ -86,9 +85,9 @@ var main = function (input) {
       (userSpsObject == "stone" && computerSpsObject == "paper")
     ) {
       computerSpsWinCounter = computerSpsWinCounter + 1;
-      userSpsWinCounter = userSpsWinCounter + 1;
+      userSpsWinCounter = userSpsWinCounter + 0;
       myOutputValue =
-        "I win " +
+        "I win, " +
         userName +
         " !" +
         "<br>" +
@@ -102,11 +101,11 @@ var main = function (input) {
         "<br>" +
         "You have " +
         userSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "And, I have " +
         computerSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "<br>" +
         finalWinner;
@@ -116,10 +115,10 @@ var main = function (input) {
       (userSpsObject == "paper" && computerSpsObject == "stone") ||
       (userSpsObject == "stone" && computerSpsObject == "scissors")
     ) {
-      computerSpsWinCounter = computerSpsWinCounter + 1;
+      computerSpsWinCounter = computerSpsWinCounter + 0;
       userSpsWinCounter = userSpsWinCounter + 1;
       myOutputValue =
-        "You win " +
+        "You win, " +
         userName +
         " !" +
         "<br>" +
@@ -133,11 +132,11 @@ var main = function (input) {
         "<br>" +
         "You have " +
         userSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "And, I have " +
         computerSpsWinCounter +
-        "winnings so far!" +
+        " win(s) so far!" +
         "<br>" +
         "<br>" +
         finalWinner;
