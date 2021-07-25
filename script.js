@@ -15,9 +15,13 @@ var main = function (input) {
   //we now put in the rest of the  conditions for a draw and losing/winning the s ,p ,s game below,
   if (userSpsObject == computerSpsObject) {
     myOutputValue =
-      "It’s a draw. No fighting! You played " +
+      "It’s a draw. No fighting!" +
+      "<br>" +
+      "You played " +
       userSpsObject +
-      " I played " +
+      " ," +
+      "<br>" +
+      "I played " +
       computerSpsObject +
       " !";
   }
@@ -27,9 +31,13 @@ var main = function (input) {
     (userSpsObject == "stone" && computerSpsObject == "paper")
   ) {
     myOutputValue =
-      "I win! You played " +
+      "I win!" +
+      "<br>" +
+      "You played " +
       userSpsObject +
-      " I played " +
+      " ," +
+      "<br>" +
+      "I played " +
       computerSpsObject +
       " !";
   }
@@ -39,9 +47,13 @@ var main = function (input) {
     (userSpsObject == "stone" && computerSpsObject == "scissors")
   ) {
     myOutputValue =
-      "You win! You played " +
+      "You win!" +
+      "<br>" +
+      "You played " +
       userSpsObject +
-      " I played " +
+      " ," +
+      "<br>" +
+      "I played " +
       computerSpsObject +
       " !";
   }
