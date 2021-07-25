@@ -13,7 +13,6 @@ var paper = "paper";
 var stone = "stone";
 
 //computer randomly choose scissors paper or stone
-
 var getRandomNum = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
@@ -28,7 +27,6 @@ var assignedNumToWord = function () {
 };
 
 // Rules: scissors beats paper, paper beats stone, and stone beats scissors. If same object draw
-
 var main = function (input) {
   if (mode == "input username") {
     playerName = input;
