@@ -47,7 +47,7 @@ var main = function (input) {
     //validation code output value is the default
     if (input !== 'scissors' && input !== 'paper' && input !== 'rock') {
       MyOutputValue =
-        'Please select either 'scissors', 'paper' or 'rock' as your inputs.';
+        'Please select either "scissors", "paper" or "rock" as your inputs.';
     }
     if (gameResult == userGuess) {
       myOutputValue =
