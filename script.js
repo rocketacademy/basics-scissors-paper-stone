@@ -1,113 +1,153 @@
-var main = function (input) {
-  var gameResult = scissorsPaperRock();
+var currentGameMode = "waiting for user name";
+var myOutputValue = "";
+var winCount = 0;
+var lossCount = 0;
+var userName = "";
+var englishResult = "";
 
-  myOutputValue =
-    // default putput is a validation input
-
-    "Please choose a valid input, the inputs are scissors, paper or rock. Your input was " +
-    input +
-    "the computer would have chosen " +
-    gameResult;
-  /* default ouptut is lose state 
-    
-    myOutputValue =
-  "You Lose! You chose " +
-    input +
-    " and the computer chose " +
-    gameResult +
-    " ."; */
-
-  if (gameResult == input) {
-    myOutputValue =
-      "Draw! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-  }
-  if (gameResult == "scissors" && input == "rock") {
-    myOutputValue =
-      "Win! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-  }
-
-  if (gameResult == "scissors" && input == "paper") {
-    myOutputValue =
-      "Lose! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-  }
-
-  if (gameResult == "paper" && input == "scissors") {
-    myOutputValue =
-      "Win! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-  }
-
-  if (gameResult == "paper" && input == "rock") {
-    myOutputValue =
-      "Lose! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-  }
-
-  if (gameResult == "rock" && input == "paper") {
-    myOutputValue =
-      "Win! You chose " +
-      input +
-      " and the computer chose " +
-      gameResult +
-      " .";
-
-    if (gameResult == "rock" && input == "scissors") {
-      myOutputValue =
-        "Lose! You chose " +
-        input +
-        " and the computer chose " +
-        gameResult +
-        " .";
-    }
-
-    /*if (input ! "scissors"){
-    myOutputValue = input+" is not a valid input. Please type scissors, paper or rock"}
-
-    if (input ! "paper"){
-    myOutputValue = input+" is not a valid input. Please type scissors, paper or rock"}
-
-    if (input !"rock"){
-    myOutputValue = input+" is not a valid input. Please type scissors, paper or rock"}
-  }*/
-  }
-
-  return myOutputValue;
-};
-
-var scissorsPaperRock = function () {
-  // produces a decimal between 0 and 6
+//scissors paper rock logic
+var playGame = function () {
   var randomDecimal = Math.random() * 3;
-  // take off the decimal
   var randomInteger = Math.floor(randomDecimal);
-  // it's anumber from 0 - 5 ... add 1
   var resultNumber = randomInteger + 1;
-
+  console.log("result Number #: " + resultNumber);
   if (resultNumber == 1) {
-    myOutputValue2 = "scissors";
+    englishResult = "scissors";
   }
   if (resultNumber == 2) {
-    myOutputValue2 = "paper";
+    englishResult = "paper";
   }
   if (resultNumber == 3) {
-    myOutputValue2 = "rock";
+    englishResult = "rock";
   }
-  return myOutputValue2;
+  console.log("English Result: " + englishResult);
+  return englishResult;
+};
+
+//Make two modes for the game which are either 'waiting for user' or 'play game'
+var main = function (input) {
+  if (currentGameMode == "waiting for user name") {
+    // set the name as input
+    userName = input;
+    console.log(userName);
+    //now that we have the name, switch the mode
+    currentGameMode = "play game";
+    console.log(currentGameMode);
+
+    return (myOutputValue = "Hello " + userName);
+  }
+
+  if (currentGameMode == "play game") {
+    var userGuess = input;
+    var gameResult = playGame();
+    console.log("User Guess: " + userGuess);
+    console.log("gameResult: " + gameResult);
+    console.log("game type :" + currentGameMode);
+
+    //validation code output value is the default
+    if (input !== "scissors" && input !== "paper" && input !== "rock") {
+      MyOutputValue =
+        'Please select either "scissors", "paper" or "rock" as your inputs.';
+    }
+    if (gameResult == userGuess) {
+      myOutputValue =
+        "Draw! You chose " +
+        userGuess +
+        "and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+    if (gameResult == "scissors" && userGuess == "rock") {
+      winCount = winCount + 1;
+      myOutputValue =
+        "Win! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+
+    if (gameResult == "scissors" && userGuess == "paper") {
+      lossCount = lossCount + 1;
+      myOutputValue =
+        "Lose! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+
+    if (gameResult == "paper" && userGuess == "scissors") {
+      winCount = winCount + 1;
+      myOutputValue =
+        "Win! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+
+    if (gameResult == "paper" && userGuess == "rock") {
+      lossCount = lossCount + 1;
+      myOutputValue =
+        "Lose! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+
+    if (gameResult == "rock" && userGuess == "paper") {
+      winCount = winCount + 1;
+      myOutputValue =
+        "Win! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+
+    if (gameResult == "rock" && userGuess == "scissors") {
+      lossCount = lossCount + 1;
+      yOutputValue =
+        "Lose! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    } else {
+      //default output value is Lose state
+      myOutputValue =
+        "You Lose! You chose " +
+        userGuess +
+        " and the computer chose " +
+        gameResult +
+        " Total times you won" +
+        winCount +
+        " total times computer won " +
+        lossCount;
+    }
+    return myOutputValue;
+  }
 };
