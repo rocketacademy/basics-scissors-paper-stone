@@ -1,3 +1,17 @@
+var computerSpsWinCounter = 0;
+var userSpsWinCounter = 0;
+
+var finalWinner = function () {
+  if (computerSpsWinCounter > userSpsWinCounter) {
+    return "I won!! You still want to continue? Heehee...";
+  }
+  if (computerSpsWinCounter < userSpsWinCounter) {
+    return "Okay, you win for now! Let's continue the game";
+  } else {
+    return "We are tie!";
+  }
+};
+
 var main = function (input) {
   var myOutputValue = "";
   ////Now IMMEDIATELY on the onset, when the MAIN starts running, we do not want the players to enter rubbish so we put the below if condition FIRST to run (also for input validation).
@@ -14,6 +28,8 @@ var main = function (input) {
   //compare the computer's objects vs players' and determine who wins.
   //we now put in the rest of the  conditions for a draw and losing/winning the s ,p ,s game below,
   if (userSpsObject == computerSpsObject) {
+    computerSpsWinCounter = computerSpsWinCounter + 1;
+    userSpsWinCounter = userSpsWinCounter + 1;
     myOutputValue =
       "It’s a draw. No fighting!" +
       "<br>" +
@@ -23,13 +39,26 @@ var main = function (input) {
       "<br>" +
       "I played " +
       computerSpsObject +
-      " !";
+      " !" +
+      "<br>" +
+      "You have " +
+      userSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "And, I have " +
+      computerSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "<br>" +
+      finalWinner;
   }
   if (
     (userSpsObject == "scissors" && computerSpsObject == "stone") ||
     (userSpsObject == "paper" && computerSpsObject == "scissors") ||
     (userSpsObject == "stone" && computerSpsObject == "paper")
   ) {
+    computerSpsWinCounter = computerSpsWinCounter + 1;
+    userSpsWinCounter = userSpsWinCounter + 1;
     myOutputValue =
       "I win!" +
       "<br>" +
@@ -39,13 +68,26 @@ var main = function (input) {
       "<br>" +
       "I played " +
       computerSpsObject +
-      " !";
+      " !" +
+      "<br>" +
+      "You have " +
+      userSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "And, I have " +
+      computerSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "<br>" +
+      finalWinner;
   }
   if (
     (userSpsObject == "scissors" && computerSpsObject == "paper") ||
     (userSpsObject == "paper" && computerSpsObject == "stone") ||
     (userSpsObject == "stone" && computerSpsObject == "scissors")
   ) {
+    computerSpsWinCounter = computerSpsWinCounter + 1;
+    userSpsWinCounter = userSpsWinCounter + 1;
     myOutputValue =
       "You win!" +
       "<br>" +
@@ -55,8 +97,20 @@ var main = function (input) {
       "<br>" +
       "I played " +
       computerSpsObject +
-      " !";
+      " !" +
+      "<br>" +
+      "You have " +
+      userSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "And, I have " +
+      computerSpsWinCounter +
+      "winnings so far!" +
+      "<br>" +
+      "<br>" +
+      finalWinner;
   }
+
   return myOutputValue;
 };
 //Build the diceroll for s ,p ,s. Named as getRandomNum;
