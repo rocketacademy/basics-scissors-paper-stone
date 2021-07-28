@@ -44,25 +44,24 @@ var validatingTheInput = function (input) {
   return false;
 };
 
-var didPlayerLose = function (userChoice) {
-  console.log("this is input " + userChoice);
-  programChoice = computersRandomWord();
+var didPlayerLose = function (input) {
+  console.log("this is input " + input);
   console.log("this is program choice " + programChoice);
   if (
-    (userChoice == SCISSORS && programChoice == PAPER) ||
-    (userChoice == PAPER && programChoice == STONE) ||
-    (userChoice == STONE && programChoice == SCISSORS)
+    (input == SCISSORS && programChoice == PAPER) ||
+    (input == PAPER && programChoice == STONE) ||
+    (input == STONE && programChoice == SCISSORS)
   ) {
     return false;
   }
   return true;
 };
 
-var getOutputMessage = function (input, userChoice) {
+var getOutputMessage = function (input) {
   userLose = didPlayerLose(input);
   console.log(input + " is input and " + programChoice + " is program choice");
   console.log("user lost is" + userLose);
-  if (userChoice == programChoice) {
+  if (input == programChoice) {
     numOfDraws = numOfDraws + 1;
     myOutputValue =
       "It's a draw! Your current record is " +
@@ -72,8 +71,7 @@ var getOutputMessage = function (input, userChoice) {
       " losses, and " +
       numOfDraws +
       " draws.";
-  }
-  if (userLose) {
+  } else if (userLose) {
     numOfComputerWins = numOfComputerWins + 1;
     console.log("if user lose this is gonna run");
     myOutputValue =
@@ -104,7 +102,7 @@ var getOutputMessage = function (input, userChoice) {
   return myOutputValue;
 };
 
-var main = function (input, userChoice) {
+var main = function (input) {
   // var spsGameMode = decideGameMode();
   //when the game starts, game mode is modeAskForUserName
   programChoice = computersRandomWord();
@@ -117,8 +115,8 @@ var main = function (input, userChoice) {
     return "Hi " + userName + "! Ready to play?";
   }
   if (gameMode == modeStartPlaying) {
-    outputMessage = getOutputMessage();
-    if (validatingTheInput(input, userChoice)) {
+    outputMessage = getOutputMessage(input);
+    if (validatingTheInput(input)) {
       return (
         "Whoops, seems like we can't process your input " +
         userName +
@@ -126,7 +124,7 @@ var main = function (input, userChoice) {
       );
     }
     // define sps normal rules
-    if (userChoice == programChoice) {
+    if (input == programChoice) {
       return outputMessage;
     } else if (userLose) {
       return outputMessage;
