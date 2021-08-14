@@ -3,7 +3,7 @@ var currentPlayerWins = 0;
 var currentComputerWins = 0;
 var currentDraws = 0;
 var status = `Waiting for Player's Name`;
-
+var test = `test`;
 //Player's Name
 var playerName = "";
 
@@ -74,6 +74,11 @@ var main = function (input) {
     status = "Playing Game";
     console.log(status);
     myOutputValue = `Hello ${playerName}! <br><br>Type in scissors or paper or stone to play`;
+
+    if (!input) {
+      status == `Waiting for Player's Name`;
+      myOutputValue = "Invalid, please enter your name to start";
+    }
   } else if ((status = "Playing game")) {
     //Player's Choice
     var playerChoice = convertingInputToChoice(input);
