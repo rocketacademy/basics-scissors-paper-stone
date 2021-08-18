@@ -1,31 +1,20 @@
 var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
-var REVERSE = "reverse";
-var REVERSE_SCISSORS = "reverse scissors";
-var REVERSE_PAPER = "reverse paper";
-var REVERSE_STONE = "reverse stone";
 var numOfUserWins = 0;
 var numOfComputerWins = 0;
 var numOfDraws = 0;
-var numOfRounds = 0;
-var modeAskForUserName = "user types in their name";
-var modeStartPlaying = "sps game starts";
-var reverseSPS = "reverse mode os SPS";
-var gameMode = modeAskForUserName;
 var userName = "";
 var myOutputValue = "";
-var userLose = "";
+var userWin = "";
 var outputMessage = "";
 
-var programOutput = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomInteger = Math.floor(randomDecimal);
-  var randomNumber = randomInteger + 1;
+var getRandomNumber = function () {
+  var randomNumber = Math.round(Math.random() * 3);
   return randomNumber;
 };
 var computersRandomWord = function () {
-  var computersRandomNumber = programOutput();
+  var computersRandomNumber = getRandomNumber();
   if (computersRandomNumber == 1) {
     return SCISSORS;
   }
@@ -44,7 +33,7 @@ var validatingTheInput = function (input) {
   return false;
 };
 
-var didPlayerLose = function (input) {
+var didPlayerWin = function (input) {
   console.log("this is input " + input);
   console.log("this is program choice " + programChoice);
   if (
@@ -52,42 +41,23 @@ var didPlayerLose = function (input) {
     (input == PAPER && programChoice == STONE) ||
     (input == STONE && programChoice == SCISSORS)
   ) {
-    return false;
+    return 1;
+  } else if (
+    (input == SCISSORS && programChoice == STONE) ||
+    (input == PAPER && programChoice == SCISSORS) ||
+    (input == STONE && programChoice == PAPER)
+  ) {
+    return 2;
+  } else if (input == programChoice) {
+    return 3;
   }
-  return true;
 };
 
-var getOutputMessage = function (input) {
-  userLose = didPlayerLose(input);
-  console.log(input + " is input and " + programChoice + " is program choice");
-  console.log("user lost is" + userLose);
-  if (input == programChoice) {
-    numOfDraws = numOfDraws + 1;
-    myOutputValue =
-      "It's a draw! Your current record is " +
-      numOfUserWins +
-      " wins, " +
-      numOfComputerWins +
-      " losses, and " +
-      numOfDraws +
-      " draws.";
-  } else if (userLose) {
-    numOfComputerWins = numOfComputerWins + 1;
-    console.log("if user lose this is gonna run");
-    myOutputValue =
-      "Oh no, you lost " +
-      userName +
-      ". Your current record is " +
-      numOfUserWins +
-      " wins, " +
-      numOfComputerWins +
-      " losses, and " +
-      numOfDraws +
-      " draws. Wanna try again?";
-  }
-  if (!userLose) {
+var getDefaultOutputMessage = function (input) {
+  userWin = didPlayerWin(input);
+  console.log("user lost is" + userWin);
+  if (userWin == 1) {
     numOfUserWins = numOfUserWins + 1;
-    console.log("if user wins this is gonna run");
     myOutputValue =
       "Congrats " +
       userName +
@@ -99,68 +69,132 @@ var getOutputMessage = function (input) {
       numOfDraws +
       " draws. Up for another game?";
   }
+  if (userWin == 2) {
+    numOfComputerWins = numOfComputerWins + 1;
+    myOutputValue =
+      "Oh no, you lost " +
+      userName +
+      ". Your current record is " +
+      numOfUserWins +
+      " wins, " +
+      numOfComputerWins +
+      " losses, and " +
+      numOfDraws +
+      " draws. Wanna try again?";
+  }
+  if (userWin == 3) {
+    numOfDraws = numOfDraws + 1;
+    myOutputValue =
+      "It's a draw! Your current record is " +
+      numOfUserWins +
+      " wins, " +
+      numOfComputerWins +
+      " losses, and " +
+      numOfDraws +
+      " draws.";
+  }
   return myOutputValue;
 };
 
-var main = function (input) {
-  // var spsGameMode = decideGameMode();
-  //when the game starts, game mode is modeAskForUserName
-  programChoice = computersRandomWord();
-  console.log("this is the random word " + programChoice + "");
-  if (gameMode == modeAskForUserName) {
-    userName = input;
-
-    // mode changes to sps game once the username is inputted.
-    gameMode = modeStartPlaying;
-    return "Hi " + userName + "! Ready to play?";
+var getReverseOutputMessage = function (input) {
+  userLose = didPlayerLose(input);
+  console.log("user lost is" + userLose);
+  if (userWin == 1) {
+    numOfComputerWins = numOfComputerWins + 1;
+    myOutputValue =
+      "Oh no, you lost " +
+      userName +
+      ". Your current record is " +
+      numOfUserWins +
+      " wins, " +
+      numOfComputerWins +
+      " losses, and " +
+      numOfDraws +
+      " draws. Wanna try again?";
   }
-  if (gameMode == modeStartPlaying) {
-    outputMessage = getOutputMessage(input);
-    if (validatingTheInput(input)) {
-      return (
-        "Whoops, seems like we can't process your input " +
-        userName +
-        ". Please input one of these choices below: scissors, paper, stone."
-      );
-    }
-    // define sps normal rules
-    if (input == programChoice) {
-      return outputMessage;
-    } else if (userLose) {
-      return outputMessage;
-    } else if (!userLose) {
-      return outputMessage;
-    }
+  if (userWin == 2) {
+    numOfUserWins = numOfUserWins + 1;
+    myOutputValue =
+      "Congrats " +
+      userName +
+      "! You won. Your current record is " +
+      numOfUserWins +
+      " wins, " +
+      numOfComputerWins +
+      " losses, and " +
+      numOfDraws +
+      " draws. Up for another game?";
   }
+  if (userWin == 3) {
+    numOfDraws = numOfDraws + 1;
+    myOutputValue =
+      "It's a draw! Your current record is " +
+      numOfUserWins +
+      " wins, " +
+      numOfComputerWins +
+      " losses, and " +
+      numOfDraws +
+      " draws.";
+  }
+  return myOutputValue;
 };
-// if user inputs 'reverse', game mode changes to the reverse mode.
-//   if (input == REVERSE) {
-//     gameMode = reverseSPS;
-//     if (!defineSPSRules) {
-//     numOfUserWins = numOfUserWins + 1;
-//     myOutputValue =
-//       "Congrats " +
-//       userName +
-//       "! You won in this reversed version. Your current record is " +
-//       numOfUserWins +
-//       " wins, " +
-//       numOfComputerWins +
-//       " losses, and " +
-//       numOfDraws +
-//       " draws. Up for another game?";
-//     }
-//     if (defineSPSRules()) {
-//      numOfComputerWins = numOfComputerWins + 1;
-//       myOutputValue =
-//        "Oh no, you lost this reversed version " +
-//         userName +
-//         ". Your current record is " +
-//         numOfUserWins +
-//         " wins, " +
-//         numOfComputerWins +
-//         " losses, and " +
-//         numOfDraws +
-//         " draws. Try again?";
-//     }
-// return myOutputValue;
-//
+
+var welcomeUser = function (input) {
+  if ((userName = input)) {
+    return (
+      "Hi " +
+      userName +
+      "! Ready to play? <br> Press the 'Normal' button to play the normal SPS or 'Reverse' to play the reverse mode!"
+    );
+  }
+  return "Hi! Please enter your name.";
+};
+
+// this runs when user click the Normal button
+var normalMode = function (input) {
+  if (input == "") {
+    return "Welcome to the Normal Mode. <br> Please enter one of the three words: scissors, paper, or stone.";
+  }
+  programChoice = computersRandomWord();
+  outputMessage = getDefaultOutputMessage(input);
+  if (validatingTheInput(input)) {
+    return (
+      "Whoops, seems like we can't process your input " +
+      userName +
+      ". Please input one of these choices below: scissors, paper, stone."
+    );
+  }
+  // define sps normal rules
+  if (userWin == 1) {
+    return outputMessage;
+  } else if (userWin == 2) {
+    return outputMessage;
+  } else if (userWin == 3) {
+    return outputMessage;
+  }
+  return myOutputValue;
+};
+
+var reverseMode = function (input) {
+  if (input == "") {
+    return "Welcome to the Reverse Mode. <br> Please enter one of the three words: scissors, paper, or stone.";
+  }
+  programChoice = computersRandomWord();
+  outputMessage = getDefaultOutputMessage(input);
+  if (validatingTheInput(input)) {
+    return (
+      "Whoops, seems like we can't process your input " +
+      userName +
+      ". Please input one of these choices below: scissors, paper, stone."
+    );
+  }
+  // define sps normal rules
+  if (userWin == 1) {
+    return outputMessage;
+  } else if (userWin == 2) {
+    return outputMessage;
+  } else if (userWin == 3) {
+    return outputMessage;
+  }
+  return myOutputValue;
+};
