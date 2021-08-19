@@ -97,7 +97,7 @@ var getDefaultOutputMessage = function (input) {
 };
 
 var getReverseOutputMessage = function (input) {
-  userLose = didPlayerLose(input);
+  userLose = didPlayerWin(input);
   console.log("user lost is" + userLose);
   if (userWin == 1) {
     numOfComputerWins = numOfComputerWins + 1;
@@ -147,13 +147,17 @@ var welcomeUser = function (input) {
       "! Ready to play? <br> Press the 'Normal' button to play the normal SPS or 'Reverse' to play the reverse mode!"
     );
   }
-  return "Hi! Please enter your name.";
+  return "Welcome to Scissors-Paper-Stone! Please enter your name.";
 };
 
 // this runs when user click the Normal button
 var normalMode = function (input) {
   if (input == "") {
-    return "Welcome to the Normal Mode. <br> Please enter one of the three words: scissors, paper, or stone.";
+    return (
+      "Welcome " +
+      userName +
+      " to the Normal Mode! <br> Please enter one of the three words: scissors, paper, or stone."
+    );
   }
   programChoice = computersRandomWord();
   outputMessage = getDefaultOutputMessage(input);
@@ -177,10 +181,14 @@ var normalMode = function (input) {
 
 var reverseMode = function (input) {
   if (input == "") {
-    return "Welcome to the Reverse Mode. <br> Please enter one of the three words: scissors, paper, or stone.";
+    return (
+      "Welcome " +
+      userName +
+      " to the Reverse Mode. <br> Please enter one of the three words: scissors, paper, or stone."
+    );
   }
   programChoice = computersRandomWord();
-  outputMessage = getDefaultOutputMessage(input);
+  outputMessage = getReverseOutputMessage(input);
   if (validatingTheInput(input)) {
     return (
       "Whoops, seems like we can't process your input " +
@@ -197,4 +205,44 @@ var reverseMode = function (input) {
     return outputMessage;
   }
   return myOutputValue;
+};
+
+var getMsg = "get starting msg";
+var computerChoose = "let computer choose for player";
+var MODE = getMsg;
+
+var computerChooseMode = function (input) {
+  if (MODE == getMsg) {
+    MODE = computerChoose;
+    return (
+      "Welcome " +
+      userName +
+      " to the Computer vs Computer Mode. <br> In this mode, computer will choose for you and you only need to press the button! <br> Let's start!"
+    );
+  }
+  if (MODE == computerChoose) {
+    input = computersRandomWord();
+    console.log("input:" + input);
+    programChoice = computersRandomWord();
+    console.log("program choice: " + programChoice);
+    outputMessage = getDefaultOutputMessage(input);
+    if (validatingTheInput(input)) {
+      return (
+        "Whoops, seems like we can't process your input " +
+        userName +
+        ". Please input one of these choices below: scissors, paper, stone."
+      );
+    }
+    // define sps normal rules
+    if (userWin == 1) {
+      return outputMessage;
+    } else if (userWin == 2) {
+      return outputMessage;
+    } else if (userWin == 3) {
+      return outputMessage;
+    }
+
+    return myOutputValue;
+  }
+  MODE = computerChoose;
 };
