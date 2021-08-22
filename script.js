@@ -3,7 +3,7 @@ var main = function (userInput) {
   if (
     !(userInput == "scissors" || userInput == "paper" || userInput == "stone")
   ) {
-    var myOutputValue = `Please input only scissors, paper or stone`;
+    var myOutputValue = `Please type only "scissors", "paper" or "stone"`;
     return myOutputValue;
   }
   // Generate random option of either scissors, paper or stone
@@ -11,7 +11,7 @@ var main = function (userInput) {
 
   // Check user input against program output to determine winner (game rules)
   if (userInput == outputByProgram) {
-    var myOutputValue = `The computer chose ${outputByProgram}. It's a draw!`;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
     return myOutputValue;
   }
 
@@ -20,7 +20,7 @@ var main = function (userInput) {
     (userInput == "paper" && outputByProgram == "stone") ||
     (userInput == "stone" && outputByProgram == "scissors")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. You won!`;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
     return myOutputValue;
   }
 
@@ -29,7 +29,7 @@ var main = function (userInput) {
     (userInput == "paper" && outputByProgram == "scissors") ||
     (userInput == "stone" && outputByProgram == "paper")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. You lose!`;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
     return myOutputValue;
   }
 };
