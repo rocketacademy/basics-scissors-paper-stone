@@ -3,35 +3,12 @@ var main = function (userInput) {
   if (
     !(userInput == "scissors" || userInput == "paper" || userInput == "stone")
   ) {
-    var myOutputValue = `Please type only "scissors", "paper" or "stone"`;
-    return myOutputValue;
-  }
-  // Generate random option of either scissors, paper or stone
-  var outputByProgram = pickOption();
-
-  // Check user input against program output to determine winner (game rules)
-  if (userInput == outputByProgram) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
+    var myOutputValue = `Please type only "scissors", "paper" or "stone".`;
     return myOutputValue;
   }
 
-  if (
-    (userInput == "scissors" && outputByProgram == "paper") ||
-    (userInput == "paper" && outputByProgram == "stone") ||
-    (userInput == "stone" && outputByProgram == "scissors")
-  ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
-    return myOutputValue;
-  }
-
-  if (
-    (userInput == "scissors" && outputByProgram == "stone") ||
-    (userInput == "paper" && outputByProgram == "scissors") ||
-    (userInput == "stone" && outputByProgram == "paper")
-  ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
-    return myOutputValue;
-  }
+  var gameWinner = generateWinner(userInput);
+  return gameWinner;
 };
 
 // Set the game options into an array
@@ -59,4 +36,34 @@ var pickOption = function () {
   var selectedOption = optionsArray[randomOptionNum];
 
   return selectedOption;
+};
+
+// ===== Function to check user input against program output to determine winner (game rules) based on original rules =====
+
+var generateWinner = function (userInput) {
+  // Generate random option of either scissors, paper or stone
+  var outputByProgram = pickOption();
+
+  if (userInput == outputByProgram) {
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
+    return myOutputValue;
+  }
+
+  if (
+    (userInput == "scissors" && outputByProgram == "paper") ||
+    (userInput == "paper" && outputByProgram == "stone") ||
+    (userInput == "stone" && outputByProgram == "scissors")
+  ) {
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
+    return myOutputValue;
+  }
+
+  if (
+    (userInput == "scissors" && outputByProgram == "stone") ||
+    (userInput == "paper" && outputByProgram == "scissors") ||
+    (userInput == "stone" && outputByProgram == "paper")
+  ) {
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
+    return myOutputValue;
+  }
 };
