@@ -9,37 +9,28 @@ var main = function (userInput) {
   // Generate random option of either scissors, paper or stone
   var outputByProgram = pickOption();
 
-  var myOutputValueWin = `The computer chose ${outputByProgram}. You won!`;
-  var myOutputValueLose = `The computer chose ${outputByProgram}. You lose!`;
-
   // Check user input against program output to determine winner (game rules)
   if (userInput == outputByProgram) {
     var myOutputValue = `The computer chose ${outputByProgram}. It's a draw!`;
     return myOutputValue;
   }
 
-  if (userInput == "scissors" && outputByProgram == "paper") {
-    return myOutputValueWin;
+  if (
+    (userInput == "scissors" && outputByProgram == "paper") ||
+    (userInput == "paper" && outputByProgram == "stone") ||
+    (userInput == "stone" && outputByProgram == "scissors")
+  ) {
+    var myOutputValue = `The computer chose ${outputByProgram}. You won!`;
+    return myOutputValue;
   }
 
-  if (userInput == "scissors" && outputByProgram == "stone") {
-    return myOutputValueLose;
-  }
-
-  if (userInput == "paper" && outputByProgram == "scissors") {
-    return myOutputValueLose;
-  }
-
-  if (userInput == "paper" && outputByProgram == "stone") {
-    return myOutputValueWin;
-  }
-
-  if (userInput == "stone" && outputByProgram == "scissors") {
-    return myOutputValueWin;
-  }
-
-  if (userInput == "stone" && outputByProgram == "paper") {
-    return myOutputValueLose;
+  if (
+    (userInput == "scissors" && outputByProgram == "stone") ||
+    (userInput == "paper" && outputByProgram == "scissors") ||
+    (userInput == "stone" && outputByProgram == "paper")
+  ) {
+    var myOutputValue = `The computer chose ${outputByProgram}. You lose!`;
+    return myOutputValue;
   }
 };
 
