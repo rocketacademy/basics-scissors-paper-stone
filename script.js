@@ -6,7 +6,12 @@ var main = function (input) {
     "You entered: " +
     input +
     ". <br> <br> You can only enter scissors ✂️ / paper 🗒 / stone. <br> Or add 'reversed' (e.g. reversed scissors) to play a reversed version of the game.<br> <br> Type accurately and let's play again!";
-  if (input == computerHand) {
+  if (
+    input == computerHand ||
+    (input == "reversed paper" && computerHand == "paper") ||
+    (input == "reversed stone" && computerHand == "stone") ||
+    (input == "reversed scissors" && computerHand == "scissors")
+  ) {
     var myOutputValue =
       "Draw! <br> <br> You entered: " +
       input +
@@ -30,11 +35,11 @@ var main = function (input) {
       ".";
   }
   if (
-    ((input == "stone" || input == "reversed paper") &&
+    ((input == "stone" || input == "reversed scissors") &&
       computerHand == "paper") ||
-    ((input == "scissors" || input == "reversed stone") &&
+    ((input == "scissors" || input == "reversed paper") &&
       computerHand == "stone") ||
-    ((input == "paper" || input == "reversed scissors") &&
+    ((input == "paper" || input == "reversed stone") &&
       computerHand == "scissors")
   ) {
     var myOutputValue =
