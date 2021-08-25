@@ -5,7 +5,7 @@ var main = function (input) {
   var myOutputValue =
     "You entered: " +
     input +
-    ". <br> <br> You can only enter scissors ✂️ / paper 🗒 / stone. Type accurately and let's play again!";
+    ". <br> <br> You can only enter scissors ✂️ / paper 🗒 / stone. <br> Or add 'reversed' (e.g. reversed scissors) to play a reversed version of the game.<br> <br> Type accurately and let's play again!";
   if (input == computerHand) {
     var myOutputValue =
       "Draw! <br> <br> You entered: " +
@@ -15,9 +15,12 @@ var main = function (input) {
       ".";
   }
   if (
-    (input == "paper" && computerHand == "stone") ||
-    (input == "stone" && computerHand == "scissors") ||
-    (input == "scissors" && computerHand == "paper")
+    ((input == "paper" || input == "reversed scissors") &&
+      computerHand == "stone") ||
+    ((input == "stone" || input == "reversed paper") &&
+      computerHand == "scissors") ||
+    ((input == "scissors" || input == "reversed stone") &&
+      computerHand == "paper")
   ) {
     var myOutputValue =
       "You win! <br> <br> You entered: " +
@@ -27,9 +30,12 @@ var main = function (input) {
       ".";
   }
   if (
-    (input == "stone" && computerHand == "paper") ||
-    (input == "scissors" && computerHand == "stone") ||
-    (input == "paper" && computerHand == "scissors")
+    ((input == "stone" || input == "reversed paper") &&
+      computerHand == "paper") ||
+    ((input == "scissors" || input == "reversed stone") &&
+      computerHand == "stone") ||
+    ((input == "paper" || input == "reversed scissors") &&
+      computerHand == "scissors")
   ) {
     var myOutputValue =
       "You lost! <br> <br> You entered: " +
