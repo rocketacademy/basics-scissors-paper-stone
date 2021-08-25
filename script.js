@@ -3,6 +3,8 @@ var main = function (input) {
   console.log("user input");
   console.log(input);
 
+  var myOutputValue = `Input is invalid. Do only enter scissors, paper or stone`;
+
   if (input == comOutput) {
     var myOutputValue = `It's a draw! User chose ${input} and computer chose ${comOutput}`;
   }
