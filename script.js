@@ -1,23 +1,62 @@
+var SCISSORS = "scissors";
+var PAPER = "paper";
+var STONE = "stone";
+var REVERSED_SCISSORS = "reversed scissors";
+var REVERSED_PAPER = "reversed paper";
+var REVERSED_STONE = "reversed stone";
+
 var randomHand = function (max) {
-  var randomNumber = Math.floor(Math.random(max) * 3) + 1;
+  var randomNumber = Math.floor(Math.random(max) * 3);
   var outputHand;
+  if (randomNumber == 0) {
+    outputHand = SCISSORS;
+  }
   if (randomNumber == 1) {
-    outputHand = "scissors";
+    outputHand = PAPER;
   }
   if (randomNumber == 2) {
-    outputHand = "paper";
-  }
-  if (randomNumber == 3) {
-    outputHand = "stone";
+    outputHand = STONE;
   }
   console.log("outputHand");
   console.log(outputHand);
   return outputHand;
 };
 
+var doesPlayerDraw = function (playerHand, computerHand) {
+  return (
+    playerHand == computerHand ||
+    (playerHand == REVERSED_PAPER && computerHand == PAPER) ||
+    (playerHand == REVERSED_STONE && computerHand == STONE) ||
+    (playerHand == REVERSED_SCISSORS && computerHand == SCISSORS)
+  );
+};
+
+var doesPlayerWin = function (playerHand, computerHand) {
+  return (
+    ((playerHand == PAPER || playerHand == REVERSED_SCISSORS) &&
+      computerHand == STONE) ||
+    ((playerHand == STONE || playerHand == REVERSED_PAPER) &&
+      computerHand == SCISSORS) ||
+    ((playerHand == SCISSORS || playerHand == REVERSED_STONE) &&
+      computerHand == PAPER)
+  );
+};
+
+var doesPlayerLose = function (playerHand, computerHand) {
+  return (
+    ((playerHand == STONE || playerHand == REVERSED_SCISSORS) &&
+      computerHand == PAPER) ||
+    ((playerHand == SCISSORS || playerHand == REVERSED_PAPER) &&
+      computerHand == STONE) ||
+    ((playerHand == PAPER || playerHand == REVERSED_STONE) &&
+      computerHand == SCISSORS)
+  );
+};
+
 var main = function (input) {
   console.log("input");
   console.log(input);
+  var playerHand = input;
   var computerHand = randomHand();
   var myOutputValue =
     "You entered: " +
@@ -29,32 +68,13 @@ var main = function (input) {
     ". <br> Computer played: " +
     computerHand +
     ".";
-  if (
-    input == computerHand ||
-    (input == "reversed paper" && computerHand == "paper") ||
-    (input == "reversed stone" && computerHand == "stone") ||
-    (input == "reversed scissors" && computerHand == "scissors")
-  ) {
+  if (doesPlayerDraw(playerHand, computerHand)) {
     myOutputValue = "Draw!" + hands;
   }
-  if (
-    ((input == "paper" || input == "reversed scissors") &&
-      computerHand == "stone") ||
-    ((input == "stone" || input == "reversed paper") &&
-      computerHand == "scissors") ||
-    ((input == "scissors" || input == "reversed stone") &&
-      computerHand == "paper")
-  ) {
+  if (doesPlayerWin(playerHand, computerHand)) {
     myOutputValue = "You win!" + hands;
   }
-  if (
-    ((input == "stone" || input == "reversed scissors") &&
-      computerHand == "paper") ||
-    ((input == "scissors" || input == "reversed paper") &&
-      computerHand == "stone") ||
-    ((input == "paper" || input == "reversed stone") &&
-      computerHand == "scissors")
-  ) {
+  if (doesPlayerLose(playerHand, computerHand)) {
     myOutputValue = "You lost!" + hands;
   }
   return myOutputValue;
