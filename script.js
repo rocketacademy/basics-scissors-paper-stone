@@ -29,7 +29,7 @@ var main = function (input) {
   var myOutputValue = `Input is invalid. Do only enter scissors, paper or stone`;
 
   if (input == comOutput || input == reversedOutput) {
-    var myOutputValue = `User chose ${input}${userObject} <br> Computer chose ${comOutput}${comObject} <br><br>
+    myOutputValue = `User chose ${input}${userObject} <br> Computer chose ${comOutput}${comObject} <br><br>
     It's a draw! `;
   }
 
@@ -38,7 +38,7 @@ var main = function (input) {
     (input == "paper" && comOutput == "stone") ||
     (input == "stone" && comOutput == "scissors")
   ) {
-    var myOutputValue = `User chose ${input}${userObject} <br>
+    myOutputValue = `User chose ${input}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     User wins!`;
   }
@@ -48,7 +48,7 @@ var main = function (input) {
     (input == "stone" && comOutput == "paper") ||
     (input == "scissors" && comOutput == "stone")
   ) {
-    var myOutputValue = `User chose ${input}${userObject} <br>
+    myOutputValue = `User chose ${input}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     Computer wins!`;
   }
@@ -58,7 +58,7 @@ var main = function (input) {
     (input == "reversed paper" && comOutput == "stone") ||
     (input == "reversed stone" && comOutput == "scissors")
   ) {
-    var myOutputValue = `User chose ${input}${userObject} <br>
+    myOutputValue = `User chose ${input}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     Computer wins!`;
   }
@@ -68,7 +68,7 @@ var main = function (input) {
     (input == "reversed stone" && comOutput == "paper") ||
     (input == "reversed scissors" && comOutput == "stone")
   ) {
-    var myOutputValue = `User chose ${input}${userObject} <br>
+    myOutputValue = `User chose ${input}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     User wins!`;
   }
