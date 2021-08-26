@@ -14,7 +14,7 @@ var gameRules = function (input) {
     console.log(input);
     console.log("System");
     console.log(systemThrow);
-    return `It's a draw! You threw ${inputIcon} and the program threw ${systemIcon}.`;
+    return `It's a draw! You threw ${input} and the program threw ${systemThrow}.`;
   }
   // if what we guess is different from the what the system throws, and based on gamerules, we win
   if (
@@ -26,7 +26,7 @@ var gameRules = function (input) {
     console.log(input);
     console.log("System");
     console.log(systemThrow);
-    return `You won! You threw ${inputIcon} and the program threw ${systemIcon}.`;
+    return `You won! You threw ${input} and the program threw ${systemThrow}.`;
   }
   // if what we guess is different from the what the system throws, and based on gamerules, we lose
   if (
@@ -38,7 +38,7 @@ var gameRules = function (input) {
     console.log(input);
     console.log("System");
     console.log(systemThrow);
-    return `You lose! You threw ${inputIcon} and the program threw ${systemIcon}.`;
+    return `You lose! You threw ${input} and the program threw ${systemThrow}.`;
   }
   return `Please type either "scissors" or "paper" or "stone".`;
 };
