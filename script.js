@@ -1,5 +1,5 @@
 var main = function (userInput) {
-  // Input validation - Check if user input only scissors, paper or stone. Prompt users if required input is not found.
+  // Input validation - Prompt users if required input is not found.
   if (
     !(
       userInput == "scissors" ||
@@ -10,7 +10,7 @@ var main = function (userInput) {
       userInput == "reversed stone"
     )
   ) {
-    var myOutputValue = `Please type only "scissors", "paper" or "stone".`;
+    var myOutputValue = `Please type only "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone". Try again!`;
     return myOutputValue;
   }
 
@@ -18,22 +18,30 @@ var main = function (userInput) {
   return gameWinner;
 };
 
-// Generate random integer between 0 to 3, exlucing 3.
+// ===== Function to generate random integer between 0 to 3, exlucing 3.
 var pickRandomNumber = function () {
   var randomInteger = Math.floor(Math.random() * 3);
   console.log(`Random Integer is ${randomInteger}`);
   return randomInteger;
 };
 
+// ===== Function to pick an option of either scissors, paper or stone
 var pickOption = function () {
-  // Generate the random integer to be used to select the item in the array
-  var randomOptionNum = pickRandomNumber();
+  var randomOptionNum = pickRandomNumber(); // Generate the random integer to be used to select the item in the array
+  // Alternative way to random pick an option
+  // var optionsArray = ["scissors", "paper", "stone"]; // Set the output options in an array
+  // var selectedOption = optionsArray[randomOptionNum]; // Use the random integer to select the random item in the array
+  if (randomOptionNum == 0) {
+    selectedOption = "scissors";
+  }
 
-  // Set the output options in an array
-  var optionsArray = ["scissors", "paper", "stone"];
+  if (randomOptionNum == 1) {
+    selectedOption = "paper";
+  }
 
-  // Use the random integer to select the random item in the array
-  var selectedOption = optionsArray[randomOptionNum];
+  if (randomOptionNum == 2) {
+    selectedOption = "stone";
+  }
 
   return selectedOption;
 };
@@ -41,8 +49,8 @@ var pickOption = function () {
 // ===== Function to check user input against program output to determine winner (game rules) based on original rules =====
 
 var generateWinner = function (userInput) {
-  // Generate random option of either scissors, paper or stone
-  var outputByProgram = pickOption();
+  var outputByProgram = pickOption(); // Generate random option of either scissors, paper or stone
+  var myOutputValue = `You lose!`;
 
   // console.log(outputByProgram);
 
@@ -52,8 +60,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed paper" && outputByProgram == "paper") ||
     (userInput == "reversed stone" && outputByProgram == "stone")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
-    return myOutputValue;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
   }
 
   if (
@@ -64,8 +71,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed paper" && outputByProgram == "scissors") ||
     (userInput == "reversed stone" && outputByProgram == "paper")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
-    return myOutputValue;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
   }
 
   if (
@@ -76,7 +82,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed paper" && outputByProgram == "stone") ||
     (userInput == "reversed stone" && outputByProgram == "scissors")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper" or "stone" to play another round!`;
-    return myOutputValue;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
   }
+  return myOutputValue;
 };
