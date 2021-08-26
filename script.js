@@ -1,6 +1,7 @@
 var numOfTimesUserWon = 0;
 var numOfTimesPcWon = 0;
 var numOfDraws = 0;
+var numOfGamesPlayed = 0;
 
 var main = function (userInput) {
   // Input validation - Prompt users if required input is not found.
@@ -55,7 +56,7 @@ var pickOption = function () {
 var generateWinner = function (userInput) {
   var outputByProgram = pickOption(); // Generate random option of either scissors, paper or stone
   var myOutputValue = `You lose!`;
-
+  numOfGamesPlayed = numOfGamesPlayed + 1;
   // console.log(outputByProgram);
 
   if (
@@ -77,7 +78,8 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "paper")
   ) {
     numOfTimesUserWon = numOfTimesUserWon + 1;
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
+    var userWinningPercent = calUserWinningPercent().toFixed(0);
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >You are winning ${userWinningPercent}% of the game!`;
   }
 
   if (
@@ -89,7 +91,20 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "scissors")
   ) {
     numOfTimesPcWon = numOfTimesPcWon + 1;
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
+    var pcWinningPercent = calPcWinningPercent().toFixed(0);
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >The computer is winning ${pcWinningPercent}% of the game!`;
   }
   return myOutputValue;
+};
+
+// ===== Functions to calculate winning percentage =====
+
+var calUserWinningPercent = function () {
+  var userWinPercent = (numOfTimesUserWon / numOfGamesPlayed) * 100;
+  return userWinPercent;
+};
+
+var calPcWinningPercent = function () {
+  var pcWinPercent = (numOfTimesPcWon / numOfGamesPlayed) * 100;
+  return pcWinPercent;
 };
