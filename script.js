@@ -13,10 +13,20 @@ var main = function (input) {
   var computerChoiceNum = generateRandomNum(options.length);
   var userChoiceNum = options.indexOf(input);
 
-  // return output based on game outcome
-  if (isDraw(userChoiceNum, computerChoiceNum)) return `It's a draw!`;
-  if (didUserWin(userChoiceNum, computerChoiceNum)) return `You won!`;
-  return `You lost!`;
+  var computerChoice = options[computerChoiceNum];
+  var userChoice = options[userChoiceNum];
+  var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>You chose ${userChoice}.<br>The computer chose ${computerChoice}.<br><br>`;
+
+  // add to output based on game outcome
+  if (isDraw(userChoiceNum, computerChoiceNum))
+    output += `It's a draw!<br><br>The computer is not satisfied.`;
+  else if (didUserWin(userChoiceNum, computerChoiceNum))
+    output += `You won! Congrats!<br><br>The computer is angry now.`;
+  else
+    output += `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
+
+  output += " Play again?";
+  return output;
 };
 
 var generateRandomNum = function (range) {
