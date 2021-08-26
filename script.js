@@ -3,43 +3,47 @@ var main = function (input) {
   var options = ["stone", "paper", "scissors"];
 
   // set input to lower case first and trim leading/ending whitespace
-  input = input.toLowerCase().trim();
+  var userTyped = input.toLowerCase().trim();
 
   // create variable for the reversed word to look for, and set reversed mode as off initially
   var reversedModeCheck = "reversed";
   var reversedMode = false;
 
   // check if the input starts with reversed
-  if (input.startsWith(reversedModeCheck)) {
+  if (userTyped.startsWith(reversedModeCheck)) {
     // set reversed mode to on and replace the "reversed" word in the input
     reversedMode = true;
-    input = input.replace(reversedModeCheck, "").trim();
+    userTyped = userTyped.replace(reversedModeCheck, "").trim();
   }
 
   // check if input is valid
-  if (!options.includes(input))
-    return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>\
-    Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>\
+  if (!options.includes(userTyped)) {
+    return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>
+    Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>
     Or if you're feeling adventurous, try reverse mode by adding 'reversed' in front of your choice! (e.g. reversed scissors)`;
+  }
 
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
   // get user's choice number based on the input and the corresponding index in the array
   var computerChoiceNum = generateRandomNum(options.length);
-  var userChoiceNum = options.indexOf(input);
+  var userChoiceNum = options.indexOf(userTyped);
 
   var computerChoice = options[computerChoiceNum];
-  var userChoice = options[userChoiceNum];
+  var userChoice = userTyped;
   var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>You chose ${userChoice}.<br>The computer chose ${computerChoice}.<br><br>`;
 
-  if (reversedMode) output += "REVERSED MODE!<br><br>";
+  if (reversedMode) {
+    output += "REVERSED MODE!<br><br>";
+  }
 
   // add to output based on game outcome
-  if (isDraw(userChoiceNum, computerChoiceNum))
+  if (isDraw(userChoiceNum, computerChoiceNum)) {
     output += `It's a draw!<br><br>The computer is not satisfied.`;
-  else if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum))
+  } else if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
     output += `You won! Congrats!<br><br>The computer is angry now.`;
-  else
+  } else {
     output += `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
+  }
 
   output += " Play again?";
   return output;
