@@ -16,11 +16,11 @@ var didUserWin = function (reversedMode, choiceOne, choiceTwo) {
 var playGame = function (reversedMode, userChoiceNum, computerChoiceNum) {
   if (userChoiceNum == computerChoiceNum) {
     return `It's a draw!<br><br>The computer is not satisfied.`;
-  } else if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
-    return `You won! Congrats!<br><br>The computer is angry now.`;
-  } else {
-    return `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
   }
+  if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
+    return `You won! Congrats!<br><br>The computer is angry now.`;
+  }
+  return `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
 };
 
 var main = function (input) {
