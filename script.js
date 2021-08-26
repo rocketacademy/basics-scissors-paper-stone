@@ -6,22 +6,23 @@ var userName = "John Smith";
 var nameCount = 0;
 
 var main = function (userInput) {
-  // Check if user has submitted name before starting the game
-
+  var myOutputValue = `Please enter your name to start the game`;
+  // Store user's name into a variable after user has submitted name before the game starts
   if (nameCount == 0) {
     userName = userInput;
     nameCount = nameCount + 1;
-    console.log(`Name Count is ${nameCount}`);
   }
 
+  // Inform user to start playing by entering either one of the 6 options
   if (nameCount == 1) {
-    var myOutputValue = `Welcome ${userName}!<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!`;
+    myOutputValue = `Welcome ${userName}!<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!`;
     nameCount = nameCount + 1;
     return myOutputValue;
   }
 
-  // Input validation - Prompt users if required input is not found.
+  // Run the game after user has input the name
   if (nameCount >= 1) {
+    // Input validation - Prompt users if required input is not found.
     if (
       !(
         userInput == "scissors" ||
@@ -32,12 +33,11 @@ var main = function (userInput) {
         userInput == "reversed stone"
       )
     ) {
-      var myOutputValue = `Please type only "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone". Try again!`;
+      myOutputValue = `Hey ${userName}! Please type only "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone". Try again!`;
       return myOutputValue;
     }
 
-    var gameWinner = generateWinner(userInput);
-    return gameWinner;
+    myOutputValue = generateWinner(userInput);
   }
   return myOutputValue;
 };
