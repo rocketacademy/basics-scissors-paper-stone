@@ -7,35 +7,35 @@ var main = function (input) {
   console.log('Computer chose')
   console.log(chosenSPS)
 
-  //if user inputs scissors and computer choose paper, user wins OR
-  //if user inputs paper and computer chose stone, user wins OR
-  //if user inputs stone and computer chose scissors, user wins
-  if (input == 'scissors' && chosenSPS == 'paper 🗒' || 
-  input == 'paper' && chosenSPS == 'stone 🪨' || 
-  input == 'stone' && chosenSPS == 'scissors ✂️'){
-    console.log('win')
-    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>You win! Congrats!<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`
+  //if user inputs reversed scissors and computer choose paper, user lose OR
+  //if user inputs reversed paper and computer chose stone, user lose OR
+  //if user inputs reversed stone and computer chose scissors, user lose
+  if (input == 'reversed scissors' && chosenSPS == 'paper 🗒' || 
+  input == 'reversed paper' && chosenSPS == 'stone 🪨' || 
+  input == 'reversed stone' && chosenSPS == 'scissors ✂️'){
+    console.log('lose')
+    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>You lose! Bummer!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
   }
 
   //if the input by user is the same as the one computer chose, its a draw
-  if (input == 'scissors' && chosenSPS == 'scissors ✂️' ||
-   input == 'paper' && chosenSPS == 'paper 🗒' ||
-   input == 'stone' && chosenSPS == 'stone 🪨'){
+  if (input == 'reversed scissors' && chosenSPS == 'scissors ✂️' ||
+   input == 'reversed paper' && chosenSPS == 'paper 🗒' ||
+   input == 'reversed stone' && chosenSPS == 'stone 🪨'){
     console.log('draw')
-    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>It's a draw!<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`
+    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>It's a draw!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
   }
 
-  //if user inputs paper and computer choose scissors, user lose OR
-  //if user inputs stone and computer chose paper, user lose OR
-  //if user inputs scissors and computer chose stone, user lose
-  if (chosenSPS == 'scissors ✂️' && input == 'paper' || 
-  chosenSPS == 'paper 🗒' && input == 'stone' || 
-  chosenSPS == 'stone 🪨' && input == 'scissors'){
-    console.log('lose')
-    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>You lose! Bummer!<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`
+  //if user inputs reversed paper and computer choose scissors, user wins OR
+  //if user inputs reversed stone and computer chose paper, user wins OR
+  //if user inputs reversed scissors and computer chose stone, user wins
+  if (chosenSPS == 'scissors ✂️' && input == 'reversed paper' || 
+  chosenSPS == 'paper 🗒' && input == 'reversed stone' || 
+  chosenSPS == 'stone 🪨' && input == 'reversed scissors'){
+    console.log('win')
+    return `The computer chose ${chosenSPS}.<br>You chose ${input} ${chosenIconForUser}.<br><br>You win! Congrats!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
   }
 
-  return 'error. please input one of these 3 options: scissors, paper or stone';
+  return 'error. please input one of these 3 options: reversed scissors, reversed paper or reversed stone';
 };
 
 
@@ -67,15 +67,15 @@ var rollDice = function(){
 
 // This function is to select the icon based on the user inputs
 var SPSIconForUser = function(input){
-  if (input == 'scissors') {
+  if (input == 'reversed scissors') {
     return '✂️'
   }
 
-  if (input == 'paper'){
+  if (input == 'reversed paper'){
     return '🗒'
   }
   
-  if (input == 'stone'){
+  if (input == 'reversed stone'){
     return '🪨'
   }
 }
