@@ -10,7 +10,7 @@ var userWin = "";
 var outputMessage = "";
 
 var getRandomNumber = function () {
-  var randomNumber = Math.round(Math.random() * 3);
+  var randomNumber = Math.floor(Math.random() * 3) + 1;
   return randomNumber;
 };
 var computersRandomWord = function () {
@@ -221,25 +221,25 @@ var computerChooseMode = function (input) {
     );
   }
   if (MODE == computerChoose) {
-    input = computersRandomWord();
+    input = computersRandomWord(getRandomNumber());
     console.log("input:" + input);
-    programChoice = computersRandomWord();
+    programChoice = computersRandomWord(getRandomNumber());
     console.log("program choice: " + programChoice);
     outputMessage = getDefaultOutputMessage(input);
-    if (validatingTheInput(input)) {
-      return (
-        "Whoops, seems like we can't process your input " +
-        userName +
-        ". Please input one of these choices below: scissors, paper, stone."
-      );
-    }
+
+    choiceInfo =
+      "Computer choose " +
+      input +
+      " for you and computer's choice is " +
+      programChoice +
+      ". ";
     // define sps normal rules
     if (userWin == 1) {
-      return outputMessage;
+      return choiceInfo + outputMessage;
     } else if (userWin == 2) {
-      return outputMessage;
+      return choiceInfo + outputMessage;
     } else if (userWin == 3) {
-      return outputMessage;
+      return choiceInfo + outputMessage;
     }
 
     return myOutputValue;
