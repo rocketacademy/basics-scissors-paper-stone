@@ -2,25 +2,44 @@ var numOfTimesUserWon = 0;
 var numOfTimesPcWon = 0;
 var numOfDraws = 0;
 var numOfGamesPlayed = 0;
+var userName = "John Smith";
+var nameCount = 0;
 
 var main = function (userInput) {
-  // Input validation - Prompt users if required input is not found.
-  if (
-    !(
-      userInput == "scissors" ||
-      userInput == "paper" ||
-      userInput == "stone" ||
-      userInput == "reversed scissors" ||
-      userInput == "reversed paper" ||
-      userInput == "reversed stone"
-    )
-  ) {
-    var myOutputValue = `Please type only "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone". Try again!`;
+  // Check if user has submitted name before starting the game
+
+  if (nameCount == 0) {
+    userName = userInput;
+    nameCount = nameCount + 1;
+    console.log(`Name Count is ${nameCount}`);
+  }
+
+  if (nameCount == 1) {
+    var myOutputValue = `Welcome ${userName}!<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!`;
+    nameCount = nameCount + 1;
     return myOutputValue;
   }
 
-  var gameWinner = generateWinner(userInput);
-  return gameWinner;
+  // Input validation - Prompt users if required input is not found.
+  if (nameCount >= 1) {
+    if (
+      !(
+        userInput == "scissors" ||
+        userInput == "paper" ||
+        userInput == "stone" ||
+        userInput == "reversed scissors" ||
+        userInput == "reversed paper" ||
+        userInput == "reversed stone"
+      )
+    ) {
+      var myOutputValue = `Please type only "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone". Try again!`;
+      return myOutputValue;
+    }
+
+    var gameWinner = generateWinner(userInput);
+    return gameWinner;
+  }
+  return myOutputValue;
 };
 
 // ===== Function to generate random integer between 0 to 3, exlucing 3.
@@ -66,7 +85,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "stone")
   ) {
     numOfDraws = numOfDraws + 1;
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
+    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
   }
 
   if (
@@ -79,7 +98,7 @@ var generateWinner = function (userInput) {
   ) {
     numOfTimesUserWon = numOfTimesUserWon + 1;
     var userWinningPercent = calUserWinningPercent().toFixed(0);
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >You are winning ${userWinningPercent}% of the game!`;
+    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >You are winning ${userWinningPercent}% of the game!`;
   }
 
   if (
@@ -92,7 +111,7 @@ var generateWinner = function (userInput) {
   ) {
     numOfTimesPcWon = numOfTimesPcWon + 1;
     var pcWinningPercent = calPcWinningPercent().toFixed(0);
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >The computer is winning ${pcWinningPercent}% of the game!`;
+    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >The computer is winning ${pcWinningPercent}% of the game!`;
   }
   return myOutputValue;
 };

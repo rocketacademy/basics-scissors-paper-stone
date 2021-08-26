@@ -24,6 +24,15 @@
         padding: 38px 31px;
       }
 
+      #name-prompt {
+        text-align: center;
+        font-weight: 700;
+        padding: 0;
+        margin: 0;
+        font-size: 20px;
+        display: block;
+      }
+
       input {
         font-size: 21px;
         line-height: 33px;
@@ -51,6 +60,7 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
+      <p id="name-prompt">Submit your name to start playing!</p>
       <p>Input:</p>
       <input id="input-field" />
       <br />
@@ -74,6 +84,9 @@
 
         // Reset input value
         input.value = "";
+
+        // Hide the instrutions to start game
+        document.getElementById("name-prompt").style.display = "none";
       });
     </script>
   </body>
