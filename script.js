@@ -1,5 +1,6 @@
 var numOfTimesUserWon = 0;
 var numOfTimesPcWon = 0;
+var numOfDraws = 0;
 
 var main = function (userInput) {
   // Input validation - Prompt users if required input is not found.
@@ -63,7 +64,8 @@ var generateWinner = function (userInput) {
     (userInput == "reversed paper" && outputByProgram == "paper") ||
     (userInput == "reversed stone" && outputByProgram == "stone")
   ) {
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!`;
+    numOfDraws = numOfDraws + 1;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
   }
 
   if (
@@ -75,7 +77,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "paper")
   ) {
     numOfTimesUserWon = numOfTimesUserWon + 1;
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!`;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
   }
 
   if (
@@ -87,7 +89,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "scissors")
   ) {
     numOfTimesPcWon = numOfTimesPcWon + 1;
-    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!`;
+    var myOutputValue = `The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
   }
   return myOutputValue;
 };
