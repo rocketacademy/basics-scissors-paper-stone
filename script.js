@@ -2,6 +2,12 @@ var main = function (input) {
   // store possible options
   var options = ["stone", "paper", "scissors"];
 
+  // check if input is valid
+  input = input.toLowerCase().trim();
+  if (!options.includes(input))
+    return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>\
+    Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊`;
+
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
   // get user's choice number based on the input and the corresponding index in the array
   var computerChoiceNum = generateRandomNum(options.length);
