@@ -10,7 +10,31 @@ var main = function (input) {
     progsChoice = "Stone";
   }
   console.log(progsChoice);
-  var myOutputValue = "hello world";
+  var myOutputValue = "You can only type 'Scissors', 'Paper' or 'Stone'.";
+  if (input == progsChoice) {
+    myOutputValue = "It's a draw!";
+  }
+  if (
+    (input == "Scissors" && progsChoice == "Paper") ||
+    (input == "Paper" && progsChoice == "Stone") ||
+    (input == "Stone" && progsChoice == "Scissors")
+  ) {
+    myOutputValue = "You win!";
+  }
+  if (
+    (input == "Scissors" && progsChoice == "Paper") ||
+    (input == "Paper" && progsChoice == "Stone") ||
+    (input == "Stone" && progsChoice == "Scissors")
+  ) {
+    myOutputValue = "You win!";
+  }
+  if (
+    (progsChoice == "Scissors" && input == "Paper") ||
+    (progsChoice == "Paper" && input == "Stone") ||
+    (progsChoice == "Stone" && input == "Scissors")
+  ) {
+    myOutputValue = "You lose!";
+  }
   return myOutputValue;
 };
 
