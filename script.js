@@ -26,16 +26,16 @@ var main = function (input) {
     (input == "Paper" && progsChoice == "Stone") ||
     (input == "Stone" && progsChoice == "Scissors")
   ) {
-    myOutputValue = "You win!";
+    myOutputValue = "You win! Yay!";
   }
   if (
     (progsChoice == "Scissors" && input == "Paper") ||
     (progsChoice == "Paper" && input == "Stone") ||
     (progsChoice == "Stone" && input == "Scissors")
   ) {
-    myOutputValue = "You lose!";
+    myOutputValue = "You lose! Sobbles.";
   }
-  return myOutputValue;
+  return `${myOutputValue} <br> The computer chose ${progsChoice} and you chose ${input}. <br> Feel free to try again!`;
 };
 
 var rollDice = function () {
