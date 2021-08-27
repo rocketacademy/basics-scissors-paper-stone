@@ -2,38 +2,49 @@ var scissors = "scissors";
 var paper = "paper";
 var stone = "stone";
 
+// main function for scissors paper stone game.
+
 var main = function (input) {
-  var randomSps = getSpsRandom(input);
+  var randomSps = getSpsRandom();
   console.log(`computer choice is ${randomSps}`);
   console.log(`player choice is ${input}`);
 
+  // if the outcome is a draw.
+
   if (input == randomSps) {
     console.log("it's a draw!");
-    return `it's a draw!`;
+    myOutputValue = `it's a draw!`;
   }
 
-  if (
+  // if outcome is player wins.
+  else if (
     (input == scissors && randomSps == paper) ||
     (input == paper && randomSps == stone) ||
     (input == stone && randomSps == scissors)
   ) {
     console.log("you win!");
-    return `you win! you chose ${input} and computer chose ${randomSps}.`;
+    myOutputValue = `you win!`;
   }
 
-  if (
+  // if outcome is player loses.
+  else if (
     (input == scissors && randomSps == stone) ||
     (input == stone && randomSps == paper) ||
     (input == paper && randomSps == scissors)
   ) {
     console.log("you lost!");
-    return `you lost! you chose ${input} and computer chose ${randomSps}.`;
+    myOutputValue = `you lost!`;
   }
 
-  console.log("input error, kindly try again, thanks!");
-  var myOutputValue = `input error, kindly try again, thanks!`;
-  return myOutputValue;
+  // if input is an error
+  else {
+    console.log("input error, kindly try again, thanks!");
+    return `input error, kindly input a valid choice and try again! thanks!`;
+  }
+  return `${myOutputValue} you chose ${input} and computer chose ${randomSps}.`;
 };
+
+// function to randomly generate SPS
 
 var getSpsRandom = function () {
   var sps = ["scissors", "paper", "stone"];
