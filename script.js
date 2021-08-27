@@ -66,7 +66,6 @@ var checkResult = function (userInput, programOutput) {
     (userInput.includes("stone") && programOutput == "scissors")
   ) {
     return `win! Congrats.`;
-
     // if user loses, output message
   } else if (
     (userInput.includes("scissors") && programOutput == "stone") ||
@@ -74,7 +73,6 @@ var checkResult = function (userInput, programOutput) {
     (userInput.includes("stone") && programOutput == "paper")
   ) {
     return `lose! Bummer.`;
-
     // if anything else (user draws), output message
   } else {
     return `draw. Try again?`;
@@ -86,7 +84,6 @@ var checkReversedResult = function (userInput, programOutput) {
   // if user wins normally, reverse output message
   if (checkResult(userInput, programOutput) == "win! Congrats.") {
     return `lose! Bummer.`;
-
     // if user loses normally, reverse output message
   } else if (checkResult(userInput, programOutput) == "lose! Bummer.") {
     return `win! Congrats.`;
