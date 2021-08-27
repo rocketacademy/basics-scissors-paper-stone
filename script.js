@@ -27,24 +27,26 @@ var main = function (input) {
 
   //Input does not match winning conditions
   if (input == "scissors" || input == "paper" || input == "stone") {
-    myOutputValue = `The computer chose ${compSPS}. You chose ${input}. You lose!`;
+    myOutputValue = `You chose ${input}. <br>
+    The computer chose ${compSPS}. <br> <br>
+    You lose! Try again.`;
   }
 
   //If user inputs Scissors and comp = paper, user wins
   if (input == "scissors" && compSPS == "paper") {
-    myOutputValue = `Your ${input} against Computer's ${compSPS}. You win.`;
+    myOutputValue = `You chose ${input}. <br> The computer chose ${compSPS}. <br> <br> You win, happy days.`;
   }
   //Paper beats stone
   if (input == "paper" && compSPS == "stone") {
-    myOutputValue = `Your ${input} against Computer's ${compSPS}, you win.`;
+    myOutputValue = `You chose ${input}. <br> The Computer chose ${compSPS}, you win, happy days.`;
   }
   //Stone beats scissors
   if (input == "stone" && compSPS == "scissors") {
-    myOutputValue = `Your ${input} against Computer's ${compSPS}, you win.`;
+    myOutputValue = `You chose ${input}. <br> The Computer chose ${compSPS}, you win, happy days.`;
   }
   //if same object, draw
   if (input == compSPS) {
-    myOutputValue = `You and the Computer chose ${input}, it's a draw.`;
+    myOutputValue = `You and the Computer chose ${input}. <br> <br> It is a draw.`;
   }
 
   return myOutputValue;
