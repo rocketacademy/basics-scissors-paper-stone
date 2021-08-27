@@ -1,21 +1,39 @@
 var main = function (userInput) {
-  // generate computer output
+  // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE //
   var programOutput = generateProgramOutput();
 
-  // check if user input is valid
-  const inputOptions = ["scissors", "paper", "stone"];
+  // CHECK IF USER INPUT IS VALID
+  const inputOptions = [
+    "scissors",
+    "paper",
+    "stone",
+    "reversed scissors",
+    "reversed paper",
+    "reversed stone",
+  ];
+  // if does not contain any object in array, generate error message.
   if (!inputOptions.includes(userInput)) {
-    return `Please input "scissors", "paper" or "stone".`;
+    return `Please input "scissors", "paper" or "stone". <br><br>
+    <div> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".
+    `;
   }
 
-  // check if user win, lose or draw. and return description.
-  var userOutcome = checkResult(userInput, programOutput);
+  // CHECK IF USER INPUT CONTAINS "reversed"
+  // if contains "reversed", check if user win, lose or draw. and return outcome string.
+  if (userInput.includes("reversed")) {
+    var userOutcome = checkReversedResult(userInput, programOutput);
 
-  // generate nicer input and reassign value
-  var userInput = generateNiceInput(userInput);
-  var programOutput = generateNiceInput(programOutput);
+    // if normal version, check if user win, lose or draw. and return outcome string.
+  } else {
+    var userOutcome = checkResult(userInput, programOutput);
+  }
 
-  // output on website
+  // GENERATE NICER INPUT: ADD EMOJIS
+  // AND REASSIGN VALUE
+  userInput += addEmojis(userInput);
+  programOutput += addEmojis(programOutput);
+
+  // GENERATE OUTPUT MESSAGE ON WEBPAGE
   var myOutputValue = `The computer chose ${programOutput}. <br>
   You chose ${userInput}. <br><br>
   You ${userOutcome} <br><br>
@@ -24,6 +42,8 @@ var main = function (userInput) {
   return myOutputValue;
 };
 
+// HELPER FUNCTIONS BELOW:
+// GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE //
 // generate a number from 0 to 2, to be used by computer to select output from array
 var generateRandomNumber = function () {
   var randomDecimal = Math.random() * 3;
@@ -36,37 +56,53 @@ var generateProgramOutput = function () {
   return (programOutput = outputOptions[generateRandomNumber()]);
 };
 
-// check if user wins, loses or draws.
+// TO CHECK IF USER WINS, LOSES OR DRAWS. //
+// #1: normal version
 var checkResult = function (userInput, programOutput) {
-  //user wins
+  // if user wins, output message
   if (
-    (userInput == "scissors" && programOutput == "paper") ||
-    (userInput == "paper" && programOutput == "stone") ||
-    (userInput == "stone" && programOutput == "scissors")
+    (userInput.includes("scissors") && programOutput == "paper") ||
+    (userInput.includes("paper") && programOutput == "stone") ||
+    (userInput.includes("stone") && programOutput == "scissors")
   ) {
-    return "win! Congrats.";
+    return `win! Congrats.`;
 
-    // user loses
+    // if user loses, output message
   } else if (
-    (userInput == "scissors" && programOutput == "stone") ||
-    (userInput == "paper" && programOutput == "scissors") ||
-    (userInput == "stone" && programOutput == "paper")
+    (userInput.includes("scissors") && programOutput == "stone") ||
+    (userInput.includes("paper") && programOutput == "scissors") ||
+    (userInput.includes("stone") && programOutput == "paper")
   ) {
-    return "lose! Bummer.";
+    return `lose! Bummer.`;
 
-    // user draws
+    // if anything else (user draws), output message
   } else {
-    return "draw. Try again?";
+    return `draw. Try again?`;
   }
 };
 
-// generate nicer input
-var generateNiceInput = function (input) {
-  if (input == "scissors") {
-    return "scissors 🔪";
-  } else if (input == "stone") {
-    return "stone 🗿";
+// #2: reversed version
+var checkReversedResult = function (userInput, programOutput) {
+  // if user wins normally, reverse output message
+  if (checkResult(userInput, programOutput) == "win! Congrats.") {
+    return `lose! Bummer.`;
+
+    // if user loses normally, reverse output message
+  } else if (checkResult(userInput, programOutput) == "lose! Bummer.") {
+    return `win! Congrats.`;
   } else {
-    return "paper 📄";
+    // if anything else (user draws), output message
+    return `draw. Try again?`;
+  }
+};
+
+// GENERATE NICER INPUT: ADD-ON EMOJIS//
+var addEmojis = function (input) {
+  if (input.includes("scissors")) {
+    return ` 🔪`;
+  } else if (input.includes("stone")) {
+    return ` 🗿`;
+  } else {
+    return ` 📄`;
   }
 };
