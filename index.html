@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Coding Basics</title>
+    <title>SPS</title>
     <style>
       * {
         box-sizing: border-box;
@@ -47,34 +47,34 @@
       }
     </style>
   </head>
-
   <body>
-    <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
+    <h1 id="header">Scissors Paper Stone</h1>
     <div id="container">
-      <p>Input:</p>
-      <input id="input-field" />
-      <br />
-      <button id="submit-button">Submit</button>
+      <input id="my-input" />
+      <button id="my-button">Submit</button>
       <p>Output:</p>
-      <div id="output-div"></div>
+      <div id="output">
+        Let's Play! Please enter "scissors", "paper", or "stone".
+      </div>
     </div>
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
-      var button = document.querySelector("#submit-button");
-      button.addEventListener("click", function () {
+      var button = document.querySelector('#my-button');
+      button.addEventListener('click', function () {
         // Set result to input value
-        var input = document.querySelector("#input-field");
+        var input = document.querySelector('#my-input');
         var result = main(input.value);
-
         // Display result in output element
-        var output = document.querySelector("#output-div");
+        var output = document.querySelector('#output');
         output.innerHTML = result;
-
         // Reset input value
-        input.value = "";
+        input.value = '';
       });
+    </script>
+  </body>
+</html>
     </script>
   </body>
 </html>
