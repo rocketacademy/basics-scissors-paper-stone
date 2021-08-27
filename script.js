@@ -21,32 +21,51 @@ var scissorsPaperorStone = function () {
 
 var main = function (input) {
   //if input is anything other than scissors paper or stone, to get an invalid response
-  var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play (:`;
+  var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play. <br> Or add 'reversed' infront and try you luck at reversed mode.`;
   var compSPS = scissorsPaperorStone();
   console.log("scissors paper or stone", compSPS);
 
   //Input does not match winning conditions
-  if (input == "scissors" || input == "paper" || input == "stone") {
+  //Add "reversed xxx" as valid input
+  if (
+    input == "scissors" ||
+    input == "paper" ||
+    input == "stone" ||
+    input == "reversed scissors" ||
+    input == "reversed paper" ||
+    input == "reversed stone"
+  ) {
     myOutputValue = `You chose ${input}. <br>
     The computer chose ${compSPS}. <br> <br>
     You lose! Try again.`;
   }
 
-  //If user inputs Scissors and comp = paper, user wins
-  if (input == "scissors" && compSPS == "paper") {
+  //If user inputs Scissors or reversed stone and comp = paper, user wins
+  if (
+    (input == "scissors" || input == "reversed paper") &&
+    compSPS == "paper"
+  ) {
     myOutputValue = `You chose ${input}. <br> The computer chose ${compSPS}. <br> <br> You win, happy days.`;
   }
-  //Paper beats stone
-  if (input == "paper" && compSPS == "stone") {
+
+  //Paper and reversed scissors beats stone
+  if (
+    (input == "paper" || input == "reversed scissors") &&
+    compSPS == "stone"
+  ) {
     myOutputValue = `You chose ${input}. <br> The Computer chose ${compSPS}, you win, happy days.`;
   }
-  //Stone beats scissors
-  if (input == "stone" && compSPS == "scissors") {
+  //Stone and reversed paper beats scissors
+  if (
+    (input == "stone" || input == "reversed paper") &&
+    compSPS == "scissors"
+  ) {
     myOutputValue = `You chose ${input}. <br> The Computer chose ${compSPS}, you win, happy days.`;
   }
+
   //if same object, draw
-  if (input == compSPS) {
-    myOutputValue = `You and the Computer chose ${input}. <br> <br> It is a draw.`;
+  if (input == compSPS || input == "reversed " + compSPS) {
+    myOutputValue = `Both You and the Computer chose ${compSPS}. <br> <br> It is a draw.`;
   }
 
   return myOutputValue;
