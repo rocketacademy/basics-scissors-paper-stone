@@ -20,7 +20,15 @@ var scissorsPaperorStone = function () {
 };
 
 var main = function (input) {
-  var myOutputValue = `Your ${input} against Computer's ${compSPS}. You lose.`;
+  //if input is anything other than scissors paper or stone, to get an invalid response
+  var myOutputValue = `Please type 'scissors', 'paper' or 'stone' to play (:`;
+  var compSPS = scissorsPaperorStone();
+  console.log("scissors paper or stone", compSPS);
+
+  //Input does not match winning conditions
+  if (input == "scissors" || input == "paper" || input == "stone") {
+    myOutputValue = `The computer chose ${compSPS}. You chose ${input}. You lose!`;
+  }
 
   //If user inputs Scissors and comp = paper, user wins
   if (input == "scissors" && compSPS == "paper") {
