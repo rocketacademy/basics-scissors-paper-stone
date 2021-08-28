@@ -35,12 +35,20 @@ var icon = function (input, comOutput) {
 
 var getUserWinningPercentage = function () {
   percentage = (userCurrentScore / totalNumberOfMatch) * 100;
-  return percentage;
+  message = `${percentage}%).`;
+  if (userCurrentScore < comCurrentScore) {
+    message = `${percentage}%). You can catch up!`;
+  }
+  if (userCurrentScore > comCurrentScore) {
+    message = `${percentage}%). You are doing well!`;
+  }
+  return message;
 };
 
 var getComWinningPercentage = function () {
   percentage = (comCurrentScore / totalNumberOfMatch) * 100;
-  return percentage;
+  message = `${percentage}%)`;
+  return message;
 };
 
 var main = function (input) {
@@ -70,8 +78,8 @@ var playSPSGame = function (userInput) {
     comWinningPercentage = getComWinningPercentage();
     myOutputValue = `${userName} chose ${userInput}${userObject} <br> Computer chose ${comOutput}${comObject} <br><br>
     It's a draw! <br><br>
-    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}%) <br>
-    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}%) <br>
+    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage} <br>
+    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage} <br>
     Number of draws: ${numberOfDraws}`;
   }
 
@@ -87,8 +95,8 @@ var playSPSGame = function (userInput) {
     myOutputValue = `${userName} chose ${userInput}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     ${userName} wins! <br><br>
-    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}%) <br>
-    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}%)<br>
+    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage} <br>
+    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}<br>
     Number of draws: ${numberOfDraws}`;
   }
 
@@ -104,8 +112,8 @@ var playSPSGame = function (userInput) {
     myOutputValue = `${userName} chose ${userInput}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     Computer wins! <br><br>
-    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}%)<br>
-    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}%)<br>
+    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}<br>
+    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}<br>
     Number of draws: ${numberOfDraws}`;
   }
 
@@ -121,8 +129,8 @@ var playSPSGame = function (userInput) {
     myOutputValue = `${userName} chose ${userInput}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     Computer wins! <br><br>
-    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}%)<br>
-    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}%)<br>
+    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}<br>
+    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}<br>
     Number of draws: ${numberOfDraws}`;
   }
 
@@ -138,8 +146,8 @@ var playSPSGame = function (userInput) {
     myOutputValue = `${userName} chose ${userInput}${userObject} <br>
     Computer chose ${comOutput}${comObject}<br><br>
     ${userName} wins! <br><br>
-    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}%)<br>
-    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}%)<br>
+    ${userName}'s current score: ${userCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${userWinningPercentage}<br>
+    Computer's current score: ${comCurrentScore} out of ${totalNumberOfMatch} (Winning Percentage: ${comWinningPercentage}<br>
     Number of draws: ${numberOfDraws}`;
   }
   return myOutputValue;
