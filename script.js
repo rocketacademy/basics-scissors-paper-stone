@@ -150,7 +150,7 @@ var diceemoji = function (diceresult) {
 };
 
 var rolldice = function (max) {
-  randomnum = Math.random() * 3 + 1;
-  randomdice = Math.floor(randomnum);
+  var randomnum = Math.random() * 3 + 1;
+  var randomdice = Math.floor(randomnum);
   return randomdice;
 };
