@@ -34,34 +34,41 @@ var main = function (userAnswer) {
   console.log("WHAT IS COMPUTER CHOICE?");
   console.log(comSps);
 
+  //CASE OF INVALID INPUT
+  if (
+    userAnswer != "paper" ||
+    userAnswer != "scissors" ||
+    userAnswer != "stone"
+  ) {
+    outputValue =
+      "Please only key in 'scissors', 'paper' or 'stone' (case sensitive)!";
+  }
+
   //CASE OF A DRAW
   if (userAnswer == comSps) {
     return `It was a draw!<br>We both picked ${comSps}!`;
   }
   //USER CHOSE SCISSORS
   if (userAnswer == "scissors" && comSps == "stone") {
-    return "You lose!<br>Your scissors lost to my stone!";
+    outputValue = "You lose!<br>Your scissors lost to my stone!";
   }
   if (userAnswer == "scissors" && comSps == "paper") {
-    return "You win!<br>Your scissors won my paper!";
+    outputValue = "You win!<br>Your scissors won my paper!";
   }
   //USER CHOSE STONE
   if (userAnswer == "stone" && comSps == "paper") {
-    return "You lose! Your stone lost to my paper!";
+    outputValue = "You lose! Your stone lost to my paper!";
   }
   if (userAnswer == "stone" && comSps == "scissors") {
-    return "You win! Your stone won my scissors!";
+    outputValue = "You win! Your stone won my scissors!";
   }
   //USER CHOSE PAPER
   if (userAnswer == "paper" && comSps == "scissors") {
-    return "You lose! Your paper lost to my scissors!";
+    outputValue = "You lose! Your paper lost to my scissors!";
   }
   if (userAnswer == "paper" && comSps == "stone") {
-    return "You win! Your paper won my stone!";
+    outputValue = "You win! Your paper won my stone!";
   }
 
-  return "Please only key in 'scissors', 'paper' or 'stone' (case sensitive)!";
-
-  console.log("WHAT IS USER INPUT?");
-  console.log(userAnswer);
+  return outputValue;
 };
