@@ -1,55 +1,114 @@
+var userScore = 0;
+var noOfGame = 0;
+var nickName = " ";
+
+var result = function (input1, outComResult1, userInput1, comResult1) {
+  var realResult = noOfGame - 1;
+  var winPercentage = userScore + "/" + realResult;
+
+  //invalid input
+  var myOutputValue =
+    "Not available.<br>" +
+    nickName +
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+  //result with valid input
+  if (
+    input1 == comResult1 ||
+    input1 == "reversed stone" ||
+    input1 == "reversed paper" ||
+    input1 == "reversed scissors"
+  ) {
+    myOutputValue =
+      "The computer choose " +
+      outComResult1 +
+      "<br>" +
+      nickName +
+      " choose " +
+      userInput1 +
+      " <br>It's a draw😲<br>" +
+      nickName +
+      "'s result:<br> score =" +
+      userScore +
+      " <br> Winning Percentage = " +
+      winPercentage;
+  }
+  if (
+    (input1 == "scissors" && comResult1 == "paper") ||
+    (input1 == "paper" && comResult1 == "stone") ||
+    (input1 == "stone" && comResult1 == "scissors") ||
+    (input1 == "reversed paper" && comResult1 == "scissors") ||
+    (input1 == "reversed stone" && comResult1 == "paper") ||
+    (input1 == "reversed scissors" && comResult1 == "stone")
+  ) {
+    userScore += 1;
+    winPercentage = userScore + "/" + realResult;
+    myOutputValue =
+      "The computer choose " +
+      outComResult1 +
+      "<br> " +
+      nickName +
+      " choose " +
+      userInput1 +
+      "<br>" +
+      userInput1 +
+      " beat " +
+      outComResult1 +
+      "<br>You Win😎<br> " +
+      nickName +
+      "'s result:<br> score =" +
+      userScore +
+      " <br> Winning Percentage = " +
+      winPercentage;
+  }
+  if (
+    (input1 == "paper" && comResult1 == "scissors") ||
+    (input1 == "stone" && comResult1 == "paper") ||
+    (input1 == "scissors" && comResult1 == "stone") ||
+    (input1 == "reversed scissors" && comResult1 == "paper") ||
+    (input1 == "reversed paper" && comResult1 == "stone") ||
+    (input1 == "reversed stone" && comResult1 == "scissors")
+  ) {
+    myOutputValue =
+      "The computer choose " +
+      outComResult1 +
+      "<br> " +
+      nickName +
+      " choose " +
+      userInput1 +
+      "<br>" +
+      outComResult1 +
+      " beat " +
+      userInput1 +
+      "<br>You lose😭<br>" +
+      nickName +
+      "'s result:<br> score =" +
+      userScore +
+      " <br> Winning Percentage = " +
+      winPercentage;
+  }
+  return myOutputValue;
+};
 var main = function (input) {
   var comResult = randomNumber();
   var userInput = keyInData(input);
   var outComResult = outResult(comResult);
 
-  console.log("userInput");
-  console.log(keyInData(input));
-  //invalid input
-  var myOutputValue =
-    "Not available.<br>Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
-  //result with valid input
-  if (input == comResult) {
-    myOutputValue =
-      "The computer choose " +
-      outComResult +
-      "<br> You choose " +
-      userInput +
-      " <br>It's a draw😲";
+  var name = input;
+  if (noOfGame == 0) {
+    nickName = name;
+    noOfGame += 1;
+    var startOfGame =
+      "Welcome to the game<br> " +
+      name +
+      "<br>let start the game<br> Please Key in 'scissors','paper' or 'stone'";
+    return startOfGame;
   }
-  if (
-    (input == "scissors" && comResult == "paper") ||
-    (input == "paper" && comResult == "stone") ||
-    (input == "stone" && comResult == "scissors") ||
-    (input == "reversed paper" && comResult == "scissors") ||
-    (input == "reversed stone" && comResult == "paper") ||
-    (input == "reversed scissors" && comResult == "stone")
-  ) {
-    myOutputValue =
-      "The computer choose " +
-      outComResult +
-      "<br> You choose " +
-      userInput +
-      "<br>You Win😎";
-  }
-  if (
-    (input == "paper" && comResult == "scissors") ||
-    (input == "stone" && comResult == "paper") ||
-    (input == "scissors" && comResult == "stone") ||
-    (input == "reversed scissors" && comResult == "paper") ||
-    (input == "reversed paper" && comResult == "stone") ||
-    (input == "reversed stone" && comResult == "scissors")
-  ) {
-    myOutputValue =
-      "The computer choose " +
-      outComResult +
-      "<br> You choose " +
-      userInput +
-      "<br>You lose😭";
-  }
-  return myOutputValue;
+  noOfGame += 1;
+  var finalResult = result(input, outComResult, userInput, comResult);
+  return finalResult;
 };
-//random number generate
+
+// random number generate
 var randomNumber = function () {
   var randomDice = Math.random() * 3;
   var randomIntegal = Math.ceil(randomDice);
