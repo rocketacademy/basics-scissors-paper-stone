@@ -34,7 +34,7 @@ var icon = function (input, comOutput) {
 };
 
 var getUserWinningPercentage = function () {
-  percentage = (userCurrentScore / totalNumberOfMatch) * 100;
+  percentage = Math.round((userCurrentScore / totalNumberOfMatch) * 100);
   message = `${percentage}%).`;
   if (userCurrentScore < comCurrentScore) {
     message = `${percentage}%). You can catch up!`;
@@ -46,7 +46,7 @@ var getUserWinningPercentage = function () {
 };
 
 var getComWinningPercentage = function () {
-  percentage = (comCurrentScore / totalNumberOfMatch) * 100;
+  percentage = Math.round((comCurrentScore / totalNumberOfMatch) * 100);
   message = `${percentage}%)`;
   return message;
 };
