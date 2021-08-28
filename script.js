@@ -22,18 +22,33 @@ var generateRandomOutcome = function () {
   }
 };
 
+// keep track of number of times player won, computer won and total rounds played
+var numPlayerWon = 0;
+var numComputerWon = 0;
+var numTotalRoundsPlayed = 0;
+var userName = "";
+
 // return outcome to player based on what they input
 var main = function (input) {
   var randomOutcome = generateRandomOutcome();
   console.log("Computer played");
   console.log(randomOutcome);
 
+  if (userName == "") {
+    if (input == "") {
+      return `Please set a username by typing it in the input box.`;
+    }
+    userName = input;
+    return `You have set your username as ${input}! <br> Let's get started with the game ${input} 😉`;
+  }
+
   if (
     (input == "scissors" && randomOutcome == "scissors") ||
     (input == "paper" && randomOutcome == "paper") ||
     (input == "stone" && randomOutcome == "stone")
   ) {
-    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br> It's a draw! <br>Now you can type scissors, paper or stone to play again 🤪`;
+    numTotalRoundsPlayed += 1;
+    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br>It's a draw! <br> So far you have won ${numPlayerWon}/${numTotalRoundsPlayed} rounds 🤪`;
   }
 
   if (
@@ -41,7 +56,9 @@ var main = function (input) {
     (input == "paper" && randomOutcome == "scissors") ||
     (input == "stone" && randomOutcome == "paper")
   ) {
-    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br> You lose! <br>Now you can type scissors, paper or stone to play again 🤪`;
+    numComputerWon += 1;
+    numTotalRoundsPlayed += 1;
+    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br> You lose! <br>So far you have won ${numPlayerWon}/${numTotalRoundsPlayed} rounds 🤪`;
   }
 
   if (
@@ -49,7 +66,9 @@ var main = function (input) {
     (input == "paper" && randomOutcome == "stone") ||
     (input == "stone" && randomOutcome == "scissors")
   ) {
-    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br> You win! <br>Now you can type scissors, paper or stone to play again 🤪`;
+    numPlayerWon += 1;
+    numTotalRoundsPlayed += 1;
+    var myOutputValue = `You played ${input}. <br> The computer played ${randomOutcome}. <br><br> You win! <br>So far you have won ${numPlayerWon}/${numTotalRoundsPlayed} rounds 🤪`;
   }
 
   if (input != "scissors" && input != "paper" && input != "stone") {
