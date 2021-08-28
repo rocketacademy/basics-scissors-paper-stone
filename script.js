@@ -4,6 +4,7 @@
 // Paper > stone > Scissors > Paper
 // 2 > 3 > 1 > 2
 // input == diceroll, Draw
+// testing git push
 var generateRandomInteger = function (max) {
   var randomDecimal = Math.random() * max;
   var randomInteger = Math.floor(randomDecimal) + 1;
