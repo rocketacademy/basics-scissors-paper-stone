@@ -1,6 +1,4 @@
 var numTimesUserWon = 0
-var numTimesUserLose = 0
-var numTimesDraw = 0
 var numTimesRolled = 0
 
 var currentGameMode = 'waiting for user name';
@@ -86,9 +84,6 @@ var SPSGame = function(userName,userGuess){
   var winRate = calcUserWinRate()
   console.log(`User winning % = ${winRate}`)
 
-  var comWinRate = calcComputerWinRate()
-  console.log(`Computer winning % = ${comWinRate}`)
-
   var message = ''
 
   //if user inputs scissors and computer choose paper, user wins OR
@@ -100,16 +95,29 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
     console.log('win')
     numTimesUserWon += 1
     winRate = calcUserWinRate()
-    message = `you won! You chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
-  }
+    
+    //if user win rate is > 50%, format a doing well message
+    if (winRate >= 50){
+          message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>You win! Congratulations!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Pretty good!`
+    }
+
+    //if user win rate is < 50%, format a try harder message
+    else message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>You win! Congratulations!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Try harder!`
+  } 
 
   //if the input by user is the same as the one computer chose, its a draw
   if (userGuess == 'scissors' && chosenSPS == 'scissors ✂️' ||
    userGuess == 'paper' && chosenSPS == 'paper 🗒' ||
    userGuess == 'stone' && chosenSPS == 'stone 🪨'){
     console.log('draw')
-    numTimesDraw += 1
-    message = `it's a draw! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
+
+    //if user win rate is > 50%, format a doing well message
+    if (winRate >= 50){
+          message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>It's a draw!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Pretty good!`
+    }
+    
+    //if user win rate is < 50%, format a try harder message
+    else message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>It's a draw!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Try harder!`
   }
 
   //if user inputs paper and computer choose scissors, user lose OR
@@ -119,9 +127,14 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
   chosenSPS == 'paper 🗒' && userGuess == 'stone' || 
   chosenSPS == 'stone 🪨' && userGuess == 'scissors'){
     console.log('lose')
-    numTimesUserLose += 1
-    var comWinRate = calcComputerWinRate()
-    message = `you lost! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
+
+    //if user win rate is > 50%, format a doing well message
+    if (winRate >= 50){
+          message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>You lose! Bummer.<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Pretty good!`
+    }
+
+    //if user win rate is < 50%, format a try harder message
+    else message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>You lose! Bummer.<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Try harder!`
   }
   return message
 }
@@ -130,10 +143,4 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
 var calcUserWinRate = function(){
   var userWinRate = Math.floor((numTimesUserWon/numTimesRolled)*100)
   return userWinRate
-}
-
-//This function is to calculate the computer winning % rate 
-var calcComputerWinRate = function(){
-  var computerWinRate = Math.floor((numTimesUserLose/numTimesRolled)*100)
-  return computerWinRate
 }
