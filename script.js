@@ -3,10 +3,26 @@ var numTimesUserLose = 0
 var numTimesDraw = 0
 var numTimesRolled = 0
 
+var currentGameMode = 'waiting for user name';
+var userName = '';
+
 var main = function (input) {
   var myOutputValue = ''
-  if (input == `scissors` || input == `paper` || input == `stone`){
-    myOutputValue = SPSGame(input)
+
+  if (currentGameMode == 'waiting for user name') {
+    // set the name
+    userName = input;
+
+    // now that we have the name, switch the mode
+    currentGameMode = 'scissors paper stone game';
+
+    myOutputValue = 'Hello ' + userName;
+
+  } else if (currentGameMode == 'scissors paper stone game' &&
+  (input == `scissors` || 
+  input == `paper` || 
+  input == `stone`)) {
+    myOutputValue = SPSGame(userName,input)
   }
 
   else myOutputValue = `error. please input one of these 3 options: scissors, paper or stone`
@@ -57,7 +73,7 @@ var SPSIconForUser = function(input){
 }
 
 // This function is to run the scissors paper stone game and return win/lose/draw message
-var SPSGame = function(userGuess){
+var SPSGame = function(userName,userGuess){
 
   numTimesRolled += 1
   console.log(`numTimesRolled = ${numTimesRolled}`)
@@ -84,7 +100,7 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
     console.log('win')
     numTimesUserWon += 1
     winRate = calcUserWinRate()
-    message = `You won! You chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>Your winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
+    message = `you won! You chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
   }
 
   //if the input by user is the same as the one computer chose, its a draw
@@ -93,7 +109,7 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
    userGuess == 'stone' && chosenSPS == 'stone 🪨'){
     console.log('draw')
     numTimesDraw += 1
-    message = `it's a draw! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>Your winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
+    message = `it's a draw! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
   }
 
   //if user inputs paper and computer choose scissors, user lose OR
@@ -105,7 +121,7 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
     console.log('lose')
     numTimesUserLose += 1
     var comWinRate = calcComputerWinRate()
-    message = `you lost! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>Your winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
+    message = `you lost! you chose ${userGuess} ${chosenIconForUser} and computer chose ${chosenSPS}.<br><br>${userName}'s Win: Lose: Draw = ${numTimesUserWon} times: ${numTimesUserLose} times: ${numTimesDraw} times<br><br>${userName}'s winning % = ${winRate}%<br>Computer winning % = ${comWinRate}%`
   }
   return message
 }
