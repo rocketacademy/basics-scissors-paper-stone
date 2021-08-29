@@ -11,7 +11,7 @@ var main = function (userInput) {
     userOutcome = generateNormalResults(userInput, programOutput); // if no, check if user win, lose or draw. and return outcome string. (normal version)
   }
 
-  // GENERATE NICER INPUT: ADD EMOJIS  & REASSIGN VALUE
+  // GENERATE NICER INPUT: ADD EMOJIS, & REASSIGN VALUE
   userInput += addEmojis(userInput);
   programOutput += addEmojis(programOutput);
 
@@ -55,52 +55,49 @@ var checkUserInputValidity = function (userInput) {
   return false;
 };
 
-// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS.
-// #1: normal version
-var generateNormalResults = function (userInput, programOutput) {
-  // if user wins, output message
+// CHECK IF USER WIN OR LOSE
+var checkIfUserWin = function (userInput, programOutput) {
+  // if user wins, return true. if not, return false.
   if (
     (userInput.includes("scissors") && programOutput == "paper") ||
     (userInput.includes("paper") && programOutput == "stone") ||
     (userInput.includes("stone") && programOutput == "scissors")
   ) {
-    return `win! Congrats.`;
+    return true;
   }
-  // if user loses, output message
-  if (
-    (userInput.includes("scissors") && programOutput == "stone") ||
-    (userInput.includes("paper") && programOutput == "scissors") ||
-    (userInput.includes("stone") && programOutput == "paper")
-  ) {
-    return `lose! Bummer.`;
-    // if anything else (user draws), output message
+  return false;
+};
+
+// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS.
+// #1: normal version
+var generateNormalResults = function (userInput, programOutput) {
+  if (checkIfUserWin(userInput, programOutput)) {
+    return `win! Congrats.`; // if user wins, output message
   }
-  return `draw. Try again?`;
+  if (!checkIfUserWin(userInput, programOutput)) {
+    return `lose! Bummer.`; // if user loses, output message
+  }
+  return `draw. Try again?`; // if anything else (user draws), output message
 };
 
 // #2: reversed version
 var generateReversedResults = function (userInput, programOutput) {
-  // if user wins normally, reverse output message
   if (generateNormalResults(userInput, programOutput) == "win! Congrats.") {
-    return `lose! Bummer.`;
+    return `lose! Bummer.`; // if user wins normally, reverse output message
   }
-  // if user loses normally, reverse output message
   if (generateNormalResults(userInput, programOutput) == "lose! Bummer.") {
-    return `win! Congrats.`;
+    return `win! Congrats.`; // if user loses normally, reverse output message
   }
-  // if anything else (user draws), output message
-  return `draw. Try again?`;
+  return `draw. Try again?`; // if anything else (user draws), output message
 };
 
 // GENERATE NICER INPUT: ADD-ON EMOJIS
 var addEmojis = function (input) {
-  // if user input includes "scissors", return knife emoji
   if (input.includes("scissors")) {
-    return ` 🔪`;
+    return ` 🔪`; // if user input includes "scissors", return knife emoji
   }
-  // if user input includes "paper", return paper
   if (input.includes("paper")) {
-    return ` 📄`;
+    return ` 📄`; // if user input includes "paper", return paper
   }
   // if anything else ("stone"), return easter island emoji
   return ` 🗿`;
