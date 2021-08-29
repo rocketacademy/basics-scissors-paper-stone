@@ -33,25 +33,24 @@ const inputChecking = (input) => {
   return false;
 };
 
-const win = (input, comp) => {
-  if (
-    (input == stone && comp == scissors) ||
-    (input == paper && comp == stone) ||
-    (input == scissors && comp == paper) ||
-    (input == reversedStone && comp == paper) ||
-    (input == reversedPaper && comp == scissors) ||
-    (input == reversedScissors && comp == stone)
-  ) {
-    return true;
-  }
+// checking if player wins
+const doesPlayerWin = (player, comp) => {
+  return (
+    (player == stone && comp == scissors) ||
+    (player == paper && comp == stone) ||
+    (player == scissors && comp == paper) ||
+    (player == reversedStone && comp == paper) ||
+    (player == reversedPaper && comp == scissors) ||
+    (player == reversedScissors && comp == stone)
+  );
 };
 
 // define a function to check the result
-const checkResult = (input, comp) => {
+const checkResult = (player, comp) => {
   let result = "";
-  if (input == comp || input == "reversed " + comp) {
+  if (player == comp || player == "reversed " + comp) {
     result = "It's a draw!";
-  } else if (win(input, comp)) {
+  } else if (doesPlayerWin(player, comp)) {
     result = "You won! ";
   } else {
     result = "You lose! Bummer.";
@@ -59,13 +58,15 @@ const checkResult = (input, comp) => {
   return result;
 };
 
+// play SPS with user input, return game result.
 const main = (input) => {
   const comp = compRandom();
+  const player = input;
   const validInput = inputChecking(input);
-  const result = checkResult(input, comp);
+  const result = checkResult(player, comp);
 
   if (validInput) {
-    return `The computer chose ${comp}.<br>You chose ${input}.<br><br>${result}<br><br>Now you can type "scissors", "paper" or "stone" to play another round, or reverse it by adding the word "reversed" to your choice!`;
+    return `The computer chose ${comp}.<br>You chose ${player}.<br><br>${result}<br><br>Now you can type "scissors", "paper" or "stone" to play another round, or reverse it by adding the word "reversed" to your choice!`;
   }
   return `Please input 1 of "scissors", "paper", or "stone" to play the game, or reverse it by adding the word "reversed" to your choice!`;
 };
