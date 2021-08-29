@@ -41,8 +41,9 @@ const win = (input, comp) => {
     (input == reversedStone && comp == paper) ||
     (input == reversedPaper && comp == scissors) ||
     (input == reversedScissors && comp == stone)
-  )
+  ) {
     return true;
+  }
 };
 
 // define a function to check the result
