@@ -18,16 +18,17 @@ const compRandom = () => {
   return scissors;
 };
 
+const validInput = {
+  stone,
+  paper,
+  scissors,
+  "reversed stone": reversedStone,
+  "reversed paper": reversedPaper,
+  "reversed scissors": reversedScissors,
+};
 // checking if the user's input is valid
 const inputChecking = (input) => {
-  if (
-    input == stone ||
-    input == paper ||
-    input == scissors ||
-    input == reversedStone ||
-    input == reversedPaper ||
-    input == reversedScissors
-  ) {
+  if (input == validInput[input]) {
     return true;
   }
   return false;
