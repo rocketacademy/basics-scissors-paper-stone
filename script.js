@@ -3,7 +3,7 @@ var roll3 = function () {
   var randomInteger = Math.floor(randomDecimal);
   var diceNumber = randomInteger + 1;
   console.log(
-    `rollnumber is ${diceNumber}. 1 is scissors, 2 is paper, 3 is paper`
+    `rollnumber is ${diceNumber}. 1 is scissors, 2 is paper, 3 is paper.`
   );
   return diceNumber;
 };
@@ -11,8 +11,15 @@ var roll3 = function () {
 var main = function (input) {
   var storedNumber = roll3();
 
-  if (input != "scissors" && input != "paper" && input != "stone") {
-    return `<b>Invalid input entered!</b> <br> Please only enter <b>scissors</b>, <b>paper</b> or <b>stone</b> to play the game against the computer!</br>`;
+  if (
+    input != "scissors" &&
+    input != "paper" &&
+    input != "stone" &&
+    input != "reversed scissors" &&
+    input != "reversed paper" &&
+    input != "reversed stone"
+  ) {
+    return `<b>Invalid input entered!</b> <br><br> Please only enter <b>scissors</b>, <b>paper</b> or <b>stone</b> to play the game against the computer!<br><br>There might be other ways to play this game too!<br><br>Can you find it?`;
   }
 
   var scissors = 1;
@@ -28,21 +35,39 @@ var main = function (input) {
     return `Both you and the computer chose <b>Stone</b> 💎!<br><br><b>It's a draw!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
   }
   if (input == "scissors" && storedNumber == 3) {
-    return `The computer chose <b>stone</b> 💎.<br>You chose <b>scissors</b> ✂️.<br><br><b>You lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>stone</b> 💎.<br>You chose <b>scissors</b> ✂️.<br><br><b>You win! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
   }
   if (input == "paper" && storedNumber == 1) {
-    return `The computer chose <b>scissors</b> ✂️.<br>You chose <b>paper</b> 🗒.<br><br><b>You lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>scissors</b> ✂️.<br>You chose <b>paper</b> 🗒.<br><br><b>You win! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
   }
   if (input == "stone" && storedNumber == 2) {
-    return `The computer chose <b>paper</b> 🗒.<br>You chose <b>stone</b> 💎.<br><br><b>You lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>paper</b> 🗒.<br>You chose <b>stone</b> 💎.<br><br><b>You win! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
   }
   if (input == "scissors" && storedNumber == 2) {
-    return `The computer chose <b>paper</b> 🗒.<br>You chose <b>scissors</b> ✂️.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>paper</b> 🗒.<br>You chose <b>scissors</b> ✂️.<br><br><b>You lose! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
   }
   if (input == "paper" && storedNumber == 3) {
-    return `The computer chose <b>stone</b> 💎.<br>You chose <b>paper</b> 🗒.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>stone</b> 💎.<br>You chose <b>paper</b> 🗒.<br><br><b>You lose! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
   }
   if (input == "stone" && storedNumber == 1) {
-    return `The computer chose <b>scissors</b> ✂️.<br>You chose <b>stone</b> 💎.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+    return `The computer chose <b>scissors</b> ✂️.<br>You chose <b>stone</b> 💎.<br><br><b>You lose! I wonder why?</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round, or might there be other inputs to play this game?`;
+  }
+  if (input == "reversed scissors" && storedNumber == 2) {
+    return `<b>You have keyed in the secret input!</b><br><br><b>Now you can play with the original rules!</b><br><brThe computer chose <b>paper</b> 🗒.<br>You chose <b>scissors</b> ✂️.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+  }
+  if (input == "reversed paper" && storedNumber == 3) {
+    return `<b>You have keyed in the secret input!<b><br><br><b>Now you can play with the original rules!</b><br><brThe computer chose <b>stone</b> 💎.<br>You chose <b>paper</b> 🗒.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+  }
+  if (input == "reversed stone" && storedNumber == 1) {
+    return `<b>You have keyed in the secret input!</b><br><br><b>Now you can play with the original rules!</b><br><br>The computer chose <b>scissors</b> ✂️.<br>You chose <b>stone</b> 💎.<br><br><b>You win! Hurray!</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+  }
+  if (input == "scissors" && storedNumber == 3) {
+    return `<b>You have keyed in the secret input!</b><br><br><b>Now you can play with the original rules!</b><br><br>The computer chose <b>stone</b> 💎.<br>You chose <b>scissors</b> ✂️.<br><br><b>Sadly you still lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+  }
+  if (input == "paper" && storedNumber == 1) {
+    return `<b>You have keyed in the secret input!</b><br><br><b>Now you can play with the original rules!</b><br><br>The computer chose <b>scissors</b> ✂️.<br>You chose <b>paper</b> 🗒.<br><br><b>Sadly you still lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
+  }
+  if (input == "stone" && storedNumber == 2) {
+    return `<b>You have keyed in the secret input!</b><br><br><b>Now you can play with the original rules!</b><br><br>The computer chose <b>paper</b> 🗒.<br>You chose <b>stone</b> 💎.<br><br><b>Sadly you still lose! Bummer.</b><br><br>Now you can type "scissors", "paper" or "stone" to play another round!`;
   }
 };
