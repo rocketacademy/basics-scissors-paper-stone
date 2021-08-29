@@ -85,7 +85,7 @@ var generateWinner = function (userInput) {
     (userInput == "reversed stone" && outputByProgram == "stone")
   ) {
     numOfDraws = numOfDraws + 1;
-    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > It's a draw! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}`;
+    var myOutputValue = `Hey ${userName}, you chose ${userInput} and the computer chose ${outputByProgram}. <br ><br > It's a draw! 🤷<br ><br > Submit "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)`;
   }
 
   if (
@@ -98,7 +98,7 @@ var generateWinner = function (userInput) {
   ) {
     numOfTimesUserWon = numOfTimesUserWon + 1;
     var userWinningPercent = calUserWinningPercent().toFixed(0);
-    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > You won! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >You are winning ${userWinningPercent}% of the game!`;
+    var myOutputValue = `Hey ${userName}, you chose ${userInput} and the computer chose ${outputByProgram}. <br ><br > You won! 🙆 <br ><br > Submit "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >You are winning ${userWinningPercent}% of the game! Keep it up!!`;
   }
 
   if (
@@ -111,7 +111,7 @@ var generateWinner = function (userInput) {
   ) {
     numOfTimesPcWon = numOfTimesPcWon + 1;
     var pcWinningPercent = calPcWinningPercent().toFixed(0);
-    var myOutputValue = `Hey ${userName}! The computer chose ${outputByProgram}. <br ><br > You lose! <br ><br > Now you can type "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You won ${numOfTimesUserWon} times!<br ><br >The computer won ${numOfTimesPcWon} times!<br ><br >Number of Draws: ${numOfDraws}<br ><br >The computer is winning ${pcWinningPercent}% of the game!`;
+    var myOutputValue = `Hey ${userName}, you chose ${userInput} and the computer chose ${outputByProgram}. <br ><br > You lose! 🙅<br ><br > Submit "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >The computer is winning ${pcWinningPercent}% of the game. Try harder!`;
   }
   return myOutputValue;
 };
