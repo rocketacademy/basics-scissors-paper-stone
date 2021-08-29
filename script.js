@@ -15,7 +15,7 @@ var main = function (userInput) {
 
   // Inform user to start playing by entering either one of the 6 options
   if (nameCount == 1) {
-    myOutputValue = `Welcome ${userName}!<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!`;
+    myOutputValue = `Welcome ${userName}! 👋<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!`;
     nameCount = nameCount + 1;
     return myOutputValue;
   }
@@ -42,16 +42,9 @@ var main = function (userInput) {
   return myOutputValue;
 };
 
-// ===== Function to generate random integer between 0 to 3, exlucing 3.
-var pickRandomNumber = function () {
-  var randomInteger = Math.floor(Math.random() * 3);
-  console.log(`Random Integer is ${randomInteger}`);
-  return randomInteger;
-};
-
 // ===== Function to pick an option of either scissors, paper or stone
 var pickOption = function () {
-  var randomOptionNum = pickRandomNumber(); // Generate the random integer to be used to select the item in the array
+  var randomOptionNum = Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
   // Alternative way to random pick an option
   // var optionsArray = ["scissors", "paper", "stone"]; // Set the output options in an array
   // var selectedOption = optionsArray[randomOptionNum]; // Use the random integer to select the random item in the array
