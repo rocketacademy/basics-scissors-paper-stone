@@ -63,10 +63,9 @@ const checkResult = (player, comp) => {
 const main = (input) => {
   const comp = compRandom();
   const player = input;
-  const validInput = inputChecking(input);
   const result = checkResult(player, comp);
 
-  if (validInput) {
+  if (inputChecking(input)) {
     return `The computer chose ${comp}.<br>You chose ${player}.<br><br>${result}<br><br>Now you can type "scissors", "paper" or "stone" to play another round, or reverse it by adding the word "reversed" to your choice!`;
   }
   return `Please input 1 of "scissors", "paper", or "stone" to play the game, or reverse it by adding the word "reversed" to your choice!`;
