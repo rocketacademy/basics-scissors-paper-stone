@@ -34,7 +34,7 @@ const inputChecking = (input) => {
 };
 
 // checking if player wins
-const doesPlayerWin = (player, comp) => {
+const doesPlayerWin = function (player, comp) {
   return (
     (player == stone && comp == scissors) ||
     (player == paper && comp == stone) ||
