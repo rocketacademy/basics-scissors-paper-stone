@@ -1,23 +1,17 @@
 var main = function (userInput) {
-  // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
-  var programOutput = generateProgramOutput();
-
-  // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
+  var programOutput = generateProgramOutput(); // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
   if (!checkUserInputValidity(userInput)) {
-    return `Please input "scissors", "paper" or "stone".`;
+    return `Please input "scissors", "paper" or "stone".`; // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
   }
 
   // CHECK IF USER INPUT CONTAINS "reversed"; IF YES, GENERATE REVERSE OUTCOME. IF NO, GENERATE NORMAL OUTCOME.
-  // if yes, check if user win, lose or draw. and return outcome string. (reversed version)
   if (userInput.includes("reversed")) {
-    var userOutcome = generateReversedResults(userInput, programOutput);
-    // if no, check if user win, lose or draw. and return outcome string. (normal version)
+    var userOutcome = generateReversedResults(userInput, programOutput); // if yes, check if user win, lose or draw. and return outcome string. (reversed version)
   } else {
-    var userOutcome = generateNormalResults(userInput, programOutput);
+    userOutcome = generateNormalResults(userInput, programOutput); // if no, check if user win, lose or draw. and return outcome string. (normal version)
   }
 
-  // GENERATE NICER INPUT: ADD EMOJIS
-  // AND REASSIGN VALUE
+  // GENERATE NICER INPUT: ADD EMOJIS  & REASSIGN VALUE
   userInput += addEmojis(userInput);
   programOutput += addEmojis(programOutput);
 
