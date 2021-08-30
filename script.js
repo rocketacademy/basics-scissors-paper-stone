@@ -116,6 +116,7 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
     input1 == "reversed paper" ||
     input1 == "reversed scissors"
   ) {
+    noOfGame += 1;
     userDraw += 1;
     myOutputValue =
       "Computer choose " +
@@ -141,6 +142,7 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
     (input1 == "reversed stone" && comResult1 == "paper") ||
     (input1 == "reversed scissors" && comResult1 == "stone")
   ) {
+    noOfGame += 1;
     userScore += 1;
     winPercentage = userScore + "/" + realResult;
     myOutputValue =
@@ -171,6 +173,7 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
     (input1 == "reversed paper" && comResult1 == "stone") ||
     (input1 == "reversed stone" && comResult1 == "scissors")
   ) {
+    noOfGame += 1;
     myOutputValue =
       "Computer choose " +
       outComResult1 +
@@ -210,6 +213,7 @@ var reverseResult = function (
     " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   if (rInput1 == rComResult1) {
+    noOfGame += 1;
     userDraw += 1;
     myOutputValue =
       "Computer choose " +
@@ -232,6 +236,7 @@ var reverseResult = function (
     (rInput1 == "stone" && rComResult1 == "paper") ||
     (rInput1 == "scissors" && rComResult1 == "stone")
   ) {
+    noOfGame += 1;
     userScore += 1;
     winPercentage = userScore + "/" + realResult;
     myOutputValue =
@@ -259,6 +264,7 @@ var reverseResult = function (
     (rInput1 == "paper" && rComResult1 == "stone") ||
     (rInput1 == "stone" && rComResult1 == "scissors")
   ) {
+    noOfGame += 1;
     myOutputValue =
       "Computer choose " +
       rOutComResult1 +
@@ -297,6 +303,7 @@ var koreanResult = function (
   var realResult = noOfGame - 2;
   var winPercentage = userScore + "/" + realResult;
   if (kInput1 == kComResult1) {
+    noOfGame += 1;
     userDraw += 1;
     myOutputValue =
       "Computer choose " +
@@ -376,6 +383,7 @@ var korean2Result = function (
   //result with valid input
   if (k2Input1 == k2ComResult1) {
     if (koreanWinMode == 1) {
+      noOfGame += 1;
       console.log("win mode");
       koreanMode -= 1;
       koreanWinMode -= 1;
@@ -401,6 +409,7 @@ var korean2Result = function (
         ", Draw = " +
         userDraw;
     } else if (koreanLoseMode == 1) {
+      noOfGame += 1;
       console.log("lose mode");
       koreanMode -= 1;
       koreanLoseMode -= 1;
@@ -433,6 +442,7 @@ var korean2Result = function (
     (k2Input1 == "stone" && k2ComResult1 == "paper") ||
     (k2Input1 == "scissors" && k2ComResult1 == "stone")
   ) {
+    noOfGame += 1;
     userDraw += 1;
     console.log("lose");
     koreanMode = 0;
@@ -582,18 +592,15 @@ var main = function (input) {
 
   //change Mode
   if (playMode == "normal") {
-    noOfGame += 1;
     var finalResult = result(input, outComResult, userInput, comResult);
     return finalResult;
   }
   if (playMode == "reverse") {
-    noOfGame += 1;
     var finalResult = reverseResult(input, outComResult, userInput, comResult);
     return finalResult;
   }
   if (playMode == "korean") {
     if (koreanMode == 0) {
-      noOfGame += 1;
       var finalResult = koreanResult(input, outComResult, userInput, comResult);
       return finalResult;
     } else if (koreanMode == 1) {
