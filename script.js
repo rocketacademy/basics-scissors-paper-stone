@@ -14,9 +14,11 @@ const CHOICE_MSG = `The game is Scissors Paper Stone. ✌✋✊<br><br>Enter 1 f
 const ENTER_SPS_MSG = `Enter one of 'scissors', 'paper' or 'stone' to begin playing.`;
 const COMPUTER_MODE_ON_MSG = `Computer mode on! The computer will choose for you now. Simply press submit to play a turn.`;
 const COMPUTER_MODE_OFF_MSG = `Computer mode off! You're in the driver's seat now. `;
-const RULES_NORMAL_MSG = `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️<br><br>Type 'reverse' again to go back to reverse mode.`;
-const RULES_REVERSED_MSG = `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️<br><br>Type 'reverse' again to go back to normal rules.`;
+const RULES_NORMAL_MSG = `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️`;
+const RULES_REVERSED_MSG = `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️`;
 const INVALID_CHOICE_MSG = `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊`;
+const COMPUTER_MODE_ADDITIONAL_MSG = `Computer mode is currently on. Type 'computer' to turn off.<br>`;
+const REVERSE_MODE_ADDITIONAL_MSG = `Reverse mode is currently on. Type 'reverse' to turn off.<br>`;
 
 const options = ["stone", "paper", "scissors"]; // available choices of moves
 
@@ -127,12 +129,10 @@ var playGame = function (userChoice) {
   var newUserChoice = computerMode ? options[userChoiceNum] : userChoice;
 
   // initialise output
-  var output =
-    curGameMode == MJP_MODE
-      ? MJP_HEADER
-      : reverseMode
-      ? SPS_HEADER + " REVERSED MODE! ◀️◀️"
-      : SPS_HEADER;
+  var output = curGameMode == MJP_MODE ? MJP_HEADER : SPS_HEADER;
+  if (reverseMode) {
+    output += " REVERSED MODE! ◀️◀️";
+  }
   output += `<br><br>${userName}: I choose ${newUserChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
 
   if (curGameMode == SPS_MODE) {
@@ -158,6 +158,17 @@ var getGameStats = function () {
     timesPlayed
   )}%)<br>
   Ties: ${timesTied} (${getPercentage(timesTied, timesPlayed)}%)`;
+};
+
+var getAdditionalInfo = function () {
+  // helper function to convey more info to user
+  var output = "";
+  if (computerMode || reverseMode) {
+    output += "<hr>";
+    if (computerMode) output += COMPUTER_MODE_ADDITIONAL_MSG;
+    if (reverseMode) output += REVERSE_MODE_ADDITIONAL_MSG;
+  }
+  return output;
 };
 
 var main = function (input) {
@@ -186,6 +197,7 @@ var main = function (input) {
     // generate output based on game outcome and print game stats
     output = playGame(userChoice);
     if (lastWinner == "") output += getGameStats(); // dont print game stats if in the middle of a mjp round, this happens when lastWinner is not empty
+    output += getAdditionalInfo();
     return output;
   }
 };
