@@ -7,7 +7,7 @@ var main = function (userInput) {
     return `Please input "scissors", "paper" or "stone".`;
   }
 
-  // GENERAT RESULT
+  // GENERATE OUTPUT VALUE: user win, lose, draw
   var userOutcome = generateOutput(userInput, programOutput);
 
   // GENERATE NICER INPUT: ADD EMOJIS, & REASSIGN VALUE
@@ -64,33 +64,21 @@ var checkIfUserWin = function (userInput, programOutput) {
   return false;
 };
 
-// CHECK IF USER INPUT CONTAINS "reversed"; IF YES, GENERATE REVERSE OUTCOME. IF NO, GENERATE NORMAL OUTCOME.
-var checkIfReversed = function (userInput) {
-  if (userInput.includes("reversed")) {
-    return true;
-  }
-  return false;
-};
-
-// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS.
+// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS. EVEN IN REVERSED MODE.
 var generateOutput = function (userInput, programOutput) {
+  if (userInput.includes(programOutput)) {
+    return `draw. Try again?`;
+  }
   // if normal mode and user wins OR if reversed mode and user loses => Win
   if (
-    (!checkIfReversed(userInput) && checkIfUserWin(userInput, programOutput)) ||
-    (checkIfReversed(userInput) && !checkIfUserWin(userInput, programOutput))
+    (!userInput.includes("reversed") &&
+      checkIfUserWin(userInput, programOutput)) ||
+    (userInput.includes("reversed") &&
+      !checkIfUserWin(userInput, programOutput))
   ) {
     return `win! Congrats.`;
   }
-  // if normal mode and user loses OR if reversed mode and user wins  => Lose
-  if (
-    (!checkIfReversed(userInput) &&
-      !checkIfUserWin(userInput, programOutput)) ||
-    (checkIfReversed(userInput) &&
-      checkUserInputValidity(userInput, programOutput))
-  ) {
-    return `lose! Bummer.`;
-  }
-  return `draw. Try again?`;
+  return `lose! Bummer.`;
 };
 
 // GENERATE NICER INPUT: ADD-ON EMOJIS
