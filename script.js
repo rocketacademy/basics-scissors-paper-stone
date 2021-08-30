@@ -104,7 +104,7 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   if (
     input1 == comResult1 ||
@@ -203,7 +203,7 @@ var reverseResult = function (
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   if (rInput1 == rComResult1) {
     userDraw += 1;
@@ -288,7 +288,7 @@ var koreanResult = function (
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   var realResult = noOfGame - 2;
   var winPercentage = userScore + "/" + realResult;
@@ -368,7 +368,7 @@ var korean2Result = function (
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   if (k2Input1 == k2ComResult1) {
     if (koreanWinMode == 1) {
@@ -468,7 +468,7 @@ var cvcResult = function (
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
   //result with valid input
   if (comAResult1 == comBResult1) {
     userDraw += 1;
