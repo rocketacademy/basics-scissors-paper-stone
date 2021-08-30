@@ -9,23 +9,23 @@ var generateRandomNum = function (range) {
   return Math.floor(Math.random() * range);
 };
 
-var didUserWin = function (reversedMode, choiceOne, choiceTwo) {
+var didUserWin = function (choiceOne, choiceTwo) {
   // check if user won
   // happens in one of the below two conditions
   // if reversedmode is on then reverse the outcome
   var userWon = false;
   if (choiceOne - choiceTwo == 1 || choiceOne - choiceTwo == -2) userWon = true;
-  if (reversedMode) return !userWon;
+  if (curGameMode == "spsr") return !userWon;
   return userWon;
 };
 
-var playGame = function (reversedMode, userChoiceNum, computerChoiceNum) {
+var playGame = function (userChoiceNum, computerChoiceNum) {
   timesPlayed++;
   if (userChoiceNum == computerChoiceNum) {
     timesTied++;
     return `It's a draw! The computer is not satisfied.`;
   }
-  if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
+  if (didUserWin(userChoiceNum, computerChoiceNum)) {
     timesUserWon++;
     return `You won! Congrats! The computer is angry now.`;
   }
@@ -54,27 +54,23 @@ var main = function (input) {
     return `Hello, ${userName}!<br><br>The game is Scissors Paper Stone. Enter one of 'scissors', 'paper' or 'stone' to begin. ✌✋✊`;
   }
 
-  if (curGameMode == "sps") {
+  if (curGameMode == "sps" || curGameMode == "spsr") {
+    if (input == "reverse") {
+      curGameMode = curGameMode == "sps" ? "spsr" : "sps";
+      return curGameMode == "sps"
+        ? `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️<br><br>Type 'reverse' again to go back to reverse mode.`
+        : `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️<br><br>Type 'reverse' again to go back to normal rules.`;
+    }
+
     // store possible options
     var options = ["stone", "paper", "scissors"];
 
     // set input to lower case first and trim leading/ending whitespace
     var userChoice = input.toLowerCase().trim();
 
-    // create variable for the reversed word to look for, and set reversed mode as off initially
-    var reversedModeCheck = "reversed";
-    var reversedMode = false;
-
-    // check if the input starts with reversed
-    if (userChoice.startsWith(reversedModeCheck)) {
-      // set reversed mode to on and replace the "reversed" word in the input
-      reversedMode = true;
-      userChoice = userChoice.replace(reversedModeCheck, "").trim();
-    }
-
     // check if input is valid
     if (!options.includes(userChoice)) {
-      return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>Or if you're feeling adventurous, try reverse mode by adding 'reversed' in front of your choice! (e.g. reversed scissors)`;
+      return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>Or if you're feeling adventurous, try reverse mode by typing 'reverse'`;
     }
 
     // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
@@ -85,12 +81,12 @@ var main = function (input) {
     var computerChoice = options[computerChoiceNum];
     var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
 
-    if (reversedMode) {
+    if (curGameMode == "spsr") {
       output += "REVERSED MODE!<br><br>";
     }
 
     // add to output based on game outcome
-    output += playGame(reversedMode, userChoiceNum, computerChoiceNum);
+    output += playGame(userChoiceNum, computerChoiceNum);
     output += " Play again?<br><hr>";
     output += getGameStats();
     return output;
