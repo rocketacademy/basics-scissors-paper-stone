@@ -23,13 +23,13 @@ var playGame = function (reversedMode, userChoiceNum, computerChoiceNum) {
   timesPlayed++;
   if (userChoiceNum == computerChoiceNum) {
     timesTied++;
-    return `It's a draw!<br><br>The computer is not satisfied.`;
+    return `It's a draw! The computer is not satisfied.`;
   }
   if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
     timesUserWon++;
-    return `You won! Congrats!<br><br>The computer is angry now.`;
+    return `You won! Congrats! The computer is angry now.`;
   }
-  return `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
+  return `You lost! Oh well :( The computer is gloating in victory.`;
 };
 
 var getPercentage = function (num, denom) {
@@ -91,7 +91,7 @@ var main = function (input) {
 
     // add to output based on game outcome
     output += playGame(reversedMode, userChoiceNum, computerChoiceNum);
-    output += " Play again?<br><br>";
+    output += " Play again?<br><hr>";
     output += getGameStats();
     return output;
   }
