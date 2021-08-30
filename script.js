@@ -41,8 +41,9 @@ var initUserName = function (name) {
 
 var initChoiceOfGame = function (choice) {
   // check if valid choice, set game mode if yes and return relevant msg
-  if (choice != 1 && choice != 2)
+  if (choice != 1 && choice != 2) {
     return `Invalid choice. <br><br>${CHOICE_MSG}`;
+  }
   curGameMode = choice == 1 ? SPS_MODE : MJP_MODE;
   return ENTER_SPS_MSG;
 };
@@ -119,7 +120,7 @@ var playMJP = function (userChoiceNum, computerChoiceNum) {
 
 var playGame = function (userChoice) {
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
-  // get user's choice number either randomly or based on the input and the corresponding index in the array
+  // get user's choice num either randomly or based on the input and the corresponding index
   var computerChoiceNum = generateRandomNum(options.length);
   var userChoiceNum = computerMode
     ? generateRandomNum(options.length)
@@ -183,10 +184,10 @@ var main = function (input) {
     // set input to lower case first and trim leading/ending whitespace
     var userChoice = input.toLowerCase().trim();
 
-    // computer mode is an independent mode that stacks on top of sps / mjp mode to help the user choose his weapon
+    // computer mode stacks on top of sps / mjp mode to help the user choose his weapon
     if (input == "computer") return toggleComputerMode();
 
-    // reverse mode is an independent mode that stacks on top of sps / mjp mode to reverse the game rules
+    // reverse mode stacks on top of sps / mjp mode to reverse the game rules
     if (input == "reverse") return toggleReverseMode();
 
     // check if input is valid
@@ -195,9 +196,10 @@ var main = function (input) {
     }
 
     // generate output based on game outcome and print game stats
-    output = playGame(userChoice);
+    var output = playGame(userChoice);
     if (lastWinner == "") output += getGameStats(); // dont print game stats if in the middle of a mjp round, this happens when lastWinner is not empty
     output += getAdditionalInfo();
     return output;
   }
+  return "";
 };
