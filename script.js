@@ -1,15 +1,14 @@
 var main = function (userInput) {
-  var programOutput = generateProgramOutput(); // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
+  // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
+  var programOutput = generateProgramOutput();
+
+  // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
   if (!checkUserInputValidity(userInput)) {
-    return `Please input "scissors", "paper" or "stone".`; // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
+    return `Please input "scissors", "paper" or "stone".`;
   }
 
-  // CHECK IF USER INPUT CONTAINS "reversed"; IF YES, GENERATE REVERSE OUTCOME. IF NO, GENERATE NORMAL OUTCOME.
-  if (userInput.includes("reversed")) {
-    var userOutcome = generateReversedResults(userInput, programOutput); // if yes, check if user win, lose or draw. and return outcome string. (reversed version)
-  } else {
-    userOutcome = generateNormalResults(userInput, programOutput); // if no, check if user win, lose or draw. and return outcome string. (normal version)
-  }
+  // GENERAT RESULT
+  var userOutcome = generateOutput(userInput, programOutput);
 
   // GENERATE NICER INPUT: ADD EMOJIS, & REASSIGN VALUE
   userInput += addEmojis(userInput);
@@ -17,22 +16,18 @@ var main = function (userInput) {
 
   // GENERATE OUTPUT MESSAGE ON WEBPAGE
   var myOutputValue = `The computer chose ${programOutput}. <br>
-  You chose ${userInput}. <br><br>
-  You ${userOutcome} <br><br>
-  Now you can type "scissors", "paper" or "stone" to play another round!<br><br>
-  <div> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
+    You chose ${userInput}. <br><br>
+    You ${userOutcome} <br><br>
+    Now you can type "scissors", "paper" or "stone" to play another round!<br><br>
+    <div> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
   return myOutputValue;
 };
 
-// HELPER FUNCTIONS BELOW: //
-
 // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
-// generate a number from 0 to 2, to be used by computer to select output from array
 var generateRandomNumber = function () {
   var randomDecimal = Math.random() * 3;
   return Math.floor(randomDecimal);
 };
-// generate computer output: randomly choose scissors, paper or stone
 var generateProgramOutput = function () {
   const outputOptions = ["scissors", "paper", "stone"];
   return outputOptions[generateRandomNumber()];
@@ -40,6 +35,7 @@ var generateProgramOutput = function () {
 
 // CHECK IF USER INPUT IS VALID
 var checkUserInputValidity = function (userInput) {
+  // added the reversed ones in because users might enter something random with "scissors"
   const inputOptions = [
     "scissors",
     "paper",
@@ -68,27 +64,33 @@ var checkIfUserWin = function (userInput, programOutput) {
   return false;
 };
 
-// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS.
-// #1: normal version
-var generateNormalResults = function (userInput, programOutput) {
-  if (checkIfUserWin(userInput, programOutput)) {
-    return `win! Congrats.`; // if user wins, output message
+// CHECK IF USER INPUT CONTAINS "reversed"; IF YES, GENERATE REVERSE OUTCOME. IF NO, GENERATE NORMAL OUTCOME.
+var checkIfReversed = function (userInput) {
+  if (userInput.includes("reversed")) {
+    return true;
   }
-  if (!checkIfUserWin(userInput, programOutput)) {
-    return `lose! Bummer.`; // if user loses, output message
-  }
-  return `draw. Try again?`; // if anything else (user draws), output message
+  return false;
 };
 
-// #2: reversed version
-var generateReversedResults = function (userInput, programOutput) {
-  if (generateNormalResults(userInput, programOutput) == "win! Congrats.") {
-    return `lose! Bummer.`; // if user wins normally, reverse output message
+// TO GENERATE OUTPUT MESSAGES WHEN USER WINS, LOSES OR DRAWS.
+var generateOutput = function (userInput, programOutput) {
+  // if normal mode and user wins OR if reversed mode and user loses => Win
+  if (
+    (!checkIfReversed(userInput) && checkIfUserWin(userInput, programOutput)) ||
+    (checkIfReversed(userInput) && !checkIfUserWin(userInput, programOutput))
+  ) {
+    return `win! Congrats.`;
   }
-  if (generateNormalResults(userInput, programOutput) == "lose! Bummer.") {
-    return `win! Congrats.`; // if user loses normally, reverse output message
+  // if normal mode and user loses OR if reversed mode and user wins  => Lose
+  if (
+    (!checkIfReversed(userInput) &&
+      !checkIfUserWin(userInput, programOutput)) ||
+    (checkIfReversed(userInput) &&
+      checkUserInputValidity(userInput, programOutput))
+  ) {
+    return `lose! Bummer.`;
   }
-  return `draw. Try again?`; // if anything else (user draws), output message
+  return `draw. Try again?`;
 };
 
 // GENERATE NICER INPUT: ADD-ON EMOJIS
