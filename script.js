@@ -102,7 +102,7 @@ var main = function (userInput) {
 
 // ===== Helper function to pick an option of either scissors, paper or stone
 var pickOption = function () {
-  var randomOptionNum = 2; // Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
+  var randomOptionNum = Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
   var selectedOption = "";
   // Alternative way to random pick an option
   // var optionsArray = ["scissors", "paper", "stone"]; // Set the output options in an array
