@@ -1,3 +1,7 @@
+var timesUserWon = 0;
+var timesTied = 0;
+var timesPlayed = 0;
+
 var generateRandomNum = function (range) {
   // generates random integer from 0 to range - 1, inclusive
   return Math.floor(Math.random() * range);
@@ -14,13 +18,31 @@ var didUserWin = function (reversedMode, choiceOne, choiceTwo) {
 };
 
 var playGame = function (reversedMode, userChoiceNum, computerChoiceNum) {
+  timesPlayed++;
   if (userChoiceNum == computerChoiceNum) {
+    timesTied++;
     return `It's a draw!<br><br>The computer is not satisfied.`;
   }
   if (didUserWin(reversedMode, userChoiceNum, computerChoiceNum)) {
+    timesUserWon++;
     return `You won! Congrats!<br><br>The computer is angry now.`;
   }
   return `You lost! Oh well :(<br><br>The computer is gloating in victory.`;
+};
+
+var getPercentage = function (num, denom) {
+  return ((num / denom) * 100).toFixed(1);
+};
+
+var getGameStats = function () {
+  var timesComputerWon = timesPlayed - timesUserWon - timesTied;
+  return `Times played: ${timesPlayed}<br>
+  Wins: ${timesUserWon} (${getPercentage(timesUserWon, timesPlayed)}%)<br>
+  Losses: ${timesComputerWon} (${getPercentage(
+    timesComputerWon,
+    timesPlayed
+  )}%)<br>
+  Ties: ${timesTied} (${getPercentage(timesTied, timesPlayed)}%)`;
 };
 
 var main = function (input) {
@@ -62,6 +84,7 @@ var main = function (input) {
 
   // add to output based on game outcome
   output += playGame(reversedMode, userChoiceNum, computerChoiceNum);
-  output += " Play again?";
+  output += " Play again?<br><br>";
+  output += getGameStats();
   return output;
 };
