@@ -1,3 +1,7 @@
+var win_count = 0;
+var loss_count = 0;
+var name_input = "";
+
 var random_pss = function () {
   var paper = "Paper";
   var scissors = "Scissors";
@@ -16,12 +20,26 @@ var random_pss = function () {
 
 var process = function (mypov, computer_pov) {
   //normal stream
-  if (mypov == "Scissors" && computer_pov == "Paper") return "you win!";
-  else if (mypov == "Scissors" && computer_pov == "Stone") return "you lose!";
-  else if (mypov == "Paper" && computer_pov == "Stone") return "you win!";
-  else if (mypov == "Paper" && computer_pov == "Scissors") return "you lose!";
-  else if (mypov == "Stone" && computer_pov == "Scissors") return "you win!";
-  else if (mypov == "Stone" && computer_pov == "Paper") return "you lose!";
+
+  if (mypov == "Scissors" && computer_pov == "Paper") {
+    win_count += 1;
+    return "you win!";
+  } else if (mypov == "Scissors" && computer_pov == "Stone") {
+    loss_count += 1;
+    return "you lose!";
+  } else if (mypov == "Paper" && computer_pov == "Stone") {
+    win_count += 1;
+    return "you win!";
+  } else if (mypov == "Paper" && computer_pov == "Scissors") {
+    loss_count += 1;
+    return "you lose!";
+  } else if (mypov == "Stone" && computer_pov == "Scissors") {
+    win_count += 1;
+    return "you win!";
+  } else if (mypov == "Stone" && computer_pov == "Paper") {
+    loss_count += 1;
+    return "you lose!";
+  }
 
   //reversed stream
   if (mypov == "Reversed Scissors" && computer_pov == "Paper")
@@ -36,6 +54,20 @@ var process = function (mypov, computer_pov) {
     return "you lose!";
   else if (mypov == "Reversed Stone" && computer_pov == "Paper")
     return "you win!";
+};
+
+var counting_message = function (win_count, loss_count, name_input) {
+  //counting winning
+  return (
+    "Hi " +
+    name_input +
+    "  so far you've been winning" +
+    "</br>" +
+    win_count +
+    "/" +
+    loss_count +
+    "<br>  turns"
+  );
 };
 
 var display_msg = function (input, computer_pov) {
@@ -54,6 +86,11 @@ var draw = function (input, computer_pov) {
 
 var main = function (input) {
   var computer_pov = random_pss();
+
+  if (!name_input) {
+    return (name_input = input);
+  }
+
   //validation
   if (
     input != "Scissors" &&
@@ -68,8 +105,14 @@ var main = function (input) {
   var finale = process(input, computer_pov);
   var finale_draw = draw(input, computer_pov);
   var message = display_msg(input, computer_pov);
-  if (finale == "you win!") return message + "You Win! Congrats";
-  if (finale == "you lose!") return message + "You lose! Bummer.";
-  if (finale_draw == "its draw!") return message + "It is a draw! try again!";
+  var c_wl = counting_message(win_count, loss_count, name_input);
+  if (finale == "you win!")
+    return message + "You Win! Congrats" + "<br>" + c_wl;
+  if (finale == "you lose!")
+    return message + "You lose! Bummer." + "<br>" + c_wl;
+  if (finale_draw == "its draw!")
+    return message + "It is a draw! try again!" + "<br>" + c_wl;
+
   console.log(computer_pov);
+  console.log(c_wl);
 };
