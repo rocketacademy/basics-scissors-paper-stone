@@ -19,17 +19,30 @@ var didUserWin = function (choiceOne, choiceTwo) {
   return userWon;
 };
 
-var playGame = function (userChoiceNum, computerChoiceNum) {
+var playGame = function (options, userChoice) {
+  // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
+  // get user's choice number based on the input and the corresponding index in the array
+  var computerChoiceNum = generateRandomNum(options.length);
+  var userChoiceNum = options.indexOf(userChoice);
+
+  var computerChoice = options[computerChoiceNum];
+  var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
+
+  if (curGameMode == "spsr") {
+    output += "REVERSED MODE!<br><br>";
+  }
+
   timesPlayed++;
   if (userChoiceNum == computerChoiceNum) {
     timesTied++;
-    return `It's a draw! The computer is not satisfied.`;
-  }
-  if (didUserWin(userChoiceNum, computerChoiceNum)) {
+    output += `It's a draw! The computer is not satisfied.`;
+  } else if (didUserWin(userChoiceNum, computerChoiceNum)) {
     timesUserWon++;
-    return `You won! Congrats! The computer is angry now.`;
+    output += `You won! Congrats! The computer is angry now.`;
+  } else {
+    output += `You lost! Oh well :( The computer is gloating in victory.`;
   }
-  return `You lost! Oh well :( The computer is gloating in victory.`;
+  return output;
 };
 
 var getPercentage = function (num, denom) {
@@ -73,20 +86,8 @@ var main = function (input) {
       return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>Or if you're feeling adventurous, try reverse mode by typing 'reverse'`;
     }
 
-    // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
-    // get user's choice number based on the input and the corresponding index in the array
-    var computerChoiceNum = generateRandomNum(options.length);
-    var userChoiceNum = options.indexOf(userChoice);
-
-    var computerChoice = options[computerChoiceNum];
-    var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
-
-    if (curGameMode == "spsr") {
-      output += "REVERSED MODE!<br><br>";
-    }
-
-    // add to output based on game outcome
-    output += playGame(userChoiceNum, computerChoiceNum);
+    // generate output based on game outcome and print game stats
+    output = playGame(options, userChoice);
     output += " Play again?<br><hr>";
     output += getGameStats();
     return output;
