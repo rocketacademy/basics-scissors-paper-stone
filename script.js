@@ -3,6 +3,7 @@ var timesTied = 0;
 var timesPlayed = 0;
 var curGameMode = "name";
 var userName = "";
+var lastWinner = "";
 
 var generateRandomNum = function (range) {
   // generates random integer from 0 to range - 1, inclusive
@@ -19,6 +20,43 @@ var didUserWin = function (choiceOne, choiceTwo) {
   return userWon;
 };
 
+var playSPS = function (userChoiceNum, computerChoiceNum) {
+  timesPlayed++;
+  if (userChoiceNum == computerChoiceNum) {
+    timesTied++;
+    return `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
+  }
+  if (didUserWin(userChoiceNum, computerChoiceNum)) {
+    timesUserWon++;
+    return `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
+  }
+  return `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
+};
+
+var playMJP = function (userChoiceNum, computerChoiceNum) {
+  if (userChoiceNum == computerChoiceNum) {
+    timesPlayed++;
+    if (lastWinner == "") {
+      timesTied++;
+      return `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
+    }
+    if (lastWinner == "user") {
+      timesUserWon++;
+      lastWinner = "";
+      return `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
+    }
+    lastWinner = "";
+    return `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
+  }
+
+  if (didUserWin(userChoiceNum, computerChoiceNum)) {
+    lastWinner = "user";
+    return `${userName}: "Muk-jji-ppa!"<br><br>`;
+  }
+  lastWinner = "computer";
+  return `Computer: "Muk-jji-ppa!"<br><br>`;
+};
+
 var playGame = function (options, userChoice) {
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
   // get user's choice number based on the input and the corresponding index in the array
@@ -32,21 +70,16 @@ var playGame = function (options, userChoice) {
     output += "REVERSED MODE!<br><br>";
   }
 
-  timesPlayed++;
-  if (userChoiceNum == computerChoiceNum) {
-    timesTied++;
-    output += `It's a draw! The computer is not satisfied.`;
-  } else if (didUserWin(userChoiceNum, computerChoiceNum)) {
-    timesUserWon++;
-    output += `You won! Congrats! The computer is angry now.`;
-  } else {
-    output += `You lost! Oh well :( The computer is gloating in victory.`;
+  if (curGameMode == "sps" || curGameMode == "spsr") {
+    output += playSPS(userChoiceNum, computerChoiceNum);
+  } else if (curGameMode == "mjp") {
+    output += playMJP(userChoiceNum, computerChoiceNum);
   }
   return output;
 };
 
 var getPercentage = function (num, denom) {
-  return ((num / denom) * 100).toFixed(1);
+  return denom == 0 ? 0 : ((num / denom) * 100).toFixed(1);
 };
 
 var getGameStats = function () {
@@ -63,11 +96,19 @@ var getGameStats = function () {
 var main = function (input) {
   if (curGameMode == "name") {
     userName = input;
-    curGameMode = "sps";
-    return `Hello, ${userName}!<br><br>The game is Scissors Paper Stone. Enter one of 'scissors', 'paper' or 'stone' to begin. ✌✋✊`;
+    curGameMode = "choice";
+    return `Hello, ${userName}!<br><br>The game is Scissors Paper Stone. ✌✋✊<br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.`;
   }
 
-  if (curGameMode == "sps" || curGameMode == "spsr") {
+  if (curGameMode == "choice") {
+    if (input != 1 && input != 2)
+      return "Invalid choice. <br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.";
+    if (input == 1) curGameMode = "sps";
+    if (input == 2) curGameMode = "mjp";
+    return "Enter one of 'scissors', 'paper' or 'stone' to begin playing.";
+  }
+
+  if (curGameMode == "sps" || curGameMode == "spsr" || curGameMode == "mjp") {
     if (input == "reverse") {
       curGameMode = curGameMode == "sps" ? "spsr" : "sps";
       return curGameMode == "sps"
@@ -88,7 +129,6 @@ var main = function (input) {
 
     // generate output based on game outcome and print game stats
     output = playGame(options, userChoice);
-    output += " Play again?<br><hr>";
     output += getGameStats();
     return output;
   }
