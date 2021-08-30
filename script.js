@@ -1,7 +1,26 @@
+const NAME_MODE = "name";
+const CHOICE_MODE = "choice";
+const SPS_MODE = "sps";
+const SPSR_MODE = "spsr";
+const MJP_MODE = "mjp";
+const options = ["stone", "paper", "scissors"];
+
+const SPS_HEADER = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>`;
+const SPSR_HEADER = `SCISSORS! ✌ PAPER! ✋ STONE! ✊ REVERSED MODE! ◀️◀️<br><br>`;
+const MJP_HEADER = `MUK 묵! ✊ JJI 찌! ✌ PPA 빠! ✋<br><br>`;
+const DRAW_MSG = `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
+const WIN_MSG = `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
+const LOSE_MSG = `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
+const CHOICE_MSG = `The game is Scissors Paper Stone. ✌✋✊<br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.`;
+const ENTER_SPS_MSG = `Enter one of 'scissors', 'paper' or 'stone' to begin playing.`;
+const RULES_NORMAL_MSG = `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️<br><br>Type 'reverse' again to go back to reverse mode.`;
+const RULES_REVERSED_MSG = `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️<br><br>Type 'reverse' again to go back to normal rules.`;
+const INVALID_CHOICE_MSG = `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊`;
+
 var timesUserWon = 0;
 var timesTied = 0;
 var timesPlayed = 0;
-var curGameMode = "name";
+var curGameMode = NAME_MODE;
 var userName = "";
 var lastWinner = "";
 
@@ -16,7 +35,7 @@ var didUserWin = function (choiceOne, choiceTwo) {
   // if reversedmode is on then reverse the outcome
   var userWon = false;
   if (choiceOne - choiceTwo == 1 || choiceOne - choiceTwo == -2) userWon = true;
-  if (curGameMode == "spsr") return !userWon;
+  if (curGameMode == SPSR_MODE) return !userWon;
   return userWon;
 };
 
@@ -24,13 +43,13 @@ var playSPS = function (userChoiceNum, computerChoiceNum) {
   timesPlayed++;
   if (userChoiceNum == computerChoiceNum) {
     timesTied++;
-    return `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
+    return DRAW_MSG;
   }
   if (didUserWin(userChoiceNum, computerChoiceNum)) {
     timesUserWon++;
-    return `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
+    return WIN_MSG;
   }
-  return `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
+  return LOSE_MSG;
 };
 
 var playMJP = function (userChoiceNum, computerChoiceNum) {
@@ -38,15 +57,15 @@ var playMJP = function (userChoiceNum, computerChoiceNum) {
     timesPlayed++;
     if (lastWinner == "") {
       timesTied++;
-      return `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
+      return DRAW_MSG;
     }
     if (lastWinner == "user") {
       timesUserWon++;
       lastWinner = "";
-      return `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
+      return WIN_MSG;
     }
     lastWinner = "";
-    return `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
+    return LOSE_MSG;
   }
 
   if (didUserWin(userChoiceNum, computerChoiceNum)) {
@@ -57,22 +76,24 @@ var playMJP = function (userChoiceNum, computerChoiceNum) {
   return `Computer: "Muk-jji-ppa!"<br><br>`;
 };
 
-var playGame = function (options, userChoice) {
+var playGame = function (userChoice) {
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
   // get user's choice number based on the input and the corresponding index in the array
   var computerChoiceNum = generateRandomNum(options.length);
   var userChoiceNum = options.indexOf(userChoice);
 
   var computerChoice = options[computerChoiceNum];
-  var output = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
+  var output =
+    curGameMode == MJP_MODE
+      ? MJP_HEADER
+      : curGameMode == SPS_MODE
+      ? SPS_HEADER
+      : SPSR_HEADER;
+  output += `${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
 
-  if (curGameMode == "spsr") {
-    output += "REVERSED MODE!<br><br>";
-  }
-
-  if (curGameMode == "sps" || curGameMode == "spsr") {
+  if (curGameMode == SPS_MODE || curGameMode == SPSR_MODE) {
     output += playSPS(userChoiceNum, computerChoiceNum);
-  } else if (curGameMode == "mjp") {
+  } else if (curGameMode == MJP_MODE) {
     output += playMJP(userChoiceNum, computerChoiceNum);
   }
   return output;
@@ -94,42 +115,37 @@ var getGameStats = function () {
 };
 
 var main = function (input) {
-  if (curGameMode == "name") {
+  if (curGameMode == NAME_MODE) {
     userName = input;
-    curGameMode = "choice";
-    return `Hello, ${userName}!<br><br>The game is Scissors Paper Stone. ✌✋✊<br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.`;
+    curGameMode = CHOICE_MODE;
+    return `Hello, ${userName}!<br><br>${CHOICE_MSG}`;
   }
 
-  if (curGameMode == "choice") {
+  if (curGameMode == CHOICE_MODE) {
     if (input != 1 && input != 2)
-      return "Invalid choice. <br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.";
-    if (input == 1) curGameMode = "sps";
-    if (input == 2) curGameMode = "mjp";
-    return "Enter one of 'scissors', 'paper' or 'stone' to begin playing.";
+      return `Invalid choice. <br><br>${CHOICE_MSG}`;
+    curGameMode = input == 1 ? SPS_MODE : MJP_MODE;
+    return ENTER_SPS_MSG;
   }
 
-  if (curGameMode == "sps" || curGameMode == "spsr" || curGameMode == "mjp") {
-    if (input == "reverse") {
-      curGameMode = curGameMode == "sps" ? "spsr" : "sps";
-      return curGameMode == "sps"
-        ? `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️<br><br>Type 'reverse' again to go back to reverse mode.`
-        : `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️<br><br>Type 'reverse' again to go back to normal rules.`;
-    }
-
-    // store possible options
-    var options = ["stone", "paper", "scissors"];
-
+  if ([SPS_MODE, SPSR_MODE, MJP_MODE].includes(curGameMode)) {
     // set input to lower case first and trim leading/ending whitespace
     var userChoice = input.toLowerCase().trim();
 
+    if (input == "reverse") {
+      if (curGameMode == MJP_MODE) return INVALID_CHOICE_MSG;
+      curGameMode = curGameMode == SPS_MODE ? SPSR_MODE : SPS_MODE;
+      return curGameMode == SPS_MODE ? RULES_NORMAL_MSG : RULES_REVERSE_MSG;
+    }
+
     // check if input is valid
     if (!options.includes(userChoice)) {
-      return `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊<br><br>Or if you're feeling adventurous, try reverse mode by typing 'reverse'`;
+      return INVALID_CHOICE_MSG;
     }
 
     // generate output based on game outcome and print game stats
-    output = playGame(options, userChoice);
-    output += getGameStats();
+    output = playGame(userChoice);
+    if (lastWinner == "") output += getGameStats();
     return output;
   }
 };
