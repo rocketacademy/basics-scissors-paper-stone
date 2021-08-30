@@ -11,13 +11,29 @@ var main = function (input) {
   // Game state: Confirm username
   if (gameState == "username") {
     userName = input;
-    gameState = "main";
+    gameState = "normal";
     return `Hello ${userName}! Scissors, paper or stone?`;
   }
 
+  // Game state changing
   if (input == "reverse") {
     gameReverse = 1;
     return `Time to play in reverse~!`;
+  }
+
+  if (input == "korean") {
+    gameState = "korean";
+    return `Korean mode enabled!`;
+  }
+
+  if (input == "normal") {
+    gameState = "normal";
+    return `Normal mode enabled!`;
+  }
+
+  if (input == "computer") {
+    gameState = "computer";
+    return `Computer mode enabled!`;
   }
 
   // Game state: Main game
@@ -25,28 +41,49 @@ var main = function (input) {
     return "Please input scissors, paper or stone.";
   }
   var checkReverse = gameReverse + determineReverse(input);
+
+  var playerRPS = input;
   var botRPS = giveRandomRPS();
   var verifyWinner = "";
-  console.log(checkReverse);
+  var koreanWinner = "";
+
+  // Check computer mode status
+  if (gameState == "computer") {
+    playerRPS = giveRandomRPS();
+  }
+
+  // Check reverse mode status
   if (checkReverse == 1) {
-    verifyWinner = didPlayerWin(botRPS, input);
+    verifyWinner = didPlayerWin(botRPS, playerRPS);
   } else {
-    verifyWinner = didPlayerWin(input, botRPS);
+    verifyWinner = didPlayerWin(playerRPS, botRPS);
+  }
+
+  // Check Korean mode status
+  if (gameState == "korean") {
+    koreanWinner = koreanRPS(verifyWinner);
   }
 
   // End of game - Record and return results
   scoreTracker(verifyWinner);
+
   var myOutput = `
-  You input ${input}, the bot input ${botRPS}.</br> 
+  You input ${playerRPS}, the bot input ${botRPS}.</br> 
   ${userName} ${verifyWinner}s! 
   The current score is ${playerWins}W-${playerLosses}L-${playerDraws}D. </br>
-  ${playerFeedback(playerWins, playerLosses)}`;
+  ${playerFeedback(playerWins, playerLosses)}
+  ${koreanWinner}`;
+
+  lastWinner = verifyWinner;
 
   return myOutput;
 };
 
 // Returns true on non-RPS responses
 var inputValidator = function (input) {
+  if (gameState == "computer") {
+    return false;
+  }
   if (
     input != "scissors" &&
     input != "paper" &&
@@ -153,5 +190,16 @@ var playerFeedback = function (wins, losses) {
   }
   if (wins == losses) {
     return `Close game ${userName}!`;
+  }
+};
+
+// Korean mode, if you draw then the most recent winner wins
+var koreanRPS = function (result) {
+  if (lastWinner == "" || lastWinner == "Draw") {
+    return "";
+  } else if (result == "Draw") {
+    return `</br>You ${lastWinner} in Korean SPS!`;
+  } else {
+    return "";
   }
 };
