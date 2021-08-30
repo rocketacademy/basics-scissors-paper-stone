@@ -52,7 +52,7 @@ var main = function (userInput) {
     }
   }
 
-  // Check the current game mode
+  // If user submit reverse, check and update game mode
   if (userInput == "reverse") {
     reverseCount = reverseCount + 1;
     // console.log(`The reversed count after input reverse is ${reverseCount}.`);
@@ -125,14 +125,6 @@ var originalRules = function (userInput, outputByProgram) {
   var choiceStatement = `Hey ${userName}, you chose ${userInput} and the computer chose ${outputByProgram}.`;
   var originalInstructionStatement = `Submit "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >You can also submit "reverse" to reverse the game rules.`;
   if (
-    userInput == outputByProgram ||
-    (userInput == "reversed scissors" && outputByProgram == "scissors") ||
-    (userInput == "reversed paper" && outputByProgram == "paper") ||
-    (userInput == "reversed stone" && outputByProgram == "stone")
-  ) {
-    numOfDraws = numOfDraws + 1;
-    myOutputValue = `${choiceStatement} <br ><br > It's a draw! 🤷<br ><br >${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)`;
-  } else if (
     userInput == outputByProgram ||
     (userInput == "reversed scissors" && outputByProgram == "scissors") ||
     (userInput == "reversed paper" && outputByProgram == "paper") ||
