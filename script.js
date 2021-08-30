@@ -1,27 +1,38 @@
+var computerWins = 0;
+var userWins = 0;
+//keeps track of total number of games played
+var gameCount = 0;
+
 var main = function (input) {
   //generate choice
   var computerChoice = generateRandomOption();
-  console.log(computerChoice);
+  //console.log(computerChoice);
   //assign number to computer's play
   //computerScissors = 0;
   //computerPaper = 1;
   //computerStone = 2;
   var computersPlay = assignComputerChoice(computerChoice);
-  console.log(computersPlay);
+  //console.log(computersPlay);
+  gameCount += 1;
 
-  //player wins
+  //player wins, add to userWins count
   if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
-    return `You win! You chose ${input} and the computer played ${computersPlay}.`;
+    userWins += 1;
+    var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+    return `You win! <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. You win ${winPercentage} of the game you've played!`;
   }
 
-  //player loses
+  //player loses, add to computerWins count
   if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
-    return `You lost :( You chose ${input} and the computer played ${computersPlay}.`;
+    computerWins += 1;
+    var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+    return `You lost :( <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. You win ${winPercentage} of the game you've played!`;
   }
 
   //tie
   if (input == computersPlay) {
-    return `It's a tie! You chose ${input} and the computer played ${computersPlay}.`;
+    var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+    return `It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. You win ${winPercentage} of the game you've played!`;
   }
 
   //player does not input scissors, paper or stone
@@ -42,4 +53,12 @@ var assignComputerChoice = function (computerChoice) {
   if (computerChoice == 0) return `scissors`;
   if (computerChoice == 1) return `paper`;
   if (computerChoice == 2) return `stone`;
+};
+
+//function to calculate percentage of wins
+var calculatePercentageOfUserWins = function (userWins, gameCount) {
+  var winPercentage = (userWins / gameCount) * 100;
+  //console.log(`winPercentage`);
+  //console.log(winPercentage);
+  return `${Math.round(winPercentage)}%`;
 };
