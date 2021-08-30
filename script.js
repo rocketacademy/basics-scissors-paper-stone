@@ -3,58 +3,61 @@ var comWinCount = 0;
 var numOfDraws = 0;
 var totalRounds = 0;
 
-var currentGameMode = "waiting for user name";
+var gameStarted = false;
 var userName = "";
 
 var main = function (userInput) {
-  var myOutputValue = "";
   // CHECK IF USER ENTERED NAME
-  if (userInput === "" && currentGameMode == "waiting for user name") {
-    return (myOutputValue = "please tell me your name to start playing");
-  } else if (currentGameMode == "waiting for user name") {
-    userName = userInput;
-    currentGameMode = "scissors paper stone";
-    myOutputValue = `hello <b>${userName}</b>, please enter "scissors", "paper" or "stone" to play. <br><br>
-        <div id="easter-egg"> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
-  } else if (currentGameMode == "scissors paper stone") {
-    // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
-    var programOutput = generateProgramOutput();
-
-    // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
-    if (!checkUserInputValidity(userInput)) {
-      return `hello <b>${userName}</b>, please enter "scissors", "paper" or "stone" to play. <br><br>
-        <div id="easter-egg"> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
-    }
-
-    // GENERATE OUTPUT VALUE: user win, lose, draw
-    var userOutcome = generateOutput(userInput, programOutput);
-
-    // CALCULATE USER WINNING PERCENTAGE
-    var userWinPercentage = Math.round(
-      ((userWinCount / totalRounds) * 10000) / 100
-    );
-    // CALCULATE COMPUTER WINNING PERCENTAGE
-    var comWinPercentage = Math.round(
-      ((comWinCount / totalRounds) * 10000) / 100
-    );
-
-    // GENERATE NICER INPUT: ADD EMOJIS, & REASSIGN VALUE
-    userInput += addEmojis(userInput);
-    programOutput += addEmojis(programOutput);
-
-    // GENERATE OUTPUT MESSAGE ON WEBPAGE
-    var myOutputValue = `The computer chose <b>${programOutput}</b>. <br>
-        You chose <b>${userInput}</b>. <br><br>
-        <b>You ${userOutcome}</b> <br><br>
-        <hr> <br>
-        A total of <b>${totalRounds} round(s)</b> have been played: <br>
-        you won <b>${userWinCount} time(s)</b>, computer won <b>${comWinCount}</b> time(s) and you guys tied <b>${numOfDraws}</b> time(s). <br>
-        You win <b>${userWinPercentage}%</b> of the time, while computer wins <b>${comWinPercentage}%</b> of the time.`;
+  // if user didn't enter anything, output to tell them to enter name
+  if (userInput == "" && gameStarted == false) {
+    return "please tell me your name to start playing";
   }
-  return myOutputValue;
+  // if user entered something, store userName, change game mode and tell them to play.
+  if (gameStarted == false) {
+    userName = userInput;
+    gameStarted = true;
+    return `hello <b>${userName}</b>, please enter "scissors", "paper" or "stone" to play. <br><br>
+        <div id="easter-egg"> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
+  }
+  // if user is in game mode, trigger SPS game~
+  if (gameStarted == true) {
+    return playSPSGame(userInput);
+  }
 };
 
 // HELPER FUNCTIONS
+// PLAY SCISSORS PAPER STONE GAME
+var playSPSGame = function (userInput) {
+  // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
+  var programOutput = generateProgramOutput();
+
+  // CHECK IF USER INPUT IS VALID; IF NOT, GENERATE ERROR MESSAGE.
+  if (!checkUserInputValidity(userInput)) {
+    return `hello <b>${userName}</b>, please enter "scissors", "paper" or "stone" to play. <br><br>
+        <div id="easter-egg"> Easter Egg: try adding "reversed" in front of your input. E.g "reversed stone".`;
+  }
+
+  // GENERATE OUTPUT VALUE: USER WIN, LOSE OR DRAW
+  var userOutcome = generateOutput(userInput, programOutput);
+
+  // GENERATE NICER OUTPUT: ADD EMOJIS, ADD
+  userInput += addEmojis(userInput);
+  programOutput += addEmojis(programOutput);
+
+  // GENERATE OUTPUT MESSAGE ON WEBPAGE
+  myOutputValue = `The computer chose <b>${programOutput}</b>. <br>
+        You chose <b>${userInput}</b>. <br><br>
+        <b>You ${userOutcome}</b> <br><br>
+        <hr> <br>
+        So far <b>${userName}</b>... <br><br>
+        Out of a total of ${totalRounds} game(s), 
+        you've won ${userWinCount} game(s), computer has won ${comWinCount} game(s) and you guys drew ${numOfDraws} game(s). <br><br>`;
+
+  // GENERATE ADDITIONAL MESSAGE
+  myOutputValue += generateMessage(userWinCount, comWinCount);
+  return myOutputValue;
+};
+
 // GENERATE RANDOM COMPUTER OUTPUT: SCISSORS, PAPER, STONE
 var generateRandomNumber = function () {
   var randomDecimal = Math.random() * 3;
@@ -67,7 +70,6 @@ var generateProgramOutput = function () {
 
 // CHECK IF USER INPUT IS VALID
 var checkUserInputValidity = function (userInput) {
-  // added the reversed ones in because users might enter something random with "scissors"
   const inputOptions = [
     "scissors",
     "paper",
@@ -76,7 +78,7 @@ var checkUserInputValidity = function (userInput) {
     "reversed paper",
     "reversed stone",
   ];
-  // check if user input is one of array objects. if yes, return true. if no, return false.
+  // check if user input is one of array objects
   if (inputOptions.includes(userInput)) {
     return true;
   }
@@ -103,7 +105,7 @@ var generateOutput = function (userInput, programOutput) {
     numOfDraws += 1;
     return `draw. Try again, ${userName}?`;
   }
-  // if normal mode and user wins OR if reversed mode and user loses => Win
+  // if normal mode and user wins OR if reversed mode and user loses, user wins
   if (
     (!userInput.includes("reversed") &&
       checkIfUserWin(userInput, programOutput)) ||
@@ -117,14 +119,24 @@ var generateOutput = function (userInput, programOutput) {
   return `lose! Bummer, ${userName}.`;
 };
 
-// GENERATE NICER INPUT: ADD-ON EMOJIS
+// GENERATE NICER OUTPUT: ADD-ON EMOJIS
 var addEmojis = function (input) {
   if (input.includes("scissors")) {
-    return ` 🔪`; // if user input includes "scissors", return knife emoji
+    return ` 🔪`;
   }
   if (input.includes("paper")) {
-    return ` 📄`; // if user input includes "paper", return paper
+    return ` 📄`;
   }
-  // if anything else ("stone"), return easter island emoji
   return ` 🗿`;
+};
+
+// GENERATE ADDITIONAL MESSAGE IF DOING WELL OR NOT
+var generateMessage = function (userWinCount, comWinCount) {
+  if (userWinCount > comWinCount) {
+    return " <b>Pretty good! 👍</b>";
+  }
+  if (userWinCount < comWinCount) {
+    return " <b>You can do better. 👊</b>";
+  }
+  return "";
 };
