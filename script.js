@@ -13,6 +13,8 @@ const WIN_MSG = `You won! Congrats! The computer is angry now. Play again?<br><h
 const LOSE_MSG = `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
 const CHOICE_MSG = `The game is Scissors Paper Stone. ✌✋✊<br><br>Enter 1 for normal Scissors Paper Stone.<br>Enter 2 for muk-jji-ppa.`;
 const ENTER_SPS_MSG = `Enter one of 'scissors', 'paper' or 'stone' to begin playing.`;
+const COMPUTER_MODE_ON_MSG = `Computer mode on! The computer will choose for you now. Simply press submit to play a turn.`;
+const COMPUTER_MODE_OFF_MSG = `Computer mode off! You're in the driver's seat now. `;
 const RULES_NORMAL_MSG = `◀️◀️ Rules back to normal! You can breathe easy now. ◀️◀️<br><br>Type 'reverse' again to go back to reverse mode.`;
 const RULES_REVERSED_MSG = `◀️◀️ Rules reversed! I see you're a daring one! ◀️◀️<br><br>Type 'reverse' again to go back to normal rules.`;
 const INVALID_CHOICE_MSG = `You didn't enter a valid choice. The game is Scissors Paper Stone!<br><br>Don't be nervous! Enter one of 'scissors', 'paper' or 'stone'. ✌✋✊`;
@@ -23,6 +25,7 @@ var timesPlayed = 0;
 var curGameMode = NAME_MODE;
 var userName = "";
 var lastWinner = "";
+var computerMode = false;
 
 var generateRandomNum = function (range) {
   // generates random integer from 0 to range - 1, inclusive
@@ -80,16 +83,19 @@ var playGame = function (userChoice) {
   // generate computer choice using random num: 0 = stone, 1 = paper, 2 = scissors
   // get user's choice number based on the input and the corresponding index in the array
   var computerChoiceNum = generateRandomNum(options.length);
-  var userChoiceNum = options.indexOf(userChoice);
+  var userChoiceNum = computerMode
+    ? generateRandomNum(options.length)
+    : options.indexOf(userChoice);
 
   var computerChoice = options[computerChoiceNum];
+  var newUserChoice = computerMode ? options[userChoiceNum] : userChoice;
   var output =
     curGameMode == MJP_MODE
       ? MJP_HEADER
       : curGameMode == SPS_MODE
       ? SPS_HEADER
       : SPSR_HEADER;
-  output += `${userName}: I choose ${userChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
+  output += `${userName}: I choose ${newUserChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
 
   if (curGameMode == SPS_MODE || curGameMode == SPSR_MODE) {
     output += playSPS(userChoiceNum, computerChoiceNum);
@@ -132,14 +138,21 @@ var main = function (input) {
     // set input to lower case first and trim leading/ending whitespace
     var userChoice = input.toLowerCase().trim();
 
+    if (input == "computer") {
+      computerMode = !computerMode;
+      return computerMode
+        ? COMPUTER_MODE_ON_MSG
+        : COMPUTER_MODE_OFF_MSG + ENTER_SPS_MSG;
+    }
+
     if (input == "reverse") {
       if (curGameMode == MJP_MODE) return INVALID_CHOICE_MSG;
       curGameMode = curGameMode == SPS_MODE ? SPSR_MODE : SPS_MODE;
-      return curGameMode == SPS_MODE ? RULES_NORMAL_MSG : RULES_REVERSE_MSG;
+      return curGameMode == SPS_MODE ? RULES_NORMAL_MSG : RULES_REVERSED_MSG;
     }
 
     // check if input is valid
-    if (!options.includes(userChoice)) {
+    if (!computerMode && !options.includes(userChoice)) {
       return INVALID_CHOICE_MSG;
     }
 
