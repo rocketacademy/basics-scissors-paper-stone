@@ -2,13 +2,11 @@
 const NAME_MODE = "name";
 const CHOICE_MODE = "choice";
 const SPS_MODE = "sps";
-const SPSR_MODE = "spsr";
 const MJP_MODE = "mjp";
 
 // constants for output strings
-const SPS_HEADER = `SCISSORS! ✌ PAPER! ✋ STONE! ✊<br><br>`;
-const SPSR_HEADER = `SCISSORS! ✌ PAPER! ✋ STONE! ✊ REVERSED MODE! ◀️◀️<br><br>`;
-const MJP_HEADER = `MUK 묵! ✊ JJI 찌! ✌ PPA 빠! ✋<br><br>`;
+const SPS_HEADER = `SCISSORS! ✌ PAPER! ✋ STONE! ✊`;
+const MJP_HEADER = `MUK 묵! ✊ JJI 찌! ✌ PPA 빠! ✋`;
 const DRAW_MSG = `It's a draw! The computer is not satisfied. Play again?<br><hr>`;
 const WIN_MSG = `You won! Congrats! The computer is angry now. Play again?<br><hr>`;
 const LOSE_MSG = `You lost! Oh well :( The computer is gloating in victory. Play again?<br><hr>`;
@@ -29,6 +27,7 @@ var timesPlayed = 0;
 var curGameMode = NAME_MODE;
 var userName = "";
 var lastWinner = "";
+var reverseMode = false;
 var computerMode = false;
 
 var initUserName = function (name) {
@@ -56,9 +55,8 @@ var toggleComputerMode = function () {
 
 var toggleReverseMode = function () {
   // change game mode and return relevant msg
-  if (curGameMode == MJP_MODE) return INVALID_CHOICE_MSG; // if game mode is mjp mode, there is no reverse mode
-  curGameMode = curGameMode == SPS_MODE ? SPSR_MODE : SPS_MODE;
-  return curGameMode == SPS_MODE ? RULES_NORMAL_MSG : RULES_REVERSED_MSG;
+  reverseMode = !reverseMode;
+  return reverseMode ? RULES_REVERSED_MSG : RULES_NORMAL_MSG;
 };
 
 var generateRandomNum = function (range) {
@@ -72,7 +70,7 @@ var didUserWin = function (choiceOne, choiceTwo) {
   // if reversedmode is on then reverse the outcome
   var userWon = false;
   if (choiceOne - choiceTwo == 1 || choiceOne - choiceTwo == -2) userWon = true;
-  if (curGameMode == SPSR_MODE) return !userWon;
+  if (reverseMode) return !userWon;
   return userWon;
 };
 
@@ -132,12 +130,12 @@ var playGame = function (userChoice) {
   var output =
     curGameMode == MJP_MODE
       ? MJP_HEADER
-      : curGameMode == SPS_MODE
-      ? SPS_HEADER
-      : SPSR_HEADER;
-  output += `${userName}: I choose ${newUserChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
+      : reverseMode
+      ? SPS_HEADER + " REVERSED MODE! ◀️◀️"
+      : SPS_HEADER;
+  output += `<br><br>${userName}: I choose ${newUserChoice}!<br>Computer: I choose ${computerChoice}!<br><br>`;
 
-  if (curGameMode == SPS_MODE || curGameMode == SPSR_MODE) {
+  if (curGameMode == SPS_MODE) {
     output += playSPS(userChoiceNum, computerChoiceNum);
   } else if (curGameMode == MJP_MODE) {
     output += playMJP(userChoiceNum, computerChoiceNum);
@@ -170,14 +168,14 @@ var main = function (input) {
   if (curGameMode == CHOICE_MODE) return initChoiceOfGame(input);
 
   // in sps / spsr / mjp mode, play game
-  if ([SPS_MODE, SPSR_MODE, MJP_MODE].includes(curGameMode)) {
+  if ([SPS_MODE, MJP_MODE].includes(curGameMode)) {
     // set input to lower case first and trim leading/ending whitespace
     var userChoice = input.toLowerCase().trim();
 
-    // computer mode is an independent mode that works with sps / spsr / mjp mode to help the user choose his weapon
+    // computer mode is an independent mode that stacks on top of sps / mjp mode to help the user choose his weapon
     if (input == "computer") return toggleComputerMode();
 
-    // reverse mode only applies to sps/spsr mode, where the command toggles between the two modes
+    // reverse mode is an independent mode that stacks on top of sps / mjp mode to reverse the game rules
     if (input == "reverse") return toggleReverseMode();
 
     // check if input is valid
