@@ -69,6 +69,7 @@ var gameModeSel = function (mode) {
     noOfGame = 1;
     comAScore = 0;
     comBscore = 0;
+    userDraw = 0;
   }
   if (mode == "reverse" && noOfGame != 0) {
     gameMode = "reverse";
@@ -77,6 +78,7 @@ var gameModeSel = function (mode) {
     noOfGame = 1;
     comAScore = 0;
     comBscore = 0;
+    userDraw = 0;
   }
   if (mode == "korean" && noOfGame != 0) {
     gameMode = "korean";
@@ -85,6 +87,7 @@ var gameModeSel = function (mode) {
     noOfGame = 1;
     comAScore = 0;
     comBscore = 0;
+    userDraw = 0;
   }
   if (mode == "com" && noOfGame != 0) {
     gameMode = "com";
@@ -93,6 +96,7 @@ var gameModeSel = function (mode) {
     noOfGame = 1;
     comAScore = 0;
     comBscore = 0;
+    userDraw = 0;
   }
 };
 //Normal with reversed mode result
