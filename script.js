@@ -32,7 +32,7 @@ var main = function (input) {
   }
 
   //reverse game code
-  else if ((gameMode = `reverse`)) {
+  else if (gameMode == `reverse`) {
     //generate choice
     var computerChoice = generateRandomOption();
     //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
@@ -45,14 +45,14 @@ var main = function (input) {
       myOutputValue = `Reverse game: Hey ${userName}, it's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
     }
 
-    //winning message for reverse game
-    else if (((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) == false) {
+    //losing message for reverse game
+    else if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
       var myOutputValue = `Reverse game: ${regGameModeWin(input, computersPlay)}`;
       console.log(myOutputValue);
     }
 
-    //losing message for reverse game
-    else if (((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) == false) {
+    //winning message for reverse game
+    else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
       var myOutputValue = `Reverse game: ${regGameModeLose(input, computersPlay)}`;
       console.log(myOutputValue);
     }
