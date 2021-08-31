@@ -8,7 +8,7 @@ var drawScore = 0;
 var moveSet = {
   1: "scissors",
   2: "paper",
-  3: "stone", // every move beats the move below it. if key1-key2 = -1 or +2, player wins in normal mode
+  3: "stone", // every move beats the move below it.
 };
 
 var winSetNormal = {
@@ -47,26 +47,19 @@ var playGame = function (input1, input2) {
 
   if (gameMode == "normal") {
     if (input1 == winSetNormal[input2]) {
-      console.log("computer wins");
       computerScore += 1;
       winner = "Computer";
-    }
-
-    if (input1 !== winSetNormal[input2]) {
-      console.log("player wins");
+    } else if (input1 !== winSetNormal[input2]) {
       playerScore += 1;
       winner = "Player";
-    }
-
-    if (input1 == input2) {
-      console.log("tie");
+    } else if (input1 == input2) {
       drawScore += 1;
       winner = "Nobody";
     }
-
-    console.log("Ending Game.");
-    return winner;
   }
+  console.log(`Winner: ${winner}`);
+  console.log("Ending Game.");
+  return winner;
 };
 
 var inputValidate = function (inputText) {
@@ -84,7 +77,8 @@ var inputValidate = function (inputText) {
     gameMode = "reverse";
     console.log("reverse mode activated.");
     return true;
-  } else {
+  }
+  {
     return false;
   }
 };
@@ -100,6 +94,7 @@ var printOutput = function (gest1, gest2, winner) {
 };
 
 var main = function (input) {
+  var myOutputValue = "";
   if (gameMode == "waiting for username") {
     username = input;
     gameMode = "normal";
