@@ -13,19 +13,19 @@ var main = function (input) {
     userName = input;
     //console.log(userName);
     gameMode = `waiting for gameMode`;
-    myOutputValue = `Hi ${userName}, please input "reverse" or "regGame" to select game mode!`;
+    myOutputValue = `Hi ${userName}, please input "reverse" or "regular" to select game mode!`;
   }
 
-  //wait for game mode selection. If input = reverse, switch to reverse game. If input = regGame, switch to regular game
+  //wait for game mode selection. If input = reverse, switch to reverse game. If input = regular, switch to regular game
   else if (gameMode == `waiting for gameMode`) {
     if (input == `reverse`) {
       gameMode = `reverse`;
       myOutputValue = `You are now in ${gameMode} game mode!`;
-    } else if (input == `regGame`) {
-      gameMode = `regGame`;
+    } else if (input == `regular`) {
+      gameMode = `regular`;
       myOutputValue = `You are now in ${gameMode} game mode!`;
     } else {
-      myOutputValue = `Please input reverse or regGame to start!`;
+      myOutputValue = `Please input reverse or regular to start!`;
     }
     console.log(gameMode);
     console.log(myOutputValue);
@@ -58,9 +58,9 @@ var main = function (input) {
     }
 
     //input to switch mode to regular game
-    else if (input == `regGame`) {
+    else if (input == `regular`) {
       gameMode = input;
-      myOutputValue = `You are now in regular game mode!`;
+      myOutputValue = `You are now in regular game mode! Enter scissors, paper or stone to play.`;
       console.log(`gameMode`);
       console.log(gameMode);
     }
@@ -69,7 +69,7 @@ var main = function (input) {
     else {
       myOutputValue = `Please type in scissors, paper or stone to play :)`;
     }
-  } else if (gameMode == `regGame`) {
+  } else if (gameMode == `regular`) {
     //console.log(input);
     //generate choice
     var computerChoice = generateRandomOption();
@@ -97,7 +97,7 @@ var main = function (input) {
     //switch to reverse game mode
     else if (input == `reverse`) {
       gameMode = `reverse`;
-      myOutputValue = `You are now in reverse game mode!`;
+      myOutputValue = `You are now in reverse game mode! Enter scissors, paper or stone to play.`;
       console.log(`gameMode`);
       console.log(gameMode);
     }
