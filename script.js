@@ -4,9 +4,8 @@ var PlayerWins = 0;
 var ComputerWins = 0;
 var totalDraws = 0;
 var Username = "";
-var GameMode = "";
+var GameMode = "normal";
 var lastResult = "";
-var Answer = "";
 
 var main = function (input) {
   if (totalGames == -1) {
@@ -28,7 +27,7 @@ var main = function (input) {
   if (input == "stone" || input == "scissors" || input == "paper") {
     console.log(GameMode);
     totalGames = totalGames + 1;
-    if ((GameMode = "normal" || Gamemode == "")) {
+    if (GameMode == "normal") {
       myOutputValue = RegularGame(input, Answer);
     }
     if (GameMode == "reverse") {
@@ -116,7 +115,6 @@ var LoseCheck = function (input2, Answer2) {
 };
 //Reverse Game
 var ReverseGame = function (input, Answer) {
-  var Result6 = "0";
   if (DrawCheck(input, Answer) == true) {
     totalDraws = totalDraws + 1;
     lastResult = "draw";
