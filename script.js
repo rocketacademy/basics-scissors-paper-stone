@@ -27,13 +27,13 @@ var randomNumber = function () {
 //add in emoji
 var outResult = function (comResult) {
   if (comResult == "scissors") {
-    return "scissors ✂️";
+    return "<b>scissors ✂️</b>";
   }
   if (comResult == "paper") {
-    return "paper 🖐";
+    return "<b>paper 🖐</b>";
   }
   if (comResult == "stone") {
-    return "stone 🥌";
+    return "<b>stone 🥌</b>";
   }
 };
 var keyInData = function (input1, comAResult1) {
@@ -42,21 +42,21 @@ var keyInData = function (input1, comAResult1) {
     input1 == "reversed scissors" ||
     comAResult1 == "scissors"
   ) {
-    return "scissors ✂️";
+    return "<b>scissors ✂️</b>";
   }
   if (
     input1 == "paper" ||
     input1 == "reversed paper" ||
     comAResult1 == "paper"
   ) {
-    return "paper 🖐";
+    return "<b>paper 🖐</b>";
   }
   if (
     input1 == "stone" ||
     input1 == "reversed stone" ||
     comAResult1 == "stone"
   ) {
-    return "stone 🥌";
+    return "<b>stone 🥌</b>";
   }
 };
 //game mode
@@ -101,14 +101,14 @@ var gameModeSel = function (mode) {
 };
 //Normal with reversed mode result
 var result = function (input1, outComResult1, userInput1, comResult1) {
-  var realResult = noOfGame - 2;
+  var realResult = "";
   var winPercentage = userScore + "/" + realResult;
 
   //invalid input
   var myOutputValue =
     "Not available.<br>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
+    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br> Please key in 'reversed' to reverse the rule. e.g 'reversed stone'<br>Change the mode anytime by keying in :<b> 'normal', 'reverse', ' korean' or 'com'.</b><br>please try again😕";
   //result with valid input
   if (
     input1 == comResult1 ||
@@ -118,21 +118,24 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
   ) {
     noOfGame += 1;
     userDraw += 1;
+    realResult = noOfGame - 2;
+    winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       outComResult1 +
-      "<br>" +
+      "<br><b>" +
       nickName +
-      " choose " +
+      "</b> choose " +
       userInput1 +
-      " <br>It's a draw😲<br>" +
+      " <br><br><b>It's a draw😲<br><br>" +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   if (
     (input1 == "scissors" && comResult1 == "paper") ||
@@ -144,26 +147,28 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
   ) {
     noOfGame += 1;
     userScore += 1;
+    realResult = noOfGame - 2;
     winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       outComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       userInput1 +
       "<br>" +
       userInput1 +
       " beat " +
       outComResult1 +
-      "<br>You Win😎<br> " +
+      "<br><br><b>You Win😎<br><br> " +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   if (
     (input1 == "paper" && comResult1 == "scissors") ||
@@ -174,25 +179,28 @@ var result = function (input1, outComResult1, userInput1, comResult1) {
     (input1 == "reversed stone" && comResult1 == "scissors")
   ) {
     noOfGame += 1;
+    realResult = noOfGame - 2;
+    winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       outComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       userInput1 +
       "<br>" +
       outComResult1 +
       " beat " +
       userInput1 +
-      "<br>You lose😭<br>" +
+      "<br><br><b>You lose😭<br><br>" +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   return myOutputValue;
 };
@@ -214,22 +222,25 @@ var reverseResult = function (
   //result with valid input
   if (rInput1 == rComResult1) {
     noOfGame += 1;
+    realResult = noOfGame - 2;
+    winPercentage = userScore + "/" + realResult;
     userDraw += 1;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       rOutComResult1 +
-      "<br>" +
+      "<br><b>" +
       nickName +
-      " choose " +
+      "</b> choose " +
       rUserInput1 +
-      " <br>It's a draw😲<br>" +
+      " <br><br><b>It's a draw😲<br><br>" +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   if (
     (rInput1 == "paper" && rComResult1 == "scissors") ||
@@ -238,26 +249,29 @@ var reverseResult = function (
   ) {
     noOfGame += 1;
     userScore += 1;
+    realResult = noOfGame - 2;
+
     winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       rOutComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       rUserInput1 +
       "<br>" +
       rUserInput1 +
       " beat " +
       rOutComResult1 +
-      "<br>You Win😎<br> " +
+      "<br><br><b>You Win😎<br><br> " +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b";
   }
   if (
     (rInput1 == "scissors" && rComResult1 == "paper") ||
@@ -265,25 +279,28 @@ var reverseResult = function (
     (rInput1 == "stone" && rComResult1 == "scissors")
   ) {
     noOfGame += 1;
+    realResult = noOfGame - 2;
+    winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       rOutComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       rUserInput1 +
       "<br>" +
       rOutComResult1 +
       " beat " +
       rUserInput1 +
-      "<br>You lose😭<br>" +
+      "<br><br><b>You lose😭<br><br>" +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   return myOutputValue;
 };
@@ -296,30 +313,33 @@ var koreanResult = function (
 ) {
   //invalid input
   var myOutputValue =
-    "Not available.<br>" +
+    "Not available.<br><b>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
+    "</b> Please key in <b>'scissors','paper' or 'stone' </b>✂️🖐🥌.<br>Change the mode anytime by keying in :<b> 'normal', 'reverse', ' korean' or 'com'.</b><br>please try again😕";
   //result with valid input
   var realResult = noOfGame - 2;
   var winPercentage = userScore + "/" + realResult;
   if (kInput1 == kComResult1) {
     noOfGame += 1;
     userDraw += 1;
+    realResult = noOfGame - 2;
+    winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       kOutComResult1 +
-      "<br>" +
+      "<br><b>" +
       nickName +
-      " choose " +
+      "</b> choose " +
       kUserInput1 +
-      " <br>It's a draw😲<br>" +
+      " <br><br><b>It's a draw😲<br><br>" +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   if (
     (kInput1 == "scissors" && kComResult1 == "paper") ||
@@ -329,17 +349,17 @@ var koreanResult = function (
     koreanMode += 1;
     koreanWinMode += 1;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       kOutComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       kUserInput1 +
       "<br>" +
       kUserInput1 +
       " beat " +
       kOutComResult1 +
-      "<br>One more time to win or draw<br> ";
+      "<br><br><b>One more time to win or draw</b><br> ";
   }
   if (
     (kInput1 == "paper" && kComResult1 == "scissors") ||
@@ -351,17 +371,17 @@ var koreanResult = function (
     console.log("koreanLoseMode");
     console.log(koreanLoseMode);
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       kOutComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       kUserInput1 +
       "<br>" +
       kOutComResult1 +
       " beat " +
       kUserInput1 +
-      "<br>one more time to lose or draw <br>";
+      "<br><br><b>one more time to lose or draw </b><br>";
   }
   return myOutputValue;
 };
@@ -377,9 +397,9 @@ var korean2Result = function (
 
   //invalid input
   var myOutputValue =
-    "Not available.<br>" +
+    "Not available.<br><b>" +
     nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
+    "</b> Please key in <b>'scissors','paper' or 'stone' </b>✂️🖐🥌.<br>Change the mode anytime by keying in :<b> 'normal', 'reverse', ' korean' or 'com'.</b><br>please try again😕";
   //result with valid input
   if (k2Input1 == k2ComResult1) {
     if (koreanWinMode == 1) {
@@ -388,51 +408,57 @@ var korean2Result = function (
       koreanMode -= 1;
       koreanWinMode -= 1;
       userScore += 1;
+      realResult = noOfGame - 2;
+
       winPercentage = userScore + "/" + realResult;
       myOutputValue =
-        "Computer choose " +
+        "<b>Computer</b> choose " +
         k2OutComResult1 +
-        "<br>" +
+        "<br><b>" +
         nickName +
-        " choose " +
+        "</b> choose " +
         k2UserInput1 +
         "<br>" +
         k2UserInput1 +
         " beat " +
         k2OutComResult1 +
-        " <br>You Win😎<br>" +
+        " <br><br><b>You Win😎<br><br>" +
         nickName +
         "'s result:<br> score =" +
         userScore +
-        ", Winning% = " +
+        ",<br> Winning% = " +
         winPercentage +
-        ", Draw = " +
-        userDraw;
+        ",<br> Draw = " +
+        userDraw +
+        "</b>";
     } else if (koreanLoseMode == 1) {
       noOfGame += 1;
       console.log("lose mode");
       koreanMode -= 1;
       koreanLoseMode -= 1;
+      realResult = noOfGame - 2;
+
       winPercentage = userScore + "/" + realResult;
       myOutputValue =
-        "Computer choose " +
+        "<b>Computer</b> choose " +
         k2OutComResult1 +
-        "<br>" +
+        "<br><b>" +
         nickName +
-        " choose " +
+        "</b> choose " +
         k2UserInput1 +
         "<br>" +
         k2OutComResult1 +
         " beat " +
         k2UserInput1 +
-        " <br>You lose😭<br>" +
+        " <br><br><b>You lose😭<br><br>" +
         nickName +
         "'s result:<br> score =" +
         userScore +
-        ", Winning% = " +
+        ",<br> Winning% = " +
         winPercentage +
-        ", Draw = " +
-        userDraw;
+        ",<br> Draw = " +
+        userDraw +
+        "</b>";
     }
   } else if (
     (k2Input1 == "scissors" && k2ComResult1 == "paper") ||
@@ -448,22 +474,25 @@ var korean2Result = function (
     koreanMode = 0;
     koreanLoseMode = 0;
     koreanWinMode = 0;
+    realResult = noOfGame - 2;
+
     winPercentage = userScore + "/" + realResult;
     myOutputValue =
-      "Computer choose " +
+      "<b>Computer</b> choose " +
       k2OutComResult1 +
-      "<br> " +
+      "<br><b> " +
       nickName +
-      " choose " +
+      "</b> choose " +
       k2UserInput1 +
-      "<br>You Draw <br> " +
+      "<br><br><b>You Draw<br> <br> " +
       nickName +
       "'s result:<br> score =" +
       userScore +
-      ", Winning% = " +
+      ",<br> Winning% = " +
       winPercentage +
-      ", Draw = " +
-      userDraw;
+      ",<br> Draw = " +
+      userDraw +
+      "</b>";
   }
   return myOutputValue;
 };
@@ -479,28 +508,27 @@ var cvcResult = function (
   var winBPer = comBScore + "/" + realResult;
 
   //invalid input
-  var myOutputValue =
-    "Not available.<br>" +
-    nickName +
-    " Please key in 'scissors','paper' or 'stone' ✂️🖐🥌.<br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br>please try again😕";
+  var myOutputValue = "";
+
   //result with valid input
   if (comAResult1 == comBResult1) {
     userDraw += 1;
     myOutputValue =
-      "Computer B choose " +
+      "<b>Computer B </b>choose " +
       outBComResult1 +
-      "<br>Computer A choose " +
+      "<br><b>Computer A </b>choose " +
       userAInput1 +
-      " <br>It's a draw😲<br>Computer A's result:<br> score =" +
+      " <br><br><b>It's a draw😲<br><br>Computer A's result:<br> score =" +
       comAScore +
       ", Winning% = " +
       winPercentage +
-      " <br> Computer B's result: <br> score =" +
+      " <br><br> Computer B's result: <br> score =" +
       comBscore +
       ", Winning% = " +
       winBPer +
       "<br> Draw = " +
-      userDraw;
+      userDraw +
+      "</b>";
   }
   if (
     (comAResult1 == "scissors" && comBResult1 == "paper") ||
@@ -510,24 +538,25 @@ var cvcResult = function (
     comAScore += 1;
     winPercentage = comAScore + "/" + realResult;
     myOutputValue =
-      "Computer B choose " +
+      "<b>Computer B</b> choose " +
       outBComResult1 +
-      "<br>Computer A choose " +
+      "<br><b>Computer A</b> choose " +
       userAInput1 +
       "<br>" +
       userAInput1 +
       " beat " +
       outBComResult1 +
-      "<br>Computer A Win😎<br>Computer B Lose😭<br>Computer A's result:<br> score =" +
+      "<br><br><b>Computer A Win😎<br>Computer B Lose😭<br><br>Computer A's result:<br> score =" +
       comAScore +
       ", Winning% = " +
       winPercentage +
-      " <br> Computer B's result: <br> score =" +
+      " <br><br> Computer B's result: <br> score =" +
       comBscore +
       ", Winning% = " +
       winBPer +
       "<br> Draw = " +
-      userDraw;
+      userDraw +
+      "/b>";
   }
   if (
     (comAResult1 == "paper" && comBResult1 == "scissors") ||
@@ -537,25 +566,26 @@ var cvcResult = function (
     comBScore += 1;
     winPercentage = comBScore + "/" + realResult;
     myOutputValue =
-      "Computer B choose " +
+      "<b>Computer B</b> choose " +
       outBComResult1 +
-      "<br>Computer A choose " +
+      "<br><b>Computer A </b>choose " +
       userAInput1 +
       "<br>" +
       outBComResult1 +
       " beat " +
       userAInput1 +
       "<br>" +
-      "Computer B Win😎<br>Computer A lose😭<br>Computer A's result:<br> score =" +
+      "<b>Computer B Win😎<br>Computer A lose😭<br><br>Computer A's result:<br> score =" +
       comAScore +
       ", Winning% = " +
       winPercentage +
-      " <br> Computer B's result: <br> score =" +
+      " <br><br> Computer B's result: <br> score =" +
       comBscore +
       ", Winning% = " +
       winBPer +
       "<br> Draw = " +
-      userDraw;
+      userDraw +
+      "/b";
   }
   return myOutputValue;
 };
@@ -574,19 +604,21 @@ var main = function (input) {
     nickName = name;
     noOfGame += 2;
     var startOfGame =
-      "Welcome to the game<br> 🥳🥳   " +
+      "Welcome to the game<br> 🥳🥳  <b> " +
       name +
-      "    🥳🥳<br>let start the game<br> Please Key in 'scissors','paper' or 'stone'<br> There are few different mode <br>Change the mode anytime by keying in : 'normal', 'reverse', ' korean' or 'com'.<br> 'normal': Traditional game <br> 'reverse': Opposite rule of normal mode <br> 'korean': Korean game - Muk-jji-ppa <br>'com': Computer vs Computer";
+      "</b>    🥳🥳<br>let start the game. <br><br><b>Current mode = " +
+      playMode +
+      "</b><br> Please key in <b>'scissors','paper' or 'stone'</b><br><br> There are few different mode and able to change the mode anytime by keying in :<br><b> 'normal'</b>: Traditional game <br><b> 'reverse'</b>: Opposite rule of normal mode <br><b> 'korean'</b>: Korean game - Muk-jji-ppa <br><b>'com'</b>: Computer vs Computer";
     return startOfGame;
   }
   if (noOfGame == 1) {
     noOfGame += 1;
     var changeOfGame =
-      "Hi " +
+      "Hi <b>" +
       nickName +
-      "<br> The game has change to " +
+      "</b><br> Game mode = <b>" +
       playMode +
-      " mode<br> All score will reset";
+      " mode </b><br> All score will reset";
     return changeOfGame;
   }
 
