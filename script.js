@@ -17,7 +17,7 @@ var userName = "";
 var winCount = 0;
 var drawCount = 0;
 var lossCount = 0;
-var winningPercentage = winCount / (winCount + lossCount + drawCount);
+var totalGames = 0;
 var generateRandomHand = function () {
   var handType = 3;
   var randomHandType = generateRandomInteger(handType);
@@ -31,7 +31,6 @@ var generateRandomHand = function () {
   if (randomHandType == 3) {
     return "stone";
   }
-  console.log();
 };
 
 var main = function (input) {
@@ -41,12 +40,13 @@ var main = function (input) {
     gameMode = "GAME ON";
     return `Hello ${userName}, are you ready to play?`;
   } else if (gameMode == "GAME ON") {
-    myOutputValue = computerHand(userName, input);
+    randomHandType = generateRandomHand()
+    myOutputValue = getComputerHand(randomHandType, input);
     return message;
   }
 };
 
-var computerHand = generateRandomHand(userName, userGuess);
+var getComputerHand = function (computerHand, userGuess)
 console.log("Computer chooses:" + computerHand);
 var genericOutput = `Your hand: ${userGuess}. Computer's Hand: ${computerHand}.`;
 if (userGuess == computerHand) {
@@ -69,8 +69,11 @@ if (userGuess == "scissors" && computerHand == "stone") ||
    (userGuess == "rscissors" && computerHand == "paper") ||
    (userGuess == "rpaper" && computerHand == "stone") || 
    (userGuess == "rstone" && computerHand == "scissors") ||
+
    {
   lossCount += 1;
   var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
 }
+return message
+};
 
