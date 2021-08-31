@@ -124,12 +124,12 @@ var main = function (input)
   console.log(`this is SPS `, compareSPS);
  
   // run function to generate win-loss record
-  var winLossStatement  = winLossDrawRecord();
+  var winLossStatement = winLossDrawRecord();
 
-  //Print string results based on outcome
-  myOutputValue = `User Selection: ${userInput} <br> Computer  Selection: ${computerSPS} <br> ${compareSPS} <br> <br>  ${winLossStatement}`
+      //Print string results based on outcome
+  myOutputValue = `User Selection: ${userInput} <br> Computer  Selection: ${computerSPS} <br> ${compareSPS} <br> <br>  ${winLossStatement}`;
   
-  return myOutputValue;
+      return myOutputValue;
 
   }
 };
