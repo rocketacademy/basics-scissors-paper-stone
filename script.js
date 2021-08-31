@@ -127,8 +127,9 @@ var main = function (input)
   var winLossStatement  = winLossDrawRecord();
 
   //Print string results based on outcome
- myOutputValue = `User Selection: ${userInput} <br> Computer  Selection: ${computerSPS} <br> ${compareSPS} <br> <br>  ${winLossStatement}`
+  myOutputValue = `User Selection: ${userInput} <br> Computer  Selection: ${computerSPS} <br> ${compareSPS} <br> <br>  ${winLossStatement}`
   
- return myOutputValue;
+  return myOutputValue;
+
   }
-}
+};
