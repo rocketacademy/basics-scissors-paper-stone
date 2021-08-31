@@ -10,10 +10,7 @@ var gameMode = `waiting for userName`;
 
 var main = function (input) {
   if (gameMode == `waiting for userName`) {
-    userName = input;
-    //console.log(userName);
-    gameMode = `waiting for gameMode`;
-    myOutputValue = `Hi ${userName}, please input "reverse" or "regular" to select game mode!`;
+    myOutputValue = inputUserName(input);
   }
 
   //wait for game mode selection. If input = reverse, switch to reverse game. If input = regular, switch to regular game
@@ -21,10 +18,11 @@ var main = function (input) {
     myOutputValue = selectGameMode(input);
   }
 
-  //reverse game code
+  //reverse game rules
   else if (gameMode == `reverse`) {
     myOutputValue = reverseGameRules(input);
   } else if (gameMode == `regular`) {
+    //regular game rules
     myOutputValue = regularGameRules(input);
   }
   return myOutputValue;
@@ -167,5 +165,17 @@ regularGameRules = function (input) {
   //player does not input scissors, paper or stone
   else {
     return `Please type in scissors, paper or stone to play :)`;
+  }
+};
+
+//function to input username
+var inputUserName = function (input) {
+  if (input != "") {
+    userName = input;
+    //console.log(userName);
+    gameMode = `waiting for gameMode`;
+    return `Hi ${userName}, please input "reverse" or "regular" to select game mode!`;
+  } else {
+    return `Didn't catch your name! Please input your name to start game.`;
   }
 };
