@@ -1,5 +1,11 @@
 // overrides: reverse?
-var reverseOverride = false;
+var gameMode = "normal"; // can also be set to 'reverse' by user override
+
+var moveSet = {
+  1: "scissors",
+  2: "paper",
+  3: "stone", // every move beats the move below it. if key1-key2 = -1 or +2, player wins in normal mode
+};
 
 var generateRandomInteger = function (max) {
   var randomDecimal = Math.random() * max;
@@ -9,23 +15,65 @@ var generateRandomInteger = function (max) {
 
 var generateComputerHandGesture = function () {
   var randomDigit = generateRandomInteger(3);
-  if (randomDigit == 1) {
-    var computerHandGesture = "scissors";
-  }
-  if (randomDigit == 2) {
-    var computerHandGesture = "paper";
-  }
-  if (randomDigit == 3) {
-    var computerHandGesture = "stone";
-  }
-  console.log(`computer's choice is: ${computerHandGesture}`);
+  console.log(randomDigit);
+  var computerHandGesture = moveSet[randomDigit];
+  console.log(moveSet[randomDigit]);
   return computerHandGesture;
 };
+
+// var formatReverseInput = function (reverseInput) {
+//   // "reverse " contains 8 characters, ends at index 7
+//   var newstr = reverseInput.slice(7);
+//   console.log(`new string is: ${newstr}`);
+//   return newstr;
+// };
+
+// var playGame = function (input1, input2) {
+//   console.log("Starting game.");
+//   console.log(`Player chose ${input1}`);
+//   console.log(`Computer chose ${input2}`);
+//   var winner = "";
+//   var score = "";
+
+//   if (input1.includes("reverse")) {
+//     gameMode = "reverse";
+//   }
+//   if (gameMode == "reverse") {
+//     input1 = formatReverseInput(input1); // remove the "reverse " section of the input1 (user)
+//   }
+
+//   if (input1 == input2) {
+//     winner = "Nobody";
+//   }
+
+//   var score1 = moveSet[input1];
+//   var score2 = moveSet[input2];
+//   score = score1 - score2;
+//   console.log(`Player MK: ${score1}. Computer MK: ${score2}.`);
+//   console.log(`score: ${score}`);
+
+//   if (gameMode == "normal") {
+//     if (score == -1 || score == 2) {
+//       winner = "Player";
+//     }
+//   }
+//   if (gameMode == "reversed") {
+//     //i.e. reversed mode
+//     if (score == 1 || score == -2) {
+//       winner = "Player";
+//     }
+//   } else {
+//     winner = "Computer";
+//   }
+//   console.log(gameMode);
+//   console.log(`Winner is ${winner}. Ending game.`);
+//   return winner;
+// };
 
 var winDecider = function (handGesture1, handGesture2) {
   // handgesture1 is user input
   console.log(`player's choice is: ${handGesture1}`);
-  if (reverseOverride == false) {
+  if (gameMode == "normal") {
     if (
       (handGesture1 == "scissors" && handGesture2 == "paper") ||
       (handGesture1 == "paper" && handGesture2 == "stone") ||
@@ -36,7 +84,7 @@ var winDecider = function (handGesture1, handGesture2) {
     }
   }
   // new ruleset for reverse mode
-  if (reverseOverride == true) {
+  if (gameMode == "reverse") {
     if (
       (handGesture1 == "reverse scissors" && handGesture2 == "stone") ||
       (handGesture1 == "reverse paper" && handGesture2 == "scissors") ||
@@ -58,13 +106,15 @@ var winDecider = function (handGesture1, handGesture2) {
   if (handGesture1 == handGesture2) {
     console.log("draw");
     return "Draw";
+  } else {
+    console.log("computer wins");
+    return "Computer";
   }
-  console.log("computer wins");
-  return "Computer";
 };
 
 var inputValidate = function (inputText) {
   if (inputText == "scissors" || inputText == "paper" || inputText == "stone") {
+    console.log("normal mode started");
     return true;
   }
   if (
@@ -75,37 +125,24 @@ var inputValidate = function (inputText) {
     reverseOverride = true;
     console.log("reverse mode activated.");
     return true;
-  }
-  console.log("input invalid!");
+  } else console.log("input invalid!");
   return false;
 };
 
+var printOutput = function (gest1, gest2, winner) {
+  var output = `You played: ${gest1}. The computer played: ${gest2}. ${winner} won!`;
+  return output;
+};
+
 var main = function (input) {
-  reverseOverride = false;
   var validation = inputValidate(input);
   if (validation == false) {
     return "Invalid Input. Please type only scissors, paper, or stone, and try again.";
   }
   var gesture1 = input;
   var gesture2 = generateComputerHandGesture();
+  // var winner = playGame(gesture1, gesture2);
   var winner = winDecider(gesture1, gesture2);
-  if (winner == "Player") {
-    var endstring = "You Win!";
-  }
-  if (winner == "Draw") {
-    var endstring = "Draw!";
-  }
-  if (winner == "Computer") {
-    var endstring = "You Lose. Oops.";
-  }
-  var myOutputValue = `You chose: ${gesture1}
-    The computer chose: ${gesture2}
-    \n
-    ${endstring}
-    \n
-    Play again?`;
-  // <br> didnt seem to work with the template literals i was using, nor did template literals actually seem to be literal on Brave
-  // nor did \n work
-  // :/
+  var myOutputValue = printOutput(gesture1, gesture2, winner);
   return myOutputValue;
 };
