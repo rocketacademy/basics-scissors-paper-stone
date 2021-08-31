@@ -38,22 +38,23 @@ var main = function (input) {
     //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
     var computersPlay = assignComputerChoice(computerChoice);
 
-    if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
+    //tie
+    if (input == computersPlay) {
+      gameCount += 1;
+      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+      myOutputValue = `Reverse game: Hey ${userName}, it's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+    }
+
+    //winning message for reverse game
+    else if (((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) == false) {
       var myOutputValue = `Reverse game: ${regGameModeWin(input, computersPlay)}`;
       console.log(myOutputValue);
     }
 
     //losing message for reverse game
-    else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
+    else if (((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) == false) {
       var myOutputValue = `Reverse game: ${regGameModeLose(input, computersPlay)}`;
       console.log(myOutputValue);
-    }
-
-    //tie
-    else if (input == computersPlay) {
-      gameCount += 1;
-      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
-      myOutputValue = `${userName}, It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
     }
 
     //input to switch mode to regular game
