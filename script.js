@@ -38,24 +38,36 @@ var main = function (input) {
     //set game mode to normal
     if (input == "normal") {
       currentGameMode = "normal game";
+      gamesplayed = 0;
+      gamesCompWon = 0;
+      gamesPlayerWon = 0;
       return `<b>Normal scissors paper stone mode activated.</b>`;
     }
 
     //set game mode to reversed
     if (input == "reversed") {
       currentGameMode = "reversed game";
+      gamesplayed = 0;
+      gamesCompWon = 0;
+      gamesPlayerWon = 0;
       return `<b>Reversed scissors paper stone mode activated.</b>`;
     }
 
     //sey game mode to korean version
     if (input == "korean") {
       currentGameMode = "korean game";
+      gamesplayed = 0;
+      gamesCompWon = 0;
+      gamesPlayerWon = 0;
       return `<b>Korean game Muk Jji Ppa mode activated.</b><br><br> Muk = Stone<br>Jji = Scissors<br>Ppa = Paper `;
     }
 
     //set game mode to comp vs comp
     if (input == "computer") {
       currentGameMode = "computer game";
+      gamesplayed = 0;
+      gamesCompWon = 0;
+      gamesPlayerWon = 0;
       return `<b>Computer mode activated, press Submit button to play the game, no input is required.</b>`;
     }
 
