@@ -1,19 +1,13 @@
-//function
 var generateRandomInteger = function (max) {
   var randomDecimal = Math.random() * max;
   var randomInteger = Math.floor(randomDecimal) + 1;
   return randomInteger;
 };
-
-//global
 var gameMode = "Please enter your user name";
 var userName = "";
 var winCount = 0;
 var drawCount = 0;
 var lossCount = 0;
-var totalGames = 0;
-
-//function
 var generateRandomHand = function () {
   var handType = 3;
   var randomHandType = generateRandomInteger(handType);
@@ -83,7 +77,6 @@ var getComputerHand = function (computerHand, userGuess) {
     winningPercentage = (winCount / totalGames) * 100;
     var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
   }
-
   if (userGuess == "rscissors" && computerHand == "paper") {
     lossCount += 1;
     winningPercentage = (winCount / totalGames) * 100;
@@ -115,4 +108,7 @@ var getComputerHand = function (computerHand, userGuess) {
     var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
   }
   return message;
-};
+    myOutputValue = computerHand(userName, input);
+    return message;
+  }
+
