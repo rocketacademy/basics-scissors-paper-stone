@@ -41,6 +41,7 @@ var main = function (input) {
       gamesplayed = 0;
       gamesCompWon = 0;
       gamesPlayerWon = 0;
+      gamesDrawed = 0;
       return `<b>Normal scissors paper stone mode activated.</b>`;
     }
 
@@ -50,6 +51,7 @@ var main = function (input) {
       gamesplayed = 0;
       gamesCompWon = 0;
       gamesPlayerWon = 0;
+      gamesDrawed = 0;
       return `<b>Reversed scissors paper stone mode activated.</b>`;
     }
 
@@ -59,6 +61,7 @@ var main = function (input) {
       gamesplayed = 0;
       gamesCompWon = 0;
       gamesPlayerWon = 0;
+      gamesDrawed = 0;
       return `<b>Korean game Muk Jji Ppa mode activated.</b><br><br> Muk = Stone<br>Jji = Scissors<br>Ppa = Paper `;
     }
 
@@ -68,6 +71,7 @@ var main = function (input) {
       gamesplayed = 0;
       gamesCompWon = 0;
       gamesPlayerWon = 0;
+      gamesDrawed = 0;
       return `<b>Computer mode activated, press Submit button to play the game, no input is required.</b>`;
     }
 
