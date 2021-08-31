@@ -16,7 +16,19 @@ var main = function (input) {
 
     myOutputValue = 'Hello ' + userName;
 
-  } else if (currentGameMode == 'scissors paper stone game' &&
+  } else if (input == 'reverse'){
+    currentGameMode = 'reverse'
+    myOutputValue = `please input one of these options: reversed scissors, reversed paper or reversed stone`
+
+  }else if (currentGameMode == 'reverse' &&
+  (input == `reversed scissors` || 
+  input == `reversed paper` || 
+  input == `reversed stone`)){
+    myOutputValue = reverseSPSGame(input)
+    console.log(myOutputValue)
+  } 
+  
+  else if (currentGameMode == 'scissors paper stone game' &&
   (input == `scissors` || 
   input == `paper` || 
   input == `stone`)) {
@@ -115,7 +127,7 @@ if (userGuess == 'scissors' && chosenSPS == 'paper 🗒' ||
     if (winRate >= 50){
           message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>It's a draw!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Pretty good!`
     }
-    
+
     //if user win rate is < 50%, format a try harder message
     else message = `The computer chose ${chosenSPS}.<br>You chose ${userGuess} ${chosenIconForUser}.<br><br>It's a draw!<br><br>So far ${userName}, you've been winning ${numTimesUserWon}/${numTimesRolled} turns. Try harder!`
   }
@@ -144,3 +156,35 @@ var calcUserWinRate = function(){
   var userWinRate = Math.floor((numTimesUserWon/numTimesRolled)*100)
   return userWinRate
 }
+
+//reverse game
+var reverseSPSGame = function(input){
+  var reverseSPS = SPS()
+  console.log(reverseSPS)
+  var reverseMsg = '';
+if (input == 'reversed scissors' && reverseSPS == 'paper 🗒' || 
+  input == 'reversed paper' && reverseSPS == 'stone 🪨' || 
+  input == 'reversed stone' && reverseSPS == 'scissors ✂️'){
+    console.log('lose')
+    reverseMsg = `The computer chose ${reverseSPS}.<br>You chose ${input}.<br><br>You lose! Bummer!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
+  }
+
+  //if the input by user is the same as the one computer chose, its a draw
+  if (input == 'reversed scissors' && reverseSPS == 'scissors ✂️' ||
+   input == 'reversed paper' && reverseSPS == 'paper 🗒' ||
+   input == 'reversed stone' && reverseSPS == 'stone 🪨'){
+    console.log('draw')
+    reverseMsg = `The computer chose ${reverseSPS}.<br>You chose ${input}.<br><br>It's a draw!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
+  }
+
+  //if user inputs reversed paper and computer choose scissors, user wins OR
+  //if user inputs reversed stone and computer chose paper, user wins OR
+  //if user inputs reversed scissors and computer chose stone, user wins
+  if (reverseSPS == 'scissors ✂️' && input == 'reversed paper' || 
+  reverseSPS == 'paper 🗒' && input == 'reversed stone' || 
+  reverseSPS == 'stone 🪨' && input == 'reversed scissors'){
+    console.log('win')
+    reverseMsg = `The computer chose ${reverseSPS}.<br>You chose ${input}.<br><br>You win! Congrats!<br><br>Now you can type "reversed scissors" "reversed paper" or "reversed stone" to play another round!`
+  }
+  return reverseMsg
+  }
