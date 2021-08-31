@@ -7,6 +7,12 @@ var moveSet = {
   3: "stone", // every move beats the move below it. if key1-key2 = -1 or +2, player wins in normal mode
 };
 
+var winSetNormal = {
+  scissors: "paper",
+  paper: "stone",
+  stone: "scissors",
+};
+
 var generateRandomInteger = function (max) {
   var randomDecimal = Math.random() * max;
   var randomInteger = Math.floor(randomDecimal) + 1;
@@ -28,23 +34,21 @@ var generateComputerHandGesture = function () {
 //   return newstr;
 // };
 
-// var playGame = function (input1, input2) {
-//   console.log("Starting game.");
-//   console.log(`Player chose ${input1}`);
-//   console.log(`Computer chose ${input2}`);
-//   var winner = "";
-//   var score = "";
+var playGame = function (input1, input2) {
+  // input 1 and input 2 should be strings
+  console.log("Starting game.");
+  var winner = "Computer";
 
-//   if (input1.includes("reverse")) {
-//     gameMode = "reverse";
-//   }
-//   if (gameMode == "reverse") {
-//     input1 = formatReverseInput(input1); // remove the "reverse " section of the input1 (user)
-//   }
-
-//   if (input1 == input2) {
-//     winner = "Nobody";
-//   }
+  if (gameMode == "normal") {
+    if (input1 == input2) {
+      winner = "Nobody";
+    }
+    if (input1 == winSetNormal[input2]) {
+      winner = "Player";
+    }
+    return winner;
+  }
+};
 
 //   var score1 = moveSet[input1];
 //   var score2 = moveSet[input2];
@@ -70,47 +74,47 @@ var generateComputerHandGesture = function () {
 //   return winner;
 // };
 
-var winDecider = function (handGesture1, handGesture2) {
-  // handgesture1 is user input
-  console.log(`player's choice is: ${handGesture1}`);
-  if (gameMode == "normal") {
-    if (
-      (handGesture1 == "scissors" && handGesture2 == "paper") ||
-      (handGesture1 == "paper" && handGesture2 == "stone") ||
-      (handGesture1 == "stone" && handGesture2 == "scissors")
-    ) {
-      console.log("player wins");
-      return "Player";
-    }
-  }
-  // new ruleset for reverse mode
-  if (gameMode == "reverse") {
-    if (
-      (handGesture1 == "reverse scissors" && handGesture2 == "stone") ||
-      (handGesture1 == "reverse paper" && handGesture2 == "scissors") ||
-      (handGesture1 == "reverse stone" && handGesture2 == "paper")
-    ) {
-      console.log("player wins");
-      return "Player";
-    }
-    if (
-      (handGesture1 == "reverse scissors" && handGesture2 == "scissors") ||
-      (handGesture1 == "reverse paper" && handGesture2 == "paper") ||
-      (handGesture1 == "reverse stone" && handGesture2 == "stone")
-    ) {
-      console.log("draw");
-      return "Draw";
-    }
-  }
+// var winDecider = function (handGesture1, handGesture2) {
+//   // handgesture1 is user input
+//   console.log(`player's choice is: ${handGesture1}`);
+//   if (gameMode == "normal") {
+//     if (
+//       (handGesture1 == "scissors" && handGesture2 == "paper") ||
+//       (handGesture1 == "paper" && handGesture2 == "stone") ||
+//       (handGesture1 == "stone" && handGesture2 == "scissors")
+//     ) {
+//       console.log("player wins");
+//       return "Player";
+//     }
+//   }
+//   // new ruleset for reverse mode
+//   if (gameMode == "reverse") {
+//     if (
+//       (handGesture1 == "reverse scissors" && handGesture2 == "stone") ||
+//       (handGesture1 == "reverse paper" && handGesture2 == "scissors") ||
+//       (handGesture1 == "reverse stone" && handGesture2 == "paper")
+//     ) {
+//       console.log("player wins");
+//       return "Player";
+//     }
+//     if (
+//       (handGesture1 == "reverse scissors" && handGesture2 == "scissors") ||
+//       (handGesture1 == "reverse paper" && handGesture2 == "paper") ||
+//       (handGesture1 == "reverse stone" && handGesture2 == "stone")
+//     ) {
+//       console.log("draw");
+//       return "Draw";
+//     }
+//   }
 
-  if (handGesture1 == handGesture2) {
-    console.log("draw");
-    return "Draw";
-  } else {
-    console.log("computer wins");
-    return "Computer";
-  }
-};
+//   if (handGesture1 == handGesture2) {
+//     console.log("draw");
+//     return "Draw";
+//   } else {
+//     console.log("computer wins");
+//     return "Computer";
+//   }
+// };
 
 var inputValidate = function (inputText) {
   if (inputText == "scissors" || inputText == "paper" || inputText == "stone") {
@@ -141,8 +145,8 @@ var main = function (input) {
   }
   var gesture1 = input;
   var gesture2 = generateComputerHandGesture();
-  // var winner = playGame(gesture1, gesture2);
-  var winner = winDecider(gesture1, gesture2);
+  var winner = playGame(gesture1, gesture2);
+  // var winner = winDecider(gesture1, gesture2);
   var myOutputValue = printOutput(gesture1, gesture2, winner);
   return myOutputValue;
 };
