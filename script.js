@@ -1,56 +1,86 @@
+//global states
+var totalGames = -1;
+var PlayerWins = 0;
+var ComputerWins = 0;
+var totalDraws = 0;
+var Username = "";
+var GameMode = "";
+var lastResult = "";
+var Answer = "";
+
 var main = function (input) {
+  if (totalGames == -1) {
+    Username = input;
+    totalGames = totalGames + 1;
+    return (
+      "Your username is " +
+      input +
+      ". Please enter scissors, paper or stone to play the game!"
+    );
+  }
+  if (input == "reverse" || input == "normal" || input == "korean") {
+    GameMode = input;
+    return "Game mode is now " + GameMode + ".";
+  }
   var myOutputValue =
     "Sorry, your input was not one of the three input options. Please try again!";
-  var Answer = ComputerChoice();
-  var ReversedAnswer = "reversed " + Answer;
-  console.log(input);
-  console.log(Answer);
-  console.log(ReversedAnswer);
+  Answer = ComputerChoice();
   if (input == "stone" || input == "scissors" || input == "paper") {
-    myOutputValue = RegularGame(input, Answer);
-    console.log(myOutputValue);
-  }
-  if (
-    input == "reversed stone" ||
-    input == "reversed scissors" ||
-    input == "reversed paper"
-  ) {
-    myOutputValue = ReverseGame(input, ReversedAnswer);
-    console.log(myOutputValue);
+    console.log(GameMode);
+    totalGames = totalGames + 1;
+    if ((GameMode = "normal" || Gamemode == "")) {
+      myOutputValue = RegularGame(input, Answer);
+    }
+    if (GameMode == "reverse") {
+      myOutputValue = ReverseGame(input, Answer);
+    }
+    if (GameMode == "korean") {
+      myOutputValue = KoreanGame(input, Answer);
+    }
   }
   return myOutputValue;
 };
-//Regular Game
+//Regular Rules
 var RegularGame = function (input, Answer) {
-  var Result3 = "0";
   if (DrawCheck(input, Answer) == true) {
-    Result3 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> Its a Draw.<br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    totalDraws = totalDraws + 1;
+    lastResult = "draw";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
   if (WinCheck(input, Answer) == true) {
-    Result3 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> You Win! <br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    PlayerWins = PlayerWins + 1;
+    lastResult = "win";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
   if (LoseCheck(input, Answer) == true) {
-    Result3 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> You Lose.<br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    ComputerWins = ComputerWins + 1;
+    lastResult = "loss";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
-  return Result3;
+};
+
+var KoreanGame = function (input, Answer) {
+  if (DrawCheck(input, Answer) == true) {
+    if (lastResult == "win") {
+      PlayerWins = PlayerWins + 1;
+      console.log("A");
+    } else if (lastResult == "loss") {
+      ComputerWins = ComputerWins + 1;
+      console.log("B");
+    }
+    console.log(lastResult);
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
+  }
+  if (WinCheck(input, Answer) == true) {
+    PlayerWins = PlayerWins + 1;
+    lastResult = "win";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
+  }
+  if (LoseCheck(input, Answer) == true) {
+    ComputerWins = ComputerWins + 1;
+    lastResult = "loss";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
+  }
 };
 
 var DrawCheck = function (input1, Answer1) {
@@ -88,41 +118,28 @@ var LoseCheck = function (input2, Answer2) {
 var ReverseGame = function (input, Answer) {
   var Result6 = "0";
   if (DrawCheck(input, Answer) == true) {
-    Result6 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> Its a Draw.<br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    totalDraws = totalDraws + 1;
+    lastResult = "draw";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
   if (ReverseWinCheck(input, Answer) == true) {
-    Result6 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> You Win! <br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    PlayerWins = PlayerWins + 1;
+    lastResult = "win";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
   if (ReverseLoseCheck(input, Answer) == true) {
-    Result6 =
-      "The Computor chose " +
-      Answer +
-      ".<br> You chose " +
-      input +
-      ".<br><br> You Lose.<br><br>" +
-      `Now you can type "scissors" "paper" or "stone" to play another round!`;
+    ComputerWins = ComputerWins + 1;
+    lastResult = "loss";
+    return GameOutcome(Answer, input, lastResult, PlayerWins, totalGames);
   }
-  return Result6;
 };
 
 var ReverseLoseCheck = function (input4, Answer4) {
   var Result4 = false;
   if (
-    (Answer4 == "reversed scissors" && input4 == "reversed stone") ||
-    (Answer4 == "reversed stone" && input4 == "reversed paper") ||
-    (Answer4 == "reversed paper" && input4 == "reversed scissors")
+    (Answer4 == "scissors" && input4 == "stone") ||
+    (Answer4 == "stone" && input4 == "paper") ||
+    (Answer4 == "paper" && input4 == "scissors")
   ) {
     Result4 = true;
   }
@@ -132,13 +149,33 @@ var ReverseLoseCheck = function (input4, Answer4) {
 var ReverseWinCheck = function (input5, Answer5) {
   var Result5 = false;
   if (
-    (input5 == "reversed scissors" && Answer5 == "reversed stone") ||
-    (input5 == "reversed stone" && Answer5 == "reversed paper") ||
-    (input5 == "reversed paper" && Answer5 == "reversed scissors")
+    (input5 == "scissors" && Answer5 == "stone") ||
+    (input5 == "stone" && Answer5 == "paper") ||
+    (input5 == "paper" && Answer5 == "scissors")
   ) {
     Result5 = true;
   }
   return Result5;
+};
+
+//results
+var GameOutcome = function (Answer, input, lastResult, PlayerWins, totalGames) {
+  var message =
+    "The Computor chose " +
+    Answer +
+    ".<br>" +
+    Username +
+    " chose " +
+    input +
+    ".<br><br> The result is a " +
+    lastResult +
+    ".<br><br>" +
+    `Now you can type "scissors" "paper" or "stone" to play another round!<br>You have won ` +
+    PlayerWins +
+    " out of " +
+    totalGames +
+    ".";
+  return message;
 };
 //background
 var ComputerChoice = function () {
