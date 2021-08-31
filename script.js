@@ -10,7 +10,7 @@ var recentWinner = "";
 
 var main = function (userInput) {
   var myOutputValue = "";
-  // console.log(`The current reversed count is ${reverseCount}.`);
+
   // If game mode is "Waiting for UserName", store input as user's name into a variable
   if (gameMode == "Waiting for UserName") {
     userName = userInput;
@@ -19,36 +19,47 @@ var main = function (userInput) {
     return myOutputValue;
   }
 
-  // If game mode is in "Version Selection", change to Game Introduction after user has submitted correct input
+  // If game mode is in "Version Selection", change to Game Introduction. Else, run the game
   if (gameMode == "Version Selection") {
-    if (!(userInput == "Normal" || userInput == "Korean")) {
-      myOutputValue = `Hey ${userName}! Please type only "Normal" or "Korean". Try again!`;
-      return myOutputValue;
-    } else {
+    var resultOfValidityCheck = validityCheck(userInput);
+    if (resultOfValidityCheck == true) {
       gameMode = "Game Introduction";
+      return introduceGame(userInput);
     }
+    return resultOfValidityCheck;
+  } else {
+    myOutputValue = generateWinner(userInput);
+    return myOutputValue;
   }
+};
 
+// ===== Helper function to introduce game features =====
+
+var introduceGame = function (userInput) {
+  var gameInstructions = "";
   // If game mode is "Game Introduction" and user select Normal version, set game version to Normal
   if (gameMode == "Game Introduction" && userInput == "Normal") {
     gameVersion = "Normal Version";
     gameMode = "Original Mode";
-    console.log(`The current game version is ${gameVersion}.`);
-    console.log(`The current game mode is ${gameMode}.`);
-    myOutputValue = `You have selected the ${gameVersion}.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!<br ><br >You can also submit "reverse" to reverse the game rules.`;
-    return myOutputValue;
+    // console.log(`The current game version is ${gameVersion}.`);
+    // console.log(`The current game mode is ${gameMode}.`);
+    gameInstructions = `You have selected the ${gameVersion}.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!<br ><br >You can also submit "reverse" to reverse the game rules.`;
+    return gameInstructions;
   }
   // If game mode is "Game Introduction" and user select Korean version, set game version to Korean
   if (gameMode == "Game Introduction" && userInput == "Korean") {
     gameVersion = "Korean Version";
     gameMode = "Original Mode";
-    console.log(`The current game version is ${gameVersion}.`);
-    console.log(`The current game mode is ${gameMode}.`);
-    myOutputValue = `You have selected the ${gameVersion}.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!<br ><br >You can also submit "reverse" to reverse the game rules.`;
-    return myOutputValue;
+    // console.log(`The current game version is ${gameVersion}.`);
+    // console.log(`The current game mode is ${gameMode}.`);
+    gameInstructions = `You have selected the ${gameVersion}.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to start playing!<br ><br >You can also submit "reverse" to reverse the game rules.`;
+    return gameInstructions;
   }
+};
 
-  // Input validation - Prompt users if required input is not found.
+// ===== Helper function to check input validity =====
+
+var validityCheck = function (userInput) {
   if (gameMode == "Original Mode") {
     if (
       !(
@@ -76,33 +87,36 @@ var main = function (userInput) {
       myOutputValue = `Hey ${userName}! Please type only "scissors", "paper" or "stone". Try again!`;
       return myOutputValue;
     }
-  }
-
-  // If user input reverse, reverse the game rules
-  if (userInput == "reverse") {
-    reverseCount = reverseCount + 1;
-    // console.log(`The reversed count after input reverse is ${reverseCount}.`);
-    if (reverseCount == 0 || reverseCount % 2 == 1) {
-      gameMode = "Reversed Mode";
-      // console.log(`The current game mode is ${gameMode}.`);
-      myOutputValue = `Hey ${userName}! You have reversed the game rules!<br ><br >Submit "scissors", "paper" or "stone" to continue playing!<br ><br >You can also submit "reverse" again to change the game rules back to the original version.`;
-      return myOutputValue;
-    } else {
-      gameMode = "Original Mode";
-      // console.log(`The current game mode is ${gameMode}.`);
-      myOutputValue = `Hey ${userName}! You have reversed the game rules! Now the game rules are according to the original version.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to continue playing!<br ><br >You can also submit "reverse" again to reverse the game rules.`;
+  } else if (gameMode == "Version Selection") {
+    if (!(userInput == "Normal" || userInput == "Korean")) {
+      myOutputValue = `Hey ${userName}! Please type only "Normal" or "Korean". Try again!`;
       return myOutputValue;
     }
   }
-
-  // If user input is correct, run the game rules to determine winner
-  myOutputValue = generateWinner(userInput);
-  return myOutputValue;
+  return true;
 };
 
-// ===== Helper function to pick an option of either scissors, paper or stone
+// ===== Helper function to reverse game rules =====
+
+var reverseGameRules = function () {
+  reverseCount = reverseCount + 1;
+  // console.log(`The reversed count after input reverse is ${reverseCount}.`);
+  if (reverseCount == 0 || reverseCount % 2 == 1) {
+    gameMode = "Reversed Mode";
+    // console.log(`The current game mode is ${gameMode}.`);
+    myOutputValue = `Hey ${userName}! You have reversed the game rules!<br ><br >Submit "scissors", "paper" or "stone" to continue playing!<br ><br >You can also submit "reverse" again to change the game rules back to the original version.`;
+    return myOutputValue;
+  } else {
+    gameMode = "Original Mode";
+    // console.log(`The current game mode is ${gameMode}.`);
+    myOutputValue = `Hey ${userName}! You have reversed the game rules! Now the game rules are according to the original version.<br ><br >Submit "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to continue playing!<br ><br >You can also submit "reverse" again to reverse the game rules.`;
+    return myOutputValue;
+  }
+};
+
+// ===== Helper function to pick an option of either scissors, paper or stone =====
 var pickOption = function () {
-  var randomOptionNum = Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
+  var randomOptionNum = 0; // Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
   var selectedOption = "";
   // Alternative way to random pick an option
   // var optionsArray = ["scissors", "paper", "stone"]; // Set the output options in an array
@@ -159,22 +173,28 @@ var checkWhoWins = function (userSelection, computerSelection) {
     (userSelection == "reversed stone" && computerSelection == "paper")
   ) {
     results = "user";
-  } else if (
-    (userSelection == "scissors" && computerSelection == "stone") ||
-    (userSelection == "paper" && computerSelection == "scissors") ||
-    (userSelection == "stone" && computerSelection == "paper") ||
-    (userSelection == "reversed scissors" && computerSelection == "paper") ||
-    (userSelection == "reversed paper" && computerSelection == "stone") ||
-    (userSelection == "reversed stone" && computerSelection == "scissors")
-  ) {
+  } else {
     results = "computer";
   }
   return results;
 };
 
-// ===== Function to check user input against program output to determine winner (game rules) =====
+// ===== Helper function to generate winner =====
 
 var generateWinner = function (userInput) {
+  if (validityCheck(userInput) == true) {
+    if (userInput == "reverse") {
+      return reverseGameRules();
+    } else {
+      return calWinner(userInput);
+    }
+  }
+  return validityCheck(userInput);
+};
+
+// ===== Function to check user input against program output to determine winner (game rules) =====
+
+var calWinner = function (userInput) {
   var outputByProgram = pickOption(); // Generate random option of either scissors, paper or stone
   var myOutputValue = "";
   numOfGamesPlayed = numOfGamesPlayed + 1;
