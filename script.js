@@ -5,12 +5,17 @@
 // 2 > 3 > 1 > 2
 // input == diceroll, Draw
 // testing git push
+// Username function not added yet
+// percentage not added properly
 var generateRandomInteger = function (max) {
   var randomDecimal = Math.random() * max;
   var randomInteger = Math.floor(randomDecimal) + 1;
   return randomInteger;
 };
-
+var winCount = 0;
+var drawCount = 0;
+var lossCount = 0;
+var winningPercentage = winCount / (winCount + lossCount + drawCount);
 var generateRandomHand = function () {
   var handType = 3;
   var randomHandType = generateRandomInteger(handType);
@@ -32,43 +37,56 @@ var handRandomness = function (input) {
   console.log("Computer chooses:" + computerHand);
   var genericOutput = `Your hand: ${input}. Computer's Hand: ${computerHand}.`;
   if (input == computerHand) {
-    return `${genericOutput} DRAWWW!!`;
+    drawCount += 1;
+    return `${genericOutput} DRAW!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "scissors" && computerHand == "paper") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "scissors" && computerHand == "stone") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "paper" && computerHand == "stone") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "paper" && computerHand == "scissors") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "stone" && computerHand == "scissors") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "stone" && computerHand == "paper") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
 
   if (input == "rscissors" && computerHand == "paper") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "rscissors" && computerHand == "stone") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "rpaper" && computerHand == "stone") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "rpaper" && computerHand == "scissors") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "rstone" && computerHand == "scissors") {
-    return `${genericOutput} LOSE!!`;
+    lossCount += 1;
+    return `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
   if (input == "rstone" && computerHand == "paper") {
-    return `${genericOutput} WIN!!`;
+    winCount += 1;
+    return `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
   }
 };
