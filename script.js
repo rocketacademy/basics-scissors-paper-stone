@@ -12,34 +12,41 @@ var main = function (input) {
   if (gameMode == `waiting for userName`) {
     userName = input;
     //console.log(userName);
-    gameMode = `spsGame`;
-    //console.log(gameMode);
-    myOutputValue = `Hi ${userName}, input scissors, paper or stone to play the game!`;
-  } else if (gameMode == `spsGame`) {
-    //console.log(input);
+    gameMode = `waiting for gameMode`;
+    myOutputValue = `Hi ${userName}, please input "reverse" or "regGame" to select game mode!`;
+  }
+
+  //wait for game mode selection. If input = reverse, switch to reverse game. If input = regGame, switch to regular game
+  else if (gameMode == `waiting for gameMode`) {
+    if (input == `reverse`) {
+      gameMode = `reverse`;
+      myOutputValue = `You are now in ${gameMode} game mode!`;
+    } else if (input == `regGame`) {
+      gameMode = `regGame`;
+      myOutputValue = `You are now in ${gameMode} game mode!`;
+    } else {
+      myOutputValue = `Please input reverse or regGame to start!`;
+    }
+    console.log(gameMode);
+    console.log(myOutputValue);
+  }
+
+  //reverse game code
+  else if ((gameMode = `reverse`)) {
     //generate choice
     var computerChoice = generateRandomOption();
-    //console.log(`computerChoice`);
-    //console.log(computerChoice);
     //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
     var computersPlay = assignComputerChoice(computerChoice);
-    //console.log(`computersPlay`);
-    //console.log(computersPlay);
 
-    //player wins, add to userWins count
     if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
-      userWins += 1;
-      gameCount += 1;
-      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
-      myOutputValue = `Yay ${userName}, You win! <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+      var myOutputValue = `Reverse game: ${regGameModeWin(input, computersPlay)}`;
+      console.log(myOutputValue);
     }
 
-    //player loses, add to computerWins count
+    //losing message for reverse game
     else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
-      computerWins += 1;
-      gameCount += 1;
-      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
-      myOutputValue = `Aww ${userName}, You lost :( <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+      var myOutputValue = `Reverse game: ${regGameModeLose(input, computersPlay)}`;
+      console.log(myOutputValue);
     }
 
     //tie
@@ -47,6 +54,51 @@ var main = function (input) {
       gameCount += 1;
       var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
       myOutputValue = `${userName}, It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+    }
+
+    //input to switch mode to regular game
+    else if (input == `regGame`) {
+      gameMode = input;
+      myOutputValue = `You are now in regular game mode!`;
+      console.log(`gameMode`);
+      console.log(gameMode);
+    }
+
+    //player does not input scissors, paper or stone
+    else {
+      myOutputValue = `Please type in scissors, paper or stone to play :)`;
+    }
+  } else if (gameMode == `regGame`) {
+    //console.log(input);
+    //generate choice
+    var computerChoice = generateRandomOption();
+    //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
+    var computersPlay = assignComputerChoice(computerChoice);
+
+    //if user does not switch to reverse game, continue with regular game
+    //if player wins, run regular game mode win function
+    if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
+      var myOutputValue = regGameModeWin(input, computersPlay);
+    }
+
+    //player loses, add to computerWins count
+    else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
+      var myOutputValue = regGameModeLose(input, computersPlay);
+    }
+
+    //tie
+    else if (input == computersPlay) {
+      gameCount += 1;
+      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+      myOutputValue = `${userName}, It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+    }
+
+    //switch to reverse game mode
+    else if (input == `reverse`) {
+      gameMode = `reverse`;
+      myOutputValue = `You are now in reverse game mode!`;
+      console.log(`gameMode`);
+      console.log(gameMode);
     }
 
     //player does not input scissors, paper or stone
@@ -77,9 +129,25 @@ var calculatePercentageOfUserWins = function (userWins, gameCount) {
   //console.log(`winPercentage`);
   //console.log(winPercentage);
   if (winPercentage < 60) {
-    return `You have won ${userWins} of ${gameCount} you played - winning ${winPercentage}% of games. Don't give up!`;
+    return `You win ${winPercentage}% of all games. Tough luck, but don't give up!`;
   }
   if (winPercentage >= 60) {
-    return `You have won ${userWins} of ${gameCount} you played - winning ${winPercentage}% of games. Awesome job, game master!`;
+    return `You win ${winPercentage}% of all games. Awesome job, game master!`;
   }
+};
+
+//function for regGameMode win
+var regGameModeWin = function (input, computersPlay) {
+  userWins += 1;
+  gameCount += 1;
+  var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+  return `Yay ${userName}, you win! <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+};
+
+//function for regGameMode lose
+var regGameModeLose = function (input, computersPlay) {
+  computerWins += 1;
+  gameCount += 1;
+  var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+  return `${userName}, you lost :( <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
 };
