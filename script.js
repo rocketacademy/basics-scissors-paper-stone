@@ -48,12 +48,12 @@ var playerWinOrLose = function (userGuess, compGuess) {
 };
 
 var main = function (input) {
-  userName = input;
-  if (userName == "" && currentGameState == gameStateOne) {
+  if (input == "" && userName == "" && currentGameState == gameStateOne) {
     return `Please enter a user name to begin.`;
   }
 
-  if ((currentGameState == gameStateOne) & (input != "")) {
+  if (currentGameState == gameStateOne && input != "") {
+    userName = input;
     currentGameState = gameStateTwo;
     return `Hi ${userName}, please enter "scissors" "paper" or "stone" to play.`;
   }
