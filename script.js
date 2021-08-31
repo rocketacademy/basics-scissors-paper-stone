@@ -78,9 +78,7 @@ var inputValidate = function (inputText) {
     console.log("reverse mode activated.");
     return true;
   }
-  {
-    return false;
-  }
+  return false;
 };
 
 var printOutput = function (gest1, gest2, winner) {
@@ -107,7 +105,7 @@ var main = function (input) {
     var gesture1 = input;
     var gesture2 = generateComputerHandGesture();
     var winner = playGame(gesture1, gesture2);
-    var myOutputValue = printOutput(gesture1, gesture2, winner);
+    myOutputValue = printOutput(gesture1, gesture2, winner);
   }
   return myOutputValue;
 };
