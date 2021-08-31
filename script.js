@@ -1,5 +1,9 @@
 // overrides: reverse?
-var gameMode = "normal"; // can also be set to 'reverse' by user override
+var gameMode = "waiting for username"; // can also be set to 'reverse' by user override
+var username = "";
+var playerScore = 0;
+var computerScore = 0;
+var drawScore = 0;
 
 var moveSet = {
   1: "scissors",
@@ -37,88 +41,39 @@ var generateComputerHandGesture = function () {
 var playGame = function (input1, input2) {
   // input 1 and input 2 should be strings
   console.log("Starting game.");
-  var winner = "Computer";
+  console.log(`Player: ${input1}`);
+  console.log(`Computer: ${input2}`);
+  var winner = "";
 
   if (gameMode == "normal") {
-    if (input1 == input2) {
-      winner = "Nobody";
-    }
     if (input1 == winSetNormal[input2]) {
+      console.log("computer wins");
+      computerScore += 1;
+      winner = "Computer";
+    }
+
+    if (input1 !== winSetNormal[input2]) {
+      console.log("player wins");
+      playerScore += 1;
       winner = "Player";
     }
+
+    if (input1 == input2) {
+      console.log("tie");
+      drawScore += 1;
+      winner = "Nobody";
+    }
+
+    console.log("Ending Game.");
     return winner;
   }
 };
 
-//   var score1 = moveSet[input1];
-//   var score2 = moveSet[input2];
-//   score = score1 - score2;
-//   console.log(`Player MK: ${score1}. Computer MK: ${score2}.`);
-//   console.log(`score: ${score}`);
-
-//   if (gameMode == "normal") {
-//     if (score == -1 || score == 2) {
-//       winner = "Player";
-//     }
-//   }
-//   if (gameMode == "reversed") {
-//     //i.e. reversed mode
-//     if (score == 1 || score == -2) {
-//       winner = "Player";
-//     }
-//   } else {
-//     winner = "Computer";
-//   }
-//   console.log(gameMode);
-//   console.log(`Winner is ${winner}. Ending game.`);
-//   return winner;
-// };
-
-// var winDecider = function (handGesture1, handGesture2) {
-//   // handgesture1 is user input
-//   console.log(`player's choice is: ${handGesture1}`);
-//   if (gameMode == "normal") {
-//     if (
-//       (handGesture1 == "scissors" && handGesture2 == "paper") ||
-//       (handGesture1 == "paper" && handGesture2 == "stone") ||
-//       (handGesture1 == "stone" && handGesture2 == "scissors")
-//     ) {
-//       console.log("player wins");
-//       return "Player";
-//     }
-//   }
-//   // new ruleset for reverse mode
-//   if (gameMode == "reverse") {
-//     if (
-//       (handGesture1 == "reverse scissors" && handGesture2 == "stone") ||
-//       (handGesture1 == "reverse paper" && handGesture2 == "scissors") ||
-//       (handGesture1 == "reverse stone" && handGesture2 == "paper")
-//     ) {
-//       console.log("player wins");
-//       return "Player";
-//     }
-//     if (
-//       (handGesture1 == "reverse scissors" && handGesture2 == "scissors") ||
-//       (handGesture1 == "reverse paper" && handGesture2 == "paper") ||
-//       (handGesture1 == "reverse stone" && handGesture2 == "stone")
-//     ) {
-//       console.log("draw");
-//       return "Draw";
-//     }
-//   }
-
-//   if (handGesture1 == handGesture2) {
-//     console.log("draw");
-//     return "Draw";
-//   } else {
-//     console.log("computer wins");
-//     return "Computer";
-//   }
-// };
-
 var inputValidate = function (inputText) {
+  // initializes game mode too
   if (inputText == "scissors" || inputText == "paper" || inputText == "stone") {
     console.log("normal mode started");
+    gameMode = "normal";
     return true;
   }
   if (
@@ -126,27 +81,38 @@ var inputValidate = function (inputText) {
     inputText == "reverse paper" ||
     inputText == "reverse stone"
   ) {
-    reverseOverride = true;
+    gameMode = "reverse";
     console.log("reverse mode activated.");
     return true;
-  } else console.log("input invalid!");
-  return false;
+  } else {
+    return false;
+  }
 };
 
 var printOutput = function (gest1, gest2, winner) {
-  var output = `You played: ${gest1}. The computer played: ${gest2}. ${winner} won!`;
+  var output =
+    `You played: ${gest1}. The computer played: ${gest2}. ${winner} won!` +
+    "<br><br>" +
+    `You have won ${playerScore} games. The Computer has won ${computerScore} games.` +
+    "<br><br>" +
+    `There were ${drawScore} ties.`;
   return output;
 };
 
 var main = function (input) {
-  var validation = inputValidate(input);
-  if (validation == false) {
-    return "Invalid Input. Please type only scissors, paper, or stone, and try again.";
+  if (gameMode == "waiting for username") {
+    username = input;
+    gameMode = "normal";
+    myOutputValue = `Hello ${username}!`;
+  } else if (gameMode == "normal" || gameMode == "reverse") {
+    var validation = inputValidate(input);
+    if (validation == false) {
+      return "Invalid Input. Please type only scissors, paper, or stone, and try again.";
+    }
+    var gesture1 = input;
+    var gesture2 = generateComputerHandGesture();
+    var winner = playGame(gesture1, gesture2);
+    var myOutputValue = printOutput(gesture1, gesture2, winner);
   }
-  var gesture1 = input;
-  var gesture2 = generateComputerHandGesture();
-  var winner = playGame(gesture1, gesture2);
-  // var winner = winDecider(gesture1, gesture2);
-  var myOutputValue = printOutput(gesture1, gesture2, winner);
   return myOutputValue;
 };
