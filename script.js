@@ -1,75 +1,84 @@
-//input one of three variables, scissors, paper or stone
-//program will return whether you have won, lost or drew
-//where scissors beats paper, paper beats stone and stone beats scissors
+//the game will save the users name and user will input one of three variabes, scissors, paper or stone
+//the computer will randomly generate a number and return whether the user wins, draws or loses
+// where scissors beats paper, paper beats stone, stone beats scissors
+//the game will store both user and computer win information
+//with each input, app will return user input, com answer, user and com wins
+
+//define global variables
+var currentGameMode = `waiting for user name`;
+var userName = "";
+var comScore = 0;
+var userScore = 0;
+var comAns;
 
 //random number generator for three outcomes
-var computerRoll = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomNumber = Math.floor(randomDecimal);
-  console.log(`this is computerRoll`, randomNumber);
-  return randomNumber;
+console.log(1);
+var comRoll = function () {
+  var randDec = Math.random() * 3;
+  var randNum = Math.floor(randDec);
+  console.log(`computer rolled number:`, randNum);
+  return randNum;
 };
 
-//define variables of scissors, paper and stone
+//link random roll to scissors, paper, stone
+console.log(2);
+var rollToWords = function () {
+  comAns = comRoll();
+  if (comAns == 0) {
+    return "scissors";
+  }
+  if (comAns == 1) {
+    return "paper";
+  } else if (comAns == 2) {
+    return "stone";
+  }
+};
+
+console.log(3);
+var outcome = function (userName, input) {
+  var outputAns = rollToWords();
+  if (
+    (input == "scissors" && outputAns == "scissors") ||
+    (input == "paper" && outputAns == "paper") ||
+    (input == "stone" && outputAns == "stone")
+  ) {
+    return `you have drawn. you input:${input}, computer input:${outputAns}. your score is ${userScore}, computer score is ${comScore}.`;
+  }
+
+  if (
+    (input == "scissors" && outputAns == "stone") ||
+    (input == "paper" && outputAns == "scissors") ||
+    (input == "stone" && outputAns == "paper")
+  ) {
+    comScore += 1;
+    return `you have lost! you input: ${input}, computer input:${outputAns}. you score is ${userScore}, computer score is ${comScore}`;
+  }
+
+  if (
+    (input == "scissors" && outputAns == "paper") ||
+    (input == "paper" && outputAns == "stone") ||
+    (input == "stone" && outputAns == "scissors")
+  ) {
+    userScore += 1;
+    return `you have won! you input: ${input}, computer input:${outputAns}. you score is ${userScore}, computer score is ${comScore}`;
+  }
+};
+console.log(4);
 var main = function (input) {
-  var randomNumRoll = computerRoll();
-  var computerAnswer;
+  var myOutputValue = "";
+  if (currentGameMode == `waiting for user name`) {
+    userName = input;
+    currentGameMode = `dice game`;
+    myOutputValue = `Hello ${userName}`;
+  } else if (currentGameMode == `dice game`) {
+    console.log(input);
+    if (input != "scissors" || input != "paper" || input != "stone") {
+      console.log(input);
+      return `please enter only scissors, paper or stone`;
+    }
 
-  if (randomNumRoll == 0) {
-    computerAnswer = `scissors`;
+    myOutputValue = outcome(userName, input);
+    return myOutputValue;
   }
-  if (randomNumRoll == 1) {
-    computerAnswer = `paper`;
-  }
-  if (randomNumRoll == 2) {
-    computerAnswer = `stone`;
-  }
-  if (
-    (input == `scissors` && computerAnswer == `scissors`) ||
-    (input == `stone` && computerAnswer == `stone`) ||
-    (input == `paper` && computerAnswer == `paper`)
-  ) {
-    return (
-      `you have thrown ` +
-      input +
-      `, the computer has thrown ` +
-      computerAnswer +
-      `. you have DRAWN! can't even win against computer (easy)?`
-    );
-  }
-  if (
-    (input == `scissors` && computerAnswer == `stone`) ||
-    (input == `stone` && computerAnswer == `paper`) ||
-    (input == `paper` && computerAnswer == `scissors`)
-  ) {
-    return (
-      `you have thrown ` +
-      input +
-      `, the computer has thrown ` +
-      computerAnswer +
-      `. what a loser! try again to see whether you can beat computer(easy).`
-    );
-  }
-  if (
-    (input == `scissors` && computerAnswer == `paper`) ||
-    (input == `stone` && computerAnswer == `scissors`) ||
-    (input == `paper` && computerAnswer == `stone`)
-  ) {
-    return (
-      `you have thrown ` +
-      input +
-      `, the computer has thrown ` +
-      computerAnswer +
-      `. okay...you win, good for you.`
-    );
-  }
-
-  //add input validation to tell user to "please enter only scissors, paper or stone"
-  if (input != `scissors` || input != `paper` || input != `stone`) {
-    return (
-      `your input ` +
-      input +
-      ` is invalid. please enter only scissors, paper or stone.`
-    );
-  }
+  return myOutputValue;
 };
