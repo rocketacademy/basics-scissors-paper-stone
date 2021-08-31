@@ -18,94 +18,14 @@ var main = function (input) {
 
   //wait for game mode selection. If input = reverse, switch to reverse game. If input = regular, switch to regular game
   else if (gameMode == `waiting for gameMode`) {
-    if (input == `reverse`) {
-      gameMode = `reverse`;
-      myOutputValue = `You are now in ${gameMode} game mode!`;
-    } else if (input == `regular`) {
-      gameMode = `regular`;
-      myOutputValue = `You are now in ${gameMode} game mode!`;
-    } else {
-      myOutputValue = `Please input reverse or regular to start!`;
-    }
-    console.log(gameMode);
-    console.log(myOutputValue);
+    myOutputValue = selectGameMode(input);
   }
 
   //reverse game code
   else if (gameMode == `reverse`) {
-    //generate choice
-    var computerChoice = generateRandomOption();
-    //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
-    var computersPlay = assignComputerChoice(computerChoice);
-
-    //tie
-    if (input == computersPlay) {
-      gameCount += 1;
-      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
-      myOutputValue = `Reverse game: Hey ${userName}, it's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
-    }
-
-    //losing message for reverse game
-    else if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
-      var myOutputValue = `Reverse game: ${regGameModeWin(input, computersPlay)}`;
-      console.log(myOutputValue);
-    }
-
-    //winning message for reverse game
-    else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
-      var myOutputValue = `Reverse game: ${regGameModeLose(input, computersPlay)}`;
-      console.log(myOutputValue);
-    }
-
-    //input to switch mode to regular game
-    else if (input == `regular`) {
-      gameMode = input;
-      myOutputValue = `You are now in regular game mode! Enter scissors, paper or stone to play.`;
-      console.log(`gameMode`);
-      console.log(gameMode);
-    }
-
-    //player does not input scissors, paper or stone
-    else {
-      myOutputValue = `Please type in scissors, paper or stone to play :)`;
-    }
+    myOutputValue = reverseGameRules(input);
   } else if (gameMode == `regular`) {
-    //console.log(input);
-    //generate choice
-    var computerChoice = generateRandomOption();
-    //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
-    var computersPlay = assignComputerChoice(computerChoice);
-
-    //if user does not switch to reverse game, continue with regular game
-    //if player wins, run regular game mode win function
-    if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
-      var myOutputValue = regGameModeWin(input, computersPlay);
-    }
-
-    //player loses, add to computerWins count
-    else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
-      var myOutputValue = regGameModeLose(input, computersPlay);
-    }
-
-    //tie
-    else if (input == computersPlay) {
-      gameCount += 1;
-      var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
-      myOutputValue = `${userName}, It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
-    }
-
-    //switch to reverse game mode
-    else if (input == `reverse`) {
-      gameMode = `reverse`;
-      myOutputValue = `You are now in reverse game mode! Enter scissors, paper or stone to play.`;
-      console.log(`gameMode`);
-      console.log(gameMode);
-    }
-
-    //player does not input scissors, paper or stone
-    else {
-      myOutputValue = `Please type in scissors, paper or stone to play :)`;
-    }
+    myOutputValue = regularGameRules(input);
   }
   return myOutputValue;
 };
@@ -151,4 +71,101 @@ var regGameModeLose = function (input, computersPlay) {
   gameCount += 1;
   var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
   return `${userName}, you lost :( <br><br>You chose ${input} and the computer played ${computersPlay}. <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+};
+
+//take in input and change game mode
+selectGameMode = function (input) {
+  if (input == `reverse`) {
+    gameMode = `reverse`;
+    return `You are now in ${gameMode} game mode!`;
+  } else if (input == `regular`) {
+    gameMode = `regular`;
+    return `You are now in ${gameMode} game mode!`;
+  } else {
+    return `Please input reverse or regular to start!`;
+  }
+  console.log(gameMode);
+  console.log(myOutputValue);
+};
+
+//reverse game rules
+reverseGameRules = function (input) {
+  //generate choice
+  var computerChoice = generateRandomOption();
+  //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
+  var computersPlay = assignComputerChoice(computerChoice);
+
+  //tie
+  if (input == computersPlay) {
+    gameCount += 1;
+    var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+    return `Reverse game: Hey ${userName}, it's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+  }
+
+  //losing message for reverse game
+  else if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
+    return `Reverse game: ${regGameModeWin(input, computersPlay)}`;
+  }
+
+  //winning message for reverse game
+  else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
+    return `Reverse game: ${regGameModeLose(input, computersPlay)}`;
+  }
+
+  //winning message for reverse game
+  else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
+    return `Reverse game: ${regGameModeLose(input, computersPlay)}`;
+    console.log(myOutputValue);
+  }
+
+  //input to switch mode to regular game
+  else if (input == `regular`) {
+    gameMode = input;
+    return `You are now in regular game mode! Enter scissors, paper or stone to play.`;
+    console.log(`gameMode`);
+    console.log(gameMode);
+  }
+  //player does not input scissors, paper or stone
+  else {
+    return `Please type in scissors, paper or stone to play :)`;
+  }
+};
+
+regularGameRules = function (input) {
+  //console.log(input);
+  //generate choice
+  var computerChoice = generateRandomOption();
+  //assign number to computer's play; computerScissors = 0; computerPaper = 1; computerStone = 2;
+  var computersPlay = assignComputerChoice(computerChoice);
+
+  //if user does not switch to reverse game, continue with regular game
+  //if player wins, run regular game mode win function
+  if ((input == `scissors` && computersPlay == `paper`) || (input == `paper` && computersPlay == `stone`) || (input == `stone` && computersPlay == `scissors`)) {
+    return regGameModeWin(input, computersPlay);
+  }
+
+  //player loses, add to computerWins count
+  else if ((input == `scissors` && computersPlay == `stone`) || (input == `paper` && computersPlay == `scissors`) || (input == `stone` && computersPlay == `paper`)) {
+    return regGameModeLose(input, computersPlay);
+  }
+
+  //tie
+  else if (input == computersPlay) {
+    gameCount += 1;
+    var winPercentage = calculatePercentageOfUserWins(userWins, gameCount);
+    return `${userName}, It's a tie! <br><br>You chose ${input} and the computer played ${computersPlay} <br><br>You won ${userWins} times and the computer won ${computerWins} times. ${winPercentage}`;
+  }
+
+  //switch to reverse game mode
+  else if (input == `reverse`) {
+    gameMode = `reverse`;
+    return `You are now in reverse game mode! Enter scissors, paper or stone to play.`;
+    console.log(`gameMode`);
+    console.log(gameMode);
+  }
+
+  //player does not input scissors, paper or stone
+  else {
+    return `Please type in scissors, paper or stone to play :)`;
+  }
 };
