@@ -53,52 +53,24 @@ if (userGuess == computerHand) {
   drawCount += 1;
   var message = `${genericOutput} DRAW!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
 }
-if (userGuess == "scissors" && computerHand == "paper") {
+if (userGuess == "scissors" && computerHand == "paper") || 
+   (userGuess == "paper" && computerHand == "stone") || 
+   (userGuess == "stone" && computerHand == "scissors") || 
+   (userGuess == "rscissors" && computerHand == "stone") ||
+   (userGuess == "rpaper" && computerHand == "scissors") ||
+   (userGuess == "rstone" && computerHand == "paper")
+   {
   winCount += 1;
   var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
 }
-if (userGuess == "scissors" && computerHand == "stone") {
-  lossCount += 1;
-  var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "paper" && computerHand == "stone") {
-  winCount += 1;
-  var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "paper" && computerHand == "scissors") {
-  lossCount += 1;
-  var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "stone" && computerHand == "scissors") {
-  winCount += 1;
-  var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "stone" && computerHand == "paper") {
+if (userGuess == "scissors" && computerHand == "stone") || 
+   (userGuess == "paper" && computerHand == "scissors") || 
+   (userGuess == "stone" && computerHand == "paper")
+   (userGuess == "rscissors" && computerHand == "paper") ||
+   (userGuess == "rpaper" && computerHand == "stone") || 
+   (userGuess == "rstone" && computerHand == "scissors") ||
+   {
   lossCount += 1;
   var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
 }
 
-if (userGuess == "rscissors" && computerHand == "paper") {
-  lossCount += 1;
-  var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "rscissors" && computerHand == "stone") {
-  winCount += 1;
-  var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "rpaper" && computerHand == "stone") {
-  lossCount += 1;
-  var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "rpaper" && computerHand == "scissors") {
-  winCount += 1;
-  var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "rstone" && computerHand == "scissors") {
-  lossCount += 1;
-  var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
-if (userGuess == "rstone" && computerHand == "paper") {
-  winCount += 1;
-  var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}.`;
-}
