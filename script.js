@@ -1,3 +1,7 @@
+var win = 0;
+var loss = 0;
+var draw = 0;
+
 var main = function (input) {
   var num = numGenerator();
   console.log(num);
@@ -5,6 +9,10 @@ var main = function (input) {
   console.log(botOutput);
   var winLoseDraw = decisionMaker(input, botOutput);
   console.log(winLoseDraw);
+
+  console.log(win);
+  console.log(loss);
+  console.log(draw);
 
   return winLoseDraw;
 };
@@ -26,6 +34,7 @@ var botSpS = function (num) {
 var decisionMaker = function (input, botOutput) {
   var input;
   var botOutput;
+
   if (!(input == "scissors" || input == "paper" || input == "stone")) {
     return (
       "Input invalid. Your input was " +
@@ -34,25 +43,46 @@ var decisionMaker = function (input, botOutput) {
     );
   }
   if (input == "scissors" && botOutput == "paper") {
-    return "You won!";
+    win = win + 1;
+    return (
+      "You won! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == "paper" && botOutput == "stone") {
-    return "You won!";
+    win = win + 1;
+    return (
+      "You won! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == "stone" && botOutput == "scissors") {
-    return "You won!";
+    win = win + 1;
+    return (
+      "You won! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == "paper" && botOutput == "scissors") {
-    return "You lost...";
+    loss = loss + 1;
+    return (
+      "You lost! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == "stone" && botOutput == "paper") {
-    return "You lost...";
+    loss = loss + 1;
+    return (
+      "You lost! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == "scissors" && botOutput == "stone") {
-    return "You lost...";
+    loss = loss + 1;
+    return (
+      "You lost! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
   if (input == botOutput) {
-    return "Draw! Again!";
+    draw = draw + 1;
+    return (
+      "You drew! Your Win-Lose-Draw record is " + win + "-" + loss + "-" + draw
+    );
   }
 };
 
