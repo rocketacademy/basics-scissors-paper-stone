@@ -25,7 +25,6 @@ var generateRandomHand = function () {
 };
 
 var main = function (input) {
-  var myOutputValue = "";
   if (gameMode == "Please enter your user name") {
     userName = input;
     gameMode = "GAME ON";
@@ -107,5 +106,15 @@ var getComputerHand = function (computerHand, userGuess) {
     winningPercentage = (winCount / totalGames) * 100;
     var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
   }
+  if (
+    userGuess != "scissors" &&
+    userGuess != "paper" &&
+    userGuess != "stone" &&
+    userGuess != "reversed scissors" &&
+    userGuess != "reversed paper" &&
+    userGuess != "reversed stone"
+  )
+    var message =
+      "Please enter only:<br><br>1. scissors<br>2. paper<br>3. stone<br><br>Or you can try your luck at reversed Scissors-Paper-Stone by adding reversed in front of your choice.";
   return message;
 };
