@@ -1,91 +1,118 @@
+//function
+var generateRandomInteger = function (max) {
+  var randomDecimal = Math.random() * max;
+  var randomInteger = Math.floor(randomDecimal) + 1;
+  return randomInteger;
+};
+
+//global
+var gameMode = "Please enter your user name";
+var userName = "";
+var winCount = 0;
+var drawCount = 0;
+var lossCount = 0;
+var totalGames = 0;
+
+//function
+var generateRandomHand = function () {
+  var handType = 3;
+  var randomHandType = generateRandomInteger(handType);
+  if (randomHandType == 1) {
+    return "scissors";
+  }
+  // "else if" is implied in the following if statements because we return in each if statement.
+  if (randomHandType == 2) {
+    return "paper";
+  }
+  if (randomHandType == 3) {
+    return "stone";
+  }
+  console.log();
+};
+
 var main = function (input) {
-  console.log(input);
+  var myOutputValue = "";
+  if (gameMode == "Please enter your user name") {
+    userName = input;
+    gameMode = "GAME ON";
+    return `Hello ${userName}, are you ready to play?`;
+  } else if (gameMode == "GAME ON") {
+    randomHandType = generateRandomHand();
+    message = getComputerHand(randomHandType, input);
+    return message;
+  }
+};
 
-  var spsOutput = spsGenerator();
-  console.log(spsOutput);
-
-  var gameOutcome = getGameOutcome(input, spsOutput);
-  console.log("gameOutcome");
-  console.log(gameOutcome);
-
-  //if function to switch to reversed rules if reversed input is entered
-  if (
-    input == "reversed scissors" ||
-    input == "reversed paper" ||
-    input == "reversed stone"
-  ) {
-    var gameOutcome = getReversedGameOutcome(input, spsOutput);
-    console.log("reversedGameOutcome");
-    console.log(gameOutcome);
+//this is where you're defining computerHand as a function. missing 'function' in line 50
+var getComputerHand = function (computerHand, userGuess) {
+  console.log("Computer chooses:" + computerHand);
+  totalGames = totalGames + 1;
+  var genericOutput = `Your hand: ${userGuess}. Computer's Hand: ${computerHand}.`;
+  if (userGuess == computerHand) {
+    drawCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} DRAW!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "scissors" && computerHand == "paper") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "scissors" && computerHand == "stone") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "paper" && computerHand == "stone") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "paper" && computerHand == "scissors") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "stone" && computerHand == "scissors") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "stone" && computerHand == "paper") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
   }
 
-  var myOutputValue =
-    "You chose " +
-    input +
-    ".<br>The computer chose " +
-    spsOutput +
-    ".<br><br>You " +
-    gameOutcome +
-    "!<br><br>Enter another input to play again!";
-
-  //if function to return error if input != scissors, paper, stone, reversed scissors, reversed paper, reversed stone
-  if (
-    input != "scissors" &&
-    input != "paper" &&
-    input != "stone" &&
-    input != "reversed scissors" &&
-    input != "reversed paper" &&
-    input != "reversed stone"
-  )
-    var myOutputValue =
-      "Please enter only:<br><br>1. scissors<br>2. paper<br>3. stone<br><br>Or you can try your luck at reversed Scissors-Paper-Stone by adding reversed in front of your choice.";
-
-  return myOutputValue;
-};
-
-//function to decide on game outcome
-var getGameOutcome = function (input, spsOutput) {
-  if (input == "scissors" && spsOutput == "paper") var gameOutcome = "win";
-  if (input == "scissors" && spsOutput == "stone") var gameOutcome = "lose";
-  if (input == "paper" && spsOutput == "scissors") var gameOutcome = "lose";
-  if (input == "paper" && spsOutput == "stone") var gameOutcome = "win";
-  if (input == "stone" && spsOutput == "scissors") var gameOutcome = "win";
-  if (input == "stone" && spsOutput == "paper") var gameOutcome = "lose";
-  if (input == spsOutput) var gameOutcome = "draw";
-  return gameOutcome;
-};
-
-//random number generator to give scissors, paper or stone
-var spsGenerator = function () {
-  var randomNum1to3 = Math.ceil(Math.random() * 3);
-  if (randomNum1to3 == 1) var spsOutput = "scissors";
-  if (randomNum1to3 == 2) var spsOutput = "paper";
-  if (randomNum1to3 == 3) var spsOutput = "stone";
-  return spsOutput;
-};
-
-//function to decide on reversed game outcome
-var getReversedGameOutcome = function (input, spsOutput) {
-  if (input == "reversed scissors" && spsOutput == "paper")
-    var gameOutcome = "lose";
-  if (input == "reversed scissors" && spsOutput == "stone")
-    var gameOutcome = "win";
-  if (input == "reversed paper" && spsOutput == "scissors")
-    var gameOutcome = "win";
-  if (input == "reversed paper" && spsOutput == "stone")
-    var gameOutcome = "lose";
-  if (input == "reversed stone" && spsOutput == "scissors")
-    var gameOutcome = "lose";
-  if (input == "reversed stone" && spsOutput == "paper")
-    var gameOutcome = "win";
-  if (input == "reversed paper" && spsOutput == "paper")
-    var gameOutcome = "draw";
-  if (input == "reversed scissors" && spsOutput == "scissors")
-    var gameOutcome = "draw";
-  if (input == "reversed stone" && spsOutput == "stone")
-    var gameOutcome = "draw";
-
-  console.log("reverse outcome generator");
-
-  return gameOutcome;
+  if (userGuess == "rscissors" && computerHand == "paper") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "rscissors" && computerHand == "stone") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "rpaper" && computerHand == "stone") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "rpaper" && computerHand == "scissors") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "rstone" && computerHand == "scissors") {
+    lossCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} LOSE!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  if (userGuess == "rstone" && computerHand == "paper") {
+    winCount += 1;
+    winningPercentage = (winCount / totalGames) * 100;
+    var message = `${genericOutput} WIN!!! <br> You have won ${winCount} times. <br> You have lost ${lossCount} times. <br> You have ${drawCount} draws. <br> Your winning percentage is ${winningPercentage}%`;
+  }
+  return message;
 };
