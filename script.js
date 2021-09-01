@@ -2,6 +2,8 @@ var numOfTimesUserWon = 0;
 var numOfTimesPcWon = 0;
 var numOfDraws = 0;
 var numOfGamesPlayed = 0;
+var pcWinningPercent = 0;
+var userWinningPercent = 0;
 var userName = "";
 var gameMode = "Waiting for UserName";
 var gameVersion = "Normal Version";
@@ -33,7 +35,7 @@ var main = function (userInput) {
   }
 };
 
-// ===== Helper function to introduce game features =====
+// ===== Function to introduce game features =====
 
 var introduceGame = function (userInput) {
   var gameInstructions = "";
@@ -58,7 +60,7 @@ var introduceGame = function (userInput) {
   }
 };
 
-// ===== Helper function to check input validity =====
+// ===== Function to check input validity =====
 
 var validityCheck = function (userInput) {
   var inputCheckResult = "";
@@ -100,20 +102,20 @@ var validityCheck = function (userInput) {
   return true;
 };
 
-// ===== Helper function to generate winner =====
+// ===== Function to generate winner =====
 
 var generateWinner = function (userInput) {
   if (validityCheck(userInput) == true) {
     if (userInput == "reverse") {
       return reverseGameRules();
     } else {
-      return calWinner(userInput);
+      return generateResults(userInput);
     }
   }
   return validityCheck(userInput);
 };
 
-// ===== Helper function to reverse game rules =====
+// ===== Function to reverse game rules =====
 
 var reverseGameRules = function () {
   reverseCount = reverseCount + 1;
@@ -138,9 +140,9 @@ var reverseGameRules = function () {
   }
 };
 
-// ===== Helper function to pick an option of either scissors, paper or stone =====
+// ===== Function to pick an option of either scissors, paper or stone =====
 var pickOption = function () {
-  var randomOptionNum = 2; // Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
+  var randomOptionNum = Math.floor(Math.random() * 3); // Generate random integer between 0 to 3, exlucing 3
   var selectedOption = "";
   // Alternative way to random pick an option
   // var optionsArray = ["scissors", "paper", "stone"]; // Set the output options in an array
@@ -177,16 +179,19 @@ var clearCounters = function () {
   recentWinner = "";
 };
 
-//  ===== Helper function to determine winner =====
+//  ===== Function to determine winner =====
 
 var checkWhoWins = function (userSelection, computerSelection) {
   var results = "";
+  numOfGamesPlayed = numOfGamesPlayed + 1;
+  // console.log(`Current game mode is ${gameMode}.`);
   if (
     userSelection == computerSelection ||
     (userSelection == "reversed scissors" && computerSelection == "scissors") ||
     (userSelection == "reversed paper" && computerSelection == "paper") ||
     (userSelection == "reversed stone" && computerSelection == "stone")
   ) {
+    numOfDraws = numOfDraws + 1;
     results = "draw";
   } else if (
     (userSelection == "scissors" && computerSelection == "paper") ||
@@ -196,26 +201,51 @@ var checkWhoWins = function (userSelection, computerSelection) {
     (userSelection == "reversed paper" && computerSelection == "scissors") ||
     (userSelection == "reversed stone" && computerSelection == "paper")
   ) {
-    results = "user";
+    if (gameMode == "Original Mode") {
+      numOfTimesUserWon = numOfTimesUserWon + 1;
+      userWinningPercent = calUserWinningPercent().toFixed(0);
+      results = "user";
+    } else if (gameMode == "Reversed Mode") {
+      numOfTimesPcWon = numOfTimesPcWon + 1;
+      pcWinningPercent = calPcWinningPercent().toFixed(0);
+      results = "computer";
+    }
   } else {
-    results = "computer";
+    if (gameMode == "Original Mode") {
+      numOfTimesPcWon = numOfTimesPcWon + 1;
+      pcWinningPercent = calPcWinningPercent().toFixed(0);
+      results = "computer";
+    } else if (gameMode == "Reversed Mode") {
+      numOfTimesUserWon = numOfTimesUserWon + 1;
+      userWinningPercent = calUserWinningPercent().toFixed(0);
+      results = "user";
+    }
   }
+  // console.log(`Results is ${results}`);
   return results;
 };
 
-// ===== Function to check user input against program output to determine winner (game rules) =====
+// ===== Function to generate result statements =====
 
-var calWinner = function (userInput) {
+var generateResults = function (userInput) {
   var myOutputValue = "";
-  var userWinningPercent = 0;
-  var pcWinningPercent = 0;
 
-  var outputByProgram = pickOption(); // Generate random option of either scissors, paper or stone
+  // Generate random option of either scissors, paper or stone
+  var outputByProgram = pickOption();
+
   var whoWins = checkWhoWins(userInput, outputByProgram);
 
-  numOfGamesPlayed = numOfGamesPlayed + 1;
-
   var choiceStatement = `Hey ${userName}, you chose ${userInput} and the computer chose ${outputByProgram}.`;
+
+  var userWinStatement = `<br ><br >You won! 🙆 <br ><br >`;
+
+  var userLostStatement = `<br ><br >You lose! 🙅<br ><br >`;
+
+  var drawStatement = `<br ><br >It's a draw! 🤷<br ><br >`;
+
+  var gameRecord =
+    `<u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
+    `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >`;
 
   var originalInstructionStatement =
     `Submit "scissors" "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!<br ><br >` +
@@ -236,34 +266,23 @@ var calWinner = function (userInput) {
   // If game version is Normal and game mode is Original, run the normal and original rules
   if (gameVersion == "Normal Version" && gameMode == "Original Mode") {
     if (whoWins == "user") {
-      numOfTimesUserWon = numOfTimesUserWon + 1;
-      userWinningPercent = calUserWinningPercent().toFixed(0);
-
       myOutputValue =
-        `${choiceStatement}<br ><br >You won! 🙆 <br ><br >` +
-        `${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userWinStatement}` +
+        `${originalInstructionStatement}<br ><br >${gameRecord}` +
         `You are winning ${userWinningPercent}% of the game! Keep it up!!`;
 
       return myOutputValue;
     } else if (whoWins == "computer") {
-      numOfTimesPcWon = numOfTimesPcWon + 1;
-      pcWinningPercent = calPcWinningPercent().toFixed(0);
-
       myOutputValue =
-        `${choiceStatement}<br ><br >You lose! 🙅<br ><br >` +
-        `${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userLostStatement}` +
+        `${originalInstructionStatement}<br ><br >${gameRecord}` +
         `The computer is winning ${pcWinningPercent}% of the game. Try harder!`;
 
       return myOutputValue;
     } else if (whoWins == "draw") {
-      numOfDraws = numOfDraws + 1;
-
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${drawStatement}` +
+        `${originalInstructionStatement}<br ><br >${gameRecord}`;
 
       return myOutputValue;
     }
@@ -271,34 +290,23 @@ var calWinner = function (userInput) {
   // If game version is Normal and game mode is Reversed, run the normal and reversed rules
   else if (gameVersion == "Normal Version" && gameMode == "Reversed Mode") {
     if (whoWins == "user") {
-      numOfTimesPcWon = numOfTimesPcWon + 1;
-      pcWinningPercent = calPcWinningPercent().toFixed(0);
-
       myOutputValue =
-        `${choiceStatement}<br ><br >You lose! 🙅<br ><br >` +
-        `${reversedInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
-        `The computer is winning ${pcWinningPercent}% of the game. Try harder!`;
-
-      return myOutputValue;
-    } else if (whoWins == "computer") {
-      numOfTimesUserWon = numOfTimesUserWon + 1;
-      userWinningPercent = calUserWinningPercent().toFixed(0);
-
-      myOutputValue =
-        `${choiceStatement}<br ><br >You won! 🙆<br ><br >` +
-        `${reversedInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userWinStatement}` +
+        `${reversedInstructionStatement}<br ><br >${gameRecord}` +
         `You are winning ${userWinningPercent}% of the game! Keep it up!!`;
 
       return myOutputValue;
-    } else if (whoWins == "draw") {
-      numOfDraws = numOfDraws + 1;
-
+    } else if (whoWins == "computer") {
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `${reversedInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${userLostStatement}` +
+        `${reversedInstructionStatement}<br ><br >${gameRecord}` +
+        `The computer is winning ${pcWinningPercent}% of the game. Try harder!`;
+
+      return myOutputValue;
+    } else if (whoWins == "draw") {
+      myOutputValue =
+        `${choiceStatement} ${drawStatement}` +
+        `${reversedInstructionStatement}<br ><br >${gameRecord}`;
 
       return myOutputValue;
     }
@@ -307,47 +315,35 @@ var calWinner = function (userInput) {
   else if (gameVersion == "Korean Version" && gameMode == "Original Mode") {
     if (whoWins == "user") {
       recentWinner = "user";
-      numOfTimesUserWon = numOfTimesUserWon + 1;
 
       myOutputValue =
-        `${choiceStatement}<br ><br >You won! 🙆<br ><br >` +
-        `${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userWinStatement}` +
+        `${originalInstructionStatement}<br ><br >${gameRecord}` +
         `You are the latest winner!`;
 
       return myOutputValue;
     } else if (whoWins == "computer") {
       recentWinner = "computer";
-      numOfTimesPcWon = numOfTimesPcWon + 1;
 
       myOutputValue =
-        `${choiceStatement}<br ><br >You lose! 🙅<br ><br >` +
-        `${originalInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userLostStatement}` +
+        `${originalInstructionStatement}<br ><br >${gameRecord}` +
         `The computer is the latest winner!`;
 
       return myOutputValue;
     } else if (whoWins == "draw" && recentWinner == "user") {
-      numOfDraws = numOfDraws + 1;
-
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `You won this game!<br ><br >${koreanInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${drawStatement}` +
+        `You won this game!<br ><br >${koreanInstructionStatement}<br ><br >${gameRecord}`;
 
       // Clear all counters to start a new game
       clearCounters();
 
       return myOutputValue;
     } else if (whoWins == "draw" && recentWinner == "computer") {
-      numOfDraws = numOfDraws + 1;
-
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `The computer won this game!<br ><br >${koreanInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${drawStatement}` +
+        `The computer won this game!<br ><br >${koreanInstructionStatement}<br ><br >${gameRecord}`;
 
       // Clear all counters to start a new game
       clearCounters();
@@ -361,48 +357,36 @@ var calWinner = function (userInput) {
   // If game version is Korean and game mode is Reversed, run the Korean and Reversed rules
   else if (gameVersion == "Korean Version" && gameMode == "Reversed Mode") {
     if (whoWins == "user") {
-      recentWinner = "computer";
-      numOfTimesPcWon = numOfTimesPcWon + 1;
-
-      myOutputValue =
-        `${choiceStatement}<br ><br >You lose! 🙅<br ><br >` +
-        `${reversedInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)<br ><br >` +
-        `The computer is the latest winner!`;
-
-      return myOutputValue;
-    } else if (whoWins == "computer") {
       recentWinner = "user";
-      numOfTimesUserWon = numOfTimesUserWon + 1;
 
       myOutputValue =
-        `${choiceStatement}<br ><br >You won! 🙆<br ><br >` +
-        `${reversedInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)<br ><br >` +
+        `${choiceStatement} ${userWinStatement}` +
+        `${reversedInstructionStatement}<br ><br >${gameRecord}` +
         `You are the latest winner!`;
 
       return myOutputValue;
-    } else if (whoWins == "draw" && recentWinner == "user") {
-      numOfDraws = numOfDraws + 1;
+    } else if (whoWins == "computer") {
+      recentWinner = "computer";
 
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `You won this game!<br ><br >${koreanRevInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${userLostStatement}` +
+        `${reversedInstructionStatement}<br ><br >${gameRecord}` +
+        `The computer is the latest winner!`;
+
+      return myOutputValue;
+    } else if (whoWins == "draw" && recentWinner == "user") {
+      myOutputValue =
+        `${choiceStatement} ${drawStatement}` +
+        `You won this game!<br ><br >${koreanRevInstructionStatement}<br ><br >${gameRecord}`;
 
       // Clear all counters to start a new game
       clearCounters();
 
       return myOutputValue;
     } else if (whoWins == "draw" && recentWinner == "computer") {
-      numOfDraws = numOfDraws + 1;
-
       myOutputValue =
-        `${choiceStatement}<br ><br >It's a draw! 🤷<br ><br >` +
-        `The computer won this game!<br ><br >${koreanRevInstructionStatement}<br ><br ><u>Game Record:</u><br>You won: ${numOfTimesUserWon} round(s)<br >` +
-        `Computer won: ${numOfTimesPcWon} round(s)<br >` +
-        `Number of draws: ${numOfDraws} round(s)`;
+        `${choiceStatement} ${drawStatement}` +
+        `The computer won this game!<br ><br >${koreanRevInstructionStatement}<br ><br >${gameRecord}`;
 
       // Clear all counters to start a new game
       clearCounters();
