@@ -1,56 +1,147 @@
-// Basic Scissors Paper Stone
-// Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw.
-// Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
-// Input Validation
-// Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again.
+//Global for game states
 
-//Attaching the word 'scissors', 'paper' and 'stone' to a variable to define them.
-var Scissors = "scissors";
-var Stone = "stone";
-var Paper = "paper";
+//2 states of the game
+var getUsername = "Username";
+var startSPSGame = "SPSgame";
 
-//The main function is where the system calculates whether the user has won or lose the game.
-var main = function (input) {
-  var ProgramsObj = randObjforProgram();
+//Setting the conditions for game state one.
+var currentGameState = getUsername;
+var userName = "";
 
-  if (input == ProgramsObj) {
-    return `Draw! Computer picked ${ProgramsObj} while you choose ${input}. Type in 'scissors', 'paper' or 'stone' to play again!`;
+//The signs
+var scissors = "✂️";
+var stone = "🪨";
+var paper = "📰";
+
+//Counter for amount of winning and losing and the draws
+var computerWinCounter = 0;
+var userWinCounter = 0;
+var totalMatchesPlayed = 1;
+var drawCounter = 0;
+
+//Get integers to attach the words later for the computer.
+var getInteger = function () {
+  //Getting the random number.
+  var numberForSPS = Math.ceil(Math.random() * 3);
+  console.log(numberForSPS);
+  return numberForSPS;
+};
+//Get the integers attached to the global shapes for the computer.
+var getSigns = function () {
+  var getNumberstoSigns = getInteger();
+
+  console.log(`1 = 'scissors', 2 = 'paper', 3 = 'stone'`);
+  console.log(getNumberstoSigns);
+  if (getNumberstoSigns == 1) {
+    return scissors;
   }
-  if (
-    (input == "scissors" && ProgramsObj == Stone) ||
-    (input == "paper" && ProgramsObj == Scissors) ||
-    (input == "stone" && ProgramsObj == Paper)
-  ) {
-    return `Computer won! Computer choose ${ProgramsObj} while you picked ${input}. Type in 'scissors', 'paper' or 'stone' to try again!`;
+  if (getNumberstoSigns == 2) {
+    return paper;
   }
-  if (
-    (input == "scissors" && ProgramsObj == Paper) ||
-    (input == "paper" && ProgramsObj == Stone) ||
-    (input == "stone" && ProgramsObj == Scissors)
-  ) {
-    return `YOU WIN!!! Computer picked ${ProgramsObj} while you took ${input}. Type in 'scissors', 'paper' or 'stone' to play again!`;
-  }
-  if (input != "scissors" || input != "stone" || input != "paper") {
-    return `Only type in 'scissors', 'paper' or 'stone' to play.`;
+  if (getNumberstoSigns == 3) {
+    return stone;
   }
 };
 
-//   var myOutputValue = test01;
-// return `You ${myOutputValue}!`;
+//Changing the input of the user to the global shapes used.
 
-//Generate scissors, paper, stone by random number.
-var randObjforProgram = function () {
-  var generateObj = Math.floor(Math.random() * 3);
+var getUserPick = function (userInput) {
+  if (userInput == "scissors") {
+    return scissors;
+  }
+  if (userInput == "stone") {
+    return stone;
+  }
+  if (userInput == "paper") {
+    return paper;
+  }
+};
 
-  console.log("numstoObj");
-  console.log(generateObj);
-  if (generateObj == 2) {
-    return Scissors;
+//System calculates the winning, losing and draw condition.
+
+var SPSGame = function (insert) {
+  var computerPick = getSigns();
+  var userPick = getUserPick(insert);
+  console.log("computer PICK");
+  console.log(computerPick);
+
+  var winMessage = `You won! You pick ${userPick} while Computer pick ${computerPick}.`;
+  var loseMessage = `You lose! You pick ${userPick} while Computer pick ${computerPick}.`;
+  var drawMessage = `Draw! Both pick ${computerPick}.`;
+  var invalidMessage = `Only type in scissors, paper or stone to play.`;
+  if (
+    (userPick == scissors && computerPick == paper) ||
+    (userPick == paper && computerPick == stone) ||
+    (userPick == stone && computerPick == scissors)
+  ) {
+    userWinCounter = userWinCounter + 1;
+    return winMessage;
   }
-  if (generateObj == 1) {
-    return Stone;
+  if (
+    (userPick == scissors && computerPick == stone) ||
+    (userPick == paper && computerPick == scissors) ||
+    (userPick == stone && computerPick == paper)
+  ) {
+    computerWinCounter = computerWinCounter + 1;
+    return loseMessage;
   }
-  if (generateObj == 0) {
-    return Paper;
+
+  if (userPick == computerPick) {
+    drawCounter = drawCounter + 1;
+    return drawMessage;
+  }
+  if (userPick != "scissors" || userPick != "paper" || userPick != "stone") {
+    return invalidMessage;
+  }
+};
+
+//Return message based on the counters
+
+var getCounterMessage = function () {
+  console.log("WOT");
+  if (userWinCounter > computerWinCounter) {
+    return ` You're winning the game so far! Your score, ${userName} is ${userWinCounter}/${totalMatchesPlayed} while Computer's score ${computerWinCounter}/${totalMatchesPlayed}! There's been 
+    ${drawCounter} draws. Nice!`;
+  }
+  if (userWinCounter < computerWinCounter) {
+    return ` You're losing the game! Computer's score is ${computerWinCounter}/${totalMatchesPlayed} while yours, ${userName} is ${userWinCounter}/${totalMatchesPlayed}. There's been ${drawCounter} draws. Go on and beat it!`;
+  }
+  if (userWinCounter == computerWinCounter) {
+    return ` It's a tie! The score is ${userWinCounter} / ${totalMatchesPlayed}. There's been ${drawCounter} draws.
+    Keep going ${userName}!`;
+  }
+};
+
+//Main function executing the input of the player.
+var main = function (input) {
+  //Attaching SPS functions to variables.
+  var gameResults = SPSGame(input);
+  var counterMessage = getCounterMessage(input);
+
+  //Before input of each game state
+  //Game state 1
+  if (input == "" && currentGameState == getUsername) {
+    return "Hey! I need a name. ";
+  }
+  //Game state 2
+  if (currentGameState == startSPSGame && input == "") {
+    return "Type scissors, paper or stone to play.";
+  }
+
+  //After input of each game state
+  //Game state 1
+  if (currentGameState == getUsername) {
+    userName = input;
+    currentGameState = startSPSGame;
+    return `${userName}, LETS BEGIN!`;
+  }
+  // Game state 2
+  if (
+    currentGameState == startSPSGame &&
+    (input == "scissors" || input == "paper" || input == "stone") &&
+    (totalMatchesPlayed += 1)
+  ) {
+    currentGameState == startSPSGame;
+    return gameResults + counterMessage;
   }
 };
