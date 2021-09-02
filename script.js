@@ -44,15 +44,16 @@ const inputChecking = (input) => {
 
 // checking if player wins
 const doesPlayerWin = function (player, comp) {
-  return (
-    (player == stone && comp == scissors) ||
-    (player == paper && comp == stone) ||
-    (player == scissors && comp == paper) ||
-    (player == reversedStone && comp == paper) ||
-    (player == reversedPaper && comp == scissors) ||
-    (player == reversedScissors && comp == stone)
-  );
-}; // return win and lost, make it as a variables
+  const win = true;
+  if (player == stone && comp == scissors) return win;
+  if (player == paper && comp == stone) return win;
+  if (player == scissors && comp == paper) return win;
+  if (player == reversedStone && comp == paper) return win;
+  if (player == reversedPaper && comp == scissors) return win;
+  if (player == reversedScissors && comp == stone) return win;
+};
+
+// return win and lost, make it as a variables
 
 // define a function to check the result
 const checkResult = (player, comp) => {
@@ -74,9 +75,8 @@ const checkResult = (player, comp) => {
 const generateScoreMessage = (playerScores, compScores) => {
   if (playerScores < compScores) {
     return "Keep going.";
-  } else {
-    return "Pretty good!";
   }
+  return "Pretty good!";
 };
 
 // generate object's icon
@@ -88,15 +88,14 @@ const objectIcon = {
   "reversed scissors": "✌🏻",
   "reversed stone": "✊🏻",
 };
-git;
 
 // play SPS with user input, return game result.
 const main = (input) => {
   const comp = compRandom();
   const player = input;
   const result = checkResult(player, comp);
-  let turns = playerScores + compScores + draws;
-  let scoreMessage = generateScoreMessage(playerScores, compScores);
+  const turns = playerScores + compScores + draws;
+  const scoreMessage = generateScoreMessage(playerScores, compScores);
 
   if (inputChecking(input)) {
     return `The computer chose ${comp} ${objectIcon[comp]} .<br>You chose ${player} ${objectIcon[player]}.<br><br>${result}<br><br>So far ${userName}, you've been winning ${playerScores}/${turns} turns and ${draws} draws. ${scoreMessage}<br><br>Now you can type "scissors", "paper" or "stone" to play another round, or reverse it by adding the word "reversed" to your choice!`;
