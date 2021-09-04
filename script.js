@@ -122,12 +122,7 @@ if(input == `Reversed Scissors` && programEl == `Paper`||input == `Reversed Pape
   }
 
   }
-// //Checking
-// console.log(`input  ${input}`)
-// console.log(`programEl  ${programEl}`)
-// console.log(`userDrawEl  ${gameDrawEl}`)
-// console.log(`userCountEl  ${userWinEl}`)
-// console.log(`programCountEl  ${programWinEl}`)
+
 
 return myOutputValue;
   
