@@ -38,7 +38,6 @@ programEl = `Paper`
 if(programEl == 3){
 programEl = `Stone`
 }
-//enter users name to start the game
 
 //Game Draw normal rules
 if(input == programEl){
@@ -52,194 +51,76 @@ myOutputValue = `Game was draw. User: [${input}] Program: [${programEl}] <><> To
 User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
 User Win: [${userWinPc}%]<br>
 Program Win: [${programWinPc}%]`
-
 }
+
 //Game Draw reversed rules
-if(input == `Reversed Scissors` && programEl == `Scissors`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Paper` && programEl == `Paper`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Stone` && programEl == `Stone`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
+if(input == `Reversed Scissors` && programEl == `Scissors`||input == `Reversed Paper` && programEl == `Paper`||input == `Reversed Stone` && programEl == `Stone`){
+  totalCountEl += 1
+  userWinEl += 1
+  // programWinEl += 1
+  // gameDrawEl += 1 
+  userWinPc = Math.floor(userWinEl/totalCountEl * 100)
+  programWinPc = Math.floor(programWinEl/totalCountEl *100)
+  myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
+  User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
+  User Win: [${userWinPc}%]<br>
+  Program Win: [${programWinPc}%]`
+  }
 
-//
 //Win or lose normal rules
-if(input == `Scissors` && programEl == `Paper`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Scissors` && programEl == `Stone`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Paper` && programEl == `Stone`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Paper` && programEl == `Scissors`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Stone` && programEl == `Scissors`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Stone` && programEl == `Paper`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
+if(input == `Scissors` && programEl == `Paper`||input == `Paper` && programEl == `Stone`||input == `Stone` && programEl == `Scissors`){
+  totalCountEl += 1
+  userWinEl += 1
+  // programWinEl += 1
+  // gameDrawEl += 1 
+  userWinPc = Math.floor(userWinEl/totalCountEl * 100)
+  programWinPc = Math.floor(programWinEl/totalCountEl *100)
+  myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
+  User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
+  User Win: [${userWinPc}%]<br>
+  Program Win: [${programWinPc}%]`
+  }
+  if(input == `Scissors` && programEl == `Stone`||input == `Paper` && programEl == `Scissors`||input == `Stone` && programEl == `Paper`){
+  totalCountEl += 1
+  // userWinEl += 1
+  programWinEl += 1
+  // gameDrawEl += 1 
+  userWinPc = Math.floor(userWinEl/totalCountEl * 100)
+  programWinPc = Math.floor(programWinEl/totalCountEl *100)
+  myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
+  User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
+  User Win: [${userWinPc}%]<br>
+  Program Win: [${programWinPc}%]`
+  }
 
-//win or lose reversed rules
-if(input == `Reversed Scissors` && programEl == `Paper`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Scissors` && programEl == `Stone`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Paper` && programEl == `Stone`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Paper` && programEl == `Scissors`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Stone` && programEl == `Scissors`){
-totalCountEl += 1
-// userWinEl += 1
-programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
-if(input == `Reversed Stone` && programEl == `Paper`){
-totalCountEl += 1
-userWinEl += 1
-// programWinEl += 1
-// gameDrawEl += 1 
-userWinPc = Math.floor(userWinEl/totalCountEl * 100)
-programWinPc = Math.floor(programWinEl/totalCountEl *100)
-myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
-User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
-User Win: [${userWinPc}%]<br>
-Program Win: [${programWinPc}%]`
-}
+// //Win or lose reversed Rules
+if(input == `Reversed Scissors` && programEl == `Paper`||input == `Reversed Paper` && programEl == `Stone`||input == `Reversed Stone` && programEl == `Scissors`){
+  totalCountEl += 1
+  // userWinEl += 1
+  programWinEl += 1
+  // gameDrawEl += 1 
+  userWinPc = Math.floor(userWinEl/totalCountEl * 100)
+  programWinPc = Math.floor(programWinEl/totalCountEl *100)
+  myOutputValue = `You lost the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
+  User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
+  User Win: [${userWinPc}%]<br>
+  Program Win: [${programWinPc}%]`
+  }
+
+  //win reversed rules
+  if(input == `Reversed Scissors` && programEl == `Stone`||input == `Reversed Paper` && programEl == `Scissors`||input == `Reversed Stone` && programEl == `Paper`){
+  totalCountEl += 1
+  userWinEl += 1
+  // programWinEl += 1
+  // gameDrawEl += 1 
+  userWinPc = Math.floor(userWinEl/totalCountEl * 100)
+  programWinPc = Math.floor(programWinEl/totalCountEl *100)
+  myOutputValue = `You won the game. User: [${input}] Program: [${programEl}] <><> Total Round: [${totalCountEl}]<br><br>
+  User Win: [${userWinEl}]<br> Program Win: [${programWinEl}]<br> Game Draw: [${gameDrawEl}]<br>
+  User Win: [${userWinPc}%]<br>
+  Program Win: [${programWinPc}%]`
+  }
+
   }
 // //Checking
 // console.log(`input  ${input}`)
@@ -254,17 +135,6 @@ return myOutputValue;
 
 
 
-
-//......to be continue with comfortable and more comfortable....
-
-
-
-
-
-
   
 
-  
-  
 
-  
