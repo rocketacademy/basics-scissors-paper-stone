@@ -3,9 +3,12 @@ var playerName = window.prompt("What is your name?");
 while (playerName == "") {
   playerName = window.prompt("Please enter your name?");
 }
+// define string constants for game mode variables
+var NORMAL_MODE = "normal";
+var REVERSE_MODE = "reverse";
 
 // default game status
-var currentGameMode = "normal";
+var currentGameMode = NORMAL_MODE;
 
 // track the number of games played
 var numGamesPlayed = 0;
@@ -22,7 +25,6 @@ var lastOutcome = "";
 var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
-var REVERSE = "reverse";
 
 /**
  * Set a function that returns "scissors" "paper" or "stone"
@@ -150,7 +152,10 @@ var getOutputMsg = function (
  */
 var validInput = function (input) {
   return (
-    input == SCISSORS || input == PAPER || input == STONE || input == REVERSE
+    input == SCISSORS ||
+    input == PAPER ||
+    input == STONE ||
+    input == REVERSE_MODE
   );
 };
 
@@ -175,8 +180,8 @@ var main = function (input) {
     playerHand = input;
 
     // check if player wants to reverse from this turn
-    if (input == "reverse") {
-      currentGameMode = "reverse";
+    if (input == REVERSE_MODE) {
+      currentGameMode = REVERSE_MODE;
       return (myOutputValue =
         'Game mode changed to reverse. Now you can type "scissors" "paper" "stone" to play another round!');
     }
@@ -184,10 +189,10 @@ var main = function (input) {
     // see current game mode value
     console.log("Current Game Mode value: ");
     console.log(currentGameMode);
-    console.log(currentGameMode == "normal");
+    console.log(currentGameMode == NORMAL_MODE);
 
     // play sps in normal mode
-    if (currentGameMode == "normal") {
+    if (currentGameMode == NORMAL_MODE) {
       console.log("Playing in normal mode");
 
       computerHand = generateHand();
@@ -231,7 +236,7 @@ var main = function (input) {
     }
 
     // play sps in reverse mode
-    if (currentGameMode == "reverse") {
+    if (currentGameMode == REVERSE_MODE) {
       console.log("Playing in reverse mode");
 
       computerHand = generateHand();
