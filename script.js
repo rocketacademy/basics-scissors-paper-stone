@@ -1,22 +1,21 @@
 var winCount = 0;
 var lossCount = 0;
-var inputCount = 0;
+var gameMode = "username";
 var username;
 
 var main = function (input) {
-  if (inputCount != 0 && isInvalidInput(input)) {
+  if (gameMode == "gameplay" && isInvalidInput(input)) {
     return "There are only 3 input options, please try again";
   }
 
-  if (inputCount == 0) {
-    inputCount = inputCount + 1;
+  if (gameMode == "username") {
+    gameMode = "gameplay";
     return saveUser(input);
   }
 
   var computer = generateComputerSelection();
 
   var winStatus = checkWinStatus(input, computer);
-  inputCount = inputCount + 1;
 
   if (winStatus == "win") {
     winCount = winCount + 1;
@@ -30,7 +29,7 @@ var main = function (input) {
 // Save user name
 var saveUser = function (input) {
   username = input;
-  return "User name is saved, continue to scissors, paper, stone game!";
+  return `User name ${username} is saved, continue to scissors, paper, stone game!`;
 };
 
 // Generate Output Statement
@@ -114,10 +113,10 @@ var checkWinStatus = function (input, computer) {
     if (computer == "paper") {
       return "loss";
     }
-
-    if (input == computer) {
-      return "draw";
-    }
+  }
+  if (input == computer) {
+    console.log("draw");
+    return "draw";
   }
 };
 
