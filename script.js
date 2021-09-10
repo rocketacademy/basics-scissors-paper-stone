@@ -69,7 +69,7 @@ var getProgramMove = function () {
 
   switch (move) {
     case 0:
-      return "scissors";gi
+      return "scissors";
 
     case 1:
       return "paper";
