@@ -1,6 +1,6 @@
 var players = [];
-var numOfGames = 1;
-var playing = true;
+var numOfGames = 0;
+var playing = false;
 
 var diceRoll = function (num) {
   var randomDecimal = Math.random() * num;
@@ -34,7 +34,7 @@ var createPlayers = function () {
 var randomObjectSelect = function () {
   var randomNumber = diceRoll(3);
   var cardArray = ["scissors", "paper", "stone"];
-  var cardPicked = cardArray[randomNumber];
+  var cardPicked = cardArray[randomNumber - 1];
   return cardPicked;
 };
 
@@ -48,9 +48,9 @@ var whoWinsEndGame = function (numOfPlays) {
   var humanScore = players[0].score;
   var computerScore = players[1].score;
   var winner;
-  if (playing && numOfPlays == 1) {
+  if (playing && numOfPlays == 10) {
     if (humanScore > computerScore) {
-      winner = `<br/><br/>Human wins, game ends. <br/><br/> Please click submit to restart`;
+      winner = `<br/><br/>You win, game ends. <br/><br/> Please click submit to restart`;
       playing = false;
     } else if (computerScore > humanScore) {
       winner = `<br/><br/>Computer wins, game ends. <br/><br/> Please click submit to restart`;
@@ -60,90 +60,104 @@ var whoWinsEndGame = function (numOfPlays) {
       playing = false;
     }
   } else {
-    winner = `📣 Oh goody!!`;
+    winner = `<br/><br/>📣 Oh goody!!`;
   }
   return winner;
 };
 
+// input scissors
 var inputScissors = function (input) {
   var randomObject = randomObjectSelect();
-  var currentPlayer = players[0].ID;
-  if (
-    currentPlayer == "player--1" &&
-    input == "scissors" &&
-    randomObject == "paper"
-  ) {
+
+  if (randomObject == "paper") {
     var human = players[0];
     human.score += 1;
     var scores = playersScoreDisplay();
-    var myOutputValue = `💯Human wins and ${scores}`;
+    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> You win. <br/><br/> ${scores}`;
+  } else if (input == randomObject) {
+    var scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } else {
     var computer = players[1];
     computer.score += 1;
     var scores = playersScoreDisplay();
-    myOutputValue = `💢Computer wins and ${scores}`;
+    myOutputValue = `💢Computer picks ${randomObject} and wins. You lose !! <br/><br/> ${scores}`;
   }
 
   return myOutputValue;
 };
+
+// input paper
 var inputPaper = function (input) {
   var randomObject = randomObjectSelect();
-  var currentPlayer = players[0].ID;
-  if (
-    currentPlayer == "player--1" &&
-    input == "paper" &&
-    randomObject == "stone"
-  ) {
+  console.log(randomObject);
+  if (randomObject == "stone") {
     var human = players[0];
     human.score += 1;
     var scores = playersScoreDisplay();
-    var myOutputValue = `💯Human wins and ${scores}`;
+    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> You win. <br/><br/> ${scores}`;
+  } else if (input == randomObject) {
+    var scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } else {
     var computer = players[1];
     computer.score += 1;
     var scores = playersScoreDisplay();
-    myOutputValue = `💢Computer wins and ${scores}`;
+    myOutputValue = `💢Computer picks ${randomObject}. <br/><br/> Computer wins. You lose ! <br/><br/> ${scores}`;
   }
   return myOutputValue;
 };
+
+// input stone
 var inputStone = function (input) {
   var randomObject = randomObjectSelect();
-  var currentPlayer = players[0].ID;
-  if (
-    currentPlayer == "player--1" &&
-    input == "stone" &&
-    randomObject == "scissors"
-  ) {
+  console.log(randomObject);
+  if (randomObject == "scissors") {
     var human = players[0];
     human.score += 1;
     var scores = playersScoreDisplay();
-    var myOutputValue = `💯Human wins and ${scores}`;
-    return myOutputValue;
+    var myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> You win.<br/> <br/> ${scores}`;
+  } else if (input == randomObject) {
+    var scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } else {
     var computer = players[1];
     computer.score += 1;
     var scores = playersScoreDisplay();
-    myOutputValue = `💢Computer wins and ${scores}`;
-    return myOutputValue;
+    myOutputValue = `💢Computer picks ${randomObject} and wins. You lose ! <br/><br/> ${scores}`;
   }
+  return myOutputValue;
 };
 
 var playersScoreDisplay = function () {
   var humanPlayerScore = players[0].score;
   var computerPlayerScore = players[1].score;
   numOfGames += 1;
-  return `Human score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. ${numOfGames} of 10 games.`;
+  return `Human score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
 };
 
+initGame();
+createPlayers();
 var main = function (input) {
   var input;
-
   if (input == "") {
     initGame();
     createPlayers();
-    var myOutputValue = `To start, click submit. <br/><br/>Then, to make a selection, please input: <br/> ✂ scissors ✂,<br/>📰 paper 📰<br/>or<br/> 🥌 stone 🥌`;
+    var myOutputValue = `To restart, click submit. <br/><br/> or else, to make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
-  if (!playing && input != "") {
+  if (
+    playing &&
+    !(
+      input == "scissors" ||
+      input == "paper" ||
+      input == "stone" ||
+      input == ""
+    )
+  ) {
+    myOutputValue = `Please only input "scissors" ; "paper" or "stone" in small caps`;
+  }
+
+  if (!playing && input !== "") {
     myOutputValue = `😒😒😒 Please press submit to restart`;
   }
   if (playing && input == "scissors") {
