@@ -4,12 +4,14 @@ var numOfGames = 0; // counter for the game to end
 var playing = false; // need to control when game ends and starts anew
 var promptPlayer; // undefined = falsy
 
-// prompts person to enter name // also initialises the game
+// prompts person to enter name
 var promptForName = function () {
   var prompter;
   // "!" to make prompter truthy to execute expression
   if (!prompter) {
-    prompter = prompt("Please tell us your name before starting the game");
+    prompter = prompt(
+      "😅😅 Please tell us your name before 👉👉 submit to start the game"
+    );
   } // second prompt if no input as prompter remains falsy
   if (!prompter) {
     prompter = prompt("C'mon, game won't start until we hear your name 😂");
@@ -17,10 +19,6 @@ var promptForName = function () {
   if (!prompter) {
     prompter = "🤣Human-faeces";
   }
-
-  // functions activated to ready the game for input at outset
-  initGame();
-  createPlayers();
   return prompter;
 };
 
@@ -68,6 +66,8 @@ var initGame = function () {
   players = [];
   numOfGames = 0;
   playing = true; // to start and allow game to start
+  var myOutputValue = `hello`;
+  return myOutputValue;
 };
 
 // whoWinsEndGame determines when game ends and declare the winner
@@ -81,7 +81,7 @@ var whoWinsEndGame = function (numOfPlays) {
       winner = `<br/><br/>${promptPlayer} win, game ends. <br/><br/> Please click submit to restart`;
       playing = false; // to end the game
     } else if (computerScore > humanScore) {
-      winner = `<br/><br/>Computer wins, game ends. <br/><br/> Please click submit to restart`;
+      winner = `<br/><br/> 👿Computer wins, game ends. <br/><br/> Please click submit to restart`;
       playing = false;
     } else if (computerScore == humanScore) {
       winner = `It is a draw 🥱`;
@@ -106,7 +106,7 @@ var inputScissors = function (input) {
   } // draw game
   else if (input == randomObject) {
     var scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
+    myOutputValue = `😒Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } // computer wins
   else {
     var computer = players[1];
@@ -131,7 +131,7 @@ var inputPaper = function (input) {
   } // draw game
   else if (input == randomObject) {
     var scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
+    myOutputValue = `☠ Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } //computer wins
   else {
     var computer = players[1];
@@ -155,7 +155,7 @@ var inputStone = function (input) {
   } // draw game
   else if (input == randomObject) {
     var scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
+    myOutputValue = `🥱Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } // computer wins
   else {
     var computer = players[1]; //extract object computer in array
@@ -174,8 +174,6 @@ var playersScoreDisplay = function () {
   return `${promptPlayer} score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
 };
 
-promptPlayer = promptForName();
-
 // function that outputs to the browser
 var main = function (input) {
   var input;
@@ -184,7 +182,7 @@ var main = function (input) {
   if (input == "") {
     initGame();
     createPlayers();
-    var myOutputValue = `To restart, click submit. <br/><br/> or else, to make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
+    var myOutputValue = `<br/>☀☀ G'day ☀☀<br><br>To start/restart, click submit. <br/><br/> or else, to make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
   // to guide player when incorrect input inserted, playing is a boolean which is "true"
   if (
@@ -214,6 +212,12 @@ var main = function (input) {
   }
   // decides whether to end the game and declare the winner
   var whoWinsEnd = whoWinsEndGame(numOfGames);
+  var myImage =
+    '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/>';
   // to give value to main to output to browser
-  return myOutputValue + whoWinsEnd;
+  return myImage + myOutputValue + whoWinsEnd;
 };
+
+promptPlayer = promptForName();
+initGame();
+createPlayers();
