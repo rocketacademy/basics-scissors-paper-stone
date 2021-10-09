@@ -2,11 +2,27 @@
 var players = []; // holds an array of Objects : players of the game
 var numOfGames = 0; // counter for the game to end
 var playing = false; // need to control when game ends and starts anew
+var promptPlayer; // undefined = falsy
 
-// prompts person to enter name
-var promptPlayer = prompt("Please tell us your name before starting the game");
+// prompts person to enter name // also initialises the game
+var promptForName = function () {
+  var prompter;
+  // "!" to make prompter truthy to execute expression
+  if (!prompter) {
+    prompter = prompt("Please tell us your name before starting the game");
+  } // second prompt if no input as prompter remains falsy
+  if (!prompter) {
+    prompter = prompt("C'mon, game won't start until we hear your name 😂");
+  } // 3rd prompt
+  if (!prompter) {
+    prompter = "🤣Human-faeces";
+  }
 
-// console.log(promptPerson);
+  // functions activated to ready the game for input at outset
+  initGame();
+  createPlayers();
+  return prompter;
+};
 
 // function that dials a random number up to a preset maximum
 var diceRoll = function (num) {
@@ -158,9 +174,7 @@ var playersScoreDisplay = function () {
   return `${promptPlayer} score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
 };
 
-// functions activated to ready the game for input at outset
-initGame();
-createPlayers();
+promptPlayer = promptForName();
 
 // function that outputs to the browser
 var main = function (input) {
