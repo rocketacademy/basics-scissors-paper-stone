@@ -7,6 +7,21 @@ var main = function (input) {
   return myOutputValue;
 };
 
+var button = document.querySelector('#submit-button');
+button.addEventListener('click', function () {
+  // Set result to input value
+  var input = document.querySelector('#input-field');
+  var result = main(input.value);
+
+  // Display result in output element
+  var output = document.querySelector('#output-div');
+
+  output.textContent = result;
+
+  // Reset input value
+  input.value = '';
+});
+
 // add 'enter' function to input-field
 inputField.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') {
