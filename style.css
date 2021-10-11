@@ -12,7 +12,7 @@ body {
   text-align: center;
 }
 
-#container {
+.container {
   background-color: pink;
   margin: 40px auto;
   max-width: 800px;
@@ -55,4 +55,7 @@ button {
 
 .reverse {
   background-color: darkturquoise;
+  margin: 40px auto;
+  max-width: 800px;
+  padding: 38px 31px;
 }
