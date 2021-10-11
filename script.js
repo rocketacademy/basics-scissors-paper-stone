@@ -1,7 +1,5 @@
 const button = document.querySelector("#submit-button");
-button.addEventListener("click", function () {
-  main();
-});
+button.addEventListener("click", main);
 
 function main() {
   const Choices = Object.freeze({
@@ -16,15 +14,15 @@ function main() {
   });
   const randomIndex = Math.floor(Math.random() * Object.keys(Choices).length);
   const computerChoice = Object.values(Choices)[randomIndex];
-  let rawInput = String(document.querySelector("#input-sps").value);
+  const rawInput = String(document.querySelector("#input-sps").value);
   let playerInput = null;
   let winState = null;
-  
-  for (const value of Object.values(Choices)) {
+
+  Object.values(Choices).forEach(value => {
     if (rawInput.includes(value)) {
       playerInput = value;
     }
-  }
+  });
 
   switch (playerInput) {
     case Choices.Scissors:
@@ -68,23 +66,25 @@ function main() {
   let outputText = `You chose ${playerInput} and the computer chose ${computerChoice}.`;
   if (rawInput.startsWith("reversed") && winState != GameEndState.Draw) {
     winState = winState == GameEndState.Win ? GameEndState.Lose : GameEndState.Win;
-    outputText += "<br>" + "<b>REVERSE MODE ACTIVATED</b>";
+    outputText += "<br>";
+    outputText += "<b>REVERSE MODE ACTIVATED</b>";
   }
 
+  outputText += "<br>";
   if (winState === GameEndState.Win) {
-    outputText += "<br>" + "<b>You win!</b>";
+    outputText += "<b>You win!</b>";
   } else if (winState === GameEndState.Lose) {
-    outputText += "<br>" + "<b>You lose!</b>";
+    outputText += "<b>You lose!</b>";
   } else if (winState === GameEndState.Draw) {
-    outputText += "<br>" + "<b>It's a tie!</b>";
+    outputText += "<b>It's a tie!</b>";
   } else {
-    outputText += "<br>" + "<b>ERROR: Invalid game state!</b>";
+    outputText += "<b>ERROR: Invalid game state!</b>";
   }
 
   displayResults(outputText);
-};
+}
 
 function displayResults(result) {
-  let outputElement = document.querySelector("#output-div");
+  const outputElement = document.querySelector("#output-div");
   outputElement.innerHTML = result;
 }
