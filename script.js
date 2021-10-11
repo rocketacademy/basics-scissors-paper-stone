@@ -3,6 +3,9 @@ var main = function (input) {
   // Variable to capture opponent's random pick (scissors, paper or stone)
   var opponentPick = choicePick(randomOpponentNum());
 
+  // Default Error Message
+  var myOutputValue = `Please try again. Kindly input either 'scissors', 'paper' or 'stone'.`  
+
   if (input == 'scissors' || input == 'paper' || input == 'stone'){
     // Draw condition
     if (input == opponentPick){
@@ -39,7 +42,7 @@ var main = function (input) {
       }
     };
 
-    var myOutputValue = `${score}`;
+    myOutputValue = `${score}`;
     myOutputValue += `<br>You picked ${input}, while your opponent picked ${opponentPick}.`;
   };
   myOutputValue += `<br><br>Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.`;
