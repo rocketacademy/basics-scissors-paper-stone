@@ -4,59 +4,84 @@ button.addEventListener("click", function () {
 });
 
 function main() {
-  const playerInput = document.querySelector("#input-sps").value;
-  const CHOICES = {
-    SCISSORS: "scissors",
-    PAPER: "paper",
-    STONE: "stone"
-  };
-  const computerChoice = Object.values(CHOICES)[Math.floor(Math.random() * Object.keys(CHOICES).length)];
+  const Choices = Object.freeze({
+    Scissors: "scissors",
+    Paper: "paper",
+    Stone: "stone"
+  });
+  const GameEndState = Object.freeze({
+    Win: 0,
+    Lose: 1,
+    Draw: -1
+  });
+  const randomIndex = Math.floor(Math.random() * Object.keys(Choices).length);
+  const computerChoice = Object.values(Choices)[randomIndex];
+  let rawInput = String(document.querySelector("#input-sps").value);
+  let playerInput = null;
+  let winState = null;
+  
+  for (const value of Object.values(Choices)) {
+    if (rawInput.includes(value)) {
+      playerInput = value;
+    }
+  }
 
-  let outputText = `You chose ${playerInput} and the computer chose ${computerChoice}.`;
   switch (playerInput) {
-    case "scissors":
+    case Choices.Scissors:
       {
-        if (computerChoice === "scissors") {
-          outputText += "<br>" + "It's a tie!";
-        } else if (computerChoice === "stone") {
-          outputText += "<br>" + "You lose!";
+        if (computerChoice === Choices.Scissors) {
+          winState = GameEndState.Draw;
+        } else if (computerChoice === Choices.Stone) {
+          winState = GameEndState.Lose;
         } else {
-          outputText += "<br>" + "You win!";
+          winState = GameEndState.Win;
         }
-        console.log("done");
-        displayResults(outputText);
       }
       break;
-    case "paper":
+    case Choices.Paper:
       {
-        if (computerChoice === "paper") {
-          outputText += "<br>" + "It's a tie!";
-        } else if (computerChoice === "scissors") {
-          outputText += "<br>" + "You lose!";
+        if (computerChoice === Choices.Paper) {
+          winState = GameEndState.Draw;
+        } else if (computerChoice === Choices.Scissors) {
+          winState = GameEndState.Lose;
         } else {
-          outputText += "<br>" + "You win!";
+          winState = GameEndState.Win;
         }
-        console.log("done");
-        displayResults(outputText);
       }
       break;
-    case "stone":
+    case Choices.Stone:
       {
-        if (computerChoice === "stone") {
-          outputText += "<br>" + "It's a tie!";
-        } else if (computerChoice === "paper") {
-          outputText += "<br>" + "You lose!";
+        if (computerChoice === Choices.Stone) {
+          winState = GameEndState.Draw;
+        } else if (computerChoice === Choices.Paper) {
+          winState = GameEndState.Lose;
         } else {
-          outputText += "<br>" + "You win!";
+          winState = GameEndState.Win;
         }
-        console.log("done");
-        displayResults(outputText);
       }
       break;
     default:
       displayResults("Please enter a valid input");
       break;
   }
+
+  let outputText = `You chose ${playerInput} and the computer chose ${computerChoice}.`;
+  if (rawInput.startsWith("reversed") && winState != GameEndState.Draw) {
+    winState = winState == GameEndState.Win ? GameEndState.Lose : GameEndState.Win;
+    outputText += "<br>" + "<b>REVERSE MODE ACTIVATED</b>";
+  }
+
+  if (winState === GameEndState.Win) {
+    outputText += "<br>" + "<b>You win!</b>";
+  } else if (winState === GameEndState.Lose) {
+    outputText += "<br>" + "<b>You lose!</b>";
+  } else if (winState === GameEndState.Draw) {
+    outputText += "<br>" + "<b>It's a tie!</b>";
+  } else {
+    outputText += "<br>" + "<b>ERROR: Invalid game state!</b>";
+  }
+
+  displayResults(outputText);
 };
 
 function displayResults(result) {
