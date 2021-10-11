@@ -28,7 +28,7 @@ const playerNameEl = document.querySelector('#player-name');
 const playerScoreEl = document.getElementById('player-score');
 const computerScoreEl = document.getElementById('computer-score');
 const drawScoreEl = document.getElementById('draw-score');
-const newGameEl = document.querySelector('.new-game');
+const btnNewGame = document.querySelector('.new-game');
 
 // add 'enter' function to input-field
 inputFieldEl.addEventListener('keydown', function (e) {
@@ -44,12 +44,27 @@ inputFieldEl.addEventListener('keydown', function (e) {
 
 // GAME FUNCTIONALITY
 
+const resetGame = function () {
+  playerScore = 0;
+  computerScore = 0;
+  drawScore = 0;
+  playerScoreEl.textContent = playerScore;
+  computerScoreEl.textContent = computerScore;
+  drawScoreEl.textContent = drawScore;
+};
 // random number generator
 const randomNumberGen = function () {
   return Math.trunc(Math.random() * 3);
 };
+// new game
+btnNewGame.addEventListener('click', function () {
+  resetGame();
+  containerEl.classList.remove('reverse');
+});
 
+// reverse game
 btnReverse.addEventListener('click', function () {
+  resetGame();
   normalMode = normalMode === true ? false : true;
   //add .reverse to container element
   containerEl.classList.toggle('reverse');
@@ -57,6 +72,25 @@ btnReverse.addEventListener('click', function () {
     ? (inputFieldEl.placeholder = 'choose scissors, paper or stone')
     : (inputFieldEl.placeholder = 'choose scissors, paper or stone (reverse)');
   outputEl.textContent = '';
+});
+
+// get player choice + scoreboard
+btnSubmit.addEventListener('click', function () {
+  // Set result to input value
+  playerChoice = inputEl.value;
+  // Reset input value
+  inputEl.value = '';
+  // get computer choice
+  computerChoice = getComputerChoice();
+  // get player choice
+  playerChoice = playerChoice.toLowerCase();
+
+  playGame(playerChoice, computerChoice);
+
+  // scoreboard
+  playerScoreEl.textContent = playerScore;
+  computerScoreEl.textContent = computerScore;
+  drawScoreEl.textContent = drawScore;
 });
 
 // play game incl reverse
@@ -77,25 +111,6 @@ const playGame = function (playerChoice, computerChoice) {
     outputEl.textContent = '';
   }
 };
-
-// get player choice + scoreboard
-btnSubmit.addEventListener('click', function () {
-  // Set result to input value
-  playerChoice = inputEl.value;
-  // Reset input value
-  inputEl.value = '';
-  // get computer choice
-  computerChoice = getComputerChoice();
-  // get player choice
-  playerChoice = playerChoice.toLowerCase();
-
-  playGame(playerChoice, computerChoice);
-
-  // scoreboard
-  playerScoreEl.textContent = playerScore;
-  computerScoreEl.textContent = computerScore;
-  drawScoreEl.textContent = drawScore;
-});
 
 // get computer choice
 const getComputerChoice = function () {
