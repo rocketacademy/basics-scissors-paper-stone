@@ -18,7 +18,7 @@ function main() {
   let playerInput = null;
   let winState = null;
 
-  Object.values(Choices).forEach(value => {
+  Object.values(Choices).forEach((value) => {
     if (rawInput.includes(value)) {
       playerInput = value;
     }
