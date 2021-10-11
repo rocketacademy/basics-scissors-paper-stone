@@ -44,6 +44,7 @@ button {
   background-color: indigo;
   border-color: indigo;
   right: 62px;
+  cursor: pointer;
 }
 
 #output-div {
@@ -58,4 +59,52 @@ button {
   margin: 40px auto;
   max-width: 800px;
   padding: 38px 31px;
+}
+
+.scores {
+  position: relative;
+  padding: 10px;
+  background-color: goldenrod;
+  width: 770px;
+  height: 13rem;
+}
+
+.player {
+  text-align: center;
+  position: relative;
+  width: 250px;
+  height: 10rem;
+  padding: 2rem;
+  float: left;
+}
+.draw {
+  text-align: center;
+  position: relative;
+  width: 250px;
+  height: 10rem;
+  padding: 2rem;
+  float: left;
+}
+.computer {
+  text-align: center;
+  position: relative;
+  width: 250px;
+  height: 10rem;
+  padding: 2rem;
+  float: left;
+}
+
+.score {
+  text-align: center;
+}
+
+.new-game {
+  position: absolute;
+  font-size: 21px;
+  line-height: 33px;
+  padding: 0 6px;
+  margin: 0 0 30px 0;
+  background-color: red;
+  border-color: black;
+  cursor: pointer;
 }
