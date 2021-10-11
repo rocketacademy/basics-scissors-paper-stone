@@ -42,6 +42,10 @@ btnReverse.addEventListener('click', function () {
   normalMode = normalMode === true ? false : true;
   //add .reverse to container element
   containerEl.classList.toggle('reverse');
+
+  normalMode === true
+    ? (inputFieldEl.placeholder = 'choose scissors, paper or stone')
+    : (inputFieldEl.placeholder = 'choose scissors, paper or stone (reverse)');
 });
 
 // play game function incl reverse
@@ -62,19 +66,15 @@ const playGame = function (choice, computerChoice) {
 // get player choice
 btnSubmit.addEventListener('click', function () {
   // Set result to input value
-  // add below in a function TODO
-  // start of function ----->
   playerChoice = inputEl.value;
   // Reset input value
   inputEl.value = '';
   // get computer choice
   computerChoice = getComputerChoice();
   // get player choice
-  let choice = playerChoice.toLowerCase();
-  //end of function <-----
+  playerChoice = playerChoice.toLowerCase();
 
-  // play game
-  playGame(choice, computerChoice);
+  playGame(playerChoice, computerChoice);
 });
 
 // get computer choice
