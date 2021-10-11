@@ -213,7 +213,7 @@ var main = function (input) {
   // decides whether to end the game and declare the winner
   var whoWinsEnd = whoWinsEndGame(numOfGames);
   var myImage =
-    '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/>';
+    '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
   // to give value to main to output to browser
   return myImage + myOutputValue + whoWinsEnd;
 };
