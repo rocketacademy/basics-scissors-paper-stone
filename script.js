@@ -64,7 +64,7 @@ btnNewGame.addEventListener('click', function () {
 
 // reverse game
 btnReverse.addEventListener('click', function () {
-  resetGame();
+  // resetGame();
   normalMode = normalMode === true ? false : true;
   //add .reverse to container element
   containerEl.classList.toggle('reverse');
