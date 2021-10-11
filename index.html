@@ -2,59 +2,18 @@
 <html>
   <head>
     <title>Coding Basics</title>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: sans-serif;
-        margin-left: 30px;
-        margin-right: 30px;
-      }
-
-      #header {
-        text-align: center;
-      }
-
-      #container {
-        background-color: pink;
-        margin: 40px auto;
-        max-width: 800px;
-        padding: 38px 31px;
-      }
-
-      input {
-        font-size: 21px;
-        line-height: 33px;
-        margin: 0 0 23px 0;
-        padding: 0 9px;
-        width: 100%;
-      }
-
-      button {
-        font-size: 21px;
-        line-height: 33px;
-        margin: 0 0 23px 0;
-        padding: 0 6px;
-      }
-
-      #output-div {
-        background-color: lightgrey;
-        margin: 20px auto;
-        padding: 20px;
-        width: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
+      <button id="btn-reverse">Press to reverse game</button>
       <p>Input:</p>
       <input id="input-field" placeholder="choose scissors, paper or stone" />
       <br />
       <button id="submit-button">Press Enter</button>
+
       <p>Output:</p>
       <div id="output-div"></div>
     </div>
