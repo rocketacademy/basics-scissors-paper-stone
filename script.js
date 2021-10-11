@@ -8,16 +8,17 @@
 ////////////////////
 
 // game variables
-let playerChoice = '';
-let computerChoice = '';
-let state = 0;
+let playerChoice, computerChoice;
+let normalMode = true;
 
 // DOM elements
 const inputFieldEl = document.getElementById('input-field');
-const submitButtonEl = document.querySelector('#submit-button');
-const reverseButtonEl = document.getElementById('btn-reverse');
-const output = document.querySelector('#output-div');
-const input = document.querySelector('#input-field');
+const outputEl = document.querySelector('#output-div');
+const inputEl = document.querySelector('#input-field');
+const headerEl = document.querySelector('#input-field');
+const containerEl = document.querySelector('.container');
+const btnSubmit = document.querySelector('#submit-button');
+const btnReverse = document.getElementById('btn-reverse');
 
 // add 'enter' function to input-field
 inputFieldEl.addEventListener('keydown', function (e) {
@@ -35,30 +36,37 @@ const randomNumberGen = function () {
   return Math.trunc(Math.random() * 3);
 };
 
-// play game function
+// upon reverse click
+// change normalMode to false
+btnReverse.addEventListener('click', function () {
+  normalMode = normalMode === true ? false : true;
+  //add .reverse to container element
+  containerEl.classList.toggle('reverse');
+});
+
+// play game function incl reverse
 const playGame = function (choice, computerChoice) {
   if (choice === 'scissors' || choice === 'paper' || choice === 'stone') {
-    // determine winner
-    output.textContent = `You chose ${choice} and the computer chose ${computerChoice}. ${determineWinner(
-      computerChoice,
-      choice
-    )}`;
+    // determine winner incl reverse
+    outputEl.textContent = `You chose ${choice} and the computer chose ${computerChoice}. ${
+      normalMode === true
+        ? determineWinner(computerChoice, choice)
+        : determineWinnerReverse(computerChoice, choice)
+    }`;
   } else {
     alert('⚠ please input correctly');
-    output.textContent = '';
+    outputEl.textContent = '';
   }
 };
-// get player choice
 
-submitButtonEl.addEventListener('click', function () {
+// get player choice
+btnSubmit.addEventListener('click', function () {
   // Set result to input value
   // add below in a function TODO
-
   // start of function ----->
-  playerChoice = input.value;
-  // Display result in output element
+  playerChoice = inputEl.value;
   // Reset input value
-  input.value = '';
+  inputEl.value = '';
   // get computer choice
   computerChoice = getComputerChoice();
   // get player choice
