@@ -1,13 +1,21 @@
 var main = function (input) {
   //Check input
-  if ( input != "scissors" && input != "stone" && input != "paper"){
-    output = "Please input again either (paper) (scissors) or (stone)";
+  if ( input != "scissors" && input != "stone" && input != "paper" && input != "reversed scissors" && input != "reversed stone" && input != "reversedpaper"){
+    output = "Please input again either (paper) (scissors) (stone) (reversed paper) (reversed scissors) or (reversed stone)";
     return output;
-  } else{
+  } else if(input == "scissors" || input =="paper" || input == "stone"){
   programHand = chooseHand()
   gameStatus = checkWin(input,programHand)
-  return "Computer selected " + programHand + "<br> You selected "+input+"<br>"+gameStatus+"<br> Now you can type 'scissors' 'paper' or 'stone' to play another round!";
+  } else{
+    programHand = chooseHand()
+    gameStatus = checkWin(input,programHand)
+    if (gameStatus == "You Win!"){
+      gameStatus = "You Lose!"
+    } else if(gameStatus = "You Lose!"){
+      gameStatus = "You Win!"
+    }
   }
+  return "Computer selected " + programHand + "<br> You selected "+input+"<br><br>"+gameStatus+"<br><br> Now you can type 'scissors' 'paper' or 'stone' to play another round!";
 };
 
 // generate program hand
@@ -24,7 +32,7 @@ var chooseHand = function(){
 
 //check win lose or draw
 var checkWin  = function(player,program){
-  var status = "Its a draw"
+  var status = "Its a Draw!"
   if (player == program){
     return status
   }else if (player == "scissors" && program == "paper"){
