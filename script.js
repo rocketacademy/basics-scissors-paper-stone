@@ -38,7 +38,7 @@ inputFieldEl.addEventListener('keydown', function (e) {
 });
 
 // name input
-playerNameEl.textContent = prompt('Please enter your name');
+// playerNameEl.textContent = prompt('Please enter your name');
 
 ////////////////////
 
