@@ -39,7 +39,8 @@ var getComputerChoice = function () {
 };
 
 var determineResult = function (userChoice, comChoice) {
-  var result;
+  var result =
+    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to start the game.";
 
   // Draw:
   if (userChoice == comChoice) {
