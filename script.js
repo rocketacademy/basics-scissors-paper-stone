@@ -1,6 +1,9 @@
 var main = function (input) {
+  if ((input =='scissors') || (input=='stone') || (input== 'paper')) {
   var myOutputValue = getResult(input);
   return myOutputValue;
+  }
+  return "The input options are scissors, stone or paper. Kindly select from these";
 };
 
 var getResult = function(input){
@@ -10,17 +13,17 @@ var getResult = function(input){
   var value = arrayItems[random];
   console.log ('system has chosen ' + value);
   if (input==value) {
-    return ('system choose ' + value  +' its a Draw');
+    return ('System also choose ' + value  +' .Its a Draw');
   }
   if ((input=='scissors') && (value=='paper')){
-    return 'system choose ' + value + ' you won';
+    return 'System choose ' + value + ' . You won :)';
   }
   if ((input=='paper') && (value=='stone')){
-    return 'system choose ' + value + ' you won';
+    return 'System choose ' + value + ' . You won :)';
   }
   if ((input=='stone') && (value=='scissors')){
-    return 'system choose ' + value + ' you won';
+    return 'System choose ' + value + ' . You won:)';
   }
   
-  return 'system choose ' + value + ' you lose';
+  return 'System choose ' + value + ' . You lose. Try again :)';
 }
