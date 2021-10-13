@@ -6,19 +6,14 @@ var main = function (userHand) {
   var generatedHand = generateHand();
 
   // result will contain either "user wins", "user draws" or "user loses"
-  if (userHand.split(" ")[0] == "reversed") {
-    userHand = userHand.split(" ")[1];
-    result = compareReversedHands(userHand, generatedHand);
-  } else {
-    result = compareHands(userHand, generatedHand);
-  }
+  result = compareHands(userHand, generatedHand);
 
   userHand = addSymbol(userHand);
   generatedHand = addSymbol(generatedHand);
 
   output = `The computer chose ${generatedHand}.<br>You chose ${userHand}.<br><br>`;
 
-  if (result == "user wins") {
+  if (result == "user loses") {
     output += `You lose! Bummer.<br><br>`;
   } else if (result == "user draws") {
     output += `You draw!.<br><br>`;
@@ -40,38 +35,25 @@ var generateHand = function () {
   return handOptions[randomInteger];
 };
 
-var compareReversedHands = function (userHand, generatedHand) {
-  // scissors beats paper
-  // paper beats stone
-  // stone beats scissors
+var compareHands = function (userHand, generatedHand) {
+  console.log("userHand: " + userHand);
+  console.log("generatedHand: " + generatedHand);
   if (
+    (userHand == "reversed paper" && generatedHand == "scissors") ||
+    (userHand == "reversed stone" && generatedHand == "paper") ||
+    (userHand == "reversed scissors" && generatedHand == "stone") ||
     (userHand == "scissors" && generatedHand == "paper") ||
     (userHand == "paper" && generatedHand == "stone") ||
     (userHand == "stone" && generatedHand == "scissors")
   ) {
-    // user wins
+    // user wins`
     return "user wins";
-  } else if (userHand == generatedHand) {
-    // user draws
-    return "user draws";
-  } else {
-    // user loses
-    return "user loses";
-  }
-};
-
-var compareHands = function (userHand, generatedHand) {
-  // scissors beats paper
-  // paper beats stone
-  // stone beats scissors
-  if (
-    (userHand == "paper" && generatedHand == "scissors") ||
-    (userHand == "stone" && generatedHand == "paper") ||
-    (userHand == "scissors" && generatedHand == "stone")
+  } else if (
+    userHand == generatedHand ||
+    (userHand == "reversed paper" && generatedHand == "paper") ||
+    (userHand == "reversed stone" && generatedHand == "stone") ||
+    (userHand == "reversed scissors" && generatedHand == "scissors")
   ) {
-    // user wins
-    return "user wins";
-  } else if (userHand == generatedHand) {
     // user draws
     return "user draws";
   } else {
@@ -83,10 +65,12 @@ var compareHands = function (userHand, generatedHand) {
 var addSymbol = function (hand) {
   switch (hand) {
     case "scissors":
+    case "reversed scissors":
       // code block
       hand += " ✂️";
       break;
     case "paper":
+    case "reversed paper":
       hand += " 📋";
       break;
     default:
