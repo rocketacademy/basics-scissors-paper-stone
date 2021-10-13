@@ -18,44 +18,70 @@ var getRandomOutput = function () {
 
 var checkInput = function (input) {
   var errorMessage =
-    "Incorrect input, please try again. <br > Acceptable Options: 'Scissors' / 'Paper' / 'Stone'";
+    "Incorrect input, please try again. <br > Acceptable Inputs: 'Scissors' / 'Paper' / 'Stone' <br> For reverse game, input 'Reversed ' before your input";
 
   if (input == "Scissors" || input == "Stone" || input == "Paper") {
     errorMessage = "";
+  } else if (
+    input == "Reversed Scissors" ||
+    input == "Reversed Stone" ||
+    input == "Reversed Paper"
+  ) {
+    errorMessage = "";
   }
-
   return errorMessage;
 };
 
 var checkBattleOutcome = function (userInput, programInput) {
-  var battleOutcome = "Something went wrong.";
+  var reversedGame = false;
+  var finalBattleOutcome = "Something went wrong.";
+  var userInputForGame = userInput;
 
-  if (userInput == programInput) {
-    battleOutcome = "Draw";
-    return battleOutcome;
+  var userWon = true;
+  var winMessage = "You win! =D";
+  var loseMessage = "You lose :(";
+
+  if (userInput.startsWith("Reversed")) {
+    userInputForGame = userInputForGame.replace("Reversed ", "");
+    reversedGame = true;
   }
 
-  if (userInput == "Scissors") {
+  if (userInputForGame == programInput) {
+    finalBattleOutcome = "Draw";
+    return finalBattleOutcome;
+  }
+
+  if (userInputForGame == "Scissors") {
     if (programInput == "Stone") {
-      battleOutcome = "You lose :(";
+      userWon = false;
     } else {
-      battleOutcome = "You win! =D";
+      userWon = true;
     }
-  } else if (userInput == "Stone") {
+  } else if (userInputForGame == "Stone") {
     if (programInput == "Paper") {
-      battleOutcome = "You lose :(";
+      userWon = false;
     } else {
-      battleOutcome = "You win! =D";
+      userWon = true;
     }
   } else {
     if (programInput == "Scissors") {
-      battleOutcome = "You lose :(";
+      userWon = false;
     } else {
-      battleOutcome = "You win! =D";
+      userWon = true;
     }
   }
 
-  return battleOutcome;
+  if (reversedGame == true) {
+    userWon = !userWon;
+  }
+
+  if (userWon == true) {
+    finalBattleOutcome = winMessage;
+  } else {
+    finalBattleOutcome = loseMessage;
+  }
+
+  return finalBattleOutcome;
 };
 
 var main = function (input) {
@@ -73,6 +99,8 @@ var main = function (input) {
   return `Result: ${battleResult}`;
 };
 
-// console.log("program decision --> " + getRandomOutput());
-// console.log("checking input --> " + checkInput("Paper"));
-// console.log("battle outcome --> " + checkBattleOutcome("Scissors", "Paper"));
+console.log("program decision --> " + getRandomOutput());
+console.log("checking input --> " + checkInput("Paper"));
+console.log(
+  "battle outcome --> " + checkBattleOutcome("Reversed Stone", "Paper")
+);
