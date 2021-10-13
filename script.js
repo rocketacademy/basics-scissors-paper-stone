@@ -13,13 +13,13 @@ var main = function (input) {
     return 'Enter "scissors", "paper", or "stone" to start playing. You can also test your luck by adding a secret word in front hehe 🙃';
   }
   // Get computer's random generated choice
-  machineChoice = machinePlay();
+  var machineChoice = machinePlay();
   // Rationalise player's input to one of stone, paper or scissors
-  humanChoice = setHumanChoice(input);
+  var humanChoice = setHumanChoice(input);
   // Game Mode is assigned value 1 by default, will be -1 if input indicated reversed word
-  gameMode = setGameMode(input);
+  var gameMode = setGameMode(input);
   // Above 3 parameters passed into playSPS function to determine player outcome. Value of 1 represents win, 0 is draw, -1 is lose
-  outcome = playSPS(machineChoice, humanChoice, gameMode);
+  var outcome = playSPS(machineChoice, humanChoice, gameMode);
   // Determine the output string to print
   var myOutputValue = printOutputMessage(
     machineChoice,
