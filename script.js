@@ -39,8 +39,7 @@ var getComputerChoice = function () {
 };
 
 var determineResult = function (userChoice, comChoice) {
-  var result =
-    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to start the game.";
+  var result = 0;
 
   // Draw:
   if (userChoice == comChoice) {
@@ -66,7 +65,6 @@ var determineResult = function (userChoice, comChoice) {
   }
 
   // and the result is:
-  console.log("Game result: ", result, "!!");
   return result;
 };
 
@@ -74,7 +72,20 @@ var main = function (input) {
   console.log("***** LET'S PLAY A GAME *****");
   // create variable for computer's choice
   var opponentChoice = getComputerChoice();
-  var myOutputValue = determineResult(input, opponentChoice);
+
+  // set default result (assumes input is not valid)
+  var myOutputValue =
+    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to start the game.";
+
+  // determine result of game
+  var gameResult = determineResult(input, opponentChoice);
+  if (gameResult !== 0) {
+    console.log("Game result: ", gameResult, "!!");
+    myOutputValue = `You chose ${input}. The computer chose ${opponentChoice}. <br><br>
+  ${gameResult}!<br><br>
+  Wanna try again? Type 'scissors', 'paper' or 'stone' for another round!`;
+  }
   console.log("");
+
   return myOutputValue;
 };
