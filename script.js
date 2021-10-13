@@ -16,25 +16,100 @@ var main = function (input) {
     "Error, please try again. Input options are 'Scissors', 'Paper' or 'Stone'";
   if (input == progInput)
     myOutputValue =
-      "Its a draw, you choose " + input + " and program choose " + progInput;
+      "Its a draw!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Scissors" && progInput == "Paper")
     myOutputValue =
-      "You Win!, you choose " + input + " and program choose " + progInput;
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Scissors" && progInput == "Stone")
     myOutputValue =
-      "You Lose!, you choose " + input + " and program choose " + progInput;
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Paper" && progInput == "Scissors")
     myOutputValue =
-      "You Lose!, you choose " + input + " and program choose " + progInput;
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Paper" && progInput == "Stone")
     myOutputValue =
-      "You Win!, you choose " + input + " and program choose " + progInput;
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Stone" && progInput == "Scissors")
     myOutputValue =
-      "You Win!, you choose " + input + " and program choose " + progInput;
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
   if (input == "Stone" && progInput == "Paper")
     myOutputValue =
-      "You Lose!, you choose " + input + " and program choose " + progInput;
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Stone" && progInput == "Paper")
+    myOutputValue =
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Stone" && progInput == "Scissors")
+    myOutputValue =
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Stone" && progInput == "Stone")
+    myOutputValue =
+      "Its a draw!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Scissors" && progInput == "Paper")
+    myOutputValue =
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Scissors" && progInput == "Stone")
+    myOutputValue =
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Scissors" && progInput == "Scissors")
+    myOutputValue =
+      "Its a draw!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Paper" && progInput == "Scissors")
+    myOutputValue =
+      "You Win!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Paper" && progInput == "Stone")
+    myOutputValue =
+      "You Lose!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
+  if (input == "Reversed Paper" && progInput == "Paper")
+    myOutputValue =
+      "Its a draw!, <br>you choose " +
+      input +
+      " <br>and program choose " +
+      progInput;
 
   return myOutputValue;
 };
