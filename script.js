@@ -9,7 +9,7 @@ var main = function (input) {
   console.log(computer);
   console.log("User Choice");
   console.log(input);
-  var myOutputValue = "you lose";
+  var myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> you lose! <br>`;
 
   //check for invalid inputs
   if (player != scissors && player != stone && player != paper) {
@@ -23,7 +23,7 @@ var main = function (input) {
     (player == stone && computer == scissors) ||
     (player == paper && computer == stone)
   ) {
-    myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> good job!`;
+    myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> good job! <br> Now you can type "scissors, paper or stone to start new game <br>`;
   }
 
   //check for draw
@@ -32,7 +32,7 @@ var main = function (input) {
     (player == stone && computer == stone) ||
     (player == paper && computer == paper)
   ) {
-    myOutputValue = `Its a draw!!`;
+    myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> Its a draw!!`;
   }
 
   return myOutputValue;
