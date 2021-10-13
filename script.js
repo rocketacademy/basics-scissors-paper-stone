@@ -58,11 +58,11 @@ var getComputerChoice = function () {
 var determineResult = function (userChoice, comChoice) {
   var result = 0;
 
+  // -- Normal gameplay --
   // Draw:
   if (userChoice == comChoice) {
     result = "It's a draw";
   }
-
   // Win:
   if (
     (userChoice == "scissors" && comChoice == "paper") ||
@@ -71,7 +71,6 @@ var determineResult = function (userChoice, comChoice) {
   ) {
     result = "You win";
   }
-
   // Lose
   if (
     (userChoice == "scissors" && comChoice == "stone") ||
@@ -81,12 +80,40 @@ var determineResult = function (userChoice, comChoice) {
     result = "You lose";
   }
 
+  // -- REVERSED gameplay --
+  // Draw:
+  if (
+    (userChoice == "reversed scissors" && comChoice == "scissors") ||
+    (userChoice == "reversed paper" && comChoice == "paper") ||
+    (userChoice == "reversed stone" && comChoice == "stone")
+  ) {
+    result = "It's a draw";
+  }
+  // Win:
+  if (
+    (userChoice == "reversed scissors" && comChoice == "stone") ||
+    (userChoice == "reversed paper" && comChoice == "scissors") ||
+    (userChoice == "reversed stone" && comChoice == "paper")
+  ) {
+    result = "You win at reversed 'Scissors, Paper, Stone'";
+  }
+  // Lose
+  if (
+    (userChoice == "reversed scissors" && comChoice == "paper") ||
+    (userChoice == "reversed paper" && comChoice == "stone") ||
+    (userChoice == "reversed stone" && comChoice == "scissors")
+  ) {
+    result = "You lose at reversed 'Scissors, Paper, Stone'";
+  }
+
   // and the result is:
   return result;
 };
 
 var formatChoice = function (choice) {
   var choiceFormatted;
+
+  // for normal gameplay
   if (choice == "scissors") {
     choiceFormatted = scissorsFormatted;
   }
@@ -96,6 +123,18 @@ var formatChoice = function (choice) {
   if (choice == "stone") {
     choiceFormatted = stoneFormatted;
   }
+
+  // for REVERSED gameplay
+  if (choice == "reversed scissors") {
+    choiceFormatted = scissorsFormatted;
+  }
+  if (choice == "reversed paper") {
+    choiceFormatted = paperFormatted;
+  }
+  if (choice == "reversed stone") {
+    choiceFormatted = stoneFormatted;
+  }
+
   return choiceFormatted;
 };
 
@@ -116,6 +155,7 @@ var main = function (input) {
   // determine result of game (if input is valid)
   var gameResult = determineResult(input, opponentChoice);
   if (gameResult !== 0) {
+    console.log("User's choice: ", input);
     console.log("Game result: ", gameResult, "!!");
     myOutputValue = `The computer chose ${opponentChoiceFormatted}.<br>
     You chose ${userChoiceFormatted}.  <br><br>
