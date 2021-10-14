@@ -1,4 +1,4 @@
-var genRandHand = function (randomInt) {
+var genRandHand = function () {
   return "paper";
   var randomInt = Math.floor(Math.random() * 4);
   //var scissors = 1
