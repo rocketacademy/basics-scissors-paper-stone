@@ -93,7 +93,8 @@ var getResults = function (userChoice, computerChoice) {
 // Print out results.
 var main = function (userChoice, computerChoice) {
   var computerChoice = randomSPSGenerator();
-  var icon = getInputIcon(userChoice);
+  var iconComputer = getInputIcon(computerChoice);
+  var iconUser = getInputIcon(userChoice);
   if (
     userChoice != "stone" &&
     userChoice != "scissors" &&
@@ -110,5 +111,5 @@ var main = function (userChoice, computerChoice) {
   return `${getResults(
     userChoice,
     computerChoice
-  )} <br><br> The computer chose ${computerChoice}${icon} <br><br> You chose ${userChoice}${icon}. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+  )} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
 };
