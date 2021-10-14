@@ -54,6 +54,9 @@
       <p>Input:</p>
       <input id="input-field" />
       <br />
+      <button id="computer-submit-button" style="display: none">
+        Computer, help me!
+      </button>
       <button id="submit-button">Submit</button>
       <p>Output:</p>
       <div id="output-div"></div>
@@ -77,6 +80,16 @@
 
         // Reset input value
         input.value = "";
+
+        if (userName.length !== 0) {
+          console.log("here");
+          document.getElementById("computer-submit-button").style.display = "";
+        }
+      });
+      var computerButton = document.querySelector("#computer-submit-button");
+      computerButton.addEventListener("click", function () {
+        var computerAidedHand = generateHand();
+        document.querySelector("#input-field").value = computerAidedHand;
       });
     </script>
   </body>
