@@ -38,6 +38,43 @@ var main = function (input) {
       computerHand +
       "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!";
   }
+
+  if (
+    (input == "reversed scissors" && computerHand == "stone") ||
+    (input == "reversed paper" && computerHand == "scissors") ||
+    (input == "reversed stone" && computerHand == "paper")
+  ) {
+    myOutputValue =
+      "You win! You chose " +
+      input +
+      " and the computer chose " +
+      computerHand +
+      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
+  }
+  if (
+    (input == "reversed scissors" && computerHand == "paper") ||
+    (input == "reversed paper" && computerHand == "stone") ||
+    (input == "reversed stone" && computerHand == "scissors")
+  ) {
+    myOutputValue =
+      "You lose! You chose " +
+      input +
+      " and the computer chose " +
+      computerHand +
+      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
+  }
+  if (
+    (input == "reversed scissors" && computerHand == "scissors") ||
+    (input == "reversed paper" && computerHand == "paper") ||
+    (input == "reversed stone" && computerHand == "stone")
+  ) {
+    myOutputValue =
+      "It's a draw! You chose " +
+      input +
+      " and the computer chose " +
+      computerHand +
+      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
+  }
   return myOutputValue;
 };
 
