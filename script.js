@@ -1,11 +1,20 @@
+var numOfUserWins = 0;
+var numOfCompWins = 0;
+var numOfUserLosses = 0;
+var numOfCompLosses = 0;
+var numOfDraws = 0;
+var numOfPlays = 0;
+
 var main = function (userHand) {
   var result = "";
   var output = "";
 
   if (!validateInput(userHand)) {
-    output = `Your input is invalid.`;
-    return output;
+    return 'Invalid. You only have 6 options "paper", "scissors", "stone", "reversed paper", "reversed scissors", "reversed stone".';
   }
+
+  // increment number of plays everytime user guesses and guess is valid
+  numOfPlays++;
 
   // this will produce randomly either scissors, paper or stone.
   var generatedHand = generateHand();
@@ -27,24 +36,19 @@ var main = function (userHand) {
   }
 
   output +=
-    'Now you can type "scissors" "paper" or "stone" to play another round!';
+    'Now you can type "scissors" "paper" or "stone" to play another round! <br><br><hr><br>';
+
+  output += `User wins: ${numOfUserWins} | User losses: ${numOfUserLosses} | User draws: ${numOfDraws} | User win percentage: ${(
+    (numOfUserWins / numOfPlays) *
+    100
+  ).toFixed(2)}% <br>`;
+
+  output += `Comp wins: ${numOfCompWins} | Comp losses: ${numOfCompLosses} | Comp draws: ${numOfDraws} | Comp win percentage: ${(
+    (numOfCompWins / numOfPlays) *
+    100
+  ).toFixed(2)}%`;
 
   return output;
-};
-
-var validateInput = function (input) {
-  if (
-    input !== "scissors" ||
-    input !== "paper" ||
-    input !== "stone" ||
-    input !== "reversed scissors" ||
-    input !== "reversed paper" ||
-    input !== "reversed stone"
-  ) {
-    return false;
-  } else {
-    return true;
-  }
 };
 
 var generateHand = function () {
@@ -56,8 +60,6 @@ var generateHand = function () {
 };
 
 var compareHands = function (userHand, generatedHand) {
-  console.log("userHand: " + userHand);
-  console.log("generatedHand: " + generatedHand);
   if (
     (userHand == "reversed paper" && generatedHand == "scissors") ||
     (userHand == "reversed stone" && generatedHand == "paper") ||
@@ -66,7 +68,9 @@ var compareHands = function (userHand, generatedHand) {
     (userHand == "paper" && generatedHand == "stone") ||
     (userHand == "stone" && generatedHand == "scissors")
   ) {
-    // user wins`
+    // user wins
+    numOfUserWins++;
+    numOfCompLosses++;
     return "user wins";
   } else if (
     userHand == generatedHand ||
@@ -75,28 +79,48 @@ var compareHands = function (userHand, generatedHand) {
     (userHand == "reversed scissors" && generatedHand == "scissors")
   ) {
     // user draws
+    numOfDraws++;
     return "user draws";
   } else {
     // user loses
+    numOfUserLosses++;
+    numOfCompWins++;
     return "user loses";
   }
 };
 
-var addSymbol = function (hand) {
-  switch (hand) {
+var addSymbol = function (userHand) {
+  switch (userHand) {
     case "scissors":
     case "reversed scissors":
       // code block
-      hand += " ✂️";
+      userHand += " ✂️";
       break;
     case "paper":
     case "reversed paper":
-      hand += " 📋";
+      userHand += " 📋";
       break;
     default:
       // code block
-      hand += " ⛰️";
+      userHand += " ⛰️";
   }
 
-  return hand;
+  return userHand;
+};
+
+var validateInput = function (userHand) {
+  if (
+    !(
+      userHand == "paper" ||
+      userHand == "scissors" ||
+      userHand == "stone" ||
+      userHand == "reversed paper" ||
+      userHand == "reversed scissors" ||
+      userHand == "reversed stone"
+    )
+  ) {
+    return false;
+  } else {
+    return true;
+  }
 };
