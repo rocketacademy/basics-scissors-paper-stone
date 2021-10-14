@@ -7,7 +7,7 @@ Rules: scissors beats paper, paper beats stone, and stone beats scissors. If bot
 var scissors = "scissors";
 var paper = "paper";
 var stone = "stone";
-var lose = "You lose! ";
+var lose = "You lose! Bummer.";
 var win = "Congratulations, you win!";
 var draw = "It's a tie.";
 var invalid =
@@ -35,6 +35,17 @@ var randomSPSGenerator = function () {
     return paper;
   }
   return stone;
+};
+
+// Pseudo: Put in input icon.
+var getInputIcon = function (object) {
+  if (object == scissors || object == reversedScissors) {
+    return " ✂️";
+  } else if (object == paper || object == reversedPaper) {
+    return " 🗒";
+  } else if (object == stone || object == reversedStone) {
+    return " 🪨";
+  }
 };
 
 // Pseudo: Rules creation.
@@ -82,6 +93,7 @@ var getResults = function (userChoice, computerChoice) {
 // Print out results.
 var main = function (userChoice, computerChoice) {
   var computerChoice = randomSPSGenerator();
+  var icon = getInputIcon(userChoice);
   if (
     userChoice != "stone" &&
     userChoice != "scissors" &&
@@ -98,5 +110,5 @@ var main = function (userChoice, computerChoice) {
   return `${getResults(
     userChoice,
     computerChoice
-  )} <br><br> Computer chose ${computerChoice} and you chose ${userChoice}. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+  )} <br><br> The computer chose ${computerChoice}${icon} <br><br> You chose ${userChoice}${icon}. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
 };
