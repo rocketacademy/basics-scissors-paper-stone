@@ -5,6 +5,7 @@ var numOfCompLosses = 0;
 var numOfDraws = 0;
 var numOfPlays = 0;
 var userName = "";
+var gameMode = "normal";
 
 var main = function (input) {
   var result = "";
@@ -20,6 +21,18 @@ var main = function (input) {
     output = `You have to enter something.<br><br>You have 6 options "paper", "scissors", "stone", "reversed paper", "reversed scissors", "reversed stone".`;
     return output;
   } else if (input.length != 0 && userName.length != 0) {
+    // check whether user types in reverse when game is normal
+    // or user types in normal when game is reverse
+    // return immediately if game mode changes
+    if (
+      (gameMode == "normal" && input == "reverse") ||
+      (gameMode == "reverse" && input == "normal")
+    ) {
+      gameMode = input;
+      output = `You have to enter something.<br><br>You have 6 options "paper", "scissors", "stone", "reversed paper", "reversed scissors", "reversed stone".`;
+      return output;
+    }
+
     // once user has a name, user submits something, validate input
     if (!validateInput(input)) {
       return 'Invalid. You only have 6 options "paper", "scissors", "stone", "reversed paper", "reversed scissors", "reversed stone".';
@@ -32,7 +45,7 @@ var main = function (input) {
     var generatedHand = generateHand();
 
     // result will contain either "user wins", "user draws" or "user loses"
-    result = compareHands(input, generatedHand);
+    result = compareHands(input, generatedHand, gameMode);
 
     input = addSymbol(input);
 
@@ -42,16 +55,32 @@ var main = function (input) {
 
     output += `The computer chose ${generatedHand}.<br>You chose ${input}.<br><br>`;
 
-    if (result == "user loses") {
-      output += `You lose! Bummer.<br><br>`;
-    } else if (result == "user draws") {
-      output += `You draw!.<br><br>`;
+    if (gameMode == "normal") {
+      switch (result) {
+        case "user wins":
+          output += `You win! Have a pat on your back.<br><br>`;
+          break;
+        case "user loses":
+          output += `You lose! Bummer.<br><br>`;
+          break;
+        default:
+          output += `You draw!.<br><br>`;
+      }
     } else {
-      output += `You win! Have a pat on your back.<br><br>`;
+      switch (result) {
+        case "user wins":
+          output += `You lose! Bummer.<br><br>`;
+          break;
+        case "user loses":
+          output += `You win! Have a pat on your back.<br><br>`;
+          break;
+        default:
+          output += `You draw!.<br><br>`;
+      }
     }
 
     output +=
-      'Now you can type "scissors" "paper" or "stone" to play another round! <br><br><hr><br>';
+      'Now you can type "scissors", "paper" or "stone" to play another round! <br><br><hr><br>';
 
     output += `Your wins: ${numOfUserWins} | Your losses: ${numOfUserLosses} | Your draws: ${numOfDraws} | Your win percentage: ${(
       (numOfUserWins / numOfPlays) *
@@ -86,7 +115,7 @@ var generateHand = function () {
   return handOptions[randomInteger];
 };
 
-var compareHands = function (input, generatedHand) {
+var compareHands = function (input, generatedHand, gameMode) {
   if (
     (input == "reversed paper" && generatedHand == "scissors") ||
     (input == "reversed stone" && generatedHand == "paper") ||
@@ -96,8 +125,7 @@ var compareHands = function (input, generatedHand) {
     (input == "stone" && generatedHand == "scissors")
   ) {
     // user wins
-    numOfUserWins++;
-    numOfCompLosses++;
+    calculateTally("win", gameMode);
     return "user wins";
   } else if (
     input == generatedHand ||
@@ -106,13 +134,59 @@ var compareHands = function (input, generatedHand) {
     (input == "reversed scissors" && generatedHand == "scissors")
   ) {
     // user draws
-    numOfDraws++;
+    calculateTally("draw", gameMode);
     return "user draws";
   } else {
     // user loses
-    numOfUserLosses++;
-    numOfCompWins++;
+    calculateTally("lose", gameMode);
     return "user loses";
+  }
+};
+
+var calculateTally = function (userResult, gameMode) {
+  if (gameMode == "normal") {
+    switch (userResult) {
+      case "win":
+        numOfUserWins++;
+        numOfCompLosses++;
+        break;
+      case "lose":
+        numOfCompWins++;
+        numOfUserLosses++;
+        break;
+      default:
+        numOfDraws++;
+    }
+  } else {
+    switch (userResult) {
+      case "win":
+        numOfCompWins++;
+        numOfUserLosses++;
+        break;
+      case "lose":
+        numOfUserWins++;
+        numOfCompLosses++;
+        break;
+      default:
+        numOfDraws++;
+    }
+  }
+};
+
+var validateInput = function (input) {
+  if (
+    !(
+      input == "paper" ||
+      input == "scissors" ||
+      input == "stone" ||
+      input == "reversed paper" ||
+      input == "reversed scissors" ||
+      input == "reversed stone"
+    )
+  ) {
+    return false;
+  } else {
+    return true;
   }
 };
 
@@ -133,21 +207,4 @@ var addSymbol = function (input) {
   }
 
   return input;
-};
-
-var validateInput = function (input) {
-  if (
-    !(
-      input == "paper" ||
-      input == "scissors" ||
-      input == "stone" ||
-      input == "reversed paper" ||
-      input == "reversed scissors" ||
-      input == "reversed stone"
-    )
-  ) {
-    return false;
-  } else {
-    return true;
-  }
 };
