@@ -62,6 +62,9 @@
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
+      document.querySelector("#output-div").innerHTML =
+        "Enter your name to play!";
+
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
