@@ -61,7 +61,15 @@ var main = function (input) {
     output += `Comp wins: ${numOfCompWins} | Comp losses: ${numOfCompLosses} | Comp draws: ${numOfDraws} | Comp win percentage: ${(
       (numOfCompWins / numOfPlays) *
       100
-    ).toFixed(2)}%`;
+    ).toFixed(2)}% <br><br>`;
+
+    if (numOfUserWins > numOfCompWins) {
+      output += `You're ahead of the computer! Maintain this lead.`;
+    } else if (numOfUserWins < numOfCompWins) {
+      output += `If I were you, I would start bucking up!!!`;
+    } else {
+      output += `This next round may be a tiebreaker! Fingers crossed!`;
+    }
 
     return output;
   } else {
