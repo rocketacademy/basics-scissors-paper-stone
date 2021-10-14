@@ -2,6 +2,11 @@ var main = function (userHand) {
   var result = "";
   var output = "";
 
+  if (!validateInput(userHand)) {
+    output = `Your input is invalid.`;
+    return output;
+  }
+
   // this will produce randomly either scissors, paper or stone.
   var generatedHand = generateHand();
 
@@ -25,6 +30,21 @@ var main = function (userHand) {
     'Now you can type "scissors" "paper" or "stone" to play another round!';
 
   return output;
+};
+
+var validateInput = function (input) {
+  if (
+    input !== "scissors" ||
+    input !== "paper" ||
+    input !== "stone" ||
+    input !== "reversed scissors" ||
+    input !== "reversed paper" ||
+    input !== "reversed stone"
+  ) {
+    return false;
+  } else {
+    return true;
+  }
 };
 
 var generateHand = function () {
