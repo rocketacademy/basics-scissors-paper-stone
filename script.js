@@ -21,23 +21,21 @@ var computerRandom = function () {
 
 var playerBeatComputer = function (player, computer) {
   return (
-    (player == SCISSORS) & (computer == PAPER) ||
-    (player == PAPER) & (computer == STONE) ||
-    (player == STONE) & (computer == SCISSORS) ||
-    (player == REVERSE_SCISSORS) & (computer == STONE) ||
-    (player == REVERSE_PAPER) & (computer == SCISSORS) ||
-    (player == REVERSE_STONE) & (computer == PAPER)
+    (player == SCISSORS && computer == PAPER) ||
+    (player == PAPER && computer == STONE) ||
+    (player == STONE && computer == SCISSORS) ||
+    (player == REVERSE_SCISSORS && computer == STONE) ||
+    (player == REVERSE_PAPER && computer == SCISSORS) ||
+    (player == REVERSE_STONE && computer == PAPER)
   );
 };
 
 var playerDrawComputer = function (player, computer) {
   return (
-    (player == SCISSORS) & (computer == SCISSORS) ||
-    (player == PAPER) & (computer == PAPER) ||
-    (player == STONE) & (computer == STONE) ||
-    (player == REVERSE_SCISSORS) & (computer == SCISSORS) ||
-    (player == REVERSE_PAPER) & (computer == PAPER) ||
-    (player == REVERSE_STONE) & (computer == STONE)
+    player == computer ||
+    (player == REVERSE_SCISSORS && computer == SCISSORS) ||
+    (player == REVERSE_PAPER && computer == PAPER) ||
+    (player == REVERSE_STONE && computer == STONE)
   );
 };
 
@@ -46,19 +44,18 @@ var defaultMessage = function (player, computer) {
 };
 
 var main = function (input) {
-  var lowercaseInput = input.toLowerCase();
+  var playerDraw = input.toLowerCase();
   if (
-    lowercaseInput != SCISSORS &&
-    lowercaseInput != PAPER &&
-    lowercaseInput != STONE &&
-    lowercaseInput != REVERSE_SCISSORS &&
-    lowercaseInput != REVERSE_PAPER &&
-    lowercaseInput != REVERSE_STONE
+    playerDraw != SCISSORS &&
+    playerDraw != PAPER &&
+    playerDraw != STONE &&
+    playerDraw != REVERSE_SCISSORS &&
+    playerDraw != REVERSE_PAPER &&
+    playerDraw != REVERSE_STONE
   ) {
     return "Please input scissors, paper, or stone to play the game.";
   }
 
-  var playerDraw = lowercaseInput;
   var computerDraw = computerRandom();
   var standardMessage = defaultMessage(playerDraw, computerDraw);
 
