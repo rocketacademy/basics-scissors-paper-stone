@@ -73,9 +73,9 @@ var main = function (input) {
 var computerChoice = function () {
   const game = ["scissors", "paper", "stone"];
 
-  randomDecimal = Math.random() * 3;
-  randomInteger = Math.floor(randomDecimal);
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
 
-  computer = game[randomInteger];
-  return computer;
+  var computerhand = game[randomInteger];
+  return computerhand;
 };
