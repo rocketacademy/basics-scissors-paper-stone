@@ -55,9 +55,6 @@ var main = function (input) {
     //console.log("Draw");
     myOutputValue = `You chose ${input}, <br> The computer chose Stone. <br><br> Its a Draw! <br> Try again! `;
   }
-  // else {
-  //   myOutputValue = `wrong input`;
-  // }
   return myOutputValue;
 };
 
