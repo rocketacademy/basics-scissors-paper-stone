@@ -24,18 +24,18 @@ var computerGuesses = function () {
 // User input "scissors", "paper", or "stone";
 // if user input beats computer's, user win
 var main = function (input) {
-  input = input.toLowerCase();
+  var userInput = input.toLowerCase();
   var computersGuess = computerGuesses();
   if (
-    (computersGuess == "paper" && input == "scissors") ||
-    (computersGuess == "stone" && input == "paper") ||
-    (computersGuess == "scissors" && input == "stone")
+    (computersGuess == "paper" && userInput == "scissors") ||
+    (computersGuess == "stone" && userInput == "paper") ||
+    (computersGuess == "scissors" && userInput == "stone")
   ) {
     return (
       "The Computer chose " +
       computersGuess +
       " and you chose " +
-      input +
+      userInput +
       ". You won! Now you can type scissors, paper or stone to play another round!."
     );
   }
@@ -43,7 +43,7 @@ var main = function (input) {
     "The Computer chose " +
     computersGuess +
     " and you chose " +
-    input +
+    userInput +
     ". You lose! Bummer. Now you can type scissors, paper or stone to play another round!."
   );
 };
