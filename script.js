@@ -4,12 +4,14 @@ var main = function (input) {
   var PAPER_OPTION = "paper";
   var SCISSOR_OPTION = "scissor";
   var STONE_OPTION = "stone";
+
+  // seetting variables for reverse SPS Game
+
   var REV_STONE = "reversed stone";
   var REV_PAPER = "reversed paper";
   var REV_SCISSOR = "reversed scissor";
 
-  /// Reverse game
-  // reversed winning conditions
+  // reversed SPS game winning conditions
   // paper beats scissor
   // stone beats paper
   // scissor beats stone
@@ -68,7 +70,7 @@ var main = function (input) {
   // draw condition
 
   if (input == computerOption) {
-    myOutputValue = "draw";
+    myOutputValue = "Draw!";
     console.log("draw condition " + myOutputValue);
   }
 
@@ -88,11 +90,13 @@ var main = function (input) {
 
   // display output in desired format
   var showOutput =
-    " The computer chose " +
+    " The computer chose '" +
     computerOption +
+    "'" +
     "<br>" +
-    "You chose " +
+    "You chose '" +
     input +
+    "'" +
     "<br>" +
     myOutputValue +
     "<br>" +
