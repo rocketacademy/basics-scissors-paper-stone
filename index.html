@@ -52,7 +52,7 @@
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
       <p>Input:</p>
-      <input id="input-field" />
+      <input id="input-field" placeholder="Enter your name to begin" />
       <br />
       <button id="submit-button">Submit</button>
       <p>Output:</p>
@@ -73,6 +73,7 @@
         output.innerHTML = result;
 
         // Reset input value
+        input.placeholder = "Let's play!";
         input.value = "";
       });
     </script>
