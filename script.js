@@ -1,5 +1,4 @@
 var main = function (input) {
-  var computerOption = generateComputerOption();
   // setting variables to avoid typo
   var PAPER_OPTION = "paper";
   var SCISSOR_OPTION = "scissor";
@@ -10,6 +9,22 @@ var main = function (input) {
   var REV_STONE = "reversed stone";
   var REV_PAPER = "reversed paper";
   var REV_SCISSOR = "reversed scissor";
+
+  var generateComputerOption = function () {
+    var RandomNo = Math.random() * 3;
+    var randomSelection = Math.ceil(RandomNo);
+
+    if (randomSelection == 1) {
+      return SCISSOR_OPTION;
+    }
+    if (randomSelection == 2) {
+      return PAPER_OPTION;
+    }
+
+    return STONE_OPTION;
+  };
+
+  var computerOption = generateComputerOption();
 
   // reversed SPS game winning conditions
   // paper beats scissor
@@ -105,20 +120,3 @@ var main = function (input) {
   return showOutput;
 };
 // random generate : scissor paper stone
-
-var generateComputerOption = function () {
-  var RandomNo = Math.random() * 3;
-  var randomSelection = Math.ceil(RandomNo);
-  console.log(randomSelection);
-  var PAPER_OPTION = "paper";
-  var SCISSOR_OPTION = "scissor";
-  var STONE_OPTION = "stone";
-  if (randomSelection == 1) {
-    return SCISSOR_OPTION;
-  }
-  if (randomSelection == 2) {
-    return PAPER_OPTION;
-  }
-
-  return STONE_OPTION;
-};
