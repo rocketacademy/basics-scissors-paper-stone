@@ -1,5 +1,7 @@
 var main = function (input) {
   var lowercaseinput = input.toLowerCase(input);
+  var reverseinput = "reversed " + lowercaseinput;
+
   var number = chooseobject();
 
   // lets assign an object to each number generated
