@@ -1,6 +1,5 @@
 var main = function (input) {
   var lowercaseinput = input.toLowerCase(input);
-  var reverseinput = "reversed " + lowercaseinput;
 
   var number = chooseobject();
 
@@ -19,24 +18,24 @@ var main = function (input) {
 
   // lets define the default output
   var myOutputValue =
-    "Ops, you lost. My " +
-    systemobject +
-    " beats your " +
+    "Ops, you lost. " +
     lowercaseinput +
-    " !";
+    " doesn't beat my " +
+    systemobject +
+    "!";
 
   // lets define how a user can win
   if (
-    (lowercaseinput == "scissors" && systemobject == "paper") ||
-    (lowercaseinput == "paper" && systemobject == "stone") ||
-    (lowercaseinput == "stone" && systemobject == "scissors")
+    (lowercaseinput == "reversed scissors" && systemobject == "stone") ||
+    (lowercaseinput == "reversed paper" && systemobject == "scissors") ||
+    (lowercaseinput == "reversed stone" && systemobject == "paper")
   ) {
     myOutputValue =
       "Dang, you won! Your " +
       lowercaseinput +
       " beat my " +
       systemobject +
-      " !";
+      "!";
   }
 
   // lets define a draw
