@@ -36,18 +36,29 @@ var main = function (input) {
 
   if (input != "Scissors" || input != "Stone" || input != "Paper") {
     outputValue =
-      "Your input is invalid. Please try again. Please key in either 'Scissors', 'Paper', or 'Stone'.";
+      "Your input is invalid. Please try again." +
+      "<br>" +
+      "<br>" +
+      "Please key in either 'Scissors', 'Paper', or 'Stone' to play.";
   }
 
   // If program choice is same as user inputs, output is "it's a draw."
 
   if (programChoice == input) {
     outputValue =
-      "It's a draw. You choose " +
+      "You choose " +
       input +
-      " and program chooses " +
+      "." +
+      "<br>" +
+      "The computer choose " +
       programChoice +
-      ".";
+      "." +
+      "<br>" +
+      "<br>" +
+      "It's a draw." +
+      "<br>" +
+      "<br>" +
+      "Now you can type 'Scisors', 'Paper' or 'Stone' to play another round.";
   }
 
   // If program choice is scissors and user inputs stone OR If program choice is stone and user inputs paper OR If program choice is paper and user inputs scissors, output is "The user wins."
@@ -58,11 +69,19 @@ var main = function (input) {
     (programChoice == "Paper" && input == "Scissors")
   ) {
     outputValue =
-      "You win! You choose " +
+      "You choose " +
       input +
-      " and program chooses " +
+      "." +
+      "<br>" +
+      "The computer choose " +
       programChoice +
-      ".";
+      "." +
+      "<br>" +
+      "<br>" +
+      "You win! Congratulations!" +
+      "<br>" +
+      "<br>" +
+      "Now you can type 'Scisors', 'Paper' or 'Stone' to play another round.";
   }
 
   // If program choice is scissors and user inputs paper OR If program choice is stone and user inputs scissors OR If program choice is paper and user inputs stone, output is "The program wins."
@@ -73,11 +92,19 @@ var main = function (input) {
     (programChoice == "Paper" && input == "Stone")
   ) {
     outputValue =
-      "The program wins! You choose " +
+      "You choose " +
       input +
-      " and program chooses " +
+      "." +
+      "<br>" +
+      "The computer choose " +
       programChoice +
-      ".";
+      "." +
+      "<br>" +
+      "<br>" +
+      "You lose! Too bad!" +
+      "<br>" +
+      "<br>" +
+      "Now you can type 'Scisors', 'Paper' or 'Stone' to play another round.";
   }
 
   return outputValue;
