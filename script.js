@@ -20,7 +20,11 @@
 
 var scissorsFormatted = "Scissors ✂️";
 var paperFormatted = "Paper 📄";
-var stoneFormatted = "Stone 🪨";
+var stoneFormatted = "Stone 💎";
+
+var reversedScissorsFormatted = "Reversed Scissors ✂️";
+var reversedPaperFormatted = "Reversed Paper 📄";
+var reversedStoneFormatted = "Reversed Stone 💎";
 
 // Helper functions here
 
@@ -144,13 +148,13 @@ var formatChoice = function (choice) {
 
   // for REVERSED gameplay
   if (choice == "reversed scissors") {
-    choiceFormatted = scissorsFormatted;
+    choiceFormatted = reversedScissorsFormatted;
   }
   if (choice == "reversed paper") {
-    choiceFormatted = paperFormatted;
+    choiceFormatted = reversedPaperFormatted;
   }
   if (choice == "reversed stone") {
-    choiceFormatted = stoneFormatted;
+    choiceFormatted = reversedStoneFormatted;
   }
 
   return choiceFormatted;
