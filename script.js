@@ -4,9 +4,9 @@
 [x] Program randomly chooses scissors, paper, stone
 [x] User input and program choice can be compared and determined whether user wins, loses or draw
 [x] After comparing user and program choices, frontend page will display the result
-[ ] Program should be able to validate that the input falls within the 3 options
-[ ] Format the output to make it look nicer.
-[ ] 
+[x] Program should be able to validate that the input falls within the 3 options
+[x] Format the output to make it look nicer.
+[x] Add function for reverse paper scissors stone game
 */
 
 var main = function (input) {
