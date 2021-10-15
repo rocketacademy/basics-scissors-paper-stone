@@ -46,13 +46,14 @@ var main = function (input) {
   }
 
   var randomSPS = generateRandomSPS();
-  var genericOutput = `Your choice: ${userSPS}. Program's choice: ${randomSPS}.`;
+  var genericOutput = `Your choice: ${userSPS}. <br>Program's choice: ${randomSPS}. <br><br>`;
+  var gameInstruction = `Now you can type "scissors" "paper" or "stone" to play another round!`;
   if (checkIfUserWon(userSPS, randomSPS)) {
-    return `${genericOutput} You win!`;
+    return `${genericOutput} You win! <br><br> ${gameInstruction}`;
   }
   //check if it is a draw
   if (userSPS == randomSPS) {
-    return `${genericOutput} It's a draw!`;
+    return `${genericOutput} It's a draw! <br><br> ${gameInstruction}`;
   }
-  return `${genericOutput} You lose!`;
+  return `${genericOutput} You lose! <br><br> ${gameInstruction}`;
 };
