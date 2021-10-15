@@ -26,40 +26,31 @@ var reversedScissorsFormatted = "Reversed Scissors ✂️";
 var reversedPaperFormatted = "Reversed Paper 📄";
 var reversedStoneFormatted = "Reversed Stone 💎";
 
-// Helper functions here
+// ****** Helper functions here ******
 
-var getRandomNumber = function () {
+// Function to generate computer's choice
+var getComputerChoice = function () {
   // generate random decimal from 0 to 3 (inclusive of 0, exclusive of 3)
   var randomDecimal = Math.random() * 3;
   // convert decimal into whole number and ensure it's between 1 and 3 (inclusive of 1 and 3)
   var randomNumber = Math.floor(randomDecimal) + 1;
-  return randomNumber;
-};
 
-var getComputerChoice = function () {
-  // create variable for computer's choice
+  // create var for computer's choice & set it based on random number generated
   var computerChoice = 0;
-
-  // set computer's choice based on random number generated
-  var choiceNum = getRandomNumber();
-  if (choiceNum == 1) {
+  if (randomNumber == 1) {
     computerChoice = "scissors";
   }
-  if (choiceNum == 2) {
+  if (randomNumber == 2) {
     computerChoice = "paper";
   }
-  if (choiceNum == 3) {
+  if (randomNumber == 3) {
     computerChoice = "stone";
   }
-
-  // return computer's choice
-  console.log("Random number generated: ", choiceNum);
-  console.log("Computer's choice: ", computerChoice);
 
   return computerChoice;
 };
 
-// create function to determine if user won for normal & reversed gameplays
+// Function to determine if user won for normal & reversed gameplays
 var didUserWin = function (userChoice, comChoice) {
   if (
     (userChoice == "scissors" && comChoice == "paper") ||
@@ -82,7 +73,7 @@ var didUserWinReversed = function (userChoice, comChoice) {
   return false;
 };
 
-// create function to output results
+// Function to output results
 var determineResult = function (userChoice, comChoice) {
   var result = 0;
 
@@ -132,6 +123,7 @@ var determineResult = function (userChoice, comChoice) {
   return result;
 };
 
+// Function to format choices
 var formatChoice = function (choice) {
   var choiceFormatted;
 
@@ -160,6 +152,7 @@ var formatChoice = function (choice) {
   return choiceFormatted;
 };
 
+// Main function
 var main = function (input) {
   console.log("***** LET'S PLAY A GAME *****");
 
@@ -168,8 +161,8 @@ var main = function (input) {
     "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to start the game.";
 
   // create variable for computer's choice
-  // var opponentChoice = getComputerChoice();
-  var opponentChoice = "stone";
+  var opponentChoice = getComputerChoice();
+  // var opponentChoice = "stone";
 
   // format the choices
   var opponentChoiceFormatted = formatChoice(opponentChoice);
