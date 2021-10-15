@@ -27,19 +27,29 @@ var main = function (input) {
 
   // Assign an outcome based on each input
   // Input Validation
-  if (input != "stone" && input != "paper" && input != "scissors") {
+  if (
+    input != "stone" &&
+    input != "paper" &&
+    input != "scissors" &&
+    input != "reversed stone" &&
+    input != "reversed paper" &&
+    input != "reversed scissors"
+  ) {
     myOutputValue =
       "You played " +
       input +
-      " which is invalid, please only play stone, paper or scissors.";
+      " which is invalid, please only play stone, paper or scissors.<br> You can also try playing reversed stone or reversed paper or reversed scissors.";
     // Return output.
-    console.log("input validation");
+    console.log("input validation: ", input);
     return myOutputValue;
   }
 
   // stone
-  // stone vs Scissors (win)
-  if (input == "stone" && computerTurn == "scissors") {
+  // stone vs Scissors (win) / reversed stone vs paper (win)
+  if (
+    (input == "stone" && computerTurn == "scissors") ||
+    (input == "reversed stone" && computerTurn == "paper")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -47,12 +57,15 @@ var main = function (input) {
       computerTurn +
       " so you win";
     // Return output.
-    console.log("you played stone - you win");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
   // stone vs stone (draw)
-  if (input == "stone" && computerTurn == "stone") {
+  if (
+    (input == "stone" || input == "reversed stone") &&
+    computerTurn == "stone"
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -60,12 +73,15 @@ var main = function (input) {
       computerTurn +
       " so you drew";
     // Return output.
-    console.log("you played stone - you drew");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
-  // stone vs Paper (lose)
-  if (input == "stone" && computerTurn == "paper") {
+  // stone vs Paper (lose) / reversed stone vs scissors (lose)
+  if (
+    (input == "stone" && computerTurn == "paper") ||
+    (input == "reversed stone" && computerTurn == "scissors")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -73,13 +89,16 @@ var main = function (input) {
       computerTurn +
       " so you lose";
     // Return output.
-    console.log("you played stone - you lose");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
   // Paper
-  // Paper vs Scissors (lose)
-  if (input == "paper" && computerTurn == "scissors") {
+  // Paper vs Scissors (lose) / reversed paper vs stone (lose)
+  if (
+    (input == "paper" && computerTurn == "scissors") ||
+    (input == "reversed paper" && computerTurn == "stone")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -87,12 +106,15 @@ var main = function (input) {
       computerTurn +
       " so you lose";
     // Return output.
-    console.log("you played paper - you lose");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
-  // Paper vs stone (win)
-  if (input == "paper" && computerTurn == "stone") {
+  // Paper vs stone (win) / reversed paper vs scissors (win)
+  if (
+    (input == "paper" && computerTurn == "stone") ||
+    (input == "reversed paper" && computerTurn == "scissors")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -100,12 +122,15 @@ var main = function (input) {
       computerTurn +
       " so you win";
     // Return output.
-    console.log("you played paper - you win");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
   // Paper vs paper (draw)
-  if (input == "paper" && computerTurn == "paper") {
+  if (
+    (input == "paper" || input == "reversed paper") &&
+    computerTurn == "paper"
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -113,13 +138,16 @@ var main = function (input) {
       computerTurn +
       " so you drew";
     // Return output.
-    console.log("you played paper - you drew");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
   // Scissors
   // Scissors vs Scissors (draw)
-  if (input == "scissors" && computerTurn == "scissors") {
+  if (
+    (input == "scissors" || input == "reversed scissors") &&
+    computerTurn == "scissors"
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -127,12 +155,15 @@ var main = function (input) {
       computerTurn +
       " so you drew";
     // Return output.
-    console.log("you played scissors - you drew");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
-  // Scissors vs stone (lose)
-  if (input == "scissors" && computerTurn == "stone") {
+  // Scissors vs stone (lose) or reversed scissors vs paper (lose)
+  if (
+    (input == "scissors" && computerTurn == "stone") ||
+    (input == "reversed scissors" && computerTurn == "paper")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -140,12 +171,15 @@ var main = function (input) {
       computerTurn +
       " so you lose";
     // Return output.
-    console.log("you played scissors - you lose");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 
-  // Scissors vs paper (win)
-  if (input == "scissors" && computerTurn == "paper") {
+  // Scissors vs paper (win) or reversed scissors vs stone (win)
+  if (
+    (input == "scissors" && computerTurn == "paper") ||
+    (input == "reversed scissors" && computerTurn == "stone")
+  ) {
     myOutputValue =
       "You played " +
       input +
@@ -153,7 +187,7 @@ var main = function (input) {
       computerTurn +
       " so you win";
     // Return output.
-    console.log("you played scissors - you win");
+    console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
   }
 };
@@ -162,9 +196,8 @@ var rollDice = function () {
   // Generate a decimal from 0 through 3, inclusive of 0
   var randomDecimal = Math.random() * 3;
   // Remove the decimal with the floor operation.
-  // This will be an integer from 1 to 3 inclusive.
+  // This will be an integer from 0 to 2 inclusive.
   var randomInteger = Math.floor(randomDecimal);
-  // Add 1 to get valid dice rolls of 1 through 3 inclusive.
   console.log("dice rolls: ", randomInteger);
   return randomInteger;
 };
