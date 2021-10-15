@@ -16,6 +16,7 @@
 // --------------- start of code! ---------------
 // ----------------------------------------------
 
+// ****** Variables ******
 // Create variables for formatted choices
 
 var scissorsFormatted = "Scissors ✂️";
@@ -26,8 +27,11 @@ var reversedScissorsFormatted = "Reversed Scissors ✂️";
 var reversedPaperFormatted = "Reversed Paper 📄";
 var reversedStoneFormatted = "Reversed Stone 💎";
 
-// ****** Helper functions here ******
+var userWin = 0;
+var userLose = 0;
+var userDraw = 0;
 
+// ****** Helper functions here ******
 // Function to generate computer's choice
 var getComputerChoice = function () {
   // generate random decimal from 0 to 3 (inclusive of 0, exclusive of 3)
@@ -82,7 +86,7 @@ var determineResult = function (userChoice, comChoice) {
 
   // ----- Reversed gameplay -----
   if (reversedGameplay) {
-    console.log("Gameplay mode: REVERSED!");
+    console.log("<<< Gameplay mode: REVERSED! >>>");
     // Draw:
     if (
       (userChoice == "reversed scissors" && comChoice == "scissors") ||
@@ -90,32 +94,38 @@ var determineResult = function (userChoice, comChoice) {
       (userChoice == "reversed stone" && comChoice == "stone")
     ) {
       result = "It's a draw";
+      userDraw += 1;
     }
 
     // Win:
     else if (didUserWinReversed(userChoice, comChoice)) {
       result = "You win at reversed 'Scissors, Paper, Stone'";
+      userWin += 1;
     }
 
     // Lose:
     else if (!didUserWinReversed(userChoice, comChoice)) {
       result = "You lose at reversed 'Scissors, Paper, Stone'";
+      userLose += 1;
     }
   }
   // --- Normal Gameplay ---
   else if (!reversedGameplay) {
-    console.log("Gameplay mode: Normal");
+    console.log("<<< Gameplay mode: Normal >>>");
     // Draw:
     if (userChoice == comChoice) {
-      result = "Draw";
+      result = "It's a draw";
+      userDraw += 1;
     }
     // Win:
     else if (didUserWin(userChoice, comChoice)) {
       result = "You win";
+      userWin += 1;
     }
     // Lose:
     else if (!didUserWin(userChoice, comChoice)) {
       result = "You lose";
+      userLose += 1;
     }
   }
 
@@ -154,7 +164,7 @@ var formatChoice = function (choice) {
 
 // Main function
 var main = function (input) {
-  console.log("***** LET'S PLAY A GAME *****");
+  console.log("******** LET'S PLAY A GAME *******");
 
   // set default result (assumes input is not valid)
   var myOutputValue =
@@ -170,14 +180,25 @@ var main = function (input) {
 
   // determine result of game (if input is valid)
   var gameResult = determineResult(input, opponentChoice);
+  var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(2);
   if (gameResult !== 0) {
+    // Log out details
     console.log("Computer's choice: ", opponentChoice);
     console.log("User's choice: ", input);
     console.log("Game result: ", gameResult, "!!");
-    myOutputValue = `The computer chose ${opponentChoiceFormatted}.<br>
-    You chose ${userChoiceFormatted}.  <br><br>
-  ${gameResult}!<br><br>
-  Wanna try again? Type 'scissors', 'paper' or 'stone' for another round!`;
+    console.log(" --- Current Score ---");
+    console.log("Number of Wins: ", userWin);
+    console.log("Number of Losses: ", userLose);
+    console.log("Number of Draws: ", userDraw);
+
+    myOutputValue = `
+    The computer chose ${opponentChoiceFormatted}<br>
+    You chose ${userChoiceFormatted}<br><br>
+    ${gameResult}!<br><br>
+    Score: ${userWin} wins | ${userLose} losses | ${userDraw} draws <br>
+    You have a winning rate of ${winRate}%.<br><br>
+    Wanna try again? Type 'scissors', 'paper' or 'stone' for another round!
+    `;
   }
   console.log("");
 
