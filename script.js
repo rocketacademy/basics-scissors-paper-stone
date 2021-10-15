@@ -85,32 +85,34 @@ var determineResult = function (userChoice, comChoice) {
   var reversedGameplay = userChoice.includes("reversed");
 
   // ----- Reversed gameplay -----
-  if (reversedGameplay) {
-    console.log("<<< Gameplay mode: REVERSED! >>>");
-    // Draw:
-    if (
-      (userChoice == "reversed scissors" && comChoice == "scissors") ||
-      (userChoice == "reversed paper" && comChoice == "paper") ||
-      (userChoice == "reversed stone" && comChoice == "stone")
-    ) {
-      result = "It's a draw";
-      userDraw += 1;
-    }
+  // if (reversedGameplay) {
+  //   console.log("<<< Gameplay mode: REVERSED! >>>");
+  //   // Draw:
+  //   if (
+  //     (userChoice == "reversed scissors" && comChoice == "scissors") ||
+  //     (userChoice == "reversed paper" && comChoice == "paper") ||
+  //     (userChoice == "reversed stone" && comChoice == "stone")
+  //   ) {
+  //     result = "It's a draw";
+  //     userDraw += 1;
+  //   }
 
-    // Win:
-    else if (didUserWinReversed(userChoice, comChoice)) {
-      result = "You win at reversed 'Scissors, Paper, Stone'";
-      userWin += 1;
-    }
+  //   // Win:
+  //   else if (didUserWinReversed(userChoice, comChoice)) {
+  //     result = "You win at reversed 'Scissors, Paper, Stone'";
+  //     userWin += 1;
+  //   }
 
-    // Lose:
-    else if (!didUserWinReversed(userChoice, comChoice)) {
-      result = "You lose at reversed 'Scissors, Paper, Stone'";
-      userLose += 1;
-    }
-  }
+  //   // Lose:
+  //   else if (!didUserWinReversed(userChoice, comChoice)) {
+  //     result = "You lose at reversed 'Scissors, Paper, Stone'";
+  //     userLose += 1;
+  //   }
+  // }
+
   // --- Normal Gameplay ---
-  else if (!reversedGameplay) {
+  // else
+  if (!reversedGameplay) {
     console.log("<<< Gameplay mode: Normal >>>");
     // Draw:
     if (userChoice == comChoice) {
@@ -140,66 +142,100 @@ var formatChoice = function (choice) {
   // for normal gameplay
   if (choice == "scissors") {
     choiceFormatted = scissorsFormatted;
-  }
-  if (choice == "paper") {
+  } else if (choice == "paper") {
     choiceFormatted = paperFormatted;
-  }
-  if (choice == "stone") {
+  } else if (choice == "stone") {
     choiceFormatted = stoneFormatted;
   }
 
   // for REVERSED gameplay
   if (choice == "reversed scissors") {
     choiceFormatted = reversedScissorsFormatted;
-  }
-  if (choice == "reversed paper") {
+  } else if (choice == "reversed paper") {
     choiceFormatted = reversedPaperFormatted;
-  }
-  if (choice == "reversed stone") {
+  } else if (choice == "reversed stone") {
     choiceFormatted = reversedStoneFormatted;
   }
 
   return choiceFormatted;
 };
 
+var username = 0;
+
 // Main function
 var main = function (input) {
-  console.log("******** LET'S PLAY A GAME *******");
-
-  // set default result (assumes input is not valid)
+  // set default result (assumes username is entered but input is not valid)
   var myOutputValue =
-    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to start the game.";
+    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.";
 
   // create variable for computer's choice
   var opponentChoice = getComputerChoice();
   // var opponentChoice = "stone";
 
   // format the choices
-  var opponentChoiceFormatted = formatChoice(opponentChoice);
   var userChoiceFormatted = formatChoice(input);
+  var opponentChoiceFormatted = formatChoice(opponentChoice);
 
   // determine result of game (if input is valid)
+  var isInputValid =
+    input == "scissors" || input == "paper" || input == "stone";
+
+  // take in user's name
+  if (input !== "" && username == 0) {
+    username = input;
+    console.log("****** NEW CHALLENGER ******");
+    console.log("User: ", username);
+    return `
+    Hi there, ${username}! <br><br>
+    Would you like to play a game? <br><br>
+    Type 'scissors', 'paper' or 'stone' to begin!
+    `;
+  } else {
+    myOutputValue = "Enter your name first to play the game.";
+  }
+
+  // gameplay
   var gameResult = determineResult(input, opponentChoice);
-  var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(2);
-  if (gameResult !== 0) {
-    // Log out details
-    console.log("Computer's choice: ", opponentChoice);
-    console.log("User's choice: ", input);
+  var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(1);
+
+  if (!isInputValid) {
+    myOutputValue = `Sorry ${username}, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.`;
+    console.log("Input not recognised --> ", input);
+  }
+
+  if (isInputValid && gameResult !== 0) {
+    // motivational message
+    var motivationMessage = `Wow, ${username}! You're good at this!`;
+    if (winRate <= 20) {
+      motivationMessage = `Oh my, ${username}, you're really bad at this...`;
+    } else if (winRate > 20 && winRate <= 50) {
+      motivationMessage = `Keep it up, you're getting there!`;
+    } else if (winRate > 50 && winRate <= 75) {
+      motivationMessage = `Doing great, ${username}! `;
+    }
+
+    // Log out game details
+    console.log("Computer chose [", opponentChoice, "]");
+    console.log(username, " chose [", input, "]");
     console.log("Game result: ", gameResult, "!!");
+    console.log(" ");
     console.log(" --- Current Score ---");
-    console.log("Number of Wins: ", userWin);
-    console.log("Number of Losses: ", userLose);
+    console.log("Computer Wins: ", userLose);
+    console.log("User Wins: ", userWin, "(Winning rate of ", winRate, "%)");
     console.log("Number of Draws: ", userDraw);
 
     myOutputValue = `
     The computer chose ${opponentChoiceFormatted}<br>
     You chose ${userChoiceFormatted}<br><br>
     ${gameResult}!<br><br>
-    Score: ${userWin} wins | ${userLose} losses | ${userDraw} draws <br>
-    You have a winning rate of ${winRate}%.<br><br>
-    Wanna try again? Type 'scissors', 'paper' or 'stone' for another round!
+    [ Score ] <br>
+    Computer : ${userLose} <br>
+    ${username}: ${userWin} <br>
+    Draws: ${userDraw} <br><br>
+    ${motivationMessage} Wanna try again? Type 'scissors', 'paper' or 'stone' for another round!
     `;
   }
+
   console.log("");
 
   return myOutputValue;
