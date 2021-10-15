@@ -19,6 +19,8 @@ var main = function (input) {
   // lets define the default output
   var myOutputValue =
     "Ops, you lost. " +
+    "<br>" +
+    "Your " +
     lowercaseinput +
     " doesn't beat my " +
     systemobject +
@@ -31,7 +33,9 @@ var main = function (input) {
     (lowercaseinput == "reversed stone" && systemobject == "paper")
   ) {
     myOutputValue =
-      "Dang, you won! Your " +
+      "Dang, you won!" +
+      "<br>" +
+      "Your " +
       lowercaseinput +
       " beat my " +
       systemobject +
