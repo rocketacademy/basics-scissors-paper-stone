@@ -10,47 +10,69 @@ var main = function (input) {
   if (input == SCISSORS && randomObjectByComputer() == SCISSORS) {
     console.log("scissors-paper-stone!");
     myOutputValue =
-      "You chose " + input + ". Computer chose scissors. It's a draw.";
+      "You chose " +
+      input +
+      " ✂️.<br><br> Computer chose scissors ✂️. <br><br> It's a draw.";
   }
 
   if (input == PAPER && randomObjectByComputer() == SCISSORS) {
     myOutputValue =
-      "You chose " + input + ". Computer chose scissors. You lost.";
+      "You chose " +
+      input +
+      " 🗒. <br><br> Computer chose scissors ✂️. <br><br>  You lost.";
   }
 
   if (input == STONE && randomObjectByComputer() == SCISSORS) {
     myOutputValue =
-      "You chose " + input + ". Computer chose scissors. You won!";
+      "You chose " +
+      input +
+      " 💎. <br><br> Computer chose scissors ✂️.<br><br> You won!";
   }
 
   // what the outcome is when computer plays "paper"
   if (input == SCISSORS && randomObjectByComputer() == PAPER) {
     console.log("scissors-paper-stone!");
-    myOutputValue = "You chose " + input + ". Computer chose paper. You won!";
+    myOutputValue =
+      "You chose " +
+      input +
+      " ✂️.<br><br> Computer chose paper 🗒.<br><br> You won!";
   }
 
   if (input == PAPER && randomObjectByComputer() == PAPER) {
     myOutputValue =
-      "You chose " + input + ". Computer chose paper. It's a draw.";
+      "You chose " +
+      input +
+      " 🗒.<br><br> Computer chose paper 🗒.<br><br> It's a draw.";
   }
 
   if (input == STONE && randomObjectByComputer() == PAPER) {
-    myOutputValue = "You chose " + input + ". Computer chose paper. You lost.";
+    myOutputValue =
+      "You chose " +
+      input +
+      " 💎.<br><br> Computer chose paper 🗒. <br><br>You lost.";
   }
 
   // what the outcome is when computer plays "stone"
   if (input == SCISSORS && randomObjectByComputer() == STONE) {
     console.log("scissors-paper-stone!");
-    myOutputValue = "You chose " + input + ". Computer chose stone. You lost.";
+    myOutputValue =
+      "You chose " +
+      input +
+      " ✂️.<br><br> Computer chose stone 💎.<br><br> You lost.";
   }
 
   if (input == PAPER && randomObjectByComputer() == STONE) {
-    myOutputValue = "You chose " + input + ". Computer chose stone. You won!";
+    myOutputValue =
+      "You chose " +
+      input +
+      " 🗒.<br><br> Computer chose stone 💎.<br><br> You won!";
   }
 
   if (input == STONE && randomObjectByComputer() == STONE) {
     myOutputValue =
-      "You chose " + input + ". Computer chose stone. It's a draw.";
+      "You chose " +
+      input +
+      " 💎.<br><br> Computer chose stone 💎.<br><br> It's a draw.";
   }
   return myOutputValue;
 };
