@@ -27,6 +27,7 @@ var main = function (input) {
 
   var computerAction = "";
   var playerAction = "";
+  var emoticonInput = "";
 
   // Defining player input
   if (input == "scissors") {
