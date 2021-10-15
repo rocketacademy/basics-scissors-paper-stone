@@ -27,6 +27,13 @@ var reversedScissorsFormatted = "Reversed Scissors ✂️";
 var reversedPaperFormatted = "Reversed Paper 📄";
 var reversedStoneFormatted = "Reversed Stone 💎";
 
+// Variables for gameplay
+var gameMode = "normal";
+console.log("Starting game mode: ", gameMode);
+console.log(" ");
+
+var username = 0;
+
 var userWin = 0;
 var userLose = 0;
 var userDraw = 0;
@@ -54,84 +61,68 @@ var getComputerChoice = function () {
   return computerChoice;
 };
 
-// Function to determine if user won for normal & reversed gameplays
-var didUserWin = function (userChoice, comChoice) {
-  if (
-    (userChoice == "scissors" && comChoice == "paper") ||
-    (userChoice == "paper" && comChoice == "stone") ||
-    (userChoice == "stone" && comChoice == "scissors")
-  ) {
-    return true;
-  }
-  return false;
-};
-
-var didUserWinReversed = function (userChoice, comChoice) {
-  if (
-    (userChoice == "reversed scissors" && comChoice == "stone") ||
-    (userChoice == "reversed paper" && comChoice == "scissors") ||
-    (userChoice == "reversed stone" && comChoice == "paper")
-  ) {
-    return true;
-  }
-  return false;
-};
-
 // Function to output results
+// -- For normal gameplay --
 var determineResult = function (userChoice, comChoice) {
+  console.log(" ");
+  console.log("<<< Initiating normal game mode >>>");
   var result = 0;
 
-  // determine if gameplay is normal or reversed
-  var reversedGameplay = userChoice.includes("reversed");
+  // Set rules for winning
+  var didUserWin =
+    (userChoice == "scissors" && comChoice == "paper") ||
+    (userChoice == "paper" && comChoice == "stone") ||
+    (userChoice == "stone" && comChoice == "scissors");
 
-  // ----- Reversed gameplay -----
-  // if (reversedGameplay) {
-  //   console.log("<<< Gameplay mode: REVERSED! >>>");
-  //   // Draw:
-  //   if (
-  //     (userChoice == "reversed scissors" && comChoice == "scissors") ||
-  //     (userChoice == "reversed paper" && comChoice == "paper") ||
-  //     (userChoice == "reversed stone" && comChoice == "stone")
-  //   ) {
-  //     result = "It's a draw";
-  //     userDraw += 1;
-  //   }
-
-  //   // Win:
-  //   else if (didUserWinReversed(userChoice, comChoice)) {
-  //     result = "You win at reversed 'Scissors, Paper, Stone'";
-  //     userWin += 1;
-  //   }
-
-  //   // Lose:
-  //   else if (!didUserWinReversed(userChoice, comChoice)) {
-  //     result = "You lose at reversed 'Scissors, Paper, Stone'";
-  //     userLose += 1;
-  //   }
-  // }
-
-  // --- Normal Gameplay ---
-  // else
-  if (!reversedGameplay) {
-    console.log("<<< Gameplay mode: Normal >>>");
-    // Draw:
-    if (userChoice == comChoice) {
-      result = "It's a draw";
-      userDraw += 1;
-    }
-    // Win:
-    else if (didUserWin(userChoice, comChoice)) {
-      result = "You win";
-      userWin += 1;
-    }
-    // Lose:
-    else if (!didUserWin(userChoice, comChoice)) {
-      result = "You lose";
-      userLose += 1;
-    }
+  // Draw:
+  if (userChoice == comChoice) {
+    result = "It's a draw";
+    userDraw += 1;
+  }
+  // Win:
+  else if (didUserWin) {
+    result = "You win";
+    userWin += 1;
+  }
+  // Lose:
+  else if (!didUserWin) {
+    result = "You lose";
+    userLose += 1;
   }
 
   // and the result is:
+  return result;
+};
+// -- For reversed gameplay --
+var determineResultReversed = function (userChoice, comChoice) {
+  console.log(" ");
+  console.log("<<< Initiating REVERSED game mode >>>");
+
+  var result = 0;
+
+  // Set rules for winning
+  var didUserWinReversed =
+    (userChoice == "scissors" && comChoice == "stone") ||
+    (userChoice == "paper" && comChoice == "scissors") ||
+    (userChoice == "stone" && comChoice == "paper");
+
+  // Draw:
+  if (userChoice == comChoice) {
+    result = "It's a draw";
+    userDraw += 1;
+  }
+
+  // Win:
+  else if (didUserWinReversed) {
+    result = "You win at reversed 'Scissors, Paper, Stone'";
+    userWin += 1;
+  }
+
+  // Lose:
+  else if (!didUserWinReversed) {
+    result = "You lose at reversed 'Scissors, Paper, Stone'";
+    userLose += 1;
+  }
   return result;
 };
 
@@ -160,48 +151,73 @@ var formatChoice = function (choice) {
   return choiceFormatted;
 };
 
-var username = 0;
-
 // Main function
 var main = function (input) {
-  // set default result (assumes username is entered but input is not valid)
-  var myOutputValue =
-    "Sorry, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.";
+  // set default result (assumes username not entered)
+  var myOutputValue = "Enter your name first to play the game.";
 
-  // create variable for computer's choice
-  var opponentChoice = getComputerChoice();
-  // var opponentChoice = "stone";
-
-  // format the choices
-  var userChoiceFormatted = formatChoice(input);
-  var opponentChoiceFormatted = formatChoice(opponentChoice);
-
-  // determine result of game (if input is valid)
-  var isInputValid =
-    input == "scissors" || input == "paper" || input == "stone";
-
-  // take in user's name
+  // validate username / input
   if (input !== "" && username == 0) {
     username = input;
     console.log("****** NEW CHALLENGER ******");
     console.log("User: ", username);
+    console.log(" ");
     return `
     Hi there, ${username}! <br><br>
     Would you like to play a game? <br><br>
     Type 'scissors', 'paper' or 'stone' to begin!
     `;
-  } else {
-    myOutputValue = "Enter your name first to play the game.";
+  } else if (username !== 0) {
+    myOutputValue = `Sorry ${username}, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.`;
   }
 
-  // gameplay
-  var gameResult = determineResult(input, opponentChoice);
-  var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(1);
+  // gameplay -- game mode
+  var isGameModeNormal = gameMode == "normal";
+  console.log("Current gamemode: ", gameMode);
 
-  if (!isInputValid) {
+  if (gameMode == "normal" && (input == "reversed" || input == "reverse")) {
+    gameMode = "reversed";
+    console.log("New gamemode: ", gameMode);
+    console.log(" ");
+    return (myOutputValue = "Reversing the game!");
+  } else if (
+    gameMode == "reversed" &&
+    (input == "reversed" || input == "reverse")
+  ) {
+    gameMode = "normal";
+
+    console.log("New gamemode: ", gameMode);
+    console.log(" ");
+    return `Resetting the game!`;
+  }
+
+  // gameplay --------
+  var opponentChoice = getComputerChoice();
+  var gameResult;
+  var isInputValid =
+    input == "scissors" ||
+    input == "paper" ||
+    input == "stone" ||
+    input == "reversed" ||
+    input == "reverse";
+
+  // normal gameplay
+  if (isGameModeNormal) {
+    gameResult = determineResult(input, opponentChoice);
+  }
+  // reversed gameplay
+  else if (!isGameModeNormal) {
+    gameResult = determineResultReversed(input, opponentChoice);
+  }
+  // if input is not recognised
+  else if (!isInputValid) {
     myOutputValue = `Sorry ${username}, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.`;
     console.log("Input not recognised --> ", input);
   }
+
+  var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(1);
+  var userChoiceFormatted = formatChoice(input);
+  var opponentChoiceFormatted = formatChoice(opponentChoice);
 
   if (isInputValid && gameResult !== 0) {
     // motivational message
@@ -219,10 +235,13 @@ var main = function (input) {
     console.log(username, " chose [", input, "]");
     console.log("Game result: ", gameResult, "!!");
     console.log(" ");
-    console.log(" --- Current Score ---");
+    console.log("Score");
     console.log("Computer Wins: ", userLose);
     console.log("User Wins: ", userWin, "(Winning rate of ", winRate, "%)");
     console.log("Number of Draws: ", userDraw);
+    console.log(" ");
+    console.log(" ------");
+    console.log(" ");
 
     myOutputValue = `
     The computer chose ${opponentChoiceFormatted}<br>
