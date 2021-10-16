@@ -13,23 +13,26 @@ var main = function (input) {
   var myOutputValue =
     "The computer chose " +
     computerchoice +
-    " <br><br> You chose " +
+    " <br> You chose " +
     input +
     ".<br><br>" +
-    "You lose! Bummer.Now you can type 'scissors' 'paper' or 'stone' to play another round!";
+    "You lose! Bummer. <br><br>Now you can type 'scissors' 'paper' or 'stone' to play another round!";
 
   if (
     (input == "scissors" && computerchoice == "paper") ||
     (input == "paper" && computerchoice == "stone") ||
-    (input == "stone" && computerchoice == "scissors")
+    (input == "stone" && computerchoice == "scissors") ||
+    (input == "reversed scissors" && computerchoice == "stone") ||
+    (input == "reversed paper" && computerchoice == "scissors") ||
+    (input == "reversed stone" && computerchoice == "paper")
   ) {
     var myOutputValue =
       "The computer chose " +
       computerchoice +
-      "  <br><br> You chose " +
+      " <br> You chose " +
       input +
       ".<br><br>" +
-      "You Win! Now you can type 'scissors' 'paper' or 'stone' to play another round!";
+      "You Win! <br><br> Now you can type 'scissors' 'paper' or 'stone' to play another round!";
   }
 
   return myOutputValue;
