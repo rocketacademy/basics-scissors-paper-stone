@@ -6,8 +6,11 @@ var stone = "stone";
 console.log("variable stone");
 
 var reverseScissors = "reversed scissors";
+console.log("variable REVstone");
 var reversePaper = "reversed paper";
+console.log("variable REVstone");
 var reverseStone = "reversed stone";
+console.log("variable REVstone");
 
 // Creating functions to randomly output "scissors", "paper", or "stone"
 
@@ -26,8 +29,8 @@ var assignNumberToSPS = function (input) {
   );
   var numberToSPS = "some number was assigned but it wasnt 1 or 2 or 3";
 
+  //assign random number to scissors, paper or stone
   if (rolledNumber == 1) {
-    //assign random number to scissors, paper or stone
     numberToSPS = scissors;
   }
 
@@ -48,12 +51,12 @@ var assignNumberToSPS = function (input) {
 var main = function (input) {
   var programmeOutputsSPS = assignNumberToSPS();
   console.log("programe outputs " + programmeOutputsSPS);
-  //creating variable for messages below
+  //creating variable for messages
   var reversedGame =
-    "Oh and btw - CONGRATS! You found the secret but not actually much more thrilling 'reversed' game.";
-  //if user enters invalud input
+    "Oh and btw - CONGRATS! You found the secret but perhaps not much more thrilling 'reversed' game.";
+  //if user enters invalid input
   var myOutputValue =
-    "Did you enter 'scissors', 'paper' or 'stone' exactly? This game is case-sensitive and a spelling nazi! :p <br><br> Ok but here's a tip: you can also use add 'reversed' and a space to any of the above options, and see what happens to the game!";
+    "Did you enter 'scissors', 'paper' or 'stone' exactly? This game is case-sensitive and a spelling nazi! :p <br><br> Oh, and here's a tip: add 'reversed' and a space to any of the above options, and see what happens to the game!";
 
   // Create conditions
   //Win
@@ -95,7 +98,7 @@ var main = function (input) {
     (input == reverseScissors && programmeOutputsSPS == scissors)
   ) {
     myOutputValue =
-      "No win no lose - you drew! <br> You typed in " +
+      "No win no lose - you drew! <br><br> You typed in " +
       input +
       " and the computer also chose " +
       programmeOutputsSPS +
@@ -116,7 +119,7 @@ var main = function (input) {
       programmeOutputsSPS == paper)
   ) {
     myOutputValue =
-      "You lost to a computer, but eh, no biggie! <br> You typed in " +
+      "You lost to a computer, but eh, no biggie! <br><br> You typed in " +
       input +
       " and the computer chose " +
       programmeOutputsSPS +
