@@ -91,7 +91,7 @@ var reverseGameMode = false;
 var main = function (input) {
   if (roundCount == -1) {
     roundCount += 1;
-    playerName = input;
+    var playerName = input;
     return inputName(playerName);
   } else {
     // computer's choice
