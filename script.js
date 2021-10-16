@@ -93,5 +93,8 @@ var main = function (input) {
     numOfGame += 1;
   }
 
+  if (!input) {
+    return `Eh say something leh!`;
+  }
   return `Dear ${userName}<br>${myOutPutValue}<br> You have won ${numOfWins}/${numOfGame} games.`;
 };
