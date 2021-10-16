@@ -46,28 +46,28 @@ var checkUserInput = function (userInput) {
 
 var main = function (userInput) {
   var userInputFlag = checkUserInput(userInput);
-  console.log(userInput);
-  var aiSelection = getAiOutput();
-  console.log(aiSelection);
+  // console.log(userInput);
+  var aiInput = getAiOutput();
+  // console.log(aiInput);
 
   if (userInputFlag == 1) {
-    if (userInput == aiSelection) {
+    if (userInput == aiInput) {
       var myOutputValue = "Draw";
-    } else if (userInput == "scissors" && aiSelection == "paper") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "scissors" && aiSelection == "stone") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "paper" && aiSelection == "scissors") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "paper" && aiSelection == "stone") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "stone" && aiSelection == "scissors") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "stone" && aiSelection == "paper") {
-      myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "scissors" && aiInput == "paper") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "scissors" && aiInput == "stone") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "paper" && aiInput == "scissors") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "paper" && aiInput == "stone") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "stone" && aiInput == "scissors") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    } else if (userInput == "stone" && aiInput == "paper") {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
     }
   } else {
-    myOutputValue = `The computer choose ${aiSelection}. <br> You choose ${userInput}. <br> <br> It's a Draw! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
   }
   return myOutputValue;
 };
