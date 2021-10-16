@@ -5,6 +5,9 @@
 
 // scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
 
+// Win-Loss Record
+// Add state to your program such that it keeps track of the number of times the user has won and the number of times the computer has won. Output this win-loss record in a format you like in the program output. You can also output the number of draws and/or each party's winning percentage if you'd like.
+
 //Generate random number between 1 and 3
 var rollDice = function () {
   // produces a float between 0 and 3
@@ -13,6 +16,11 @@ var rollDice = function () {
   var resultInteger = Math.floor(randomFloat + 1);
   return resultInteger;
 };
+
+// win-loss record
+var userWon = 0;
+var computerWon = 0;
+var drawNumber = 0;
 
 var main = function (input) {
   // Generate random action
@@ -64,69 +72,69 @@ var main = function (input) {
   console.log("random action is " + randomAction);
   console.log("computer action is " + computerAction);
 
-  //player scissors beats computer paper
-  if (playerAction == scissors && randomAction == paper) {
+  // global var console log
+  console.log("user won is " + userWon);
+  console.log("computer won is " + computerWon);
+  console.log("draw number is " + drawNumber);
+
+  //player scissors beats computer paper or player paper beats computer stone or player stone beats computer scissors
+  if (
+    (playerAction == scissors && randomAction == paper) ||
+    (playerAction == paper && randomAction == stone) ||
+    (playerAction == stone && randomAction == scissors)
+  ) {
+    userWon = userWon + 1;
     myOutputValue =
       "Player wins with " +
       emoticonInput +
       "! <br><br>Computer lose with " +
       computerAction +
+      ". <br><br> " +
+      "Player win count is " +
+      userWon +
+      ". <br> Computer win count is " +
+      computerWon +
+      ". <br> Draw count is " +
+      drawNumber +
       ".";
   }
 
-  //computer scissors beats player paper
-  if (randomAction == scissors && playerAction == paper) {
+  //computer scissors beats player paper or computer paper beats player stone or computer stone beats player scissors
+  if (
+    (randomAction == scissors && playerAction == paper) ||
+    (randomAction == paper && playerAction == stone) ||
+    (randomAction == stone && playerAction == scissors)
+  ) {
+    computerWon = computerWon + 1;
     myOutputValue =
       "Player lose with " +
       emoticonInput +
       "! <br><br>Computer wins with " +
       computerAction +
-      ".";
-  }
-
-  // player paper beats computer stone
-  if (playerAction == paper && randomAction == stone) {
-    myOutputValue =
-      "Player wins with " +
-      emoticonInput +
-      "! <br><br>Computer lose with " +
-      computerAction +
-      ".";
-  }
-
-  // computer paper beats player stone
-  if (randomAction == paper && playerAction == stone) {
-    myOutputValue =
-      "Player lose with " +
-      emoticonInput +
-      "! <br><br>Computer wins with " +
-      computerAction +
-      ".";
-  }
-
-  // player stone beats computer scissors
-  if (playerAction == stone && randomAction == scissors) {
-    myOutputValue =
-      "Player wins with " +
-      emoticonInput +
-      "! <br><br>Computer lose with " +
-      computerAction +
-      ".";
-  }
-
-  // computer stone beats player scissors
-  if (randomAction == stone && playerAction == scissors) {
-    myOutputValue =
-      "Player lose with " +
-      emoticonInput +
-      "! <br><br>Computer wins with " +
-      computerAction +
+      ". <br><br> " +
+      "Player win count is " +
+      userWon +
+      ". <br> Computer win count is " +
+      computerWon +
+      ". <br> Draw count is " +
+      drawNumber +
       ".";
   }
 
   // player action = computer action, then draw
   if (playerAction == randomAction) {
-    myOutputValue = "Player and computer draw with " + emoticonInput + ".";
+    drawNumber = drawNumber + 1;
+    myOutputValue =
+      "Player and computer draw with " +
+      emoticonInput +
+      ". <br><br> " +
+      "Player win count is " +
+      userWon +
+      ". <br><br> Computer win count is " +
+      computerWon +
+      ". <br> Draw count is " +
+      drawNumber +
+      ".";
   }
   return myOutputValue;
 };
