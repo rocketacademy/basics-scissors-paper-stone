@@ -14,6 +14,7 @@ var comLastWon = 0;
 var userName = "no user name";
 var reversedModeHint = 0;
 var gameMode = "waiting for user name";
+var computerHelp = 0;
 
 var main = function (input) {
   var myOutputValue = "";
@@ -34,6 +35,16 @@ var main = function (input) {
   else if (gameMode == "waiting for game mode") {
     return `Please select a game mode before proceeding.<br>To begin, enter either 'Regular SPS' or 'Korean SPS'.`;
   }
+  // Activate Computer vs. Computer
+  else if (input == "Activate lazy mode" && computerHelp == 0) {
+    computerHelp = 1;
+    return `Computer will now help you choose.`;
+  }
+  // Deactivate Computer vs. Computer
+  else if (input == "Deactivate lazy mode" && computerHelp == 1) {
+    computerHelp = 0;
+    return "Computer will no longer help you choose.";
+  }
   // Regular SPS Game
   else if (
     gameMode == "SPS" &&
@@ -42,11 +53,17 @@ var main = function (input) {
       input == "paper" ||
       input == "reversed paper" ||
       input == "stone" ||
-      input == "reversed stone")
+      input == "reversed stone" ||
+      (computerHelp == 1 && input == ""))
   ) {
     input = input.toLowerCase();
     // Normal Game Mode
-    if (input == "scissors" || input == "paper" || input == "stone") {
+    if (
+      input == "scissors" ||
+      input == "paper" ||
+      input == "stone" ||
+      (computerHelp == 1 && input == "")
+    ) {
       myOutputValue = normalSPS(input);
     }
 
@@ -71,7 +88,10 @@ var main = function (input) {
   // Korean SPS Game
   else if (
     gameMode == "Korean SPS" &&
-    (input == "scissors" || input == "paper" || input == "stone")
+    (input == "scissors" ||
+      input == "paper" ||
+      input == "stone" ||
+      (computerHelp == 1 && input == ""))
   ) {
     myOutputValue = koreanSPS(input);
     if (totalRounds != 0) {
@@ -136,10 +156,14 @@ var removeReversed = function (reversed) {
 // Function: Normal Game Mode
 var normalSPS = function (playerGuess) {
   var opponentPick = choicePick(randomOpponentNum());
+  var message = "";
+  if (computerHelp == 1) {
+    playerGuess = choicePick(randomOpponentNum());
+  }
   reversedModeHint = reversedModeHint + 1;
   // Draw condition
   if (playerGuess == opponentPick) {
-    var score = `It's a draw! 👁👄👁`;
+    message = `It's a draw! 👁👄👁`;
     draws = draws + 1;
     winsInARow = 0;
     lossesInARow = 0;
@@ -148,13 +172,13 @@ var normalSPS = function (playerGuess) {
   //Scissors
   if (playerGuess == "scissors") {
     if (opponentPick == "paper") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
       winsInARow = winsInARow + 1;
       lossesInARow = 0;
     }
     if (opponentPick == "stone") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
       winsInARow = 0;
       lossesInARow = lossesInARow + 1;
@@ -164,13 +188,13 @@ var normalSPS = function (playerGuess) {
   //Paper
   if (playerGuess == "paper") {
     if (opponentPick == "stone") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
       winsInARow = winsInARow + 1;
       lossesInARow = 0;
     }
     if (opponentPick == "scissors") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
       winsInARow = 0;
       lossesInARow = lossesInARow + 1;
@@ -180,54 +204,55 @@ var normalSPS = function (playerGuess) {
   //Stone
   if (playerGuess == "stone") {
     if (opponentPick == "scissors") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
       winsInARow = winsInARow + 1;
       lossesInARow = 0;
     }
     if (opponentPick == "paper") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
       winsInARow = 0;
       lossesInARow = lossesInARow + 1;
     }
   }
 
-  myOutputValue = `${score}`;
+  var finalMessage = `${message}`;
 
   if (winsInARow > 2) {
-    myOutputValue += `Wow <b>${userName}</b>! You're on a winning streak! Keep it up!`;
+    finalMessage += `Wow <b>${userName}</b>! You're on a winning streak! Keep it up!`;
   } else if (lossesInARow > 2) {
-    myOutputValue += `Darn <b>${userName}</b>! You're on a losing streak! Don't give up!`;
+    finalMessage += `Darn <b>${userName}</b>! You're on a losing streak! Don't give up!`;
   }
 
-  myOutputValue += `<br>You picked ${inputEmoji(
+  finalMessage += `<br>You picked ${inputEmoji(
     playerGuess
   )}, while your opponent picked ${inputEmoji(opponentPick)}
     <br><br>Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.`;
 
   totalRounds = totalRounds + 1;
-  return myOutputValue;
+  return finalMessage;
 };
 
 // Function: Reversed SPS
 var reversedSPS = function (playerGuess) {
   reversedModeHint = 0;
   var opponentPick = choicePick(randomOpponentNum());
+  var message = "";
   // Draw condition
   if (removeReversed(playerGuess) == opponentPick) {
-    var score = `It's a draw! 👁👄👁`;
+    message = `It's a draw! 👁👄👁`;
     draws = draws + 1;
   }
 
   //Reversed Scissors
   if (playerGuess == "reversed scissors") {
     if (opponentPick == "stone") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
     }
     if (opponentPick == "paper") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
     }
   }
@@ -235,11 +260,11 @@ var reversedSPS = function (playerGuess) {
   //Reversed Paper
   if (playerGuess == "reversed paper") {
     if (opponentPick == "scissors") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
     }
     if (opponentPick == "stone") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
     }
   }
@@ -247,35 +272,38 @@ var reversedSPS = function (playerGuess) {
   //Reversed Stone
   if (playerGuess == "reversed stone") {
     if (opponentPick == "paper") {
-      var score = `You won! Nice one! 😎`;
+      message = `You won! Nice one! 😎`;
       wins = wins + 1;
     }
     if (opponentPick == "scissors") {
-      var score = `You lost! 💩`;
+      message = `You lost! 💩`;
       losses = losses + 1;
     }
   }
 
-  myOutputValue = `Secret <b>Reversed</b> Mode Unlocked! 😈<br><br>${score}`;
+  var finalMessage = `Secret <b>Reversed</b> Mode Unlocked! 😈<br><br>${message}`;
 
   if (winsInARow > 2) {
-    myOutputValue += `Wow <b>${userName}</b>! You're on a winning streak! Keep it up!`;
+    finalMessage += `Wow <b>${userName}</b>! You're on a winning streak! Keep it up!`;
   } else if (lossesInARow > 2) {
-    myOutputValue += `Darn <b>${userName}</b>! You're on a losing streak! Don't give up!`;
+    finalMessage += `Darn <b>${userName}</b>! You're on a losing streak! Don't give up!`;
   }
 
-  myOutputValue += `<br>You picked ${inputEmoji(
+  finalMessage += `<br>You picked ${inputEmoji(
     removeReversed(playerGuess)
   )}, while your opponent picked ${inputEmoji(
     opponentPick
   )}<br><br>Special <b>Reversed</b> Rules: scissors beat stone, stone beats paper, and paper beats scissors. If both parties choose the same object, it's a draw.`;
   totalRounds = totalRounds + 1;
-  return myOutputValue;
+  return finalMessage;
 };
 
 // Function: Korean SPS
 var koreanSPS = function (playerGuess) {
   var opponentPick = choicePick(randomOpponentNum());
+  if (computerHelp == 1) {
+    playerGuess = choicePick(randomOpponentNum());
+  }
   var message = "";
 
   // Initial Throw
@@ -380,13 +408,13 @@ var koreanSPS = function (playerGuess) {
       }
     }
   }
-  myOutputValue = `${message}`;
+  finalMessage = `${message}`;
 
-  myOutputValue += `<br>You picked ${inputEmoji(
+  finalMessage += `<br>You picked ${inputEmoji(
     playerGuess
   )}, while your opponent picked ${inputEmoji(opponentPick)}
     <br><br>Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.<br><b><i>Additional Korean Version Rules: You only win a round if you win a match and follow-up with a draw in the next match.</b></i>`;
-  return myOutputValue;
+  return finalMessage;
 };
 
 // Function: Display Scoreboard
@@ -396,9 +424,9 @@ var scoreBoard = function () {
   userWinPercentage = ((wins / totalRounds) * 100).toFixed(1);
   computerWinPercentage = ((losses / totalRounds) * 100).toFixed(1);
 
-  if (userWinPercentage >= computerWinPercentage && totalRounds > 5) {
+  if (userWinPercentage > computerWinPercentage && totalRounds > 10) {
     message += `<b><i>Well done ${userName}, you're doing awesome! Keep going! 💫</b></i><br>`;
-  } else if (computerWinPercentage >= userWinPercentage && totalRounds > 5) {
+  } else if (computerWinPercentage > userWinPercentage && totalRounds > 10) {
     message += `<b><i>Oh no ${userName}, you're getting beat! Switch up that strategy! 💭</b></i><br>`;
   }
 
