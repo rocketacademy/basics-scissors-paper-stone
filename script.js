@@ -1,68 +1,3 @@
-// definiing round outcomes count
-var roundCount = -1;
-var winCount = 0;
-var loseCount = 0;
-var drawCount = 0;
-
-var reverseGameMode = false;
-
-var main = function (input) {
-  if (roundCount == -1) {
-    roundCount += 1;
-    playerName = input;
-    return inputName(playerName);
-  } else {
-    // computer's choice
-    var computer = computerChoice();
-    var computerIcon = getIcon(computer);
-    var playerIcon = getIcon(input);
-
-    // start of game
-    roundCount += 1;
-
-    if (input == "reverse") {
-      reverseGameMode = true;
-      return "Start of reverse game mode";
-    }
-
-    if (input == "normal") {
-      reverseGameMode = false;
-      return "Start of normal game mode";
-    }
-
-    if (reverseGameMode) {
-      var outcome = playReversedGame(input, computer);
-    } else {
-      outcome = playNormalGame(input, computer);
-    }
-
-    if (outcome == "win") {
-      winCount += 1;
-      var myOutputValue = `Hello ${playerName}! <br> <br>  The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You win! Congrats. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
-    }
-    if (outcome == "lose") {
-      loseCount += 1;
-      myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You lose! Bummer. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (outcome == "draw") {
-      drawCount += 1;
-      myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> It is a draw! <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
-    }
-    if (outcome == "error") {
-      roundCount -= 1; // ignore round if input is not valid
-      myOutputValue = `Hello ${playerName}! <br> <br> "${input}" is not a valid choice. <br> <br> Please choose only "scissors" "paper" or "stone" to play the game.`;
-    }
-
-    var yourWinRate = ((winCount / roundCount) * 100).toFixed(2);
-    var computerWinRate = ((loseCount / roundCount) * 100).toFixed(2);
-    var winLossRecord = `<br> <br> Round Count: ${roundCount} <br> Win Count: ${winCount} <br> Lose Count: ${loseCount} <br> Draw Count: ${drawCount} <br> <br> Your Win Rate: ${yourWinRate}% <br> Computer's Win Rate: ${computerWinRate}%`;
-  }
-
-  myOutputValue += winLossRecord;
-
-  return myOutputValue;
-};
-
 // computer random chooses scissors, paper, or stone
 var computerChoice = function () {
   const game = ["scissors", "paper", "stone"];
@@ -142,4 +77,77 @@ var playReversedGame = function (playerHand, computerHand) {
   } else {
     return "error";
   }
+};
+
+// definiing round outcomes count
+var roundCount = -1;
+var winCount = 0;
+var loseCount = 0;
+var drawCount = 0;
+var prevWinner = 0;
+
+var reverseGameMode = false;
+
+var main = function (input) {
+  if (roundCount == -1) {
+    roundCount += 1;
+    playerName = input;
+    return inputName(playerName);
+  } else {
+    // computer's choice
+    var computer = computerChoice();
+    var computerIcon = getIcon(computer);
+    var playerIcon = getIcon(input);
+
+    // start of game
+    roundCount += 1;
+
+    if (input == "reverse") {
+      reverseGameMode = true;
+      return "Start of reverse game mode";
+    }
+
+    if (input == "normal") {
+      reverseGameMode = false;
+      return "Start of normal game mode";
+    }
+
+    if (reverseGameMode) {
+      var outcome = playReversedGame(input, computer);
+    } else {
+      outcome = playNormalGame(input, computer);
+    }
+
+    if (outcome == "win") {
+      winCount += 1;
+      prevWinner = "you";
+      var myOutputValue = `Hello ${playerName}! <br> <br>  The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You win! Congrats. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
+    }
+    if (outcome == "lose") {
+      loseCount += 1;
+      prevWinner = "computer";
+      myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You lose! Bummer. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+    }
+    if (outcome == "draw") {
+      if (prevWinner == "you") {
+        winCount += 1;
+      }
+      if (prevWinner == "computer") {
+        loseCount += 1;
+      }
+      myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> It is a draw! <br> Since the previous winner is ${prevWinner}, ${prevWinner} win! <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+    }
+    if (outcome == "error") {
+      roundCount -= 1; // ignore round if input is not valid
+      myOutputValue = `Hello ${playerName}! <br> <br> "${input}" is not a valid choice. <br> <br> Please choose only "scissors" "paper" or "stone" to play the game.`;
+    }
+
+    var yourWinRate = ((winCount / roundCount) * 100).toFixed(2);
+    var computerWinRate = ((loseCount / roundCount) * 100).toFixed(2);
+    var winLossRecord = `<br> <br> Round Count: ${roundCount} <br> Win Count: ${winCount} <br> Lose Count: ${loseCount} <br> <br> Your Win Rate: ${yourWinRate}% <br> Computer's Win Rate: ${computerWinRate}%`;
+  }
+
+  myOutputValue += winLossRecord;
+
+  return myOutputValue;
 };
