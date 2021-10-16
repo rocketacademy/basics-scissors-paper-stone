@@ -7,6 +7,7 @@
 // check input vs comPlay
 // winCondition: scissors > paper || paper > stone || stone > scissors 
 // drawCondition: input == computerRandom
+// updated for formatting 
 
 
 var main = function (input) {
@@ -22,40 +23,40 @@ input != "stone") {
   return myOutputValue;
 }  
   var comPlay = randomNumber()
-console.log (comPlay)
+console.log (comPlay);
 
 // scissors = 0
 // paper = 1
 // stone = 2 
 
-if(comPlay == 0){
+if(comPlay == 0) {
   input1 = "scissors"
 }
 
-if(comPlay == 1){
+if(comPlay == 1) {
   input1 = "paper"
 }
 
-if(comPlay == 2){
+if(comPlay == 2) {
   input1 = "stone"
 }
 
 // check user vs. computer outomce
 if (input == "scissors" && comPlay == 1||
 input == "paper" && comPlay == 2 ||
-input == "stone" && comPlay == 0){
+input == "stone" && comPlay == 0) {
 var outcome = "you win"
 }
 
 if (input == "scissors" && comPlay == 2||
 input == "paper" && comPlay == 0 ||
-input == "stone" && comPlay == 1){
+input == "stone" && comPlay == 1) {
 outcome = "you lose"
 }
 
 if (input == "scissors" && comPlay == 0||
 input == "paper" && comPlay == 1 ||
-input == "stone" && comPlay == 2){
+input == "stone" && comPlay == 2) {
 outcome = "you draw"
 }
 
@@ -64,8 +65,8 @@ return myOutputValue;
 };
 
 //generate random number for comPlay
-var randomNumber = function(){
+var randomNumber = function() {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
-  return randomInteger
+  return randomInteger;
 }
