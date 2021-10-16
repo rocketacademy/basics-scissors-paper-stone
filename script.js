@@ -28,7 +28,7 @@ var isComputerModeSet = false;
 
 var getComputerSps = function () {
   // generate a value between 0 and 2.9999...
-  var randomDecimal = Math.random() * 4;
+  var randomDecimal = Math.random() * 5;
 
   // take off the decimal
   var randomInteger = Math.floor(randomDecimal);
