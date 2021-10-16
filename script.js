@@ -4,39 +4,40 @@
 // Rules: scissors beats paper, paper beats stone, and stone beats scissors.
 // If both parties choose the same object, it's a draw.
 
+// reverse scissors paper stone game
 var main = function (input) {
   var computer = generateScissorsPaperStone();
   console.log("Computer is choosing");
   console.log(computer);
 
   var myOutputValue =
-    "You can only input 'scissors', 'paper' or 'stone'. Please try again!";
+    "You can only input 'reversed scissors', 'reversed paper' or 'reversed stone'. Please try again!";
 
   if (
-    (input == "scissors" && computer == "scissors") ||
-    (input == "paper" && computer == "paper") ||
-    (input == "stone" && computer == "stone")
+    (input == "reversed scissors" && computer == "scissors") ||
+    (input == "reversed paper" && computer == "paper") ||
+    (input == "reversed stone" && computer == "stone")
   ) {
     console.log("draw!");
     myOutputValue = "It's a draw!";
   }
 
   if (
-    (input == "scissors" && computer == "paper") ||
-    (input == "paper" && computer == "stone") ||
-    (input == "stone" && computer == "scissors")
+    (input == "reversed scissors" && computer == "paper") ||
+    (input == "reversed paper" && computer == "stone") ||
+    (input == "reversed stone" && computer == "scissors")
   ) {
     console.log("Winning actions");
-    myOutputValue = "You win! Computer lost!";
+    myOutputValue = "You lost! Computer won!";
   }
 
   if (
-    (input == "scissors" && computer == "stone") ||
-    (input == "paper" && computer == "scissors") ||
-    (input == "stone" && computer == "paper")
+    (input == "reversed scissors" && computer == "stone") ||
+    (input == "reversed paper" && computer == "scissors") ||
+    (input == "reversed stone" && computer == "paper")
   ) {
-    console.log("Losing actions");
-    myOutputValue = "You lost! Computer won!";
+    console.log("Winning actions");
+    myOutputValue = "You win! Computer lost!";
   }
 
   return myOutputValue;
