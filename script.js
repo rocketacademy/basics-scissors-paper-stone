@@ -3,6 +3,10 @@
 // How will the computer's option be randomly generated? Using math.random to generate a number between 0-2
 // How many different cases are there? 3 (win, lose, draw)
 
+var userWins = 0;
+var compWins = 0;
+var draws = 0;
+
 var main = function (input) {
   // Generate a random dice number
   var randomDiceNumber = rollDice();
@@ -36,7 +40,8 @@ var main = function (input) {
     input != "reversed scissors"
   ) {
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " which is invalid, please only play stone, paper or scissors.<br> You can also try playing reversed stone or reversed paper or reversed scissors.";
     // Return output.
@@ -50,12 +55,27 @@ var main = function (input) {
     (input == "stone" && computerTurn == "scissors") ||
     (input == "reversed stone" && computerTurn == "paper")
   ) {
+    userWins = userWins + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      ", you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you win";
+      " so you win. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -66,12 +86,27 @@ var main = function (input) {
     (input == "stone" || input == "reversed stone") &&
     computerTurn == "stone"
   ) {
+    draws = draws + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you drew";
+      " so you drew. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -82,12 +117,27 @@ var main = function (input) {
     (input == "stone" && computerTurn == "paper") ||
     (input == "reversed stone" && computerTurn == "scissors")
   ) {
+    compWins = compWins + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you lose";
+      " so you lose. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -99,12 +149,27 @@ var main = function (input) {
     (input == "paper" && computerTurn == "scissors") ||
     (input == "reversed paper" && computerTurn == "stone")
   ) {
+    compWins = compWins + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you lose";
+      " so you lose. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -115,12 +180,27 @@ var main = function (input) {
     (input == "paper" && computerTurn == "stone") ||
     (input == "reversed paper" && computerTurn == "scissors")
   ) {
+    userWins = userWins + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      ", you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you win";
+      " so you win. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -132,11 +212,25 @@ var main = function (input) {
     computerTurn == "paper"
   ) {
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you drew";
+      " so you drew. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -149,27 +243,25 @@ var main = function (input) {
     computerTurn == "scissors"
   ) {
     myOutputValue =
-      "You played " +
+      yourname +
+      " you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you drew";
-    // Return output.
-    console.log("you played ", input, " and computer played ", computerTurn);
-    return myOutputValue;
-  }
-
-  // Scissors vs stone (lose) or reversed scissors vs paper (lose)
-  if (
-    (input == "scissors" && computerTurn == "stone") ||
-    (input == "reversed scissors" && computerTurn == "paper")
-  ) {
-    myOutputValue =
-      "You played " +
-      input +
-      " and the computer played " +
-      computerTurn +
-      " so you lose";
+      " so you drew. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
@@ -180,12 +272,27 @@ var main = function (input) {
     (input == "scissors" && computerTurn == "paper") ||
     (input == "reversed scissors" && computerTurn == "stone")
   ) {
+    userWins = userWins + 1;
     myOutputValue =
-      "You played " +
+      yourname +
+      ", you played " +
       input +
       " and the computer played " +
       computerTurn +
-      " so you win";
+      " so you win. <br>" +
+      yourname +
+      " Wins:" +
+      userWins +
+      "(" +
+      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")" +
+      "<br> Computer Wins: " +
+      compWins +
+      "(" +
+      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
+      "%" +
+      ")";
     // Return output.
     console.log("you played ", input, " and computer played ", computerTurn);
     return myOutputValue;
