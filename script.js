@@ -31,7 +31,11 @@ var checkIfUserWon = function (userSPS, randomSPS) {
   if (
     (userSPS == "scissors" && randomSPS == "paper") ||
     (userSPS == "paper" && randomSPS == "stone") ||
-    (userSPS == "stone" && randomSPS == "scissors")
+    (userSPS == "stone" && randomSPS == "scissors") ||
+    //include reverse game
+    (userSPS == "reversed scissors" && randomSPS == "stone") ||
+    (userSPS == "reversed paper" && randomSPS == "scissors") ||
+    (userSPS == "reversed stone" && randomSPS == "paper")
   ) {
     return true;
   }
@@ -41,7 +45,14 @@ var checkIfUserWon = function (userSPS, randomSPS) {
 var main = function (input) {
   var userSPS = input;
   //input validation
-  if (userSPS != "scissors" && userSPS != "paper" && userSPS != "stone") {
+  if (
+    userSPS != "scissors" &&
+    userSPS != "paper" &&
+    userSPS != "stone" &&
+    userSPS != "reversed scissors" &&
+    userSPS != "reversed paper" &&
+    userSPS != "reversed stone"
+  ) {
     return `Please input "scissors", "paper" or "stone" only to play the game!`;
   }
 
@@ -52,7 +63,12 @@ var main = function (input) {
     return `${genericOutput} You win! <br><br> ${gameInstruction}`;
   }
   //check if it is a draw
-  if (userSPS == randomSPS) {
+  if (
+    userSPS == randomSPS ||
+    (userSPS == "reversed scissors" && randomSPS == "scissors") ||
+    (userSPS == "revsersed paper" && randomSPS == "paper") ||
+    (userSPS == "reversed stone" && randomSPS == "stone")
+  ) {
     return `${genericOutput} It's a draw! <br><br> ${gameInstruction}`;
   }
   return `${genericOutput} You lose! <br><br> ${gameInstruction}`;
