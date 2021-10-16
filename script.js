@@ -16,6 +16,10 @@ var rollScissorPaperStone = function () {
 };
 
 const signs = [`scissors`, `paper`, `stone`];
+var gamesCount = 0;
+var userWonCount = 0;
+var CompWonCount = 0;
+var drawCount = 0;
 
 var main = function (input) {
   var randomSign = rollScissorPaperStone();
@@ -25,7 +29,9 @@ var main = function (input) {
 
   // Outcome 1: Player and Computer draw
   if (input == randomSign) {
-    myOutputValue = `You chose ${input}. <br> The computer chose ${randomSign}. <br> It is a draw. <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+    gamesCount += 1;
+    drawCount += 1;
+    myOutputValue = `You chose ${input}. <br> The computer chose ${randomSign}. <br> You drawed ${drawCount} times. <br> Type "scissors" "paper" or "stone" to play another round!`;
   }
 
   // Outcome 2: Player lost, Computer wins
@@ -34,7 +40,9 @@ var main = function (input) {
     (input == signs[1] && randomSign == signs[0]) ||
     (input == signs[2] && randomSign == signs[1])
   ) {
-    myOutputValue = `You chose ${input}. <br> Computer chose ${randomSign}. <br> Too bad. <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+    gamesCount += 1;
+    CompWonCount += 1;
+    myOutputValue = `You chose ${input}. <br> Computer chose ${randomSign}. <br> You lost ${CompWonCount} out of ${gamesCount} games, and drawed ${drawCount} times. Keep trying! <br> Type "scissors" "paper" or "stone" to play another round!`;
   }
 
   // Outcome 3: Player wins, Computer lost
@@ -43,7 +51,9 @@ var main = function (input) {
     (input == signs[1] && randomSign == signs[2]) ||
     (input == signs[2] && randomSign == signs[0])
   ) {
-    myOutputValue = `You chose ${input}. Computer chose ${randomSign}. <br> You won. <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
+    gamesCount += 1;
+    userWonCount += 1;
+    myOutputValue = `You chose ${input}. Computer chose ${randomSign}. <br> You won ${userWonCount} out of ${gamesCount} games, and drawed ${drawCount} times. Feeling lucky? <br> Type "scissors" "paper" or "stone" to play another round!`;
   }
   return myOutputValue;
 };
