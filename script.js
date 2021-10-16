@@ -52,7 +52,7 @@ var main = function (userInput) {
 
   if (userInputFlag == 1) {
     if (userInput == aiInput) {
-      var myOutputValue = "Draw";
+      var myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
     } else if (userInput == "scissors" && aiInput == "paper") {
       myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
     } else if (userInput == "scissors" && aiInput == "stone") {
@@ -67,7 +67,7 @@ var main = function (userInput) {
       myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
     }
   } else {
-    myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    myOutputValue = `Wrong selection. Please select "scissors", "paper" or "stone".`;
   }
   return myOutputValue;
 };
