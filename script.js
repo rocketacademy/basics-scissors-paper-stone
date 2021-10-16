@@ -38,9 +38,17 @@ var main = function (input) {
   return myOutputValue;
 };
 
+var randomNumber = function () {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var randNumber = randomInteger;
+  console.log(randNumber);
+  return randNumber;
+};
+
 var computerChoice = function () {
   var number = randomNumber();
-  choice = scissors;
+  var choice = scissors;
 
   if (randomNumber == 0) {
     choice = stone;
@@ -50,12 +58,4 @@ var computerChoice = function () {
     choice = paper;
   }
   return choice;
-};
-
-var randomNumber = function () {
-  var randomDecimal = Math.random() * 3;
-  var randomInteger = Math.floor(randomDecimal);
-  var randNumber = randomInteger;
-  console.log(randNumber);
-  return randNumber;
 };
