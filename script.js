@@ -56,7 +56,6 @@ var main = function (input) {
       input == "reversed stone" ||
       (computerHelp == 1 && input == ""))
   ) {
-    input = input.toLowerCase();
     // Normal Game Mode
     if (
       input == "scissors" ||
@@ -113,6 +112,7 @@ var randomOpponentNum = function () {
 
 // Function: Returns pick from number input (scissors, paper or stone)
 var choicePick = function (num) {
+  var choice = "";
   if (num == 0) {
     choice = "scissors";
   }
@@ -128,27 +128,28 @@ var choicePick = function (num) {
 // Function: Add emoji
 var inputEmoji = function (input) {
   if (input == "scissors") {
-    input = "scissors ✌🏼";
+    inputNew = "scissors ✌🏼";
   }
   if (input == "paper") {
-    input = "paper 🖐🏼";
+    inputNew = "paper 🖐🏼";
   }
   if (input == "stone") {
-    input = "stone ✊🏼";
+    inputNew = "stone ✊🏼";
   }
-  return input;
+  return inputNew;
 };
 
 // Function: Remove word 'reversed'
 var removeReversed = function (reversed) {
+  var withoutReversed = "";
   if (reversed == "reversed scissors") {
-    var withoutReversed = "scissors";
+    withoutReversed = "scissors";
   }
   if (reversed == "reversed paper") {
-    var withoutReversed = "paper";
+    withoutReversed = "paper";
   }
   if (reversed == "reversed stone") {
-    var withoutReversed = "stone";
+    withoutReversed = "stone";
   }
   return withoutReversed;
 };
@@ -408,7 +409,7 @@ var koreanSPS = function (playerGuess) {
       }
     }
   }
-  finalMessage = `${message}`;
+  var finalMessage = `${message}`;
 
   finalMessage += `<br>You picked ${inputEmoji(
     playerGuess
@@ -419,7 +420,7 @@ var koreanSPS = function (playerGuess) {
 
 // Function: Display Scoreboard
 var scoreBoard = function () {
-  message = `<br><br>`;
+  var message = `<br><br>`;
   // Outputs user wins, computer wins, draws, user win percentage and computer win percentage
   userWinPercentage = ((wins / totalRounds) * 100).toFixed(1);
   computerWinPercentage = ((losses / totalRounds) * 100).toFixed(1);
