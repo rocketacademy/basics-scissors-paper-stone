@@ -17,27 +17,27 @@ var randomOutput = function () {
   return randomNumber;
 };
 
-//if the computer generates 0, his guess is scissors
-var randomAttack = randomOutput();
-if (randomAttack == 0) {
-  var finalAttack = "scissors";
-  console.log(finalAttack);
-}
-
-//if the computer generates 1, his guess is stone
-if (randomAttack == 1) {
-  var finalAttack = "stone";
-  console.log(finalAttack);
-}
-
-//if the computer generates 2, his guess is paper
-if (randomAttack == 2) {
-  var finalAttack = "paper";
-  console.log(finalAttack);
-}
-
 var main = function (input) {
   // if the user types in an invalid input
+  //if the computer generates 0, his guess is scissors
+  var randomAttack = randomOutput();
+  if (randomAttack == 0) {
+    var finalAttack = "scissors";
+    console.log(finalAttack);
+  }
+
+  //if the computer generates 1, his guess is stone
+  if (randomAttack == 1) {
+    var finalAttack = "stone";
+    console.log(finalAttack);
+  }
+
+  //if the computer generates 2, his guess is paper
+  if (randomAttack == 2) {
+    var finalAttack = "paper";
+    console.log(finalAttack);
+  }
+
   var myOutputValue = "Please type in either scissors, paper or stone";
 
   if (input == "scissors" && finalAttack == "scissors") {
