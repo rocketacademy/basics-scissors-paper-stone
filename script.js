@@ -1,8 +1,10 @@
 // definiing round outcomes count
-roundCount = -1;
-winCount = 0;
-loseCount = 0;
-drawCount = 0;
+var roundCount = -1;
+var winCount = 0;
+var loseCount = 0;
+var drawCount = 0;
+
+var reverseGameMode = false;
 
 var main = function (input) {
   if (roundCount == -1) {
@@ -15,73 +17,39 @@ var main = function (input) {
     var computerIcon = getIcon(computer);
     var playerIcon = getIcon(input);
 
+    // start of game
     roundCount += 1;
-    // player wins if
-    // player chooses scissors, computer chooses paper
-    // player chooses paper, computer chooses stone
-    // player chooses stone, computer chooses scissors
-    // player chooses reversed scissors, computer chooses stone
-    // player chooses reversed paper, computer chooses scissors
-    // player chooses reversed stone, computer chooses paper
 
-    if (
-      (input == "scissors" && computer == "paper") ||
-      (input == "paper" && computer == "stone") ||
-      (input == "stone" && computer == "scissors") ||
-      (input == "reversed stone" && computer == "stone") ||
-      (input == "reversed paper" && computer == "scissors") ||
-      (input == "reversed stone" && computer == "paper")
-    ) {
+    if (input == "reverse") {
+      reverseGameMode = true;
+      return "Start of reverse game mode";
+    }
+
+    if (input == "normal") {
+      reverseGameMode = false;
+      return "Start of normal game mode";
+    }
+
+    if (reverseGameMode) {
+      var outcome = playReversedGame(input, computer);
+    } else {
+      outcome = playNormalGame(input, computer);
+    }
+
+    if (outcome == "win") {
       winCount += 1;
       var myOutputValue = `Hello ${playerName}! <br> <br>  The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You win! Congrats. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round! `;
     }
-
-    // player loses if
-    // player chooses scissors, computer chooses stone
-    // player chooses paper, computer chooses scissors
-    // player chooses stone, computer chooses paper
-    // player chooses reversed scissors, computer chooses paper
-    // player chooses reversed paper, computer chooses stone
-    // player chooses reversed stone, computer chooses scissors
-
-    if (
-      (input == "scissors" && computer == "stone") ||
-      (input == "paper" && computer == "scissors") ||
-      (input == "stone" && computer == "paper") ||
-      (input == "reversed scissors" && computer == "paper") ||
-      (input == "reversed paper" && computer == "stone") ||
-      (input == "reversed stone" && computer == "scissors")
-    ) {
+    if (outcome == "lose") {
       loseCount += 1;
       myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> You lose! Bummer. <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
     }
-
-    // game draws if both player and computer chooses the same
-
-    if (
-      (input == "scissors" && computer == "scissors") ||
-      (input == "paper" && computer == "paper") ||
-      (input == "stone" && computer == "stone") ||
-      (input == "reversed scissors" && computer == "scissors") ||
-      (input == "reversed paper" && computer == "paper") ||
-      (input == "reversed stone" && computer == "stone")
-    ) {
+    if (outcome == "draw") {
       drawCount += 1;
       myOutputValue = `Hello ${playerName}! <br> <br> The computer chose ${computer} ${computerIcon}. <br> You chose ${input} ${playerIcon}. <br> <br> It is a draw! <br> <br> Now you can type "scissors" "paper" or "stone" to play another round!`;
     }
-
-    // input validation
-    // prompt if input is not scissors, paper or stone
-
-    if (
-      input != "scissors" &&
-      input != "paper" &&
-      input != "stone" &&
-      input != "reversed scissors" &&
-      input != "reversed paper" &&
-      input != "reversed stone"
-    ) {
-      roundCount -= 1; // ignore roundCount if input is not valid
+    if (outcome == "error") {
+      roundCount -= 1; // ignore round if input is not valid
       myOutputValue = `Hello ${playerName}! <br> <br> "${input}" is not a valid choice. <br> <br> Please choose only "scissors" "paper" or "stone" to play the game.`;
     }
 
@@ -95,7 +63,7 @@ var main = function (input) {
   return myOutputValue;
 };
 
-// function: computer random chooses scissors, paper, or stone
+// computer random chooses scissors, paper, or stone
 var computerChoice = function () {
   const game = ["scissors", "paper", "stone"];
 
@@ -119,5 +87,59 @@ var getIcon = function (hand) {
   }
   if (hand == "stone" || hand == "reversed stone") {
     return "🪨";
+  }
+};
+
+// normal game mode
+var playNormalGame = function (playerHand, computerHand) {
+  if (
+    (playerHand == "scissors" && computerHand == "paper") ||
+    (playerHand == "paper" && computerHand == "stone") ||
+    (playerHand == "stone" && computerHand == "scissors")
+  ) {
+    return "win";
+  }
+  if (
+    (playerHand == "scissors" && computerHand == "stone") ||
+    (playerHand == "paper" && computerHand == "scissors") ||
+    (playerHand == "stone" && computerHand == "paper")
+  ) {
+    return "lose";
+  }
+  if (
+    (playerHand == "scissors" && computerHand == "scissors") ||
+    (playerHand == "paper" && computerHand == "paper") ||
+    (playerHand == "stone" && computerHand == "stone")
+  ) {
+    return "draw";
+  } else {
+    return "error";
+  }
+};
+
+// reversed game mode
+var playReversedGame = function (playerHand, computerHand) {
+  if (
+    (playerHand == "scissors" && computerHand == "stone") ||
+    (playerHand == "paper" && computerHand == "scissors") ||
+    (playerHand == "stone" && computerHand == "paper")
+  ) {
+    return "win";
+  }
+  if (
+    (playerHand == "scissors" && computerHand == "paper") ||
+    (playerHand == "paper" && computerHand == "stone") ||
+    (playerHand == "stone" && computerHand == "scissors")
+  ) {
+    return "lose";
+  }
+  if (
+    (playerHand == "scissors" && computerHand == "scissors") ||
+    (playerHand == "paper" && computerHand == "paper") ||
+    (playerHand == "stone" && computerHand == "stone")
+  ) {
+    return "draw";
+  } else {
+    return "error";
   }
 };
