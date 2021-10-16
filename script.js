@@ -34,7 +34,7 @@ var main = function (input) {
   console.log(computer);
   console.log("User Choice");
   console.log(input);
-  var myOutputValue = `You have played ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type scissors, paper or stone to start a new game `;
+  var myOutputValue = `You have chosen ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type scissors, paper or stone to start a new game `;
 
   //check for invalid inputs
   if (
