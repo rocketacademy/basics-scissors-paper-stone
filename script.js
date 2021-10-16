@@ -47,22 +47,17 @@ var userName = "";
 var numOfWins = 0;
 var numOfGame = 0;
 var genRandHand = function () {
-  var randomInt = Math.floor(Math.random() * 4);
-  //var scissors = 1
-  //var paper = 2
-  //var stone = 3
+  var randomInt = Math.floor(Math.random() * 3);
+  //var scissors = 0
+  //var paper = 1
+  //var stone = anything else
+  if (randomInt == 0) {
+    return "scissors";
+  }
   if (randomInt == 1) {
-    var outPutHand = "scissors";
-    return outPutHand;
+    return "paper";
   }
-  if (randomInt == 2) {
-    var outPutHand = "paper";
-    return outPutHand;
-  }
-  if (randomInt == 3) {
-    var outPutHand = "stone";
-    return outPutHand;
-  }
+  return "stone";
 };
 
 var main = function (input) {
