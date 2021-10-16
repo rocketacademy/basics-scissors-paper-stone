@@ -51,6 +51,5 @@ var main = function (input) {
   if (input == stone && randomRoshambo == paper) {
     myOutputValue = `${genericOutput} <br><br>You lose! <br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
   }
-
   return myOutputValue;
 };
