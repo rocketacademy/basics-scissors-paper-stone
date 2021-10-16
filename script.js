@@ -17,7 +17,7 @@ var randomScissorPaperStone = function () {
     return "paper";
   }
 
-  if (Num == 13) {
+  if (Num == 3) {
     return "stone";
   }
 };
