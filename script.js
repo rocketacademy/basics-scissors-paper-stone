@@ -1,3 +1,11 @@
+var generateRandomInteger = function () {
+  var randomDec = Math.random() * 3;
+  var randomNum = Math.ceil(randomDec);
+
+  console.log(randomNum);
+  return randomNum;
+};
+
 var randomScissorPaperStone = function () {
   var Num = generateRandomInteger();
 
@@ -14,42 +22,38 @@ var randomScissorPaperStone = function () {
   }
 };
 
-var generateRandomInteger = function () {
-  var randomDec = Math.random() * 3;
-  var randomNum = Math.ceil(randomDec);
-
-  console.log(randomNum);
-  return randomNum;
-};
-
 var generateResult = function (userPlays, computerPlays) {
+  var result = "Please enter scissors, paper or stone";
+
   if (userPlays == computerPlays) {
-    return "It's a tie!";
+    result = "It's a tie!";
   }
 
   if (userPlays == "scissor" && computerPlays == "paper") {
-    return "You win!";
+    result = "You win!";
   }
 
   if (userPlays == "scissors" && computerPlays == "stone") {
-    return "You lose!";
+    result = "You lose!";
   }
 
   if (userPlays == "paper" && computerPlays == "stone") {
-    return "You win!";
+    result = "You win!";
   }
 
   if (userPlays == "paper" && computerPlays == "scissors") {
-    return "You lose!";
+    result = "You lose!";
   }
 
   if (userPlays == "stone" && computerPlays == "scissors") {
-    return "You win!";
+    result = "You win!";
   }
 
   if (userPlays == "stone" && computerPlays == "paper") {
-    return "You lose!";
+    result = "You lose!";
   }
+
+  return result;
 };
 
 var main = function (input) {
@@ -63,10 +67,6 @@ var main = function (input) {
     input +
     ".<br>" +
     result;
-
-  if (result == undefined) {
-    var myOutputValue = "Please enter scissors, paper or stone";
-  }
 
   return myOutputValue;
 };
