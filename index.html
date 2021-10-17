@@ -42,22 +42,24 @@
       #output-div {
         background-color: lightgrey;
         margin: 20px auto;
-        padding: 20px;
+        padding: 30px;
         width: 100%;
       }
     </style>
   </head>
 
   <body>
-    <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
+    <h1 id="header">Basics: Scissors Paper Stone</h1>
+
     <div id="container">
-      <p>Input:</p>
+      <div id="name"><p>Enter your name:</p></div>
       <input id="input-field" />
       <br />
       <button id="submit-button">Submit</button>
       <p>Output:</p>
       <div id="output-div"></div>
     </div>
+
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
@@ -66,6 +68,8 @@
       button.addEventListener("click", function () {
         // Set result to input value
         var input = document.querySelector("#input-field");
+        document.getElementById("name").innerHTML =
+          "Enter scissors, paper or stone";
         var result = main(input.value);
 
         // Display result in output element
