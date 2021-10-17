@@ -56,7 +56,8 @@ var main = function (input) {
 
   // 3rd input validation to verify input in either SPS or Reverse SPS game
   if (gameMode == 1 || gameMode == SPS) {
-    var playerSelection = '';    
+    var playerSelection = '';
+    gameMode = SPS;    
     
     if (!input || (input != scissors && input != paper && input != stone)) {
       return `Hello ${playerName}, it is an invalid entry, please enter "scissors", 
@@ -70,7 +71,8 @@ var main = function (input) {
   }  
   
   else if (gameMode == 2 || gameMode == reverseSPS) {
-    var playerSelection = '';    
+    var playerSelection = '';
+    gameMode = reverseSPS;    
     
     if (!input || (input != reversed_scissors && input != reversed_paper 
       && input != reversed_stone)) {
@@ -87,7 +89,7 @@ var main = function (input) {
 
 // Play SPS function
 var playSPSGame = function (playerInput) {
-  var computerInput = numberToSPS ();  
+  var computerInput = numberToSPS ();    
 
   if (determineWinCondition (playerInput, computerInput)) {
     totalPlayCount += 1;
@@ -134,7 +136,7 @@ var standardMessage3 = function () {
     return `<br><br>Please enter "reversed scissors", "reverse paper" or "reverse stone"
     to continue playing. Else refresh the browser to start over again.`
   }
-  return `<br><br>Please enter "reversed scissors", "reverse paper" or "reverse stone"
+  return `<br><br>Please enter "scissors", "paper" or "stone"
   to continue playing. Else refresh the browser to start over again.`
 }
 
