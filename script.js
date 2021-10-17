@@ -11,8 +11,12 @@ let Reversed_Rock = 'reversed rock';
 let Reversed_Paper = 'reversed paper';
 let Reversed_Scissor = 'reversed scissors';
 
-let Replay_Message = `Now you can type "scissors" "paper" or "stone" to play another round!`
+let Replay_Message = `Now you can type "scissors" "paper" or "stone" to play another round!  <br><br> Total Games played is `
 let currentGameMode = 'waiting for user name';
+let countGamesPlayed = 0;
+let countComputerWins = 0;
+let countGamesDraw = 0;
+
 
 // 1. Generate RPS sign
 let getComputerSign = function ()  {
@@ -87,6 +91,8 @@ let playRPS = function (input) {
 
     let playerObject = input
     let computerObject = getComputerSign()
+    countGamesPlayed = countGamesPlayed +1 ;
+
     // Get a default output message sharing what player's and computer's objects are
     let defaultObjectsMessage = getDefaultObjectsMessage(
       playerObject,
@@ -96,16 +102,22 @@ let playRPS = function (input) {
     // Compare player's object with computer's object and output win status
     // a) draw case
     if (doesPlayerDrawComputer (playerObject, computerObject) ){
-      myOutputValue =  defaultObjectsMessage + "<br><br> It's a draw! <br><br> " + Replay_Message
+      countComputerWins = countComputerWins;
+      countGamesDraw = countGamesDraw + 1;
+      myOutputValue =  defaultObjectsMessage + "<br><br> It's a draw! <br><br> " + Replay_Message + `${countGamesPlayed} <br><br> Total Computer Wins is ${countComputerWins}. <br><br> Total Draws is ${countGamesDraw}.`
     }
 
     // b) player wins case
     else if (doesPlayerBeatsComputer(playerObject, computerObject) ) {
-      myOutputValue =  defaultObjectsMessage + "<br><br> You win! <br><br> " + Replay_Message
+      countComputerWins = countComputerWins;
+      countGamesDraw = countGamesDraw
+      myOutputValue =  defaultObjectsMessage + "<br><br> You win! <br><br> " + Replay_Message  + `${countGamesPlayed} <br><br> Total Computer Wins is ${countComputerWins}. <br><br> Total Draws is ${countGamesDraw}.`
     }
     // c) computer wins case
     else {
-      myOutputValue =  defaultObjectsMessage + "<br><br> You lose! Bummer. <br><br>  " + Replay_Message
+      countComputerWins = countComputerWins +1;
+      countGamesDraw = countGamesDraw
+      myOutputValue =  defaultObjectsMessage + "<br><br> You lose! Bummer. <br><br>  " + Replay_Message  + `${countGamesPlayed} <br><br> Total Computer Wins is ${countComputerWins}. <br><br> Total Draws is ${countGamesDraw}.`
     }
 
   }
