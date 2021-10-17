@@ -1,3 +1,4 @@
+var myOutputValue = "";
 var userWin = 0;
 var computerWin = 0;
 var totalPlay = 0;
@@ -46,7 +47,6 @@ var main = function (input) {
   //When user input and the SPS game mode is switched on
   else if (currentGameMode == "SPS game") {
     var computersGuess = computerGuesses();
-    var myOutputValue = "";
     //if we beat the computer, we win
     if (
       (computersGuess == "paper" && userInput == "scissors") ||
