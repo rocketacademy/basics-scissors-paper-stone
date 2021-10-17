@@ -53,7 +53,7 @@ var main = function (input) {
 
 //Generate Number for Computer
 var generateNumber = function (max) {
-  var max = 3;
+  max = 3;
   var estRandomNumber = Math.random() * max;
   var randomInteger = Math.floor(estRandomNumber);
   var randomNumber = randomInteger + 1;
@@ -125,7 +125,7 @@ var validateUserInput = function (UserInput) {
 
 //Tabulate Win-Loss Stats
 var tabulateStats = function () {
-  userWinningPercentage =
+  var userWinningPercentage =
     ((userWinCount + userDrawCount * 0.5) / userPlayCount) * 100;
   console.log("User winning percentage:", userWinningPercentage);
   var userWinningStatistics =
