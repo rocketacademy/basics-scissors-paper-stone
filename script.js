@@ -196,7 +196,7 @@ function getWinState(playerInput, computerChoice, gameMode) {
               outputText += "<br><br>You are the ultimate winner!";
             } else if (programState.koreanGameState.score === KoreanGameScore.ComputerWins) {
               outputText += "<br><br>The computer is the ultimate winner!";
-            } else{
+            } else {
               outputText += "<b>ERROR: Invalid game state!</b>";
             }
 
@@ -221,6 +221,12 @@ function getWinState(playerInput, computerChoice, gameMode) {
         }
       }
       break;
+    default:
+      {
+        const outputText = "<b>ERROR: Invalid game mode!</b>";
+        displayResults(outputText);
+      }
+      break;
   }
 
   return winState;
@@ -231,13 +237,13 @@ function calculateScore(playerInput, computerChoice, winState) {
 
   outputText += "<br><br>";
   if (winState === GameEndState.Win) {
-    programState.gameScore.wins++;
+    programState.gameScore.wins += 1;
     outputText += "<b>You win!</b>";
   } else if (winState === GameEndState.Lose) {
-    programState.gameScore.losses++;
+    programState.gameScore.losses += 1;
     outputText += "<b>You lose!</b>";
   } else if (winState === GameEndState.Draw) {
-    programState.gameScore.draws++;
+    programState.gameScore.draws += 1;
     outputText += "<b>It's a tie!</b>";
   } else {
     outputText += "<b>ERROR: Invalid game state!</b>";
