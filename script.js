@@ -32,19 +32,29 @@ var main = function (input) {
   var progInput = generateProgamInput();
   console.log(`your input = ${input}`);
   // default output
-  if (input != `Scissors` || input != `Paper` || input != `Stone`) {
-    myOutputValue = `Error, <br>Please try again. <br>Input options are 'Scissors', 'Paper' or 'Stone'`;
+  if (
+    input != `Scissors` ||
+    input != `Paper` ||
+    input != `Stone` ||
+    input != `Reverse Scissors` ||
+    input != `Reverse Paper` ||
+    input != `Reverse Stone`
+  ) {
+    myOutputValue = `Error, <br>Please try again. <br>Input options are 'Scissors', 'Paper', 'Stone', 'Reverse Scissors', 'Reverse Paper'or 'Reverse Stone'`;
   }
   // draw condition
-  if (input == progInput) {
+  if (input == progInput || input == `Reverse ${progInput}`) {
     countGameTurn += 1;
-    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>You chose${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
+    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
   }
   // win condition
   if (
-    (input == `Scissors` && progInput == "Paper") ||
-    (input == "Paper" && progInput == "Stone") ||
-    (input == "Stone" && progInput == "Scissors")
+    (input == `Scissors` && progInput == `Paper`) ||
+    (input == `Paper` && progInput == `Stone`) ||
+    (input == `Stone` && progInput == `Scissors`) ||
+    (input == `Reverse Scissors` && progInput == `Stone`) ||
+    (input == `Reverse Paper` && progInput == `Scissors`) ||
+    (input == `Reverse Stone` && progInput == `Paper`)
   ) {
     countGameTurn += 1;
     countWinTurn += 1;
@@ -52,9 +62,12 @@ var main = function (input) {
   }
   // lose condition
   if (
-    (input == `Scissors` && progInput == "Stone") ||
-    (input == "Paper" && progInput == "Scissors") ||
-    (input == "Stone" && progInput == "Paper")
+    (input == `Scissors` && progInput == `Stone`) ||
+    (input == `Paper` && progInput == `Scissors`) ||
+    (input == `Stone` && progInput == `Paper`) ||
+    (input == `Reverse Scissors` && progInput == `Paper`) ||
+    (input == `Reverse Paper` && progInput == `Stone`) ||
+    (input == `Reverse Stone` && progInput == `Scissors`)
   ) {
     countGameTurn += 1;
     myOutputValue = `Lose game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
