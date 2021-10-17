@@ -23,7 +23,48 @@ var generateRandomSPS = function () {
   }
 };
 
-// set the winning conditions
+// set conditions
+var scissorsPaperStone = function (userName, userChoice) {
+  console.log(userChoice);
+  var scissorsPaperStoneResponse = generateRandomSPS();
+  console.log(scissorsPaperStoneResponse);
+  if (userChoice == scissorsPaperStoneResponse) {
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - its a draw! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "scissors" && scissorsPaperStoneResponse == "paper") {
+    numberPlayerWins = numberPlayerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you win! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "scissors" && scissorsPaperStoneResponse == "stone") {
+    numberComputerWins = numberComputerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "paper" && scissorsPaperStoneResponse == "stone") {
+    numberPlayerWins = numberPlayerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you win!You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "paper" && scissorsPaperStoneResponse == "scissors") {
+    numberComputerWins = numberComputerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "stone" && scissorsPaperStoneResponse == "scissors") {
+    numberPlayerWins = numberPlayerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you win! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (userChoice == "stone" && scissorsPaperStoneResponse == "paper") {
+    numberComputerWins = numberComputerWins + 1;
+    return `${userName}, you chose ${userChoice} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
+  }
+  if (
+    userChoice != "scissors" &&
+    userChoice != "paper" &&
+    userChoice != "stone"
+  ) {
+    return "Don't you know how to play scissors paper stone??";
+  }
+};
+
+// run main function
 var main = function (input) {
   var myOutputValue = "";
   if (currentGameMode == "waiting for player name") {
@@ -32,42 +73,7 @@ var main = function (input) {
     myOutputValue = `Hello ${userName}`;
     return myOutputValue;
   } else if (currentGameMode == "Scissors Paper Stone") {
-    var scissorsPaperStone = function (input) {
-      console.log(input);
-      var scissorsPaperStoneResponse = generateRandomSPS();
-      console.log(scissorsPaperStoneResponse);
-      if (input == scissorsPaperStoneResponse) {
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - its a draw! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "scissors" && scissorsPaperStoneResponse == "paper") {
-        numberPlayerWins = numberPlayerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you win! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "scissors" && scissorsPaperStoneResponse == "stone") {
-        numberComputerWins = numberComputerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "paper" && scissorsPaperStoneResponse == "stone") {
-        numberPlayerWins = numberPlayerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you win!You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "paper" && scissorsPaperStoneResponse == "scissors") {
-        numberComputerWins = numberComputerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "stone" && scissorsPaperStoneResponse == "scissors") {
-        numberPlayerWins = numberPlayerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you win! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input == "stone" && scissorsPaperStoneResponse == "paper") {
-        numberComputerWins = numberComputerWins + 1;
-        return `${userName}, you chose ${input} and the computer chose ${scissorsPaperStoneResponse} - you lose! You have won ${numberPlayerWins} times and the computer has won ${numberComputerWins} times.`;
-      }
-      if (input != "scissors" && input != "paper" && input != "stone") {
-        return "Don't you know how to play scissors paper stone??";
-      }
-    };
-    myOutputValue = scissorsPaperStone(input);
+    myOutputValue = scissorsPaperStone(userName, input);
     return myOutputValue;
   }
 };
