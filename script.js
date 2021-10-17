@@ -1,7 +1,14 @@
+var userWinCount = 0;
+var programWinCount = 0;
+var drawCount = 0;
+var userName = "";
+
 var main = function (input) {
   // input validation check
   if (!(input == "scissors" || input == "paper" || input == "stone")) {
-    var myOutputValue = `sorry, there are only 3 input options. please try again.`;
+    // var myOutputValue = `sorry, there are only 3 input options. please try again.`;
+    userName = input;
+    var myOutputValue = `Hi there ${input}, let's start the first round. Please input 'scissors', 'paper' or 'stone'.`;
   }
   console.log(`user chooses `);
   console.log(input);
@@ -30,13 +37,15 @@ var main = function (input) {
     (input == "paper" && randomNumber1 == "stone") ||
     (input == "stone" && randomNumber1 == "scissors")
   ) {
-    myOutputValue = `you won`;
+    userWinCount = userWinCount + 1;
+    myOutputValue = `You're doing great, ${userName}.<br>You won ${userWinCount} time`;
   }
 
   //scenarios where it's a draw
   // use case: if user's input equals to program's input -> draw
   else if (randomNumber1 == input) {
-    myOutputValue = `it's a draw`;
+    drawCount = drawCount + 1;
+    myOutputValue = `it's a draw, ${userName}.<br> Total number of draw is ${drawCount} time`;
   }
   // scenarios where program wins
   // use case: if program's input equals scissors, but user 'chooses' paper,
@@ -47,7 +56,8 @@ var main = function (input) {
     (randomNumber1 == "paper" && input == "stone") ||
     (randomNumber1 == "stone" && input == "scissors")
   ) {
-    myOutputValue = `you lose, the program won`;
+    programWinCount = programWinCount + 1;
+    myOutputValue = `the program won.<br>You lose ${programWinCount} time, ${userName}.`;
   }
 
   // Return output
