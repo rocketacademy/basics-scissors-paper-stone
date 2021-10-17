@@ -60,30 +60,46 @@ var main = function (input) {
         computersGuess +
         "<br><br> You chose " +
         userInput +
-        ".<br><br> You won! <br><br> Now you can type scissors, paper or stone to play another round! <br><br> You won: " +
-        userWin;
+        ".<br><br> You won! <br><br> Now you can type scissors, paper or stone to play another round! <br><br> So far " +
+        userName +
+        ", you've been winning: " +
+        userWin +
+        "/" +
+        totalPlay +
+        " turns. Pretty good!";
       //else if the computer is the same as the user's input, it's a draw
+    } else if (computersGuess == userInput) {
+      totalPlay = totalPlay + 1;
+      myOutputValue =
+        "The Computer chose " +
+        computersGuess +
+        "<br><br> You chose " +
+        userInput +
+        ".<br><br> It's a draw! <br><br> Now you can type scissors, paper or stone to play another round!<br><br> So far " +
+        userName +
+        ", you've been winning: " +
+        userWin +
+        "/" +
+        totalPlay +
+        " turns. Pretty good!";
+      //if the 2 conditions are not met, the player lose
     } else {
-      if (computersGuess == userInput) {
-        totalPlay = totalPlay + 1;
-        myOutputValue =
-          "The Computer chose " +
-          computersGuess +
-          "<br><br> You chose " +
-          userInput +
-          ".<br><br> It's a draw! <br><br> Now you can type scissors, paper or stone to play another round!";
-        //if the 2 conditions are not met, the player lose
-      } else {
-        computerWin = computerWin + 1;
-        totalPlay = totalPlay + 1;
-        myOutputValue =
-          "The Computer chose " +
-          computersGuess +
-          "<br><br> You chose " +
-          userInput +
-          ".<br><br> You lose! Bummer. <br><br> Now you can type scissors, paper or stone to play another round! <br><br> The computer won: " +
-          computerWin;
-      }
+      computerWin = computerWin + 1;
+      totalPlay = totalPlay + 1;
+      myOutputValue =
+        "The Computer chose " +
+        computersGuess +
+        "<br><br> You chose " +
+        userInput +
+        ".<br><br> You lose! Bummer. <br><br> Now you can type scissors, paper or stone to play another round! <br><br> The computer won: " +
+        computerWin +
+        "<br><br> So far " +
+        userName +
+        ", you've been winning: " +
+        userWin +
+        "/" +
+        totalPlay +
+        " turns. Pretty good!";
     }
   }
   return myOutputValue;
