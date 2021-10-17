@@ -40,13 +40,19 @@ var main = function (input) {
     } else {
       userName = input;
       currentGameMode = "SPS game";
-      myOutputValue = "Hello " + userName;
+      myOutputValue =
+        "Hello " + userName + "<br><br> Please key in your guess.";
     }
   }
 
   //When user input and the SPS game mode is switched on
   else if (currentGameMode == "SPS game") {
     var computersGuess = computerGuesses();
+    var commonOutput =
+      "The Computer chose " +
+      computersGuess +
+      "<br><br> You chose " +
+      userInput;
     //if we beat the computer, we win
     if (
       (computersGuess == "paper" && userInput == "scissors") ||
@@ -56,10 +62,7 @@ var main = function (input) {
       userWin = userWin + 1;
       totalPlay = totalPlay + 1;
       myOutputValue =
-        "The Computer chose " +
-        computersGuess +
-        "<br><br> You chose " +
-        userInput +
+        commonOutput +
         ".<br><br> You won! <br><br> Now you can type scissors, paper or stone to play another round! <br><br> So far " +
         userName +
         ", you've been winning: " +
@@ -71,10 +74,7 @@ var main = function (input) {
     } else if (computersGuess == userInput) {
       totalPlay = totalPlay + 1;
       myOutputValue =
-        "The Computer chose " +
-        computersGuess +
-        "<br><br> You chose " +
-        userInput +
+        commonOutput +
         ".<br><br> It's a draw! <br><br> Now you can type scissors, paper or stone to play another round!<br><br> So far " +
         userName +
         ", you've been winning: " +
@@ -87,10 +87,7 @@ var main = function (input) {
       computerWin = computerWin + 1;
       totalPlay = totalPlay + 1;
       myOutputValue =
-        "The Computer chose " +
-        computersGuess +
-        "<br><br> You chose " +
-        userInput +
+        commonOutput +
         ".<br><br> You lose! Bummer. <br><br> Now you can type scissors, paper or stone to play another round! <br><br> The computer won: " +
         computerWin +
         "<br><br> So far " +
