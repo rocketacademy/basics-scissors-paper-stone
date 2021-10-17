@@ -1,5 +1,7 @@
 var countGameTurn = 0;
 var countWinTurn = 0;
+var countDrawTurn = 0;
+var countLoseTurn = 0;
 
 var generateRandomInteger = function () {
   var randomDecimal = Math.random() * 3;
@@ -45,7 +47,8 @@ var main = function (input) {
   // draw condition
   if (input == progInput || input == `Reverse ${progInput}`) {
     countGameTurn += 1;
-    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
+    countDrawTurn += 1;
+    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}.<br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}. `;
   }
   // win condition
   if (
@@ -58,7 +61,7 @@ var main = function (input) {
   ) {
     countGameTurn += 1;
     countWinTurn += 1;
-    myOutputValue = `Win game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
+    myOutputValue = `Win game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. <br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}.`;
   }
   // lose condition
   if (
@@ -70,10 +73,13 @@ var main = function (input) {
     (input == `Reverse Stone` && progInput == `Scissors`)
   ) {
     countGameTurn += 1;
-    myOutputValue = `Lose game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. `;
+    countLoseTurn += 1;
+    myOutputValue = `Lose game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. <br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}.`;
   }
   console.log(`Total turns =${countGameTurn}`);
   console.log(`Total wins =${countWinTurn}`);
+  console.log(`Total draws =${countDrawTurn}`);
+  console.log(`Total losses =${countLoseTurn}`);
 
   return myOutputValue;
 };
