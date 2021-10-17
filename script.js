@@ -1,7 +1,8 @@
 // input a choice between scissors paper stone
 // output if the player has won the game against the computer
 // if input is not valid, output will indicate what are the valid choices and remind the player to play them accordingly
-
+var currentGameMode = "waiting for user name";
+var userName = "";
 var computerChoice = function () {
   var randomInteger = Math.ceil(Math.random() * 3);
   var computerPlay = "";
@@ -105,17 +106,24 @@ var statistics = function (numGames, playerWins, comWins, draws) {
 };
 
 var main = function (input) {
-  var computer = computerChoice();
-  var myOutputValue = "";
-  var outcome = decision(input, computer);
-  var playerEmoji = emoticon(input);
-  var computerEmoji = emoticon(computer);
-  var stats = statistics(numGames, playerWins, comWins, draws);
+  if (currentGameMode == "waiting for user name") {
+    userName = input;
+    currentGameMode = "SPS";
+    myOutputValue = `Hello ${userName}, Now you can type "scissors" "paper" or "stone" to play scissors paper stone `;
+  } else if ((currentGameMode = "SPS")) {
+    var computer = computerChoice();
+    var myOutputValue = "";
+    var outcome = decision(input, computer);
+    var playerEmoji = emoticon(input);
+    var computerEmoji = emoticon(computer);
+    var stats = statistics(numGames, playerWins, comWins, draws);
 
-  if (input != "scissors" && input != "paper" && input != "stone") {
-    myOutputValue = `You did not enter a valid input. <br> Please type and enter either "scissors", "paper" or "stone". ${stats}`;
-  } else {
-    myOutputValue = `The computer chose ${computer}${computerEmoji}. <br> You chose ${input}${playerEmoji}. <br> ${outcome}  ${stats} <br> ${reminder}  `;
+    if (input != "scissors" && input != "paper" && input != "stone") {
+      myOutputValue = `${userName}, you did not enter a valid input. <br> Please type and enter either "scissors", "paper" or "stone". ${stats}`;
+    } else {
+      myOutputValue = `${userName}, the computer chose ${computer}${computerEmoji}. <br> you chose ${input}${playerEmoji}. <br> ${outcome}  ${stats} <br> ${reminder}  `;
+    }
   }
+
   return myOutputValue;
 };
