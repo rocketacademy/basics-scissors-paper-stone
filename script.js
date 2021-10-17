@@ -1,49 +1,71 @@
+var winCount = 0;
+var numDraws = 0;
+var lossCount = 0;
+var currentMode = "waiting for user name";
+var userName = "";
+var myOutputValue = "";
 var main = function (input) {
-  var spsGenerator = spsOptions();
-  console.log(spsGenerator);
-  var option = "";
+  if (currentMode == "waiting for user name") {
+    // set the name of user
+    userName = input;
 
-  //if computer rolls 1, it will show paper
-  if (spsGenerator == 1) {
-    option = "paper";
-  }
-  //if computer rolls 2, it will show scissors
-  if (spsGenerator == 2) {
-    option = "scissors";
-  }
-  //if computer rolls 3, it will show stone
-  if (spsGenerator == 3) {
-    option = "stone";
-  }
-
-  console.log(option);
-
-  // DRAW
-  if (input == option) {
-    var myOutputValue = `It's a draw! You rolled ${input} and the computer rolled ${option}.`;
+    currentMode = "game mode";
+    myOutputValue = `Your name is ${userName}.`;
     return myOutputValue;
-  }
-  // User wins
-  if (
-    (input == "scissors" && option == "paper") ||
-    (input == "stone" && option == "scissors") ||
-    (input == "paper" && option == "stone")
-  ) {
-    var myOutputValue = `You WIN! You rolled ${input} and the computer rolled ${option}.`;
-    return myOutputValue;
-  }
+  } else if (currentMode == "game mode") {
+    var spsGenerator = spsOptions();
+    console.log(spsGenerator);
+    var option = "";
 
-  // User lose
-  if (
-    (option == "scissors" && input == "paper") ||
-    (option == "stone" && input == "scissors") ||
-    (option == "paper" && input == "stone")
-  ) {
-    var myOutputValue = `You LOSE! You rolled ${input} and the computer rolled ${option}.`;
-    return myOutputValue;
-  }
+    //if computer rolls 1, it will show paper
+    if (spsGenerator == 1) {
+      option = "paper";
+    }
+    //if computer rolls 2, it will show scissors
+    if (spsGenerator == 2) {
+      option = "scissors";
+    }
+    //if computer rolls 3, it will show stone
+    if (spsGenerator == 3) {
+      option = "stone";
+    }
 
-  var myOutputValue = "Please enter either scissors, paper or stone.";
+    console.log(option);
+
+    // DRAW
+    if (input == option && currentMode) {
+      var myOutputValue = `It's a draw ${userName}! <br><br> You rolled ${input} and the computer rolled ${option}.`;
+      return myOutputValue;
+    }
+    // User wins
+    if (
+      (input == "scissors" && option == "paper") ||
+      (input == "stone" && option == "scissors") ||
+      (input == "paper" && option == "stone")
+    ) {
+      winCount = winCount + 1;
+      numDraws = numDraws + 1;
+      var myOutputValue = `You WIN ${userName}! <br><br> You rolled ${input} and the computer rolled ${option}. <br><br> The number of draws is ${numDraws} and your win - loss count is ${winCount} - ${lossCount}.`;
+      console.log(`The win count is ${winCount}.`);
+      return myOutputValue;
+    }
+
+    // User lose
+    if (
+      (option == "scissors" && input == "paper") ||
+      (option == "stone" && input == "scissors") ||
+      (option == "paper" && input == "stone")
+    ) {
+      numDraws = numDraws + 1;
+      lossCount = lossCount + 1;
+      console.log(`The loss count is ${lossCount}.`);
+      var myOutputValue = `You LOSE ${userName}! <br><br> You rolled ${input} and the computer rolled ${option}. <br><br> The number of draws is ${numDraws} and your win - loss count is ${winCount} - ${lossCount}.`;
+      return myOutputValue;
+    }
+    console.log(`The loss count is ${lossCount}.`);
+    console.log(`The draw count is ${numDraws}.`);
+  }
+  var myOutputValue = ` ${userName} please enter either scissors, paper or stone.`;
   return myOutputValue;
 };
 
