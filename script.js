@@ -1,4 +1,4 @@
-// Scorekeeping Global State
+// Scorekeeping Global States
 var wins = 0;
 var losses = 0;
 var draws = 0;
@@ -21,27 +21,33 @@ var main = function (input) {
   if (gameMode == "waiting for user name") {
     userName = input;
     gameMode = "waiting for game mode";
-    return `Nice to meet you <b>${userName}</b>, welcome to Scissors, Paper, Stone.<br>To begin, enter either 'Regular SPS' or 'Korean SPS'.`;
+    return `Nice to meet you <b>${userName}</b>, welcome to Scissors, Paper, Stone.<br>To begin, enter either:<br><br>1. Regular SPS<br>2. Korean SPS<br>3. Guess the Word<br>4. Dice Game</b>`;
   }
-  // Select Game Modes (Korean SPS or Regular SPS)
+  // Select Game Modes (Korean SPS, Regular SPS or Guess the Word)
   else if (input == "Korean SPS") {
     gameMode = "Korean SPS";
     return `Welcome to Korean Scissors, Paper, Stone. To begin, enter either 'scissors', 'paper' or 'stone'.<br><br><b><i>Additional Korean Version Rules: You only win a round if you win a match and follow-up with a draw in the next match.</b></i>`;
   } else if (input == "Regular SPS") {
     gameMode = "SPS";
     return `Welcome to Regular Scissors, Paper Stone. To begin, enter either 'scissors', 'paper' or 'stone'.`;
+  } else if (input == "Guess the Word") {
+    gameMode = "Guess the Word";
+    return `Welcome to Guess the Word. To begin, enter the secret word.`;
+  } else if (input == "Dice Game") {
+    gameMode = "Dice Game";
+    return `Welcome to Dice Game. To begin, enter a number from 1 to 6.`;
   }
-  // Error Message for either Korean SPS or Regular SPS
+  // Error Message for either Korean SPS, Regular SPS, Guess the Word or Dice Game
   else if (gameMode == "waiting for game mode") {
-    return `Please select a game mode before proceeding.<br>To begin, enter either 'Regular SPS' or 'Korean SPS'.`;
+    return `Please select a game mode before proceeding.<br>To begin, enter either 'Regular SPS', 'Korean SPS', 'Guess the Word' or 'Dice Game'.`;
   }
   // Activate Computer vs. Computer
-  else if (input == "Activate lazy mode" && computerHelp == 0) {
+  else if (input == "Activate Lazy Mode" && computerHelp == 0) {
     computerHelp = 1;
     return `Computer will now help you choose.`;
   }
   // Deactivate Computer vs. Computer
-  else if (input == "Deactivate lazy mode" && computerHelp == 1) {
+  else if (input == "Deactivate Lazy Mode" && computerHelp == 1) {
     computerHelp = 0;
     return "Computer will no longer help you choose.";
   }
@@ -96,6 +102,14 @@ var main = function (input) {
     if (totalRounds != 0) {
       myOutputValue += scoreBoard();
     }
+  }
+  // Guess the Word
+  else if (gameMode == "Guess the Word") {
+    myOutputValue = guessTheWord(input);
+  }
+  // Dice Game
+  else if (gameMode == "Dice Game") {
+    myOutputValue = diceGame(input);
   } else {
     // Error Message
     myOutputValue = `Please try again. Kindly input either 'scissors', 'paper' or 'stone'.`;
@@ -416,6 +430,36 @@ var koreanSPS = function (playerGuess) {
   )}, while your opponent picked ${inputEmoji(opponentPick)}
     <br><br>Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.<br><b><i>Additional Korean Version Rules: You only win a round if you win a match and follow-up with a draw in the next match.</b></i>`;
   return finalMessage;
+};
+
+// Function: Guess The Word
+var guessTheWord = function (playerGuess) {
+  var message = "";
+
+  if (playerGuess == `palatable papaya`) {
+    message = `You've guessed the right secret word!`;
+  } else {
+    message = `You got the wrong word. Please try again.`;
+  }
+  return message;
+};
+
+// Function: Dice Game
+var diceGame = function (playerGuess) {
+  var message = "";
+  var diceRoll = Math.floor(Math.random() * 6) + 1;
+  if (computerHelp == 1) {
+    playerGuess = Math.floor(Math.random() * 6) + 1;
+  }
+
+  if (isNaN(Number(playerGuess)) || playerGuess <= 0 || playerGuess >= 7) {
+    return `Please input a valid number between 1 to 6.`;
+  } else if (playerGuess == diceRoll) {
+    message = `That's right! You guessed ${playerGuess}, dice rolled ${diceRoll}.`;
+  } else {
+    message = `You guessed wrong. You guessed ${playerGuess}, dice rolled ${diceRoll}.`;
+  }
+  return message;
 };
 
 // Function: Display Scoreboard
