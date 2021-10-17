@@ -2,7 +2,18 @@ var countGameTurn = 0;
 var countWinTurn = 0;
 var countDrawTurn = 0;
 var countLoseTurn = 0;
+var myOutputValue = `Input options are 'Scissors', 'Paper', 'Stone', 'Reverse Scissors', 'Reverse Paper'or 'Reverse Stone'`;
 
+// User Name prompt
+{
+  var name = prompt("Your name", "");
+  var color = "green";
+  document.write(
+    `<CENTER><FONT FACE=ARIAdL,VERDANA COLOR=${color} SIZE=5>Welcome ${name}<br>Input 'Scissors', 'Paper', 'Stone', 'Reverse Scissors', 'Reverse Paper' or 'Reverse Stone' <br>to play.</FONT><HR NOSHADE WIDTH=450></CENTER><P>`
+  );
+}
+
+// generate random Integer from 0 to 2
 var generateRandomInteger = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
@@ -10,6 +21,7 @@ var generateRandomInteger = function () {
   return randomInteger;
 };
 
+// generate Computer Choice
 var generateProgamInput = function () {
   var randomInteger = generateRandomInteger();
   if (randomInteger == 0) progInput = "Scissors";
@@ -19,6 +31,7 @@ var generateProgamInput = function () {
   return progInput;
 };
 
+// Record Win Loss
 var generateWinLossRecord = function () {
   var record = countWinTurn / countGameTurn;
   console.log(`game record =${record}`);
@@ -29,7 +42,7 @@ var generateWinLossRecord = function () {
     return `Bummer!`;
   }
 };
-
+// Main function
 var main = function (input) {
   var progInput = generateProgamInput();
   console.log(`your input = ${input}`);
@@ -42,13 +55,13 @@ var main = function (input) {
     input != `Reverse Paper` ||
     input != `Reverse Stone`
   ) {
-    myOutputValue = `Error, <br>Please try again. <br>Input options are 'Scissors', 'Paper', 'Stone', 'Reverse Scissors', 'Reverse Paper'or 'Reverse Stone'`;
+    myOutputValue = `Error, <br>Please try again ${name}. <br>Input options are 'Scissors', 'Paper', 'Stone', 'Reverse Scissors', 'Reverse Paper'or 'Reverse Stone'`;
   }
   // draw condition
   if (input == progInput || input == `Reverse ${progInput}`) {
     countGameTurn += 1;
     countDrawTurn += 1;
-    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}.<br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}. `;
+    myOutputValue = `Draw game! <br>Computer chose: ${progInput}. <br>${name} chose ${input}. <br>${name} win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}.<br>${name} draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}. `;
   }
   // win condition
   if (
@@ -61,7 +74,7 @@ var main = function (input) {
   ) {
     countGameTurn += 1;
     countWinTurn += 1;
-    myOutputValue = `Win game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. <br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}.`;
+    myOutputValue = `Win game! <br>Computer chose: ${progInput}. <br>${name} chose ${input}. <br>${name} win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}.<br>${name} draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}. `;
   }
   // lose condition
   if (
@@ -74,7 +87,7 @@ var main = function (input) {
   ) {
     countGameTurn += 1;
     countLoseTurn += 1;
-    myOutputValue = `Lose game! <br>Computer chose ${progInput}. <br>You chose ${input}. <br>You win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}. <br>You draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}.`;
+    myOutputValue = `Lose game! <br>Computer chose: ${progInput}. <br>${name} chose ${input}. <br>${name} win ${countWinTurn}/${countGameTurn}. ${generateWinLossRecord()}.<br>${name} draw ${countDrawTurn} turns. <br>Computer win ${countLoseTurn}/${countGameTurn}. `;
   }
   console.log(`Total turns =${countGameTurn}`);
   console.log(`Total wins =${countWinTurn}`);
