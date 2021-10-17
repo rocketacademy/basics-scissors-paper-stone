@@ -14,11 +14,17 @@ const GameEndState = Object.freeze({
 const GameMode = Object.freeze({
   Normal: 0,
   Reversed: 1,
-  Korean: 2
+  Korean: 2,
+});
+const GameType = Object.freeze({
+  ScissorsPaperStone: 0,
+  GuessTheWord: 1,
+  DiceGame: 2
 });
 const GameState = Object.freeze({
   EnterName: 0,
-  InGame: 1
+  SelectGameType: 1,
+  InGame: 2
 });
 const KoreanGameScore = Object.freeze({
   PlayerWins: 0,
@@ -27,6 +33,7 @@ const KoreanGameScore = Object.freeze({
 
 const programState = {
   userName: null,
+  gameType: GameType.ScissorsPaperStone,
   koreanGameState: {
     isFinalRound: false,
     score: -1
@@ -46,44 +53,109 @@ instructionsText.innerHTML = "Enter your name:";
 function main() {
   if (programState.gameState === GameState.EnterName) {
     programState.userName = document.querySelector("#input-sps").value;
-    programState.gameState = GameState.InGame;
+    programState.gameState = GameState.SelectGameType;
     document.querySelector("#input-sps").value = "";
     instructionsText.innerHTML = `Hello, ${programState.userName}!` +
-      "<br>" + "Available modes are <code>reversed</code>, or <code>korean</code>. Refresh the page to reset the game." +
-      "<br>" + "Otherwise, enter scissors, paper or stone (enter random for a random choice):";
-  } else {
+      "<br>" + "Available games are: <code>sps</code>, <code>word</code> and <code>dice</code>." +
+      "<br>" + "Refresh the page to reset the game.";
+  } else if (programState.gameState === GameState.SelectGameType) {
     const rawInput = String(document.querySelector("#input-sps").value);
 
+    // Check for game type first
     switch (rawInput) {
-      case "reversed":
+      case "sps":
         {
-          if (programState.gameMode !== GameMode.Reversed) {
-            programState.gameMode = GameMode.Reversed;
-            document.querySelector("#input-sps").value = "";
-            instructionsText.innerHTML = `Reversed mode activated! Enter scissors, paper or stone (enter random for a random choice):`;
-          }
+          programState.gameType = GameType.ScissorsPaperStone;
+          programState.gameState = GameState.InGame;
+          instructionsText.innerHTML = "Enter scissors, paper or stone (enter random for a random choice):";
         }
         break;
-      case "korean":
+      case "word":
         {
-          if (programState.gameMode !== GameMode.Korean) {
-            programState.gameMode = GameMode.Korean;
-            document.querySelector("#input-sps").value = "";
-            instructionsText.innerHTML = `Korean mode activated! Enter scissors, paper or stone (enter random for a random choice):`;
-          }
+          programState.gameType = GameType.GuessTheWord;
+          programState.gameState = GameState.InGame;
+          instructionsText.innerHTML = `Guess the word! Enter your guess:`;
         }
         break;
-      case "random":
+      case "dice":
         {
-          const randomIndex = Math.floor(Math.random() * Object.keys(Choices).length);
-          const randomChoice = Object.values(Choices)[randomIndex];
-          runGame(randomChoice);
+          programState.gameType = GameType.DiceGame;
+          programState.gameState = GameState.InGame;
+          instructionsText.innerHTML = `Dice Game! Guess a number between 1 to 6:`;
         }
-        break;
-      default:
-        runGame(rawInput);
         break;
     }
+  } else if (programState.gameState === GameState.InGame) {
+    const rawInput = String(document.querySelector("#input-sps").value);
+
+    switch (programState.gameType) {
+      case GameType.ScissorsPaperStone:
+        {
+          spsGame(rawInput);
+        }
+        break;
+      case GameType.GuessTheWord:
+        {
+          guessTheWord(rawInput);
+        }
+        break;
+      case GameType.DiceGame:
+        {
+          diceGame(rawInput);
+        }
+        break;
+    }
+  }
+}
+
+function diceGame(rawInput) {
+  const diceRoll = Math.floor(Math.random() * 6) + 1;
+  if (Number(rawInput) === diceRoll) {
+    displayResults(`You've guessed ${Number(rawInput)}, and the roll was ${diceRoll}! You win!`);
+  } else {
+    displayResults(`Sorry, no dice! The roll was ${diceRoll}.`);
+  }
+}
+
+function guessTheWord(rawInput) {
+  if (rawInput === "palatable papaya") {
+    displayResults("You've guessed the word correctly! You win!");
+  } else {
+    displayResults("Sorry, you guessed the word incorrectly!");
+  }
+}
+
+function spsGame(rawInput) {
+  switch (rawInput) {
+    // SPS modes
+    case "reversed":
+      {
+        if (programState.gameMode !== GameMode.Reversed) {
+          programState.gameMode = GameMode.Reversed;
+          document.querySelector("#input-sps").value = "";
+          instructionsText.innerHTML += `Reversed mode activated! Enter scissors, paper or stone (enter random for a random choice):`;
+        }
+      }
+      break;
+    case "korean":
+      {
+        if (programState.gameMode !== GameMode.Korean) {
+          programState.gameMode = GameMode.Korean;
+          document.querySelector("#input-sps").value = "";
+          instructionsText.innerHTML += `Korean mode activated! Enter scissors, paper or stone (enter random for a random choice):`;
+        }
+      }
+      break;
+    case "random":
+      {
+        const randomIndex = Math.floor(Math.random() * Object.keys(Choices).length);
+        const randomChoice = Object.values(Choices)[randomIndex];
+        runGame(randomChoice);
+      }
+      break;
+    default:
+      runGame(rawInput);
+      break;
   }
 }
 
