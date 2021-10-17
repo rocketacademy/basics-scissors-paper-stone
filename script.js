@@ -1,3 +1,6 @@
+var winRecord = 0;
+var loseRecord = 0;
+
 var main = function (input) {
   var randomSPS = random();
   var myOutputValue = "";
@@ -35,7 +38,8 @@ var main = function (input) {
     myOutputValue = `The computer chose ${randomSPS}.<br>
       You chose ${input}.<br><br>
       It's a draw.<br><br>
-      Now you can type "scissors" "paper" or "stone" to play another round!`;
+      Now you can type "scissors" "paper" or "stone" to play another round!<br>
+      Your record: ${winRecord} Wins, ${loseRecord} Losses.`;
   }
 
   //WIN
@@ -44,10 +48,12 @@ var main = function (input) {
     (input == "paper" && randomSPS == "stone") ||
     (input == "stone" && randomSPS == "scissors")
   ) {
+    winRecord = winRecord + 1;
     myOutputValue = `The computer chose ${randomSPS}.<br>
       You chose ${input}.<br><br>
       You win! Congrats!<br><br>
-      Now you can type "scissors" "paper" or "stone" to play another round!`;
+      Now you can type "scissors" "paper" or "stone" to play another round!
+      Your record: ${winRecord} Wins, ${loseRecord} Losses.`;
   }
 
   //LOSE
@@ -56,10 +62,12 @@ var main = function (input) {
     (randomSPS == "paper" && input == "stone") ||
     (randomSPS == "stone" && input == "scissors")
   ) {
+    loseRecord = loseRecord + 1;
     myOutputValue = `The computer chose ${randomSPS}.<br>
       You chose ${input}.<br><br>
       You lose! Bummer.<br><br>
-      Now you can type "scissors" "paper" or "stone" to play another round!`;
+      Now you can type "scissors" "paper" or "stone" to play another round!
+      Your record: ${winRecord} Wins, ${loseRecord} Losses.`;
   }
 
   //REVERSED WIN
@@ -68,11 +76,13 @@ var main = function (input) {
     (randomSPS == "paper" && input == "reversed stone") ||
     (randomSPS == "stone" && input == "reversed scissors")
   ) {
+    winRecord = winRecord + 1;
     myOutputValue = `REVERSE! <br>
       The computer chose ${randomSPS}.<br>
       You chose ${input}.<br><br>
       You win! Congrats!<br><br>
-      Now you can type "scissors" "paper" or "stone" to play another round!`;
+      Now you can type "scissors" "paper" or "stone" to play another round!<br>
+      Your record: ${winRecord} Wins, ${loseRecord} Losses.`;
   }
 
   //REVERSED LOSE
@@ -81,11 +91,13 @@ var main = function (input) {
     (input == "reversed paper" && randomSPS == "stone") ||
     (input == "reversed stone" && randomSPS == "scissors")
   ) {
+    loseRecord = loseRecord + 1;
     myOutputValue = `REVERSE! <br>
       The computer chose ${randomSPS}.<br>
       You chose ${input}.<br><br>
       You lose! Bummer.<br><br>
-      Now you can type "scissors" "paper" or "stone" to play another round!`;
+      Now you can type "scissors" "paper" or "stone" to play another round!<br>
+      Your record: ${winRecord} Wins, ${loseRecord} Losses.`;
   }
 
   return myOutputValue;
