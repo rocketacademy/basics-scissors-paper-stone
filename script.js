@@ -7,7 +7,6 @@ var userName = "Player";
 var takeInputFrom = "user";
 var gameVersion = "standard";
 var firstInput = true;
-var waitForSubmit = true;
 var whoWinsKorean = "Nobody";
 var typeWhatToContinue =
   "<br>Please type 'scissors', 'paper' or 'stone' to continue.";
@@ -507,135 +506,135 @@ var main = function (input) {
       "!<br>Choose a game mode: normal, reverse.<br>You can also choose a game version: standard, korean, or special.<br>Lastly, you can also type 'computer' if you want the computer to guess for you.<br>You can change your game version or mode anytime during the game.<br><br>You're now playing the standard version in normal mode.<br>Please type 'scissors', 'paper' or 'stone' if you want to start playing.<br>";
     firstInput = false;
     return myOutputValue;
-  } else {
-    // Calibrating game modes
-    if (input == "normal") {
-      gameMode = "normal";
-      myOutputValue =
-        "You've chosen to play the " +
-        gameVersion +
-        " version in " +
-        gameMode +
-        " mode, " +
-        userName +
-        "!<br>" +
-        typeWhatToContinue +
-        "<br>";
-      return myOutputValue;
-    }
-    if (input == "reverse") {
-      gameMode = "reverse";
-      myOutputValue =
-        "You've chosen to play the " +
-        gameVersion +
-        " version in " +
-        gameMode +
-        " mode, " +
-        userName +
-        "!<br>" +
-        typeWhatToContinue +
-        "<br>";
-      return myOutputValue;
-    }
-
-    //Calibrating game versions
-    if (input == "korean") {
-      gameVersion = "korean";
-      typeWhatToContinue =
-        "<br>Please type 'scissors', 'paper' or 'stone' to continue.";
-      myOutputValue =
-        "You've chosen to play the " +
-        gameVersion +
-        " version in " +
-        gameMode +
-        " mode, " +
-        userName +
-        "!<br>" +
-        typeWhatToContinue +
-        "<br>";
-      return myOutputValue;
-    }
-    if (input == "standard") {
-      gameVersion = "standard";
-      typeWhatToContinue =
-        "<br>Please type 'scissors', 'paper' or 'stone' to continue.";
-      myOutputValue =
-        "You've chosen to play the " +
-        gameVersion +
-        " version in " +
-        gameMode +
-        " mode, " +
-        userName +
-        "!<br>" +
-        typeWhatToContinue +
-        "<br>";
-      return myOutputValue;
-    }
-    if (input == "special") {
-      gameVersion = "special";
-      typeWhatToContinue =
-        "This special version is Scissors-Paper-Stone-Lizard-Spock.<br>Please type 'scissors', 'paper', 'stone', 'lizard' or 'spock' to continue.";
-      myOutputValue =
-        "You've chosen to play the " +
-        gameVersion +
-        " version in " +
-        gameMode +
-        " mode, " +
-        userName +
-        "!<br>" +
-        typeWhatToContinue +
-        "<br>";
-      return myOutputValue;
-    }
-
-    // Takes input from computer or player
-    if (input == "computer") {
-      takeInputFrom = "computer";
-      myOutputValue =
-        "The computer will choose the subsequent guesses for you! Type 'user' to discontinue this.<br>";
-      return myOutputValue;
-    }
-    if (input == "user") {
-      takeInputFrom = "user";
-      myOutputValue =
-        "You have reverted to user input for guesses. Type 'computer' to ask the computer to choose for you.<br>";
-      return myOutputValue;
-    }
-
-    // Choosing which game function to run
-    if (gameMode == "normal" && gameVersion == "standard") {
-      myOutputValue = scissorsPaperStone(input);
-    }
-    if (gameMode == "reverse" && gameVersion == "standard") {
-      myOutputValue = reverseScissorsPaperStone(input);
-    }
-    if (gameMode == "normal" && gameVersion == "korean") {
-      myOutputValue = koreanScissorsPaperStone(input);
-    }
-    if (gameMode == "reverse" && gameVersion == "korean") {
-      myOutputValue = reverseKoreanScissorsPaperStone(input);
-    }
-    if (gameMode == "normal" && gameVersion == "special") {
-      myOutputValue = specialScissorsPaperStone(input);
-    }
-    if (gameMode == "reverse" && gameVersion == "special") {
-      myOutputValue = reverseSpecialScissorsPaperStone(input);
-    }
-
-    var percentageWon = (timesWon / timesPlayed) * 100;
-    var stateComment =
-      "<br><br>So far, " +
-      userName +
-      ", you have played " +
-      timesPlayed +
-      " times and won " +
-      timesWon +
-      " times.<br>Number of draws: " +
-      timesDrawn +
-      "<br>Percentage of tries won: " +
-      percentageWon +
-      "%";
-
-    return myOutputValue + stateComment;
   }
+
+  // Calibrating game modes
+  if (input == "normal") {
+    gameMode = "normal";
+    myOutputValue =
+      "You've chosen to play the " +
+      gameVersion +
+      " version in " +
+      gameMode +
+      " mode, " +
+      userName +
+      "!<br>" +
+      typeWhatToContinue +
+      "<br>";
+    return myOutputValue;
+  }
+  if (input == "reverse") {
+    gameMode = "reverse";
+    myOutputValue =
+      "You've chosen to play the " +
+      gameVersion +
+      " version in " +
+      gameMode +
+      " mode, " +
+      userName +
+      "!<br>" +
+      typeWhatToContinue +
+      "<br>";
+    return myOutputValue;
+  }
+
+  //Calibrating game versions
+  if (input == "korean") {
+    gameVersion = "korean";
+    typeWhatToContinue =
+      "<br>Please type 'scissors', 'paper' or 'stone' to continue.";
+    myOutputValue =
+      "You've chosen to play the " +
+      gameVersion +
+      " version in " +
+      gameMode +
+      " mode, " +
+      userName +
+      "!<br>" +
+      typeWhatToContinue +
+      "<br>";
+    return myOutputValue;
+  }
+  if (input == "standard") {
+    gameVersion = "standard";
+    typeWhatToContinue =
+      "<br>Please type 'scissors', 'paper' or 'stone' to continue.";
+    myOutputValue =
+      "You've chosen to play the " +
+      gameVersion +
+      " version in " +
+      gameMode +
+      " mode, " +
+      userName +
+      "!<br>" +
+      typeWhatToContinue +
+      "<br>";
+    return myOutputValue;
+  }
+  if (input == "special") {
+    gameVersion = "special";
+    typeWhatToContinue =
+      "This special version is Scissors-Paper-Stone-Lizard-Spock.<br>Please type 'scissors', 'paper', 'stone', 'lizard' or 'spock' to continue.";
+    myOutputValue =
+      "You've chosen to play the " +
+      gameVersion +
+      " version in " +
+      gameMode +
+      " mode, " +
+      userName +
+      "!<br>" +
+      typeWhatToContinue +
+      "<br>";
+    return myOutputValue;
+  }
+
+  // Takes input from computer or player
+  if (input == "computer") {
+    takeInputFrom = "computer";
+    myOutputValue =
+      "The computer will choose the subsequent guesses for you! Type 'user' to discontinue this.<br>";
+    return myOutputValue;
+  }
+  if (input == "user") {
+    takeInputFrom = "user";
+    myOutputValue =
+      "You have reverted to user input for guesses. Type 'computer' to ask the computer to choose for you.<br>";
+    return myOutputValue;
+  }
+
+  // Choosing which game function to run
+  if (gameMode == "normal" && gameVersion == "standard") {
+    myOutputValue = scissorsPaperStone(input);
+  }
+  if (gameMode == "reverse" && gameVersion == "standard") {
+    myOutputValue = reverseScissorsPaperStone(input);
+  }
+  if (gameMode == "normal" && gameVersion == "korean") {
+    myOutputValue = koreanScissorsPaperStone(input);
+  }
+  if (gameMode == "reverse" && gameVersion == "korean") {
+    myOutputValue = reverseKoreanScissorsPaperStone(input);
+  }
+  if (gameMode == "normal" && gameVersion == "special") {
+    myOutputValue = specialScissorsPaperStone(input);
+  }
+  if (gameMode == "reverse" && gameVersion == "special") {
+    myOutputValue = reverseSpecialScissorsPaperStone(input);
+  }
+
+  var percentageWon = (timesWon / timesPlayed) * 100;
+  var stateComment =
+    "<br><br>So far, " +
+    userName +
+    ", you have played " +
+    timesPlayed +
+    " times and won " +
+    timesWon +
+    " times.<br>Number of draws: " +
+    timesDrawn +
+    "<br>Percentage of tries won: " +
+    percentageWon +
+    "%";
+
+  return myOutputValue + stateComment;
 };
