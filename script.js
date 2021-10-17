@@ -12,7 +12,7 @@ let Reversed_Paper = 'reversed paper';
 let Reversed_Scissor = 'reversed scissors';
 
 let Replay_Message = `Now you can type "scissors" "paper" or "stone" to play another round!`
-
+let currentGameMode = 'waiting for user name';
 
 // 1. Generate RPS sign
 let getComputerSign = function ()  {
@@ -74,6 +74,16 @@ var getDefaultObjectsMessage = function (playerObject, computerObject) {
 
  // 2. Basic RPS Matchin 
 let playRPS = function (input) {
+  var myOutputValue = '';  
+  if (currentGameMode == 'waiting for user name') {    
+    // set the name    
+    userName = input;   
+     // now that we have the name, switch the mode    
+     currentGameMode = 'game mode';    
+     myOutputValue = 'Hello ' + userName;
+  } else if (currentGameMode = 'game mode'){
+
+
 
     let playerObject = input
     let computerObject = getComputerSign()
@@ -86,17 +96,18 @@ let playRPS = function (input) {
     // Compare player's object with computer's object and output win status
     // a) draw case
     if (doesPlayerDrawComputer (playerObject, computerObject) ){
-      return defaultObjectsMessage + "<br><br> It's a draw! <br><br> " + Replay_Message
+      myOutputValue =  defaultObjectsMessage + "<br><br> It's a draw! <br><br> " + Replay_Message
     }
 
     // b) player wins case
     else if (doesPlayerBeatsComputer(playerObject, computerObject) ) {
-      return defaultObjectsMessage + "<br><br> You win! <br><br> " + Replay_Message
+      myOutputValue =  defaultObjectsMessage + "<br><br> You win! <br><br> " + Replay_Message
     }
     // c) computer wins case
     else {
-      return defaultObjectsMessage + "<br><br> You lose! Bummer. <br><br>  " + Replay_Message
+      myOutputValue =  defaultObjectsMessage + "<br><br> You lose! Bummer. <br><br>  " + Replay_Message
     }
 
+  }
+    return myOutputValue;
 };
-
