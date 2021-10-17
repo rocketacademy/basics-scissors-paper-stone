@@ -1,122 +1,188 @@
-// Declare global variables for use across functions
-var scissors = "scissors";
-var paper = "paper";
-var stone = "stone";
-var reversed_scissors = "reversed scissors";
-var reversed_paper = "reversed paper";
-var reversed_stone = "reversed stone";
-var totalPlayCount = 0;
-var totalDrawCount = 0;
+// Global variables
+// Objects
+var scissors = 'scissors';
+var paper = 'paper';
+var stone = 'stone';
+var reversed_scissors = 'reversed scissors';
+var reversed_paper = 'reversed paper';
+var reversed_stone = 'reversed stone';
+var playerName = '';
+
+// Number counters
 var userWinCount = 0;
 var computerWinCount = 0;
-var playerName = "";
+var drawCount = 0;
+var totalPlayCount = 0;
 
-// Main function to execute the output to browser
-var main = function (input) {
-  if (!playerName) {       
-   
-    if (input == "") {         
-      return "Please enter your name to continue."  
-    }  
+// Game modes
+var gameMode = '';
+var SPS = 'sps';
+var reverseSPS = 'reversed sps'
+
+// Main function
+var main = function (input) {  
+  // 1st input validation to verify username  
+  if (!playerName) {        
+    if (!input) {         
+      return "Please enter your name 1st to start."  
+    }    
+    playerName = input; // Set username as input throughout the entire game
+    return `Hello ${playerName}, you can start game by entering your game selection.
+    <br><br>1 - sps<br><br>2 - reversed sps
+    <br><br>Type in the number or full name of game.`
+  }     
   
-    playerName = input; 
-    console.log(playerName);
-    return `Hello ${playerName}, you can start game by entering "scissors", "paper" & "stone".`         
-  }    
+  // 2nd input validation to verify game selection
+  if (!gameMode) {
+    if (!input || (input != 1 && input !=2 && input != SPS && input != reverseSPS)){      
+      return `Hello ${playerName}, it is an invalid entry, 
+      please enter your game selection.
+      <br><br>1 - sps<br><br>2 - reversed sps
+      <br><br>Type in the number or full name of game.` 
+    }
+
+    else if (input == 1 || input == SPS) {            
+      gameMode = input;
+      return `Hello ${playerName}, you can start playing standard SPS by entering 
+      "scissors", "paper" & "stone".`
+    }
+
+    else if (input == 2 || input == reverseSPS) {            
+      gameMode = input;
+      return `Hello ${playerName}, you can start playing reverse SPS by entering 
+      "reversed scissors", "reversed paper" & "reversed stone".`
+    }
+  }
+
+  // 3rd input validation to verify input in either SPS or Reverse SPS game
+  if (gameMode == 1 || gameMode == SPS) {
+    var playerSelection = '';    
+    
+    if (!input || (input != scissors && input != paper && input != stone)) {
+      return `Hello ${playerName}, it is an invalid entry, please enter "scissors", 
+      "paper" & "stone".`
+    }
+
+    else {
+      playerSelection = input;
+      return playSPSGame (playerSelection);
+    }    
+  }  
   
-  return playSPS (input);    
+  else if (gameMode == 2 || gameMode == reverseSPS) {
+    var playerSelection = '';    
+    
+    if (!input || (input != reversed_scissors && input != reversed_paper 
+      && input != reversed_stone)) {
+      return `Hello ${playerName}, it is an invalid entry, please enter 
+      "reversed scissors", "reversed paper" & "reversed stone".`
+    }
+
+    else {
+      playerSelection = input;
+      return playSPSGame (playerSelection);
+    }    
+  }   
 };
 
 // Play SPS function
-var playSPS = function (playerInput) {  
-  var randomComputerSPS = numberToSPS ();
-  console.log (randomComputerSPS); // For debugging on output value of randomComputerSPS
-  var getIcon = objectIcon (playerInput);
-  console.log (getIcon); // For debugging on output value of getIcon
-  var getComputerIcon = objectIcon (randomComputerSPS);
-  console.log (getComputerIcon); // For debugging on output value of getComputerIcon
-  
-  // Check and perform input validation
-  if (playerInput != scissors && playerInput != reversed_scissors &&
-    playerInput != paper && playerInput != reversed_paper &&
-    playerInput != stone && playerInput != reversed_stone) {
-      var myOutputValue = 'Please enter "scissors", "paper" or "stone" to start.'
-  }
-    
-  // Check input condition for draw
-  else if (conditionForDraw (playerInput,randomComputerSPS)) {
-    totalPlayCount += 1;
-    totalDrawCount += 1;
-    myOutputValue = `The computer chose ${randomComputerSPS} ${getComputerIcon}, you chose ${playerInput} ${getIcon}, it is a draw.`
-  }
-  
-  // Check input condition for win
-  else if (conditionForWin (playerInput,randomComputerSPS)) {
+var playSPSGame = function (playerInput) {
+  var computerInput = numberToSPS ();  
+
+  if (determineWinCondition (playerInput, computerInput)) {
     totalPlayCount += 1;
     userWinCount += 1;
-    myOutputValue = `The computer chose ${randomComputerSPS} ${getComputerIcon}, you chose ${playerInput} ${getIcon}, you win!.`
+    return standardMessage1 (playerInput, computerInput) + 'you win.' + 
+    standardMessage2 (totalPlayCount, userWinCount, computerWinCount, drawCount)
+    + standardMessage3 ();
   }
-  
-  // All other non-defined conditions will lose
+
+  if (determineDrawCondition (playerInput, computerInput)) {
+    totalPlayCount += 1;
+    drawCount += 1;
+    return standardMessage1 (playerInput, computerInput) + 'it is a draw.' + 
+    standardMessage2 (totalPlayCount, userWinCount, computerWinCount, drawCount)
+    + standardMessage3 ();
+  }
+
   else {
     totalPlayCount += 1;
     computerWinCount += 1;
-    myOutputValue = `The computer chose ${randomComputerSPS} ${getComputerIcon}.<br><br> 
-    You chose ${playerInput} ${getIcon}.<br><br>
-    You lose! Bummer.<br><br>
-    Now you can type "scissors" "paper" or "stone" to play another round!`
+    return standardMessage1 (playerInput, computerInput) + 'you lose.' 
+    + standardMessage2 (totalPlayCount, userWinCount, computerWinCount, drawCount)
+    + standardMessage3 ();
+  }  
+}
+
+// Standard message function
+var standardMessage1 = function (playerInput, computerInput) {
+  var getPlayerIcon = objectIcon (playerInput);
+  var getComputerIcon = objectIcon (computerInput);
+  return `Hello ${playerName}, the computer chose ${computerInput} ${getComputerIcon}, 
+  you chose ${playerInput} ${getPlayerIcon}, `
+}
+
+// Standard message function
+var standardMessage2 = function (totalPlayCount, userWinCount, computerWinCount, drawCount) {  
+  return `<br><br>There are total ${totalPlayCount} round(s) played.
+  <br><br>The computer win count is ${computerWinCount}, 
+  your win count is ${userWinCount}, draw count is ${drawCount}.`
+}
+
+var standardMessage3 = function () {
+  if (gameMode == reverseSPS) {
+    return `<br><br>Please enter "reversed scissors", "reverse paper" or "reverse stone"
+    to continue playing. Else refresh the browser to start over again.`
   }
-  
-  var winPercentageComputer = computerWinCount/totalPlayCount * 100;
-  winPercentageComputer = winPercentageComputer.toFixed(0);
-  var winPercentageUser = userWinCount/totalPlayCount * 100;
-  winPercentageUser = winPercentageUser.toFixed(0);
-
-  var callUserName = `Hello ${playerName}!<br><br>`
-  var stdMessage = `<br><br>Summary: Total play count is ${totalPlayCount}, 
-  total draw count is ${totalDrawCount},
-  computer win count is ${computerWinCount}, percentage at ${winPercentageComputer}%, 
-  your win count is ${userWinCount}, percentage at ${winPercentageUser}%.`
-
-  return callUserName + myOutputValue + stdMessage;
+  return `<br><br>Please enter "reversed scissors", "reverse paper" or "reverse stone"
+  to continue playing. Else refresh the browser to start over again.`
 }
 
-// Function to check draw condition for SPS between Player and Computer
-var conditionForDraw = function (player, computer) {
-  return (player == computer ||
-    player == reversed_scissors && computer == scissors ||
-    player == reversed_paper && computer == paper ||
-    player == reversed_stone && computer == stone);
+
+// SPS win condition function
+var determineWinCondition = function (playerInput, computerInput) {
+  if (gameMode == reverseSPS) {
+    return (
+      (playerInput == reversed_scissors && computerInput == stone) ||  
+      (playerInput == reversed_paper && computerInput == scissors) ||  
+      (playerInput == reversed_stone && computerInput == paper)
+    );
+  }
+  return (
+    (playerInput == scissors && computerInput == paper) ||  
+    (playerInput == paper && computerInput == stone) ||  
+    (playerInput == stone && computerInput == scissors)
+  );
 }
 
-// Function to check win condition for SPS between Player and Computer
-var conditionForWin = function (player, computer) {
-  return (player == scissors && computer == paper ||
-    player == paper && computer == stone ||
-    player == stone && computer == scissors ||
-    player == reversed_scissors && computer == stone ||
-    player == reversed_paper && computer == scissors ||
-    player == reversed_stone && computer == paper);
-}
+
+// SPS draw condition function
+var determineDrawCondition = function (playerInput, computerInput) {
+  if (gameMode == reverseSPS) {
+    return ((playerInput == reversed_scissors && computerInput == scissors) ||
+    (playerInput == reversed_paper && computerInput == paper) ||
+    (playerInput == reversed_stone && computerInput == stone)
+    );
+  }
+  return playerInput == computerInput;
+};
+
 
 // Generate SPS condition using random numbers
 var numberToSPS = function () {
-  var randomDecimal = Math.random () * 3;
-  var randomInteger = Math.floor (randomDecimal);
+  var randomInteger = Math.floor(Math.random () * 3) + 1;  
 
   if (randomInteger == 0) {
     return scissors;
-  }
-
-  else if (randomInteger == 1) {
+  } else if (randomInteger == 1) {
     return paper;
-  }
+  } else return stone;
+};
 
-  return stone;
-}
 
+// Generate object icons for SPS
 var objectIcon = function (icon) {
   if (icon == scissors || icon == reversed_scissors) return '✂️';
   else if (icon == paper || icon == reversed_paper) return '🗒';
   else if (icon == stone || icon == reversed_stone) return '🪨';
-}
+};
