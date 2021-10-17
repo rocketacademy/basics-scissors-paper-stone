@@ -8,22 +8,17 @@ var main = function (input) {
 
 var getResult = function(input){
   console.log ('you have input ' + input);
-  var arrayItems = ['stone','paper','scissors'];
-  var random = Math.floor(Math.random()*3);
-  var value = arrayItems[random];
-  console.log ('system has chosen ' + value);
-  if (input == value) {
-    return ('System also choose ' + value  +' .Its a Draw');
+  var handArray = ['stone','paper','scissors'];
+  var randomInteger = Math.floor(Math.random()*3);
+  var chosenHand = handArray[randomInteger];
+  console.log ('system has chosen ' + chosenHand);
+  if (input == chosenHand) {
+    return ('System also chose ' + chosenHand  +' .Its a Draw');
   };
-  if ((input == 'scissors') && (value=='paper')){
-    return 'System choose ' + value + ' . You won :)';
+  if (((input == 'scissors') && (chosenHand =='paper')) || 
+     ((input == 'paper') && (chosenHand == 'stone')) || ((input == 'stone') &&  (chosenHand == 'scissors'))){
+    return 'System chose ' + chosenHand + ' . You won :)';
   };
-  if ((input == 'paper') && (value == 'stone')){
-    return 'System choose ' + value + ' . You won :)';
-  };
-  if ((input == 'stone') && (value == 'scissors')){
-    return 'System choose ' + value + ' . You won:)';
-  }
   
-  return 'System choose ' + value + ' . You lose. Try again :)';
+  return 'System chose ' + chosenHand + ' . You lose. Try again :)';
 }
