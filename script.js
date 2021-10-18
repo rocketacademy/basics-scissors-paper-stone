@@ -1,9 +1,9 @@
-var scissors = "scissors";
-var paper = "paper";
-var stone = "stone";
-var reversedScissors = "reversed scissors";
-var reversedPaper = "reversed paper";
-var reversedStone = "reversed stone";
+var SCISSORS = "scissors";
+var PAPER = "paper";
+var STONE = "stone";
+var REVERSEDSCISSORS = "reversed scissors";
+var REVERSEDPAPER = "reversed paper";
+var REVERSEDSTONE = "reversed stone";
 
 var randomNumber = function () {
   var randomDecimal = Math.random() * 3;
@@ -15,14 +15,14 @@ var randomNumber = function () {
 
 var computerChoice = function () {
   var number = randomNumber();
-  var choice = scissors;
+  var choice = SCISSORS;
 
   if (number == 0) {
-    choice = stone;
+    choice = STONE;
   }
 
   if (number == 1) {
-    choice = paper;
+    choice = PAPER;
   }
   return choice;
 };
@@ -30,20 +30,18 @@ var computerChoice = function () {
 var main = function (input) {
   var computer = computerChoice();
   var player = input;
-  console.log("Computer Choice");
-  console.log(computer);
-  console.log("User Choice");
-  console.log(input);
+  console.log("Computer Choice", computer);
+  console.log("User Choice", input);
   var myOutputValue = `You have chosen ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type scissors, paper or stone to start a new game `;
 
   //check for invalid inputs
   if (
-    player != scissors &&
-    player != stone &&
-    player != paper &&
-    player != reversedScissors &&
-    player != reversedStone &&
-    player != reversedPaper
+    player != SCISSORS &&
+    player != STONE &&
+    player != PAPER &&
+    player != REVERSEDSCISSORS &&
+    player != REVERSEDSTONE &&
+    player != REVERSEDPAPER
   ) {
     myOutputValue =
       "you have entered a incorrect input <br> Please enter either scissors, paper or stone <br>";
@@ -51,12 +49,12 @@ var main = function (input) {
 
   //check for win
   if (
-    (player == scissors && computer == paper) ||
-    (player == stone && computer == scissors) ||
-    (player == paper && computer == stone) ||
-    (player == reversedPaper && computer == scissors) ||
-    (player == reversedStone && computer == paper) ||
-    (player == reversedScissors && computer == stone)
+    (player == SCISSORS && computer == PAPER) ||
+    (player == STONE && computer == SCISSORS) ||
+    (player == PAPER && computer == STONE) ||
+    (player == REVERSEDPAPER && computer == SCISSORS) ||
+    (player == REVERSEDSTONE && computer == PAPER) ||
+    (player == REVERSEDSCISSORS && computer == STONE)
   ) {
     myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> good job! <br> Now you can type "scissors, paper or stone to start new game <br>`;
   }
