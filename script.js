@@ -1,5 +1,16 @@
+//Global Variable
+var username =0
+var computerWin = 0
+var userWin = 0
+var roundCount = 0
+
 var main = function (input) {
   //Check input
+
+  if (username == 0){
+    username = input
+    return "Hi "+username+" :) <br> Please input scissors paper or stone"
+  }
   if (
     input != "scissors" &&
     input != "stone" &&
@@ -18,18 +29,21 @@ var main = function (input) {
     programHand = chooseHand();
     gameStatus = checkWin(input, programHand);
     if (gameStatus == "You Win!") {
+      computerWin = computerWin + 1;
       gameStatus = "You Lose!";
     } else if ((gameStatus = "You Lose!")) {
+      userWin = userWin +1;
       gameStatus = "You Win!";
     }
+    roundCount = roundCount +1
   }
   return (
     "Computer selected " +
     programHand +
-    "<br> You selected " +
+    "<br>" +username+" selected " +
     input +
     "<br><br>" +
-    gameStatus +
+    gameStatus + "<br> So far " +username+", you've been winning "+ userWin+"/"+roundCount+" turns. Pretty Good!"+
     "<br><br> Now you can type 'scissors' 'paper' or 'stone' to play another round!"
   );
 };
