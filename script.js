@@ -1,9 +1,23 @@
 /**
- * Scissors Paper Stone (Part 1)
+ * Scissors Paper Stone (Part 2)
  *
- * basic version where user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw.
- * Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
+ * user inputs one of "scissors", "paper", or "stone"
+ * program internally randomly chooses scissors, paper, or stone
+ * outputs whether the user won, the program won, or it's a draw.
+ * Regular rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
  */
+
+var SCISSORS = "scissors";
+var PAPER = "paper";
+var STONE = "stone";
+var REVERSED_SCISSORS = "reversed scissors";
+var REVERSED_PAPER = "reversed paper";
+var REVERSED_STONE = "reversed stone";
+
+// to count number of games played, user/program wins
+var numGamesPlayed = 0;
+var numUserWon = 0;
+var numProgWon = 0;
 
 // Generate a random integer from 1 to max inclusive
 var generateRandomInteger = function (max) {
@@ -16,60 +30,79 @@ var generateRandomSPS = function () {
   var numSPSoutcome = 3;
   var randomSPSoutcome = generateRandomInteger(numSPSoutcome);
   if (randomSPSoutcome == 1) {
-    return "scissors";
+    return SCISSORS;
   }
   if (randomSPSoutcome == 2) {
-    return "paper";
+    return PAPER;
   }
   if (randomSPSoutcome == 3) {
-    return "stone";
+    return STONE;
   }
   return "Oops! There may be error!";
 };
 
 var checkIfUserWon = function (userSPS, randomSPS) {
   if (
-    (userSPS == "scissors" && randomSPS == "paper") ||
-    (userSPS == "paper" && randomSPS == "stone") ||
-    (userSPS == "stone" && randomSPS == "scissors") ||
+    (userSPS == SCISSORS && randomSPS == PAPER) ||
+    (userSPS == PAPER && randomSPS == STONE) ||
+    (userSPS == STONE && randomSPS == SCISSORS) ||
     //include reverse game
-    (userSPS == "reversed scissors" && randomSPS == "stone") ||
-    (userSPS == "reversed paper" && randomSPS == "scissors") ||
-    (userSPS == "reversed stone" && randomSPS == "paper")
+    (userSPS == REVERSED_SCISSORS && randomSPS == STONE) ||
+    (userSPS == REVERSED_PAPER && randomSPS == SCISSORS) ||
+    (userSPS == REVERSED_STONE && randomSPS == PAPER)
   ) {
     return true;
   }
   return false;
 };
 
+// Calculate how many times the user wins out of the total number of games played
+var getWinRateInfo = function () {
+  var winRate = Math.floor((numUserWon / numGamesPlayed) * 100);
+  console.log(`win rate: ${winRate}`);
+  return `You won ${numUserWon}/${numGamesPlayed} of games played. Win rate: ${winRate}%.`;
+};
+
 var main = function (input) {
   var userSPS = input;
-  //input validation
+  //input validation: if user input other than SPS, remind user to input correct word
   if (
-    userSPS != "scissors" &&
-    userSPS != "paper" &&
-    userSPS != "stone" &&
-    userSPS != "reversed scissors" &&
-    userSPS != "reversed paper" &&
-    userSPS != "reversed stone"
+    userSPS != SCISSORS &&
+    userSPS != PAPER &&
+    userSPS != STONE &&
+    userSPS != REVERSED_SCISSORS &&
+    userSPS != REVERSED_PAPER &&
+    userSPS != REVERSED_STONE
   ) {
     return `Please input "scissors", "paper" or "stone" only to play the game!`;
   }
+  console.log(`userSPS: ${userSPS}`);
 
+  //increase number of game played
+  numGamesPlayed += 1;
   var randomSPS = generateRandomSPS();
   var genericOutput = `Your choice: ${userSPS}. <br>Program's choice: ${randomSPS}. <br><br>`;
   var gameInstruction = `Now you can type "scissors" "paper" or "stone" to play another round!`;
+  // Get display message about the win rate
+  var winRateInfo = getWinRateInfo();
+
+  //if user wins
   if (checkIfUserWon(userSPS, randomSPS)) {
-    return `${genericOutput} You win! <br><br> ${gameInstruction}`;
+    numUserWon += 1;
+    // Recalculate the win rate and get a new display message
+    winRateInfo = getWinRateInfo();
+    return `${genericOutput} You win! <br><br> You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
   }
   //check if it is a draw
   if (
     userSPS == randomSPS ||
-    (userSPS == "reversed scissors" && randomSPS == "scissors") ||
-    (userSPS == "revsersed paper" && randomSPS == "paper") ||
-    (userSPS == "reversed stone" && randomSPS == "stone")
+    (userSPS == REVERSED_SCISSORS && randomSPS == SCISSORS) ||
+    (userSPS == REVERSED_PAPER && randomSPS == PAPER) ||
+    (userSPS == REVERSED_STONE && randomSPS == STONE)
   ) {
-    return `${genericOutput} It's a draw! <br><br> ${gameInstruction}`;
+    return `${genericOutput} It's a draw! You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
   }
-  return `${genericOutput} You lose! <br><br> ${gameInstruction}`;
+  //if user lose
+  numProgWon += 1;
+  return `${genericOutput} You lose! <br><br> You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
 };
