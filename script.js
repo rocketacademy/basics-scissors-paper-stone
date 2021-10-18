@@ -26,13 +26,6 @@ var totalGamesCount = function (winCount, loseCount, drawCount) {
   return Number(winCount) + Number(loseCount) + Number(drawCount);
 };
 var winPercentage = function () {
-  //debug
-  console.log("winCount");
-  console.log(winCount);
-  console.log("totalGamesCount(winCount, loseCount, drawCount)");
-  console.log(totalGamesCount(winCount, loseCount, drawCount));
-  //
-
   return Math.floor(
     (Number(winCount) * 100) /
       Number(totalGamesCount(winCount, loseCount, drawCount))
@@ -130,11 +123,11 @@ var writeExtraMessage = function () {
 //refactor function: CHOOSE USERNAME
 var chooseUsername = function (input) {
   if (input == "") {
-    var myOutputValue = `Enter your name!`;
+    myOutputValue = `Enter your name!`;
   } else if (input != "") {
     chooseName(input);
     gameMode = "sps game";
-    var myOutputValue = `Hi ${userName}! Please enter either 'scissors', 'paper' or 'stone'.`;
+    myOutputValue = `Hi ${userName}! Please enter either 'scissors', 'paper' or 'stone'.`;
   }
   return myOutputValue;
 };
@@ -146,17 +139,29 @@ var spsGame = function (input, userName) {
     input != scissors &&
     input != paper &&
     input != stone &&
-    input != "reverse"
+    input != "reverse" &&
+    input != "computer"
   ) {
     var myOutputValue = `What is "${input}" ??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
   }
+  // activate computer vs computer mode
+  else if (input == "computer") {
+    gameMode = "computer";
+    myOutputValue =
+      "You have activated COMPUTER vs COMPUTER mode!!!!" +
+      "<br>" +
+      "<br>" +
+      "Click submit to continue or type 'uncomputer' to go back to normie mode!";
+  }
+
   // activate SPS reverse mode
   else if (input == "reverse") {
     gameMode = "spsReverse";
-    var myOutputValue = "You have activated REVERSE SCISSORS PAPER STONE!!!";
-  } else {
-    // normal SPS game
+    myOutputValue = "You have activated REVERSE SCISSORS PAPER STONE!!!";
+  }
 
+  // normal SPS game
+  else {
     //calls the roll function which updates the global variable of the stored roll value.
     storeRollDice = rollDice();
 
@@ -207,19 +212,19 @@ var spsReverseGame = function (input, userName) {
     input != stone &&
     input != "reverse"
   ) {
-    var myOutputValue = `What is "${input}" ??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
+    myOutputValue = `What is "${input}" ??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
   }
   // activate regular SPS mode
   else if (input == "reverse") {
     gameMode = "sps game";
-    var myOutputValue = "You have activated NORMIE SCISSORS PAPER STONE!!!";
+    myOutputValue = "You have activated NORMIE SCISSORS PAPER STONE!!!";
   } else {
     //calls the roll function which updates the global variable of the stored roll value.
     storeRollDice = rollDice();
 
     //DISPLAY STATEMENT:
     //The computer chose ${computerChoice}. You chose ${yourChoice}. You {winOrLose}.
-    var myOutputValue =
+    myOutputValue =
       "The computer chose " +
       storeRollDice +
       "<br>" +
@@ -256,13 +261,73 @@ var spsReverseGame = function (input, userName) {
   return myOutputValue;
 };
 
+var computerMode = function (input) {
+  //input validation
+  if (input != "" && input != "uncomputer") {
+    myOutputValue = "Click submit or type in 'uncomputer'!";
+  } else if (input == "uncomputer") {
+    gameMode = "sps game";
+    myOutputValue =
+      "You have activated normie SCISSORS PAPER STONE!!!!" +
+      "<br>" +
+      "<br>" +
+      "Type either 'scissors', 'paper' or 'stone' to continue.";
+  }
+
+  // begin computer vs computer mode
+  else if (input == "") {
+    // generate 2 dice rolls
+    var yourComputerRoll = rollDice();
+    storeRollDice = rollDice();
+
+    myOutputValue =
+      "The computer chose " +
+      storeRollDice +
+      "<br>" +
+      "Your bot chose " +
+      yourComputerRoll +
+      "<br>" +
+      checkWinOrLose(yourComputerRoll, storeRollDice) +
+      "<br>" +
+      "<br>" +
+      "<br>" +
+      userName +
+      "'s Stats:" +
+      "<br>" +
+      "Number of Wins:" +
+      winCount +
+      "<br>" +
+      "Number of Losses:" +
+      loseCount +
+      "<br>" +
+      "Number of Draws:" +
+      drawCount +
+      "<br>" +
+      "Win Rate:" +
+      winPercentage() +
+      "%" +
+      "<br>" +
+      "Number of games played:" +
+      totalGamesCount(winCount, loseCount, drawCount) +
+      "<br>" +
+      "<br>" +
+      writeExtraMessage();
+  }
+  return myOutputValue;
+};
+
 var main = function (input) {
+  var myOutputValue = "";
+
   if (gameMode == "enter username") {
     return chooseUsername(input);
   } else if (gameMode == "sps game") {
     return spsGame(input, userName);
-  } else if ((gameMode = "spsReverse")) {
+  } else if (gameMode == "spsReverse") {
     return spsReverseGame(input, userName);
+  } else if (gameMode == "computer") {
+    return computerMode(input);
   }
+
   return myOutputValue;
 };
