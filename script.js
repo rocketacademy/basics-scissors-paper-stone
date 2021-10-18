@@ -45,18 +45,26 @@ var gameRules = function (userWord, computerWord) {
     return true;
 };
 
+//Check if the game mode exist
+var validGameMode = function (gameMode) {
+  return gameMode == "normal" || gameMode == "reverse";
+};
+
 var main = function (input) {
   var programChoice = randomProgram();
   var iconUser = addIcone(input);
   var iconComputer = addIcone(programChoice);
   var totalParty = numberUserWon + numberDraws + numberComputerWon;
 
-  if (userName == "") {
+  if (userName === "") {
     userName = input;
     return `Hello ${userName}, welcome to the game.<br><br>Please choose your game mode : normal or reverse.`;
   }
 
   if (gameMode == "") {
+    if (!validGameMode(input)) {
+      return "Please choose a valid game mode : normal or reverse.";
+    }
     gameMode = input;
     return `${gameMode} mode activated, ${userName} choose your type "scissors" "paper" or "stone".`;
   }
@@ -71,7 +79,6 @@ var main = function (input) {
     // If it is reverse mode, we add "reverse" to the user choice
     if (gameMode == "reverse") {
       input = "reverse " + input;
-      console.log(input);
     }
 
     // The rules of Scissors Paper Stone game and reverse Scissors Paper Stone game
