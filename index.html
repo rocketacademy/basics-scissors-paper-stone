@@ -51,6 +51,8 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
+      <p id="p1"></p>
+      <p id="p2"></p>
       <p>Input:</p>
       <input id="input-field" />
       <br />
@@ -67,8 +69,10 @@
         // Set result to input value
         var input = document.querySelector("#input-field");
         var result = main(input.value);
+        var winLose = (document.querySelector(
+          "#p2"
+        ).innerHTML = `Win/Loss/Draw = ${winRecord}/${loseRecord}/${drawRecord}`);
 
-        // Display result in output element
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
 
