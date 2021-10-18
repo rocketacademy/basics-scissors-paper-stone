@@ -12,26 +12,18 @@ var main = function (input) {
 
   var computerChoice = setChoice();
   var conclusion = drawConclusion(input, computerChoice);
+  var returnMsg = `
+  The computer chose ${computerChoice}, you chose ${input}. You ${conclusion}!
+  You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
+  `
   if (conclusion == "win") {
     totalWins = totalWins + 1;
-    return `
-    The computer chose ${computerChoice}, you chose ${input}. You win!
-    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
-    `
   } else if (conclusion == "lose") {
     totalLoss = totalLoss + 1;
-    return `
-    The computer chose ${computerChoice}, you chose ${input}. You lose!
-    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
-    `
   } else {
     totalDraws = totalDraws + 1;
-    return `
-    The computer chose ${computerChoice}, you chose ${input}. It's a draw!
-    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
-    `
   }
-  
+  return returnMsg;
 };
 
 var rollDice = function () {  
@@ -57,34 +49,30 @@ var setChoice = function() {
 }
 
 var drawConclusion = function (playerChoice, computerChoice) {
+  if (playerChoice == computerChoice) {
+    return "draw";
+  }
   if (playerChoice == scissors) {
     if (computerChoice == paper) {
       return "win";
-    } else if (computerChoice == stone) {
-      return "lose";
     } else {
-      return "draw";
-    }
-  }
+      return "lose";
+    } 
+}
 
   if (playerChoice == paper) {
     if (computerChoice == stone) {
       return "win";
-    } else if (computerChoice == scissors) {
-      return "lose";
     } else {
-      return "draw";
-    }
+      return "lose";
   }
+}
 
   if (playerChoice == stone) {
     if (computerChoice == scissors) {
       return "win";
-    } else if (computerChoice == paper) {
-      return "lose";
     } else {
-      return "draw";
-    }
+      return "lose";
   }
-
   }
+}
