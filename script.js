@@ -5,6 +5,9 @@ var machineWinCount = 0;
 var drawCount = 0;
 var roundsPlayed = 0;
 
+var korHumanWin = false;
+var korMachineWin = false;
+
 var main = function (input) {
   if (userName == "") {
     if (input == "") {
@@ -16,7 +19,7 @@ var main = function (input) {
 
   if (gameMode == 0) {
     if (!(input == 1 || input == 2 || input == 3 || input == 4)) {
-      return "Enter the number corresponding to your choice of game mode<br>1. Regular<br>2. Reversed<br>3. Let computer play for you<br>4. Korean";
+      return "Enter the number corresponding to your choice of game mode<br>1. Regular<br>2. Reversed<br>3. Let computer play for you (Regular mode) <br>4. Korean";
     }
     gameMode = input;
   }
@@ -38,6 +41,11 @@ var main = function (input) {
 
   // Above 3 parameters passed into playSPS function to determine player outcome. Value of 1 represents win, 0 is draw, -1 is lose
   var outcome = playSPS(machineChoice, humanChoice, gameMode);
+
+  if (gameMode == 4) {
+    koreanOutput = playkoreanMode(machineChoice, humanChoice, outcome);
+    return koreanOutput;
+  }
   var scoreboard = resultsCounter(outcome);
   // Determine the output string to print
   var myOutputValue = printOutputMessage(
@@ -105,7 +113,11 @@ var printOutputMessage = function (
   if (outcome == 1) {
     outcomeMessage = "You win! Amazing.";
   }
-
+  var REPLAY_MESSAGE =
+    'Now you can type "scissors" "paper" or "stone" to play another round!';
+  if (gameMode == 3) {
+    REPLAY_MESSAGE = "Click submit to let computer play for you again";
+  }
   var REVERSED = "";
   if (gameMode == 2) {
     REVERSED = "◀️ reversed ";
@@ -114,7 +126,7 @@ var printOutputMessage = function (
     machineChoice
   )}.<br>You chose ${REVERSED}${humanChoice} ${setEmoji(
     humanChoice
-  )}.<br><br>${outcomeMessage}<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
+  )}.<br><br>${outcomeMessage}<br><br>${REPLAY_MESSAGE}`;
 
   return outputMessage;
 };
@@ -146,4 +158,37 @@ var resultsCounter = function (outcome) {
   winRate = Math.round((humanWinCount / roundsPlayed) * 100);
   scoreboard = `<br><br>${userName} won ${humanWinCount}, Computer won ${machineWinCount}, Ties: ${drawCount}, Rounds Played: ${roundsPlayed}, Win Rate: ${winRate}%`;
   return scoreboard;
+};
+
+var playkoreanMode = function (machineChoice, humanChoice, outcome) {
+  console.log(
+    "machineChoice, humanChoice, outcome, korHumanWin, korMachineWin"
+  );
+  console.log(machineChoice, humanChoice, outcome, korHumanWin, korMachineWin);
+
+  if (outcome == 0 && korHumanWin == false && korMachineWin == false) {
+    return `The computer chose ${machineChoice}.<br>You chose ${humanChoice}<br>Play again`;
+  }
+  if (outcome == 0 && korHumanWin == true) {
+    korHumanWin = false;
+    korMachineWin = false;
+    humanWinCount += 1;
+    return `The computer chose ${machineChoice}.<br>You chose ${humanChoice}<br>Player wins<br>Player total win ${humanWinCount} Computer total win ${machineWinCount}`;
+  }
+  if (outcome == 0 && korMachineWin == true) {
+    korMachineWin = false;
+    korHumanWin = false;
+    machineWinCount += 1;
+    return `The computer chose ${machineChoice}.<br>You chose ${humanChoice}<br>Computer wins<br>Player total win ${humanWinCount} Computer total win ${machineWinCount}`;
+  }
+  if (outcome == 1) {
+    korHumanWin = true;
+    korMachineWin = false;
+    return `The computer chose ${machineChoice}.<br>You chose ${humanChoice}<br>Player shouts muk-jji-ppa!`;
+  }
+  if (outcome == -1) {
+    korMachineWin = true;
+    korHumanWin = false;
+    return `The computer chose ${machineChoice}.<br>You chose ${humanChoice}<br>Computer shouts muk-jji-ppa!`;
+  }
 };
