@@ -105,7 +105,7 @@ var playersScoreDisplay = function () {
 
 // input scissors function that determines win or lose condition
 var inputScissors = function (input) {
-  randomObject = randomObjectSelect();
+  var randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "paper") {
     var human = players[0];
