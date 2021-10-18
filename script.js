@@ -4,6 +4,9 @@ var stone = `stone`;
 var reversedScissors = "reversed scissors";
 var reversedPaper = "reversed paper";
 var reversedStone = "reversed stone";
+var numPlayerWins = 0;
+var numComputerWins = 0;
+var numDraw = 0;
 
 // Generate a random integer from 1 to max inclusive
 var generateRandomInteger = function (max) {
@@ -40,6 +43,11 @@ var getIcon = function (roshambo) {
   }
 };
 
+var getWinsMessage = function () {
+  var winsMessage = `Player Wins: ${numPlayerWins}, Computer Wins: ${numComputerWins} & Draw: ${numDraw}`;
+  return winsMessage;
+};
+
 var main = function (input) {
   var randomRoshambo = generateRandomRoshambo();
   var inputIcon = getIcon(input);
@@ -59,52 +67,68 @@ var main = function (input) {
     myOutputValue = `Please input either "scissors", "paper", or "stone" to play the game.'`;
   }
   if (input == randomRoshambo) {
-    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${replayMessage}`;
+    numDraw += 1;
+    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedScissors && randomRoshambo == scissors) {
-    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${replayMessage}`;
+    numDraw += 1;
+    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedPaper && randomRoshambo == paper) {
-    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${replayMessage}`;
+    numDraw += 1;
+    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedStone && randomRoshambo == stone) {
-    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${replayMessage}`;
+    numDraw += 1;
+    myOutputValue = `${genericMessage} <br><br>It's a draw! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == scissors && randomRoshambo == paper) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedScissors && randomRoshambo == stone) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == scissors && randomRoshambo == stone) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedScissors && randomRoshambo == paper) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == paper && randomRoshambo == stone) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedPaper && randomRoshambo == scissors) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == paper && randomRoshambo == scissors) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedPaper && randomRoshambo == stone) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == stone && randomRoshambo == scissors) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedStone && randomRoshambo == paper) {
-    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${replayMessage}`;
+    numPlayerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You win! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == stone && randomRoshambo == paper) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   if (input == reversedStone && randomRoshambo == scissors) {
-    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${replayMessage}`;
+    numComputerWins += 1;
+    myOutputValue = `${genericMessage} <br><br>You lose! <br><br>${getWinsMessage()}<br><br>${replayMessage}`;
   }
   return myOutputValue;
 };
