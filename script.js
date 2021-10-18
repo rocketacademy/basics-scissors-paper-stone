@@ -4,12 +4,14 @@ var computerWin = 0
 var userWin = 0
 var roundCount = 0
 var gamemode = 0
+var firstWinner = 0     //0 = no lead, 1 = User lead, 2 = computer lead
+var ultiWinner = 0
 
 var main = function (input) {
   // input username
   if (username == 0){
     username = input
-    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed)"
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean)"
   } else{   
   // select game mode
   if (gamemode == 0 && input == "normal"){
@@ -18,8 +20,50 @@ var main = function (input) {
   }else if (gamemode == 0 && input == "reversed"){
     gamemode = input
     return "Reversed mode selected. Please enter scissors paper or stone"
+  }else if (gamemode == 0 && input == "korean"){
+      gamemode = input
+      return "Korean mode selected. Please enter scissors paper or stone"
   }else if (gamemode == 0 && (input != "normal" || input != "reversed")){
-    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed)"
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean)"
+  }
+  }
+
+  //korean version
+  if (gamemode == "korean"){
+    while (ultiWinner == 0){
+    if (
+      input != "scissors" &&
+      input != "stone" &&
+      input != "paper"
+    ){
+      output =
+        "Please input again either (paper) (scissors) (stone)";
+      return output;
+    }else if (input == "scissors" || input == "paper" || input == "stone") {
+      programHand = chooseHand();
+      gameStatus = checkWin(input, programHand);
+    }
+    if(firstWinner == 0 && gameStatus == "You Win!"){                           // User wins first round
+      firstWinner = 1
+      return "You Win the first round! Input 2nd round guess"
+    }else if (firstWinner == 0 && gameStatus == "You Lose!"){                   // Computer wins first round
+      firstWinner = 2
+      return "You Lose the first round! Avoid guess the same as computer!"
+    }else if (firstWinner == 0 && gameStatus == "Its a Draw!"){                 // First round draws
+      return "Draw! input again"
+    }else if (firstWinner == 1 && gameStatus == "Its a Draw!"){                 // User wins first round and draws second round, User is ultimate winner
+      ultiWinner == 1
+      return "You are the ultimate Winner!"
+    }else if (firstWinner == 2 && gameStatus == "Its a Draw!"){                 // Computer wins first round and draws second round, Computer is ultimate winner
+      ultiWinner == 2
+      return "You lose! Computer is ultimate winner!"
+    }else if (firstWinner == 1 && gameStatus != "Its a Draw!"){                 // User wins first round but not draw second round
+      firstWinner = 0
+      return "You lose second round! Try again from first round"
+    }else if (firstWinner == 2 && gameStatus != "Its a Draw!"){                 // Computer wins first round but not draw second round
+      firstWinner = 0
+      return "Computer loses second round! Try again"
+    }
   }
   }
 
@@ -36,7 +80,6 @@ var main = function (input) {
     programHand = chooseHand();
     gameStatus = checkWin(input, programHand);
   }
-  console.log("21")
   if (gamemode == "normal"){
     if (gameStatus == "You Win!") {  
       console.log("normal user win")             //User wins normal
