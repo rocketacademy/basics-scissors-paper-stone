@@ -35,13 +35,40 @@ var getAiOutput = function () {
   return aiOutput;
 };
 
-var checkUserInput = function (userInput) {
-  if (userInput == "scissors" || userInput == "paper" || userInput == "stone") {
+var checkUserInput = function (userSelection) {
+  if (
+    userSelection == "scissors" ||
+    userSelection == "paper" ||
+    userSelection == "stone" ||
+    userSelection == "reversed scissors" ||
+    userSelection == "reversed paper" ||
+    userSelection == "reversed stone"
+  ) {
     var flag = 1;
   } else {
     flag = 0;
   }
   return flag;
+};
+
+var checkPlayerWin = function (userWinInput, aiLoseInput) {
+  return (
+    (userWinInput == "scissors" && aiLoseInput == "paper") ||
+    (userWinInput == "paper" && aiLoseInput == "stone") ||
+    (userWinInput == "stone" && aiLoseInput == "scissors") ||
+    (userWinInput == "reversed scissors" && aiLoseInput == "stone") ||
+    (userWinInput == "reversed paper" && aiLoseInput == "scissors") ||
+    (userWinInput == "reversed stone" && aiLoseInput == "paper")
+  );
+};
+
+var checkPlayerDraw = function (userDrawInput, aiDrawInput) {
+  return (
+    userDrawInput == aiDrawInput ||
+    (userDrawInput == "reversed scissors" && aiDrawInput == "scissors") ||
+    (userDrawInput == "reversed paper" && aiDrawInput == "paper") ||
+    (userDrawInput == "reversed stone" && aiDrawInput == "stone")
+  );
 };
 
 var main = function (userInput) {
@@ -51,23 +78,15 @@ var main = function (userInput) {
   // console.log(aiInput);
 
   if (userInputFlag == 1) {
-    if (userInput == aiInput) {
-      var myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "scissors" && aiInput == "paper") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "scissors" && aiInput == "stone") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "paper" && aiInput == "scissors") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "paper" && aiInput == "stone") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "stone" && aiInput == "scissors") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
-    } else if (userInput == "stone" && aiInput == "paper") {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! Bummer! <br><br> Now you can type "scissors "paper" or "stone" to play another round!`;
+    if (checkPlayerWin(userInput, aiInput)) {
+      var myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
+    } else if (checkPlayerDraw(userInput, aiInput)) {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
+    } else {
+      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
     }
   } else {
-    myOutputValue = `Wrong selection. Please select "scissors", "paper" or "stone".`;
+    myOutputValue = `Wrong selection. Please select "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone".`;
   }
   return myOutputValue;
 };
