@@ -1,79 +1,130 @@
+var playerWins = 0;
+var computerWins = 0;
+var userName = "";
+
 var main = function (input) {
-  myOutputValue =
-    "You can only choose scissors, paper, or stone. Please try again!";
+  if (userName == "") {
+    if (input == "") {
+      myOutputValue = "Please enter your username!";
+    }
+    if (input !== "") {
+      userName = input;
+      myOutputValue =
+        "Welcome, " +
+        userName +
+        "! Enter scissors, paper, or stone to start playing!";
+    }
+  }
   var computerHand = randomHandSign();
   if (
     (input == "scissors" && computerHand == "stone") ||
     (input == "paper" && computerHand == "scissors") ||
     (input == "stone" && computerHand == "paper")
   ) {
-    myOutputValue =
-      "You lose! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!";
+    computerWins = computerWins + 1;
+    if (playerWins >= computerWins) {
+      myOutputValue =
+        "You lose! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Keep it up, " +
+        userName +
+        "!";
+    }
+    if (playerWins < computerWins) {
+      myOutputValue =
+        "You lose! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Try harder, " +
+        userName +
+        "!";
+    }
   }
   if (
     (input == "scissors" && computerHand == "paper") ||
     (input == "paper" && computerHand == "stone") ||
     (input == "stone" && computerHand == "scissors")
   ) {
-    myOutputValue =
-      "You win! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!";
+    playerWins = playerWins + 1;
+    if (playerWins >= computerWins) {
+      myOutputValue =
+        "You win! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Keep it up, " +
+        userName +
+        "!";
+    }
+    if (playerWins < computerWins) {
+      myOutputValue =
+        "You win! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Try harder, " +
+        userName +
+        "!";
+    }
   }
   if (
     (input == "scissors" && computerHand == "scissors") ||
     (input == "paper" && computerHand == "paper") ||
     (input == "stone" && computerHand == "stone")
   ) {
-    myOutputValue =
-      "It's a draw! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!";
-  }
-
-  if (
-    (input == "reversed scissors" && computerHand == "stone") ||
-    (input == "reversed paper" && computerHand == "scissors") ||
-    (input == "reversed stone" && computerHand == "paper")
-  ) {
-    myOutputValue =
-      "You win! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
-  }
-  if (
-    (input == "reversed scissors" && computerHand == "paper") ||
-    (input == "reversed paper" && computerHand == "stone") ||
-    (input == "reversed stone" && computerHand == "scissors")
-  ) {
-    myOutputValue =
-      "You lose! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
-  }
-  if (
-    (input == "reversed scissors" && computerHand == "scissors") ||
-    (input == "reversed paper" && computerHand == "paper") ||
-    (input == "reversed stone" && computerHand == "stone")
-  ) {
-    myOutputValue =
-      "It's a draw! You chose " +
-      input +
-      " and the computer chose " +
-      computerHand +
-      "<br><br> Type 'reversed scissors', 'reversed paper', or 'reversed stone' to play another round!";
+    if (playerWins >= computerWins) {
+      myOutputValue =
+        "It's a draw! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Keep it up, " +
+        userName +
+        "!";
+    }
+    if (playerWins < computerWins) {
+      myOutputValue =
+        "It's a draw! You chose " +
+        input +
+        " and the computer chose " +
+        computerHand +
+        "<br><br> Type 'scissors', 'paper', or 'stone' to play another round!" +
+        "<br><br> You've won " +
+        playerWins +
+        " time(s) and the computer has won " +
+        computerWins +
+        " time(s)! Try harder, " +
+        userName +
+        "!";
+    }
   }
   return myOutputValue;
 };
