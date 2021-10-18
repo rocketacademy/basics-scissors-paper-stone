@@ -3,42 +3,64 @@ var username =0
 var computerWin = 0
 var userWin = 0
 var roundCount = 0
+var gamemode = 0
 
 var main = function (input) {
-  //Check input
-
+  // input username
   if (username == 0){
     username = input
-    return "Hi "+username+" :) <br> Please input scissors paper or stone"
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed)"
+  } else{   
+  // select game mode
+  if (gamemode == 0 && input == "normal"){
+    gamemode = input
+    return "Normal mode selected. Please enter scissors paper or stone"
+  }else if (gamemode == 0 && input == "reversed"){
+    gamemode = input
+    return "Reversed mode selected. Please enter scissors paper or stone"
+  }else if (gamemode == 0 && (input != "normal" || input != "reversed")){
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed)"
   }
+  }
+
+  // check input & generate result based on normal gamemode
   if (
     input != "scissors" &&
     input != "stone" &&
-    input != "paper" &&
-    input != "reversed scissors" &&
-    input != "reversed stone" &&
-    input != "reversedpaper"
-  ) {
+    input != "paper"
+  ){
     output =
-      "Please input again either (paper) (scissors) (stone) (reversed paper) (reversed scissors) or (reversed stone)";
+      "Please input again either (paper) (scissors) (stone)";
     return output;
   } else if (input == "scissors" || input == "paper" || input == "stone") {
     programHand = chooseHand();
     gameStatus = checkWin(input, programHand);
-  } else {
-    programHand = chooseHand();
-    gameStatus = checkWin(input, programHand);
-    if (gameStatus == "You Win!") {
+  }
+  console.log("21")
+  if (gamemode == "normal"){
+    if (gameStatus == "You Win!") {  
+      console.log("normal user win")             //User wins normal
+      userWin = userWin + 1;
+  }else if (gameStatus = "You Lose!") {         //Computer wins normal
+      console.log("normal computer win")
+      computerWin = computerWin +1;
+  }}
+  else if (gamemode == "reversed"){ 
+    if (gameStatus == "You Win!") {               //User wins normal but reversed mode
+      console.log("reverse but normal user win")
       computerWin = computerWin + 1;
       gameStatus = "You Lose!";
-    } else if ((gameStatus = "You Lose!")) {
+    } else if (gameStatus = "You Lose!") {      //Computer wins normal but reversed mode
+      console.log("reverse but normal computer win")
       userWin = userWin +1;
       gameStatus = "You Win!";
     }
-    roundCount = roundCount +1
   }
+
+  roundCount = roundCount +1
   return (
-    "Computer selected " +
+    "You selected "+ gamemode +" mode"+
+    "<br>Computer selected " +
     programHand +
     "<br>" +username+" selected " +
     input +
@@ -46,7 +68,7 @@ var main = function (input) {
     gameStatus + "<br> So far " +username+", you've been winning "+ userWin+"/"+roundCount+" turns. Pretty Good!"+
     "<br><br> Now you can type 'scissors' 'paper' or 'stone' to play another round!"
   );
-};
+}
 
 // generate program hand
 var chooseHand = function () {
