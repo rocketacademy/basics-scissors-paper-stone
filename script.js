@@ -256,7 +256,7 @@ var koreanScissorsPaperStone = function (userInput) {
   if (takeInputFrom == "computer") {
     userDecision = computerRoll();
   } else {
-    var userDecision = userInput;
+    userDecision = userInput;
   }
   var outcome = "";
   console.log("User: " + userDecision);
@@ -305,7 +305,7 @@ var reverseKoreanScissorsPaperStone = function (userInput) {
   if (takeInputFrom == "computer") {
     userDecision = computerRoll();
   } else {
-    var userDecision = userInput;
+    userDecision = userInput;
   }
   logic(userDecision, computerDecision);
   var action = action1(userDecision, computerDecision);
@@ -354,7 +354,7 @@ var specialScissorsPaperStone = function (userInput) {
   if (takeInputFrom == "computer") {
     userDecision = specialComputerRoll();
   } else {
-    var userDecision = userInput;
+    userDecision = userInput;
   }
   logic(userDecision, computerDecision);
   var outcome = "";
@@ -396,7 +396,7 @@ var reverseSpecialScissorsPaperStone = function (userInput) {
   if (takeInputFrom == "computer") {
     userDecision = specialComputerRoll();
   } else {
-    var userDecision = userInput;
+    userDecision = userInput;
   }
   logic(userDecision, computerDecision);
   var outcome = "";
