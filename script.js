@@ -189,17 +189,9 @@ var main = function (input) {
     mode = "red";
     myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
-  if (
-    mode == "green" &&
-    !playing &&
-    !(
-      input == "scissors" ||
-      input == "paper" ||
-      input == "stone" ||
-      input == ""
-    )
-  ) {
-    myOutputValue = `Please press SUBMIT to start the games`;
+  // to guide player at outset i.e green mode to press SUBMIT and nothing else to start game
+  if (mode == "green" && input !== "") {
+    return `😠😅 Please press SUBMIT to start the game.`;
   }
 
   // to guide player when incorrect input inserted, playing is a boolean which is "true"
