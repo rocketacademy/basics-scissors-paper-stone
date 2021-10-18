@@ -1,3 +1,6 @@
+var userwins = 0;
+var systemwins = 0;
+
 var main = function (input) {
   var lowercaseinput = input.toLowerCase(input);
 
@@ -16,36 +19,65 @@ var main = function (input) {
     systemobject = "stone";
   }
 
-  // lets define the default output
-  var myOutputValue =
-    "Ops, you lost. " +
-    "<br>" +
-    "Your " +
-    lowercaseinput +
-    " doesn't beat my " +
-    systemobject +
-    "!";
+  var myOutputValue = "";
+
+  // lets define how system can win
+  if (
+    (lowercaseinput == "scissors" && systemobject == "stone") ||
+    (lowercaseinput == "paper" && systemobject == "scissors") ||
+    (lowercaseinput == "stone" && systemobject == "paper")
+  ) {
+    systemwins = systemwins + 1;
+    myOutputValue =
+      "Ops, you lost. " +
+      "<br>" +
+      "My " +
+      systemobject +
+      " beats your " +
+      lowercaseinput +
+      "!" +
+      "<br>" +
+      " Your score: " +
+      userwins +
+      " | My score: " +
+      systemwins;
+  }
 
   // lets define how a user can win
   if (
-    (lowercaseinput == "reversed scissors" && systemobject == "stone") ||
-    (lowercaseinput == "reversed paper" && systemobject == "scissors") ||
-    (lowercaseinput == "reversed stone" && systemobject == "paper")
+    (lowercaseinput == "scissors" && systemobject == "paper") ||
+    (lowercaseinput == "paper" && systemobject == "stone") ||
+    (lowercaseinput == "stone" && systemobject == "scissors")
   ) {
+    userwins = userwins + 1;
     myOutputValue =
       "Dang, you won!" +
       "<br>" +
       "Your " +
       lowercaseinput +
-      " beat my " +
+      " beats my " +
       systemobject +
-      "!";
+      "!" +
+      "<br>" +
+      "Your score: " +
+      userwins +
+      " | My score: " +
+      systemwins;
   }
 
   // lets define a draw
   if (lowercaseinput == systemobject) {
     myOutputValue =
-      "Ooo, you read my mind. I chose " + systemobject + " too. It's a draw!";
+      "Ooo, you read my mind." +
+      "<br>" +
+      "I chose " +
+      systemobject +
+      " too. It's a draw!" +
+      "<br>" +
+      "Your score: " +
+      userwins +
+      " | My score: " +
+      systemwins;
   }
 
   return myOutputValue;
