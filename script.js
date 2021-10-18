@@ -1,6 +1,11 @@
   var SCISSORS = 'scissors';
   var PAPER = 'paper';
   var STONE = 'stone';
+  var numOfPlayerWins = 0
+  var numOfComputerWins = 0
+  var state = "WAITING TO START"
+  var username = ""
+
 
 
   var getComputerRPS = function() {
@@ -34,29 +39,39 @@
     );
   };
 
-
   var main = function (input) {
     var PlayerRPS = input
     var ComputerRPS = getComputerRPS()
+    var generalMessage = `You used ${input} the computer used ${getComputerRPS()}!`
+    var winCounter = `${username} has  ${numOfPlayerWins} number of wins the computer has ${numOfComputerWins} number of wins.`
+  
+    if (state == "WAITING TO START"){
+      username = input
+      state = "RPS"
+      return `username is now ${input}`
+    }
 
-    if (
+    else if (
+      state == "RPS" &&
       input != SCISSORS &&
       input != PAPER &&
       input != STONE
       ) {
       return 'Please input 1 of "scissors", "paper", or "stone" to play the game.';
       }
-    if (playerDraw(PlayerRPS, ComputerRPS)){
-      return "DRAW"
+    
+     else if (state == "RPS" && playerDraw(PlayerRPS, ComputerRPS)){
+      return `${generalMessage} Draw! No winners here. ${winCounter}` 
     }
 
     
-    if (playerWin(PlayerRPS, ComputerRPS)){
-      return "WIN"
+    else if (state == "RPS" && playerWin(PlayerRPS, ComputerRPS)){
+      numOfPlayerWins += 1
+      return `${generalMessage} You won! ${winCounter}` 
 
     }
-
-    return "LOSE"
+    else 
+      numOfComputerWins += 1;
+      return `${generalMessage} You lose. ${winCounter}` 
     
     }
-console.log(PlayerRPS,ComputerRPS)
