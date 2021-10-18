@@ -80,6 +80,16 @@ var main = function (input) {
       systemwins;
   }
 
+  // lets add input validation
+  if (
+    lowercaseinput != "scissors" ||
+    lowercaseinput != "paper" ||
+    lowercaseinput != "stone"
+  ) {
+    myOutputValue =
+      "Huh? I didn't get that. You're supposed to choose either 'scissors', 'paper' or 'stone'. Let's try again!";
+  }
+
   return myOutputValue;
 };
 
