@@ -54,7 +54,8 @@ var main = function (input) {
 // lets generate three random numbers
 var chooseobject = function () {
   var randomDecimal = Math.random() * 3;
-  var randomNumber = Math.ceil(randomDecimal);
+  var randomInteger = Math.floor(randomDecimal);
+  var randomNumber = randomInteger + 1;
 
   return randomNumber;
 };
