@@ -15,6 +15,7 @@ var prevWinner = "";
 var currentWinner = "";
 var PLAYER = `Player`;
 var COMPUTER = `Computer`;
+var userName = ``;
 
 // Game modes
 var gameMode = "";
@@ -23,12 +24,12 @@ var REVERSED = `Reversed SPS`;
 var KOREAN = `Korean SPS`;
 var COM = `COM vs COM`;
 
-// User Name prompt
+//User Name prompt
 {
-  var name = prompt("Your name", "");
+  var userName = prompt("Please enter Your name");
   var color = "green";
   document.write(
-    `<CENTER><FONT FACE=ARIAdL,VERDANA COLOR=${color} SIZE=5>Welcome! ${name}.<br>Please enter one of the following to choose a game mode. <br>1. ${BASIC}<br>2. ${REVERSED}<br>3.${KOREAN}<br>4.${COM}</FONT><HR NOSHADE WIDTH=450></CENTER><P>`
+    `<CENTER><FONT FACE=ARIAdL,VERDANA COLOR=${color} SIZE=5>Welcome! ${userName}.<br>Please enter one of the following to choose a game mode. <br>1. ${BASIC}<br>2. ${REVERSED}<br>3.${KOREAN}<br>4.${COM}</FONT><HR NOSHADE WIDTH=450></CENTER><P>`
   );
 }
 
@@ -115,6 +116,9 @@ var instructionCom = function () {
   return `Just Click 'Submit button' to play`;
 };
 
+// Instructions to select game
+var gameSelectInstructions = `Enter 1-4 to select a game.<br>1. ${BASIC}<br>2. ${REVERSED}<br>3. ${KOREAN}<br>4. ${COM}`;
+
 // Result for Basic SPS
 var checkResultBasic = function (input) {
   var progInput = generateProgamInput();
@@ -122,7 +126,7 @@ var checkResultBasic = function (input) {
   // draw game
   if (input == progInput) {
     countDrawTurn += 1;
-    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // win game
   if (
@@ -131,7 +135,7 @@ var checkResultBasic = function (input) {
     (input == PAPER && progInput == STONE)
   ) {
     countWinTurn += 1;
-    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // Lose game
   if (
@@ -140,7 +144,7 @@ var checkResultBasic = function (input) {
     (input == PAPER && progInput == SCISSORS)
   ) {
     countLoseTurn += 1;
-    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
 };
 
@@ -150,7 +154,7 @@ var checkResultReversed = function (input) {
   countGameTurn += 1;
   // draw game
   if (input == `Reversed ${progInput}`) {
-    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // win game
   if (
@@ -159,7 +163,7 @@ var checkResultReversed = function (input) {
     (input == REVERSED_PAPER && progInput == SCISSORS)
   ) {
     countWinTurn += 1;
-    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // Lose game
   if (
@@ -168,7 +172,7 @@ var checkResultReversed = function (input) {
     (input == REVERSED_PAPER && progInput == STONE)
   ) {
     countLoseTurn += 1;
-    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
 };
 
@@ -178,7 +182,7 @@ var checkResultKorean = function (input) {
   countGameTurn += 1;
   // 1st draw turn
   if (input == progInput && countPlayerscore == 0 && countComputerscore == 0) {
-    myOutPutValue = `Computer chose ${progInput}.<br>${name} chose ${input}<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
+    myOutPutValue = `Computer chose ${progInput}.<br>${userName} chose ${input}<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
   }
   // when player wins a turn
   if (
@@ -188,7 +192,7 @@ var checkResultKorean = function (input) {
   ) {
     prevWinner = PLAYER;
     countPlayerscore += 1;
-    myOutPutValue = `Computer chose ${progInput}.<br>${name} chose ${input}<br>${prevWinner} wins this turn<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
+    myOutPutValue = `Computer chose ${progInput}.<br>${userName} chose ${input}<br>${prevWinner} wins this turn<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
   }
   // when computer wins a turn
   if (
@@ -198,7 +202,7 @@ var checkResultKorean = function (input) {
   ) {
     prevWinner = COMPUTER;
     countComputerscore += 1;
-    myOutPutValue = `Computer chose ${progInput}.<br>${name} chose ${input}<br>${prevWinner} wins this turn<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
+    myOutPutValue = `Computer chose ${progInput}.<br>${userName} chose ${input}<br>${prevWinner} wins this turn<br>Total turns played this game = ${countGameTurn}<br>Continue playing to win the game.<br>muk-jji-ppa!`;
   }
   console.log(`player score = ${countPlayerscore}`);
   console.log(`computer score = ${countComputerscore}`);
@@ -208,7 +212,7 @@ var checkResultKorean = function (input) {
     (countPlayerscore > countComputerscore ||
       countComputerscore > countPlayerscore)
   ) {
-    myOutPutValue = `Grand Winner of this game is ${prevWinner}<br>Computer chose ${progInput}.<br>${name} chose ${input}<br>Winner of the last turn is ${prevWinner}<br>Total tuns played this game = ${countGameTurn}`;
+    myOutPutValue = `Grand Winner of this game is ${prevWinner}<br>Computer chose ${progInput}.<br>${userName} chose ${input}<br>Winner of the last turn is ${prevWinner}<br>Total tuns played this game = ${countGameTurn}`;
     countPlayerscore = 0;
     countComputerscore = 0;
     countGameTurn = 0;
@@ -222,7 +226,7 @@ var checkResultCom = function () {
   // draw game
   if (randomInput == progInput) {
     countDrawTurn += 1;
-    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${name} chose ${randomInput}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Draw!<br>Computer chose ${progInput}.<br>${userName} chose ${randomInput}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // win game
   if (
@@ -231,7 +235,7 @@ var checkResultCom = function () {
     (randomInput == PAPER && progInput == STONE)
   ) {
     countWinTurn += 1;
-    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${name} chose ${randomInput}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Win!<br>Computer chose ${progInput}.<br>${userName} chose ${randomInput}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
   // Lose game
   if (
@@ -240,17 +244,20 @@ var checkResultCom = function () {
     (randomInput == PAPER && progInput == SCISSORS)
   ) {
     countLoseTurn += 1;
-    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${name} chose ${randomInput}<br>${name} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
+    myOutPutValue = `Lose!<br>Computer chose ${progInput}.<br>${userName} chose ${randomInput}<br>${userName} win ${countWinTurn}/${countGameTurn} turns. ${generateWinLossRecord()}.<br>${countDrawTurn} were draw games. <br>Computer wins ${countLoseTurn}/${countGameTurn}.`;
   }
 };
 
 // Main function
 var main = function (input) {
   gameMode = selectGameMode(input);
-  if (!gameMode) {
-    return `Please select a game Mode to Start`;
+
+  if (gameMode == ``) {
+    return `Welcome! ${userName}<br>Please select a game Mode to Start.<br>${gameSelectInstructions}`;
   }
+  gameMode = selectGameMode(input);
   console.log(`Selected Game Mode = ${gameMode}`);
+
   if (
     gameMode == BASIC &&
     (input == SCISSORS || input == PAPER || input == STONE)
@@ -271,7 +278,7 @@ var main = function (input) {
   ) {
     checkResultKorean(input);
   }
-  if (gameMode == COM) {
+  if (gameMode == COM && input == ``) {
     checkResultCom();
   }
   return myOutPutValue;
