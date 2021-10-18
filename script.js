@@ -57,27 +57,27 @@ var main = function (input) {
     // I tried to put this whole block as a separate function above but it didnt work/i didnt know how to do it...so i had to add it back here
   } else {
     // Generate a random number from 0-2
-    randomAttack = randomOutput();
+    var randomAttack = randomOutput();
 
     //Assign 0 to scissors, which means computer chose scissors
     if (randomAttack == 0) {
-      var finalAttack = "scissors";
+      var computerChoice = "scissors";
       console.log("This is the computer choice:");
-      console.log(finalAttack);
+      console.log(computerChoice);
     }
 
     //Assign 1 to stone, which means computer chose stone
     if (randomAttack == 1) {
-      var finalAttack = "stone";
+      var computerChoice = "stone";
       console.log("This is the computer choice:");
-      console.log(finalAttack);
+      console.log(computerChoice);
     }
 
     //Assign 2 to paper, which means computer chose paper
     if (randomAttack == 2) {
-      var finalAttack = "paper";
+      var computerChoice = "paper";
       console.log("This is the computer choice:");
-      console.log(finalAttack);
+      console.log(computerChoice);
     }
 
     // I don't know where this block should fit in...should it be an additional if function nested on top or??
@@ -88,35 +88,35 @@ var main = function (input) {
     }
 
     //Situation if player wins
-    if (playerWins(input, finalAttack)) {
+    if (playerWins(input, computerChoice)) {
       winCount += 1;
       totalGameCount += 1;
       var winPercentage = Math.floor((winCount / totalGameCount) * 100);
 
       //Customise output message depending on win percentage
       if (winPercentage < 60) {
-        myOutputValue = `${userName}, you won! <br> You chose ${input} but the computer chose ${finalAttack} <br> Your current win count is ${winCount} and your win percentage is ${winPercentage}% You need to improve!`;
+        myOutputValue = `${userName}, you won! <br> You chose ${input} but the computer chose ${computerChoice} <br> Your current win count is ${winCount} and your win percentage is ${winPercentage}% You need to improve!`;
       } else {
-        myOutputValue = `${userName}, you won! <br> You chose ${input} but the computer chose ${finalAttack} <br> Your current win count is ${winCount} and your win percentage is ${winPercentage}%`;
+        myOutputValue = `${userName}, you won! <br> You chose ${input} but the computer chose ${computerChoice} <br> Your current win count is ${winCount} and your win percentage is ${winPercentage}%`;
       }
     }
 
     //Situation if player loses
-    if (playerLoses(input, finalAttack)) {
+    if (playerLoses(input, computerChoice)) {
       loseCount += 1;
       totalGameCount += 1;
       var winPercentage = Math.floor((winCount / totalGameCount) * 100);
 
       //Customise output message depending on win percentage
       if (winPercentage < 60) {
-        myOutputValue = `${userName}, you lose! <br> You chose ${input} but the computer chose ${finalAttack} <br> Your current lose count is ${loseCount} and your win percentage is ${winPercentage}% You need to improve!`;
+        myOutputValue = `${userName}, you lose! <br> You chose ${input} but the computer chose ${computerChoice} <br> Your current lose count is ${loseCount} and your win percentage is ${winPercentage}% You need to improve!`;
       } else {
-        myOutputValue = `${userName}, you lose! <br> You chose ${input} but the computer chose ${finalAttack} <br> Your current lose count is ${loseCount} and your win percentage is ${winPercentage}%`;
+        myOutputValue = `${userName}, you lose! <br> You chose ${input} but the computer chose ${computerChoice} <br> Your current lose count is ${loseCount} and your win percentage is ${winPercentage}%`;
       }
     }
 
     //Situation if player draws
-    if (playerDraws(input, finalAttack)) {
+    if (playerDraws(input, computerChoice)) {
       totalGameCount += 1;
       var winPercentage = Math.floor((winCount / totalGameCount) * 100);
 
