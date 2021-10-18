@@ -61,11 +61,26 @@ var checkIfUserWon = function (userSPS, randomSPS) {
   return false;
 };
 
+//check if it is a draw
+var checkIfDraw = function (userSPS, randomSPS) {
+  return (
+    userSPS == randomSPS ||
+    (userSPS == REVERSED_SCISSORS && randomSPS == SCISSORS) ||
+    (userSPS == REVERSED_PAPER && randomSPS == PAPER) ||
+    (userSPS == REVERSED_STONE && randomSPS == STONE)
+  );
+};
+
 // Calculate how many times the user wins out of the total number of games played
 var getWinRateInfo = function () {
   var winRate = Math.floor((numUserWon / numGamesPlayed) * 100);
   console.log(`win rate: ${winRate}`);
-  return `You won ${numUserWon}/${numGamesPlayed} of games played. Win rate for ${userName}: ${winRate}%.`;
+  if (winRate < 50) {
+    return `You won ${numUserWon}/${numGamesPlayed} of games played. Win rate for ${userName}: ${winRate}%. Don't give up!`;
+  }
+  if (winRate >= 50) {
+    return `You won ${numUserWon}/${numGamesPlayed} of games played. Win rate for ${userName}: ${winRate}%. Good job, keep going!`;
+  }
 };
 
 var main = function (input) {
@@ -108,13 +123,8 @@ var main = function (input) {
       winRateInfo = getWinRateInfo();
       return `${genericOutput} ${userName}, you win! <br><br> You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
     }
-    //check if it is a draw
-    if (
-      userSPS == randomSPS ||
-      (userSPS == REVERSED_SCISSORS && randomSPS == SCISSORS) ||
-      (userSPS == REVERSED_PAPER && randomSPS == PAPER) ||
-      (userSPS == REVERSED_STONE && randomSPS == STONE)
-    ) {
+    //if it is a draw
+    if (checkIfDraw(userSPS, randomSPS)) {
       return `${genericOutput} It's a draw! You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
     }
     //if user lose
