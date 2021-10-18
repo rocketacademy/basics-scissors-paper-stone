@@ -130,22 +130,12 @@ var determineResult = function (gameMode, userChoice, comChoice) {
 var formatChoice = function (choice) {
   var choiceFormatted;
 
-  // for normal gameplay
   if (choice == "scissors") {
     choiceFormatted = scissorsFormatted;
   } else if (choice == "paper") {
     choiceFormatted = paperFormatted;
   } else if (choice == "stone") {
     choiceFormatted = stoneFormatted;
-  }
-
-  // for REVERSED gameplay
-  if (choice == "reversed scissors") {
-    choiceFormatted = reversedScissorsFormatted;
-  } else if (choice == "reversed paper") {
-    choiceFormatted = reversedPaperFormatted;
-  } else if (choice == "reversed stone") {
-    choiceFormatted = reversedStoneFormatted;
   }
 
   return choiceFormatted;
