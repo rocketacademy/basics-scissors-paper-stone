@@ -38,12 +38,18 @@ var userDraw = 0;
 // Function to change game mode
 var changeGameMode = function (mode) {
   var gameModeMessage;
+
+  // change from Normal to Reversed mode
   if (mode == "normal") {
     gameMode = "reversed";
+    console.log(" ");
     console.log("New gamemode: ", gameMode);
     gameModeMessage = `Reversing the game!`;
-  } else if (mode == "reversed") {
+  }
+  // change from Reversed to Normal mode
+  else if (mode == "reversed") {
     gameMode = "normal";
+    console.log(" ");
     console.log("New gamemode: ", gameMode);
     gameModeMessage = `Resetting the game!`;
   }
@@ -73,8 +79,8 @@ var getComputerChoice = function () {
 };
 
 // Function to output results
-// -- For normal gameplay --
 var determineResult = function (gameMode, userChoice, comChoice) {
+  console.log(" ");
   console.log("<<< Initiating ", gameMode, " game mode >>>");
   var result = "";
 
@@ -176,28 +182,39 @@ var main = function (input) {
 
     // change the game mode
     gameMode = "normal";
+
+    // set message for new user
     myOutputValue = `
     Hi there, ${username}! <br><br>
     Would you like to play a game? <br><br>
     Type 'scissors', 'paper' or 'stone' to begin! <br><br>
     You can also choose to reverse the rules to win by typing "reverse".
     `;
+
+    return myOutputValue;
   }
+
   // if input is not recognised
-  else if (!isInputValid) {
+  if (!isInputValid) {
     myOutputValue = `Sorry ${username}, I didn't recognise that. Please type 'scissors', 'paper' or 'stone' to play.`;
     console.log("Input not recognised --> ", input);
+    return myOutputValue;
   }
+
   // if user inputs "reverse", change the game mode
-  else if (input == "reverse") {
+  if (input == "reverse") {
     myOutputValue = changeGameMode(gameMode);
+    return myOutputValue;
   }
+
   // if input is valid, play the game
-  else if (isInputValid) {
+  if (isInputValid) {
+    // choices and formatting
     var opponentChoice = getComputerChoice();
     var opponentChoiceFormatted = formatChoice(opponentChoice);
     var userChoiceFormatted = formatChoice(input);
 
+    // gameplay
     var gameResult = determineResult(gameMode, input, opponentChoice);
     var winRate = ((userWin / (userWin + userLose + userDraw)) * 100).toFixed(
       1
@@ -205,16 +222,6 @@ var main = function (input) {
 
     // motivational message
     var motivationMessage = motivateUser(username, winRate);
-
-    // Log out game details
-    console.log("Computer chose [", opponentChoice, "]");
-    console.log(username, " chose [", input, "]");
-    console.log("Game result: ", gameResult, "!!");
-    console.log("------- SCORE -------");
-    console.log("Computer Wins: ", userLose);
-    console.log("User Wins: ", userWin, "(Winning rate of ", winRate, "%)");
-    console.log("Number of Draws: ", userDraw);
-    console.log("---------------------");
 
     myOutputValue = `
     The computer chose ${opponentChoiceFormatted}<br>
@@ -227,6 +234,18 @@ var main = function (input) {
     ${motivationMessage}<br><br>
     Wanna try again? Type 'scissors', 'paper' or 'stone' for another round! You can also type 'reverse' to change the game mode.
     `;
+
+    // Log out game details
+    console.log("Computer chose [", opponentChoice, "]");
+    console.log(username, " chose [", input, "]");
+    console.log("Game result: ", gameResult, "!!");
+    console.log("------- SCORE -------");
+    console.log("Computer Wins: ", userLose);
+    console.log("User Wins: ", userWin, "(Winning rate of ", winRate, "%)");
+    console.log("Number of Draws: ", userDraw);
+    console.log("---------------------");
+
+    return myOutputValue;
   }
 
   console.log("");
