@@ -1,10 +1,66 @@
+var computerhand = ``;
+var winCount = 0;
+var roundCount = 0;
+var gameMode = `waiting for username`;
+var userName = "";
+var playerHand = ``;
+
+// ======================================MAIN FUNCTION STARTS BELOW ====================================
+
 var main = function (input) {
-  // Input validation
-  if (input != `scissors` || `paper` || `stone`) {
-    var myOutputValue = `Sorry, ${input} was not recognized. You can only enter scissors, paper, or stone. Please try again.`;
+  //Username needed to start the game
+  if (gameMode == `waiting for username`) {
+    userName = input;
+    gameMode = `SPS`;
+    myOutputValue = `Hello ${userName}! <br> You are now ready to play. Paper, scissors, or stone?`;
+  } else if (gameMode == `SPS`) {
+    myOutputValue = spsGame(input);
+  } else {
+    // input validation
+    myOutputValue = `not working`;
+
+    //`Sorry, ${input} was not recognized. You can only enter scissors, paper, or stone. Please try again.`;
   }
 
-  // Generate the computer hand
+  return `${myOutputValue} <br> GAME MODE: ${gameMode} <br> Rounds played: ${roundCount}`;
+};
+
+// ===============================MAIN FUNCITON ENDS HERE==================================================
+
+// This function is to compare hands and check whether player or computer won
+var WinnerChecker = function (playerHand, computerhand) {
+  // THIS FUNCTION IS FOR PLAYER WINS
+  if (
+    (playerHand == `scissors` && computerhand == `paper`) ||
+    (playerHand == `paper` && computerhand == `stone`) ||
+    (playerHand == `stone` && computerhand == `scissors`)
+  ) {
+    return `Player win`;
+  }
+
+  // THIS FUCTION IS FOR TIE
+  if (
+    (playerHand == `scissors` && computerhand == `scissors`) ||
+    (playerHand == `paper` && computerhand == `paper`) ||
+    (playerHand == `stone` && computerhand == `stone`)
+  ) {
+    return `Tie`;
+  }
+
+  // THIS IS FOR PLAYER LOSES
+  if (
+    (playerHand == `scissors` && computerhand == `stone`) ||
+    (playerHand == `paper` && computerhand == `scissors`) ||
+    (playerHand == `stone` && computerhand == `paper`)
+  ) {
+    return `Player loses`;
+  }
+};
+
+// SPS Game function
+var spsGame = function (playerHand) {
+  var msg = ``;
+
   randomnumber = generaterandomnumber();
 
   // connect each number to either SPS
@@ -18,72 +74,43 @@ var main = function (input) {
     var computerhand = "stone";
   }
 
-  var WinnerResult = WinnerChecker(input, computerhand);
+  var WinnerResult = WinnerChecker(playerHand, computerhand);
+
+  console.log(WinnerResult);
+
   // This is what the player sees if they lose against the computer
   if (WinnerResult == `Player loses`) {
-    var myOutputValue = `You lose! You showed ${input} and I showed ${computerhand}.`;
+    roundCount = roundCount + 1;
+    var msg = `${userName} you lose! You showed ${playerHand} and the computer showed ${computerhand}. Your total wins are ${winCount}.`;
   }
 
   // This is what the player sees if they win against the computer
   if (WinnerResult == `Player win`) {
-    var myOutputValue = `You win! You showed ${input} and I showed ${computerhand}.`;
+    winCount = winCount + 1;
+    roundCount = roundCount + 1;
+    console.log(winCount);
+    var msg = `${userName} you win! You showed ${playerHand} and the computer showed ${computerhand}. Your total wins are ${winCount}`;
   }
 
   // This is what the player sees if there is a tie
   if (WinnerResult == `Tie`) {
-    var myOutputValue = `It is a tie! You showed ${input} and I showed ${computerhand}`;
+    roundCount = roundCount + 1;
+    var msg = `${userName} It is a tie! You showed ${playerHand} and the computer showed ${computerhand}. Your total wins are ${winCount}`;
   }
 
   console.log(`=======CHECK=======`);
   console.log(`player showed:`);
-  console.log(input);
+  console.log(playerHand);
   console.log(`computer showed:`);
   console.log(computerhand);
+  console.log(WinnerResult);
 
-  return myOutputValue;
+  return msg;
 };
-// ====================================================================================
 
-// This function is to compare hands and check whether player or computer won
-var WinnerChecker = function (input, computerhand) {
-  // THIS FUNCTION IS FOR PLAYER WINS
-  if (
-    (input == `scissors` && computerhand == `paper`) ||
-    (input == `paper` && computerhand == `stone`) ||
-    (input == `stone` && computerhand == `scissors`)
-  ) {
-    return `Player win`;
-  }
-  console.log(`This condition will only run if the player wins`);
-  console.log(input);
-
-  // THIS FUCTION IS FOR TIE
-  if (
-    (input == `scissors` && computerhand == `scissors`) ||
-    (input == `paper` && computerhand == `paper`) ||
-    (input == `stone` && computerhand == `stone`)
-  ) {
-    return `Tie`;
-  }
-  console.log(`This condition will only run if it is a tie`);
-  console.log(`Player showed ${input}`);
-  console.log(`computer showed ${computerhand}`);
-
-  // THIS IS FOR PLAYER LOSES
-  if (
-    (input == `scissors` && computerhand == `stone`) ||
-    (input == `paper` && computerhand == `scissors`) ||
-    (input == `stone` && computerhand == `paper`)
-  ) {
-    return `Player loses`;
-  }
-  console.log(`This will only run if the player loses`);
-  console.log(`Player showed ${input}`);
-  console.log(`computer showed ${computerhand}`);
-};
 // =============================================================================================
 
-// This function generates the computer hand
+// This function generates a random number
 var generaterandomnumber = function () {
   var randomdecimal = Math.random() * 3;
   var randomwholenumber = Math.floor(randomdecimal);
