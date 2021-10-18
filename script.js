@@ -210,7 +210,7 @@ var reverseScissorsPaperStone = function (userInput) {
   console.log("Game version:", gameVersion);
   console.log("Game mode:", gameMode);
   console.log(takeInputFrom, " guesses");
-  var computerDecision = computerRoll();
+  computerDecision = computerRoll();
   if (takeInputFrom == "computer") {
     userDecision = computerRoll();
   } else {
@@ -252,7 +252,7 @@ var koreanScissorsPaperStone = function (userInput) {
   console.log("Game version:", gameVersion);
   console.log("Game mode:", gameMode);
   console.log(takeInputFrom, "guesses");
-  var computerDecision = computerRoll();
+  computerDecision = computerRoll();
   if (takeInputFrom == "computer") {
     userDecision = computerRoll();
   } else {
@@ -301,7 +301,7 @@ var reverseKoreanScissorsPaperStone = function (userInput) {
   console.log("Game version:", gameVersion);
   console.log("Game mode:", gameMode);
   console.log(takeInputFrom, "guesses");
-  var computerDecision = computerRoll();
+  computerDecision = computerRoll();
   if (takeInputFrom == "computer") {
     userDecision = computerRoll();
   } else {
@@ -350,7 +350,7 @@ var specialScissorsPaperStone = function (userInput) {
   console.log("Game version:", gameVersion);
   console.log("Game mode:", gameMode);
   console.log(takeInputFrom, "guesses");
-  var computerDecision = specialComputerRoll();
+  computerDecision = specialComputerRoll();
   if (takeInputFrom == "computer") {
     userDecision = specialComputerRoll();
   } else {
@@ -392,7 +392,7 @@ var reverseSpecialScissorsPaperStone = function (userInput) {
   console.log("Game version:", gameVersion);
   console.log("Game mode:", gameMode);
   console.log(takeInputFrom, "guesses");
-  var computerDecision = specialComputerRoll();
+  computerDecision = specialComputerRoll();
   if (takeInputFrom == "computer") {
     userDecision = specialComputerRoll();
   } else {
