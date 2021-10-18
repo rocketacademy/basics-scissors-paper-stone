@@ -73,33 +73,38 @@ var main = function (input) {
     }
     return myOutPutValue;
   } else if (userName !== "") {
-    if (!input) {
+    if (input) {
       myOutPutValue = `Play scissors, paper or stone.`;
     }
 
-    if (input == randHand) {
-      myOutPutValue = `You played ${input}<br>I played ${randHand}<br>We DRAW.`;
+    if (input.toLowerCase() == randHand) {
+      myOutPutValue = `You played ${input.toLowerCase()}<br>I played ${randHand}<br>We DRAW.`;
       numOfGame += 1;
     }
     if (
-      (input == "scissors" && randHand == "paper") ||
-      (input == "paper" && randHand == "stone") ||
-      (input == "stone" && randHand == "scissors")
+      (input.toLowerCase() == "scissors" && randHand == "paper") ||
+      (input.toLowerCase() == "paper" && randHand == "stone") ||
+      (input.toLowerCase() == "stone" && randHand == "scissors")
     ) {
       numOfWins += 1;
       numOfGame += 1;
-      myOutPutValue = `You played ${input}<br>I played ${randHand}<br>You WIN`;
+      myOutPutValue = `You played ${input.toLowerCase()}<br>I played ${randHand}<br>You WIN`;
     }
 
     if (
-      (input == "scissors" && randHand == "stone") ||
-      (input == "paper" && randHand == "scissors") ||
-      (input == "stone" && randHand == "paper")
+      (input.toLowerCase() == "scissors" && randHand == "stone") ||
+      (input.toLowerCase() == "paper" && randHand == "scissors") ||
+      (input.toLowerCase() == "stone" && randHand == "paper")
     ) {
       numOfGame += 1;
-      myOutPutValue = `You played ${input} <br>I played ${randHand}<br>You LOSE`;
+      myOutPutValue = `You played ${input.toLowerCase()} <br>I played ${randHand}<br>You LOSE`;
     }
-
+    if (input.toLowerCase() == "reset") {
+      userName = "";
+      numOfWins = 0;
+      numOfGame = 0;
+      return "Okay, game reset; please input user name again";
+    }
     return `Dear ${userName}<br>${myOutPutValue}<br> You have won ${numOfWins}/${numOfGame} games.`;
   }
 };
