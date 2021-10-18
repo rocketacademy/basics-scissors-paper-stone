@@ -1,46 +1,59 @@
+/*
+This is a scissors-paper-stone (SPS) game 
+*/
+
+// global variables
+var nTotalPlays = 0;
+var nUserWins = 0;
+var nDraws = 0;
+var gameMode = "inputUserName";
+var userName = "";
+
 // for any valid user input, gives the result
 var computeOutcome = function (userInput, programInput) {
-  // default outcome, assumes invalid input
-  var outcome = "Please try again. Input only scissors, paper, or stone.";
+  var outcome = "";
   // draw
-  if (userInput == programInput) {
-    outcome = "it's a draw";
+  if (userInput == programInput || userInput == "reversed " + programInput) {
+    outcome = "it's a draw!";
+    nDraws += 1;
   }
   // user wins
-  if (
+  else if (
     (userInput == "scissors" && programInput == "paper") ||
     (userInput == "stone" && programInput == "scissors") ||
     (userInput == "paper" && programInput == "stone")
   ) {
-    outcome = "the user wins";
-  }
-  // program wins
-  if (
-    (userInput == "scissors" && programInput == "stone") ||
-    (userInput == "stone" && programInput == "paper") ||
-    (userInput == "paper" && programInput == "scissors")
-  ) {
-    outcome = "the user loses";
-  }
-  // REVERSED logic-- draw
-  if (userInput == "reversed " + programInput) {
-    outcome = "You drew in this tricky reversed game!";
-  }
-  // REVERSED logic-- program wins
-  if (
-    (userInput == "reversed scissors" && programInput == "paper") ||
-    (userInput == "reversed stone" && programInput == "scissors") ||
-    (userInput == "reversed paper" && programInput == "stone")
-  ) {
-    outcome = "You lost in this tricky reversed game!";
+    outcome = "you win";
+    // add to user win counter
+    nUserWins += 1;
   }
   // REVERSED logic -- user wins
-  if (
+  else if (
     (userInput == "reversed scissors" && programInput == "stone") ||
     (userInput == "reversed stone" && programInput == "paper") ||
     (userInput == "reversed paper" && programInput == "scissors")
   ) {
     outcome = "You win in this tricky reversed game!";
+    // add to user win counter
+    nUserWins += 1;
+  }
+
+  // program wins
+  else if (
+    (userInput == "scissors" && programInput == "stone") ||
+    (userInput == "stone" && programInput == "paper") ||
+    (userInput == "paper" && programInput == "scissors")
+  ) {
+    outcome = "the computer wins";
+  }
+
+  // REVERSED logic-- program wins
+  else if (
+    (userInput == "reversed scissors" && programInput == "paper") ||
+    (userInput == "reversed stone" && programInput == "scissors") ||
+    (userInput == "reversed paper" && programInput == "stone")
+  ) {
+    outcome = "You lost in this tricky reversed game!";
   }
   return outcome;
 };
@@ -70,17 +83,74 @@ var randomDraw = function () {
   return draw;
 };
 
+// main function
 var main = function (input) {
-  var programDraw = randomDraw();
-  // set default outcome if user input is invalid
-  var outcome = computeOutcome(input, programDraw);
+  // mode 1: get username
+  if (gameMode == "inputUserName") {
+    // set the name
+    userName = input;
+    // now that we have the name, switch mode
+    gameMode = "playGame";
+    return "Hello " + userName + ", proceed to make your SPS choice";
+  }
 
-  return (
-    "You chose: " +
-    input +
-    "<br>Computer chose: " +
-    programDraw +
-    "<br><br>Outcome: " +
-    outcome
-  );
+  // mode 2: play game
+  else if (gameMode == "playGame") {
+    // input validation
+    if (
+      !(
+        input == "scissors" ||
+        input == "paper" ||
+        input == "stone" ||
+        input == "reversed scissors" ||
+        input == "reversed paper" ||
+        input == "reversed stone"
+      )
+    ) {
+      // invalid input, cannot play
+      return "Please try again. Input only scissors, paper, or stone.";
+    } else {
+      // valid input, proceed to play
+      var programDraw = randomDraw();
+      nTotalPlays += 1;
+      // determine outcome of game
+      var outcome = computeOutcome(input, programDraw);
+
+      // calculate win percentage
+      var winPct = ((nUserWins / nTotalPlays) * 100).toFixed(1);
+      var extraMsg = "";
+      if (winPct >= 50) {
+        extraMsg = "You're doing great!";
+      } else if (winPct < 50) {
+        extraMsg = "Gotta catch up!";
+      }
+
+      return (
+        userName +
+        " versus the computer" +
+        "<br><br>You chose: " +
+        input +
+        "<br>Computer chose: " +
+        programDraw +
+        "<br><br>Outcome: " +
+        outcome +
+        "<br><br>Current stats: Of " +
+        nTotalPlays +
+        " games played, " +
+        userName +
+        " won " +
+        nUserWins +
+        ", computer won " +
+        (nTotalPlays - nUserWins - nDraws) +
+        ", and " +
+        nDraws +
+        " draws.<br>" +
+        userName +
+        " has won " +
+        winPct +
+        "% of games played so far. " +
+        extraMsg
+      );
+    }
+  }
 };
