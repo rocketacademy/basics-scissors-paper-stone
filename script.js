@@ -7,14 +7,14 @@ const Choices = Object.freeze({
   Stone: "stone"
 });
 const GameEndState = Object.freeze({
-  Win: 0,
-  Lose: 1,
+  Lose: 0,
+  Win: 1,
   Draw: -1
 });
 const GameMode = Object.freeze({
   Normal: 0,
   Reversed: 1,
-  Korean: 2,
+  Korean: 2
 });
 const GameType = Object.freeze({
   ScissorsPaperStone: 0,
@@ -176,7 +176,7 @@ function runGame(rawInput) {
     displayResults("Please enter a valid input");
   } else {
     winState = getWinState(playerInput, computerChoice, programState.gameMode);
-    if (programState.gameMode != GameMode.Korean) {
+    if (programState.gameMode !== GameMode.Korean) {
       calculateScore(playerInput, computerChoice, winState);
     }
   }
@@ -184,44 +184,18 @@ function runGame(rawInput) {
 
 function getWinState(playerInput, computerChoice, gameMode) {
   let winState = null;
+
   // Check default win state
-  switch (playerInput) {
-    case Choices.Scissors:
-      {
-        if (computerChoice === Choices.Scissors) {
-          winState = GameEndState.Draw;
-        } else if (computerChoice === Choices.Stone) {
-          winState = GameEndState.Lose;
-        } else {
-          winState = GameEndState.Win;
-        }
-      }
-      break;
-    case Choices.Paper:
-      {
-        if (computerChoice === Choices.Paper) {
-          winState = GameEndState.Draw;
-        } else if (computerChoice === Choices.Scissors) {
-          winState = GameEndState.Lose;
-        } else {
-          winState = GameEndState.Win;
-        }
-      }
-      break;
-    case Choices.Stone:
-      {
-        if (computerChoice === Choices.Stone) {
-          winState = GameEndState.Draw;
-        } else if (computerChoice === Choices.Paper) {
-          winState = GameEndState.Lose;
-        } else {
-          winState = GameEndState.Win;
-        }
-      }
-      break;
-    default:
-      // NOTE: Error checking should be done before calling this function
-      break;
+  if (computerChoice === playerInput) {
+    winState = GameEndState.Draw;
+  } else {
+    if ((playerInput === Choices.Scissors && computerChoice === Choices.Paper) ||
+      (playerInput === Choices.Paper && computerChoice === Choices.Stone) ||
+      (playerInput === Choices.Stone && computerChoice === Choices.Scissors)) {
+      winState = GameEndState.Win;
+    } else {
+      winState = GameEndState.Lose;
+    }
   }
 
   console.log("Checking state...");
@@ -231,7 +205,7 @@ function getWinState(playerInput, computerChoice, gameMode) {
     case GameMode.Reversed:
       {
         if (winState !== GameEndState.Draw) {
-          winState = winState == GameEndState.Win ? GameEndState.Lose : GameEndState.Win;
+          winState = winState === GameEndState.Win ? GameEndState.Lose : GameEndState.Win;
         }
       }
       break;
