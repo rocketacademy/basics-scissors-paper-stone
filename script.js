@@ -1,5 +1,6 @@
 var totalWins = 0;
 var totalLoss = 0;
+var totalDraws = 0;
 const scissors = "scissors";
 const paper = "paper";
 const stone = "stone";
@@ -9,18 +10,25 @@ var main = function (input) {
     return `You keyed in an invalid option; choose from '${scissors}', '${paper}' or '${stone}'.`;
   }
 
-  var computerChoice = setWinningChoice();
-  if (input == computerChoice) {
+  var computerChoice = setChoice();
+  var conclusion = drawConclusion(input, computerChoice);
+  if (conclusion == "win") {
     totalWins = totalWins + 1;
     return `
-    You have ${totalWins} wins and ${totalLoss} losses.
     The computer chose ${computerChoice}, you chose ${input}. You win!
+    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
     `
-  } else {
+  } else if (conclusion == "lose") {
     totalLoss = totalLoss + 1;
     return `
-    You have ${totalWins} wins and ${totalLoss} losses.
     The computer chose ${computerChoice}, you chose ${input}. You lose!
+    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
+    `
+  } else {
+    totalDraws = totalDraws + 1;
+    return `
+    The computer chose ${computerChoice}, you chose ${input}. It's a draw!
+    You have ${totalWins} wins, ${totalLoss} losses and ${totalDraws} draws.
     `
   }
   
@@ -34,7 +42,7 @@ var rollDice = function () {
   return resultInteger;
 };
 
-var setWinningChoice = function() {
+var setChoice = function() {
   var roll = rollDice();
 
   if (roll == 0) {
@@ -47,3 +55,36 @@ var setWinningChoice = function() {
     return stone;
   }
 }
+
+var drawConclusion = function (playerChoice, computerChoice) {
+  if (playerChoice == scissors) {
+    if (computerChoice == paper) {
+      return "win";
+    } else if (computerChoice == stone) {
+      return "lose";
+    } else {
+      return "draw";
+    }
+  }
+
+  if (playerChoice == paper) {
+    if (computerChoice == stone) {
+      return "win";
+    } else if (computerChoice == scissors) {
+      return "lose";
+    } else {
+      return "draw";
+    }
+  }
+
+  if (playerChoice == stone) {
+    if (computerChoice == scissors) {
+      return "win";
+    } else if (computerChoice == paper) {
+      return "lose";
+    } else {
+      return "draw";
+    }
+  }
+
+  }
