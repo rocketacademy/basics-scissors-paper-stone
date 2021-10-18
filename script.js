@@ -2,24 +2,25 @@
 var players = []; // holds an array of Objects : players of the game
 var numOfGames = 0; // counter for the game to end
 var playing = false; // need to control when game ends and starts anew
-var promptPlayer; // undefined = falsy
+var promptPlayer = ""; // falsy
+var mode = "green";
 
 // prompts person to enter name
 var promptForName = function () {
-  var prompter;
-  // "!" to make prompter truthy to execute expression
-  if (!prompter) {
-    prompter = prompt(
-      "😅😅 Please tell us your name before 👉👉 submit to start the game"
+  if (!promptPlayer) {
+    promptPlayer = prompt(
+      "😅😅 Please tell us your name before 👉 'SUBMIT' to start a NEW game"
     );
   } // second prompt if no input as prompter remains falsy
-  if (!prompter) {
-    prompter = prompt("C'mon, game won't start until we hear your name 😂");
-  } // 3rd prompt
-  if (!prompter) {
-    prompter = "🤣Human-faeces";
+  if (!promptPlayer) {
+    promptPlayer = prompt("C'mon, game won't start until we hear your name 😂");
   }
-  return prompter;
+  // 3rd prompt but allows the game to continue
+  if (!promptPlayer) {
+    promptPlayer = "🤣No-Name-Human";
+  }
+  playing = true;
+  return promptPlayer;
 };
 
 // function that dials a random number up to a preset maximum
@@ -30,8 +31,9 @@ var diceRoll = function (num) {
 };
 
 // create players function that creates player objects that can store scores won; name of players ; identity or an array of cards if needed.
-var createPlayers = function () {
-  var playerNames = ["Human", "Computer"];
+var createPlayers = function (nameOfPlayer) {
+  var playerNames = [nameOfPlayer, "Computer"];
+  console.log(nameOfPlayer);
   var playerIdentity = ["player--1", "player--2"]; // extra stuff, not needed in this project but useful for more complex situations
   // for loop
   for (
@@ -56,7 +58,7 @@ var createPlayers = function () {
 
 // function that randomly selects either scissors, paper or stone
 var randomObjectSelect = function () {
-  var randomNumber = diceRoll(3); // number "3" parsed and to count up and including 3 ====BEWARE==== @ line 41
+  randomNumber = diceRoll(3); // number "3" parsed and to count up and including 3 ====BEWARE==== @ line 41
   var cardArray = ["scissors", "paper", "stone"];
   var cardPicked = cardArray[randomNumber - 1]; // very common issue. =====BEWARE======, decide whether "- 1 " is needed as diceRoll is used.
   return cardPicked;
@@ -65,9 +67,9 @@ var randomObjectSelect = function () {
 var initGame = function () {
   players = [];
   numOfGames = 0;
-  playing = true; // to start and allow game to start
-  var myOutputValue = `hello`;
-  return myOutputValue;
+  playing = false;
+  promptPlayer = "";
+  mode = "green";
 };
 
 // whoWinsEndGame determines when game ends and declare the winner
@@ -78,13 +80,13 @@ var whoWinsEndGame = function (numOfPlays) {
   // note that game is preset to end at game number "10"
   if (playing && numOfPlays == 10) {
     if (humanScore > computerScore) {
-      winner = `<br/><br/>${promptPlayer} win, game ends. <br/><br/> Please click submit to restart`;
+      winner = `<br/><br/>${promptPlayer} win, game ends. <br/><br/> Please click SUBMIT to restart.`;
       playing = false; // to end the game
     } else if (computerScore > humanScore) {
-      winner = `<br/><br/> 👿Computer wins, game ends. <br/><br/> Please click submit to restart`;
+      winner = `<br/><br/> 👿Computer wins, game ends. <br/><br/> Please click SUBMIT to restart.`;
       playing = false;
     } else if (computerScore == humanScore) {
-      winner = `It is a draw 🥱`;
+      winner = `It is a draw 🥱, click SUBMIT to restart.`;
       playing = false;
     }
     // just for show to eliminate output "undefined"
@@ -96,22 +98,22 @@ var whoWinsEndGame = function (numOfPlays) {
 
 // input scissors function that determines win or lose condition
 var inputScissors = function (input) {
-  var randomObject = randomObjectSelect();
+  randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "paper") {
     var human = players[0];
     human.score += 1; // increases human score by one for game won
-    var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
+    scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `😒Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } // computer wins
   else {
     var computer = players[1];
     computer.score += 1;
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `💢Computer picks ${randomObject} and wins. ${promptPlayer} lose !! <br/><br/> ${scores}`;
   }
 
@@ -120,23 +122,22 @@ var inputScissors = function (input) {
 
 // input paper function that determines win or lose result
 var inputPaper = function (input) {
-  var randomObject = randomObjectSelect();
-  console.log(randomObject);
+  randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "stone") {
-    var human = players[0];
+    human = players[0];
     human.score += 1; // increases human score by one for the game won
-    var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} win. <br/><br/> ${scores}`;
+    scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} win. <br/><br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `☠ Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } //computer wins
   else {
-    var computer = players[1];
+    computer = players[1];
     computer.score += 1; // increases computer score by one when wins
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `💢Computer picks ${randomObject}. <br/><br/> Computer wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
   }
   return myOutputValue;
@@ -144,23 +145,22 @@ var inputPaper = function (input) {
 
 // input stone function that determines win or lose result
 var inputStone = function (input) {
-  var randomObject = randomObjectSelect();
-  console.log(randomObject);
+  randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "scissors") {
-    var human = players[0]; // extract object human in array
+    human = players[0]; // extract object human in array
     human.score += 1; // increase human score by one for the game won
-    var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> ${promptPlayer} win.<br/> <br/> ${scores}`;
+    scores = playersScoreDisplay();
+    myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> ${promptPlayer} win.<br/> <br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `🥱Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } // computer wins
   else {
-    var computer = players[1]; //extract object computer in array
+    computer = players[1]; //extract object computer in array
     computer.score += 1; // increases computers score by one for game won
-    var scores = playersScoreDisplay();
+    scores = playersScoreDisplay();
     myOutputValue = `💢Computer picks ${randomObject} and wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
   }
   return myOutputValue;
@@ -176,14 +176,32 @@ var playersScoreDisplay = function () {
 
 // function that outputs to the browser
 var main = function (input) {
-  var input;
-
-  // if click with no input, will restart new game
-  if (input == "") {
+  // only allows SUBMIT to restart game when mode is "red"
+  if (input == "" && mode == "red") {
     initGame();
-    createPlayers();
-    var myOutputValue = `<br/>☀☀ G'day ☀☀<br><br>To start/restart, click submit. <br/><br/> or else, to make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
+    promptPlayer = promptForName();
+    createPlayers(promptPlayer);
+    myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
+  // flow control to start game and introduce the inputs
+  if (input == "" && mode == "green") {
+    createPlayers(promptPlayer);
+    mode = "red";
+    myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
+  }
+  if (
+    mode == "green" &&
+    !playing &&
+    !(
+      input == "scissors" ||
+      input == "paper" ||
+      input == "stone" ||
+      input == ""
+    )
+  ) {
+    myOutputValue = `Please press SUBMIT to start the games`;
+  }
+
   // to guide player when incorrect input inserted, playing is a boolean which is "true"
   if (
     playing &&
@@ -211,7 +229,7 @@ var main = function (input) {
     myOutputValue = inputStone(input);
   }
   // decides whether to end the game and declare the winner
-  var whoWinsEnd = whoWinsEndGame(numOfGames);
+  whoWinsEnd = whoWinsEndGame(numOfGames);
   var myImage =
     '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
   // to give value to main to output to browser
@@ -219,5 +237,3 @@ var main = function (input) {
 };
 
 promptPlayer = promptForName();
-initGame();
-createPlayers();
