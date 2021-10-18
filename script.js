@@ -1,25 +1,44 @@
+var userName = "";
+var gameMode = 0;
+var humanWinCount = 0;
+var machineWinCount = 0;
+var drawCount = 0;
+var roundsPlayed = 0;
+
 var main = function (input) {
-  // Validate that input is any of below 6 options otherwise return a play instruction
+  if (userName == "") {
+    if (input == "") {
+      return "Enter your name to start playing";
+    }
+    userName = input;
+  }
+  console.log("userName", userName);
+
+  if (gameMode == 0) {
+    if (!(input == 1 || input == 2 || input == 3 || input == 4)) {
+      return "Enter the number corresponding to your choice of game mode<br>1. Regular<br>2. Reversed<br>3. Let computer play for you<br>4. Korean";
+    }
+    gameMode = input;
+  }
+  console.log("gamemode", gameMode);
+
   if (
-    !(
-      input == "stone" ||
-      input == "paper" ||
-      input == "scissors" ||
-      input == "reversed stone" ||
-      input == "reversed paper" ||
-      input == "reversed scissors"
-    )
+    !(input == "stone" || input == "paper" || input == "scissors") &&
+    gameMode != 3
   ) {
-    return 'Enter "scissors", "paper", or "stone" to start playing. You can also test your luck by adding a secret word in front hehe 🙃';
+    return 'Enter "scissors", "paper", or "stone" to start playing.';
   }
   // Get computer's random generated choice
   var machineChoice = machinePlay();
-  // Rationalise player's input to one of stone, paper or scissors
-  var humanChoice = setHumanChoice(input);
-  // Game Mode is assigned value 1 by default, will be -1 if input indicated reversed word
-  var gameMode = setGameMode(input);
+
+  var humanChoice = input;
+  if (gameMode == 3) {
+    humanChoice = machinePlay();
+  }
+
   // Above 3 parameters passed into playSPS function to determine player outcome. Value of 1 represents win, 0 is draw, -1 is lose
   var outcome = playSPS(machineChoice, humanChoice, gameMode);
+  var scoreboard = resultsCounter(outcome);
   // Determine the output string to print
   var myOutputValue = printOutputMessage(
     machineChoice,
@@ -27,6 +46,8 @@ var main = function (input) {
     gameMode,
     outcome
   );
+
+  myOutputValue += scoreboard;
 
   return myOutputValue;
 };
@@ -46,33 +67,6 @@ var machinePlay = function () {
   return machineChoice;
 };
 
-var setHumanChoice = function (humanInput) {
-  var humanChoice = "stone";
-
-  if (humanInput == "paper" || humanInput == "reversed paper") {
-    humanChoice = "paper";
-  }
-
-  if (humanInput == "scissors" || humanInput == "reversed scissors") {
-    humanChoice = "scissors";
-  }
-  return humanChoice;
-};
-
-var setGameMode = function (humanInput) {
-  var gameMode = 1;
-
-  if (
-    humanInput == "reversed scissors" ||
-    humanInput == "reversed paper" ||
-    humanInput == "reversed stone"
-  ) {
-    gameMode = -1;
-  }
-
-  return gameMode;
-};
-
 var playSPS = function (machineChoice, humanChoice, gameMode) {
   // For the outcome variable, value of 1 represents win, 0 is draw, -1 is lose
   var outcome = -1;
@@ -88,10 +82,11 @@ var playSPS = function (machineChoice, humanChoice, gameMode) {
   ) {
     outcome = 1;
   }
-  // If the game is played in reverse, gameMode will have value -1. Multiplying it into outcome's value of 1 or -1 will effectively reverse it.
+  // If the game is played in reverse, Multiplying -1 into outcome's value of 1 or -1 will effectively reverse it.
   // If gameMode has default value 1 or if outcome is a draw, the multiplication does not have any effect.
-  outcome = outcome * gameMode;
-
+  if (gameMode == 2) {
+    outcome = outcome * -1;
+  }
   return outcome;
 };
 
@@ -110,19 +105,16 @@ var printOutputMessage = function (
   if (outcome == 1) {
     outcomeMessage = "You win! Amazing.";
   }
-  var gameModeMessage = "";
+
   var REVERSED = "";
-  var cheekyReplay = "";
-  if (gameMode == -1) {
-    gameModeMessage = "You tempted luck! 🙃<br><br>";
+  if (gameMode == 2) {
     REVERSED = "◀️ reversed ";
-    cheekyReplay = " Don't play cheeky again! 🙄";
   }
-  var outputMessage = `${gameModeMessage}The computer chose ${machineChoice} ${setEmoji(
+  var outputMessage = `Hi ${userName}<br>The computer chose ${machineChoice} ${setEmoji(
     machineChoice
   )}.<br>You chose ${REVERSED}${humanChoice} ${setEmoji(
     humanChoice
-  )}.<br><br>${outcomeMessage}<br><br>Now you can type "scissors" "paper" or "stone" to play another round!${cheekyReplay}`;
+  )}.<br><br>${outcomeMessage}<br><br>Now you can type "scissors" "paper" or "stone" to play another round!`;
 
   return outputMessage;
 };
@@ -138,4 +130,20 @@ var setEmoji = function (object) {
     emojiOutput = "✂️";
   }
   return emojiOutput;
+};
+
+var resultsCounter = function (outcome) {
+  roundsPlayed += 1;
+  if (outcome == 0) {
+    drawCount += 1;
+  }
+  if (outcome == 1) {
+    humanWinCount += 1;
+  }
+  if (outcome == -1) {
+    machineWinCount += 1;
+  }
+  winRate = Math.round((humanWinCount / roundsPlayed) * 100);
+  scoreboard = `<br><br>${userName} won ${humanWinCount}, Computer won ${machineWinCount}, Ties: ${drawCount}, Rounds Played: ${roundsPlayed}, Win Rate: ${winRate}%`;
+  return scoreboard;
 };
