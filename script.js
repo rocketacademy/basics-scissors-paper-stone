@@ -17,7 +17,13 @@ Scissors > Paper > Stone > Scissors
 2-2 = 0
 
  */
+// Gobal Variables
 const selection = ["scissors", "paper", "stone"];
+var userWinLoseRecord = 0;
+var aiWinLoseRecord = 0;
+var totalRuns = 0;
+var userName = "";
+var userNameFlag = 0;
 
 var getRandomArray = function (lenOfArray) {
   // Generate a decimal from 0 through 6, inclusive of 0 and exclusive of
@@ -73,17 +79,45 @@ var checkPlayerDraw = function (userDrawInput, aiDrawInput) {
 
 var main = function (userInput) {
   var userInputFlag = checkUserInput(userInput);
-  // console.log(userInput);
   var aiInput = getAiOutput();
-  // console.log(aiInput);
+
+  if (!userName) {
+    if (!userInput) {
+      return "Please enter your name";
+    }
+    userName = userInput;
+    return `Please enter "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play`;
+  }
 
   if (userInputFlag == 1) {
+    totalRuns += 1;
     if (checkPlayerWin(userInput, aiInput)) {
-      var myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Win! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
+      userWinLoseRecord += 1;
+      var myOutputValue = `The computer choose ${aiInput}. <br> 
+        You choose ${userInput}. <br><br> 
+        You Win! :D <br><br> 
+        Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round! <br><br> ${userName} Records: <br> 
+        Win: ${userWinLoseRecord} <br> 
+        Lose: ${aiWinLoseRecord} <br> 
+        Draw: ${totalRuns - userWinLoseRecord - aiWinLoseRecord}`;
     } else if (checkPlayerDraw(userInput, aiInput)) {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> It's a Draw! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
+      myOutputValue = `The computer choose ${aiInput}. <br> 
+        You choose ${userInput}. <br><br> 
+        It's a Draw! :D <br><br> 
+        Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round! <br><br> ${userName} Records: <br> 
+        Win: ${userWinLoseRecord} <br> 
+        Lose: ${aiWinLoseRecord} <br> 
+        Draw: ${totalRuns - userWinLoseRecord - aiWinLoseRecord}`;
     } else {
-      myOutputValue = `The computer choose ${aiInput}. <br> You choose ${userInput}. <br> <br> You Lose! :D <br><br> Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round!`;
+      aiWinLoseRecord += 1;
+      myOutputValue = `The computer choose ${aiInput}. <br> 
+        You choose ${userInput}. <br><br> 
+        You Lose! :D <br><br> 
+        Now you can type "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone" to play another round! <br><br>
+        ${userName} Records: <br> 
+        Win: ${userWinLoseRecord} <br> 
+        Lose: ${aiWinLoseRecord} <br> 
+        Draw: ${totalRuns - userWinLoseRecord - aiWinLoseRecord}`;
     }
   } else {
     myOutputValue = `Wrong selection. Please select "scissors", "paper", "stone", "reversed scissors", "reversed paper" or "reversed stone".`;
