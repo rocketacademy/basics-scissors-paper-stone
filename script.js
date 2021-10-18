@@ -1,7 +1,7 @@
 let main = function (input) {
- 
+  console.log('--------- input field', input)
   let myOutputValue =playRPS2(input);
-   // let myOutputValue =playRPS(input);
+  // let myOutputValue =playRPS(input);
   // let myOutputValue =normalRPS(input);
   // let myOutputValue =reverseRPS(input);
   return myOutputValue;
@@ -100,7 +100,7 @@ var getDefaultObjectsMessage = function (playerObject, computerObject) {
 
  // Project Part 2 - Choose normal or Reverse Mode
 let playRPS2 = function (input) {
-  // var myOutputValue = '';  
+   // var myOutputValue = '';  
   if (currentMode == 'waiting for user name') { 
   
     // set the name    
@@ -109,19 +109,20 @@ let playRPS2 = function (input) {
     console.log(currentMode)
     return 'Hello ' + userName + ` choose your type -- normal or reverse`;
   }
-// // for current mode = normal, 
+  // for current mode = normal, 
   if (currentMode == 'waiting for game type') {
     gameType = input
     currentMode = 'game mode'; 
+    console.log('setting gameType')
     return `Hello ${userName} you have chosen ${gameType} game type`;
   }
 
   if (currentMode === 'game mode') {
     if (gameType === 'normal') {
-        let game = normalRPS()
+        let game = normalRPS(input)
         return game
     } else {
-        let game = reverseRPS()
+        let game = reverseRPS(input)
         return game
     }
   }
