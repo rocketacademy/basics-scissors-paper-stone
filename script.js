@@ -10,6 +10,9 @@ var chooseName = function (input) {
   userName = input;
 };
 
+//starting "game mode" to be "enter username"
+var gameMode = "enter username";
+
 //Convert Scissors/paper/stone to variables
 var scissors = "scissors";
 var paper = "paper";
@@ -86,6 +89,34 @@ var checkWinOrLose = function (input, storeRollDice) {
   return winOrLoseStatement;
 };
 
+//CONDITIONS FOR REVERSE WINNING/LOSING/ETC
+var checkWinOrLoseReverse = function (input, storeRollDice) {
+  //win conditions
+  if (
+    (input == scissors && storeRollDice == stone) ||
+    (input == paper && storeRollDice == scissors) ||
+    (input == stone && storeRollDice == paper)
+  ) {
+    winCount = winCount + 1;
+    var winOrLoseStatement = "You reverse win! Noiiice.";
+  }
+  //lose conditions
+  else if (
+    (input == scissors && storeRollDice == paper) ||
+    (input == paper && storeRollDice == stone) ||
+    (input == stone && storeRollDice == scissors)
+  ) {
+    loseCount = loseCount + 1;
+    var winOrLoseStatement = "You lose! GG EZ.";
+  }
+  //draw conditions
+  else if (input == storeRollDice) {
+    drawCount = drawCount + 1;
+    var winOrLoseStatement = "It's a DRAW.";
+  }
+  return winOrLoseStatement;
+};
+
 //write an extra (de)motivational message
 var writeExtraMessage = function () {
   if (winPercentage() >= 50) {
@@ -96,58 +127,142 @@ var writeExtraMessage = function () {
   return extraMessage;
 };
 
-var main = function (input) {
-  //calls the roll function which updates the global variable of the stored roll value.
-  storeRollDice = rollDice();
-
-  if (input == "" && userName == "") {
-    var statement = `Enter your name!`;
-  } else if (userName == "") {
+//refactor function: CHOOSE USERNAME
+var chooseUsername = function (input) {
+  if (input == "") {
+    var myOutputValue = `Enter your name!`;
+  } else if (input != "") {
     chooseName(input);
-    var welcomeMessage = `Hi ${userName}! Please enter either 'scissors', 'paper' or 'stone'.`;
-    var statement = welcomeMessage;
-  } else {
-    //invalid input repsonse
-    if (input != scissors && input != paper && input != stone) {
-      var statement = `What is '${input}'??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
-    } else {
-      //DISPLAY STATEMENT:
-      //The computer chose ${computerChoice}. You chose ${yourChoice}. You {winOrLose}.
-      var statement =
-        "The computer chose " +
-        storeRollDice +
-        "<br>" +
-        "You chose " +
-        input +
-        "<br>" +
-        checkWinOrLose(input, storeRollDice) +
-        "<br>" +
-        "<br>" +
-        "<br>" +
-        userName +
-        "'s Stats:" +
-        "<br>" +
-        "Number of Wins:" +
-        winCount +
-        "<br>" +
-        "Number of Losses:" +
-        loseCount +
-        "<br>" +
-        "Number of Draws:" +
-        drawCount +
-        "<br>" +
-        "Win Rate:" +
-        winPercentage() +
-        "%" +
-        "<br>" +
-        "Number of games played:" +
-        totalGamesCount(winCount, loseCount, drawCount) +
-        "<br>" +
-        "<br>" +
-        writeExtraMessage();
-    }
+    gameMode = "sps game";
+    var myOutputValue = `Hi ${userName}! Please enter either 'scissors', 'paper' or 'stone'.`;
   }
+  return myOutputValue;
+};
 
-  var myOutputValue = statement;
+//refactor function: SPS GAME
+var spsGame = function (input, userName) {
+  //invalid input repsonse
+  if (
+    input != scissors &&
+    input != paper &&
+    input != stone &&
+    input != "reverse"
+  ) {
+    var myOutputValue = `What is "${input}" ??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
+  }
+  // activate SPS reverse mode
+  else if (input == "reverse") {
+    gameMode = "spsReverse";
+    var myOutputValue = "You have activated REVERSE SCISSORS PAPER STONE!!!";
+  } else {
+    // normal SPS game
+
+    //calls the roll function which updates the global variable of the stored roll value.
+    storeRollDice = rollDice();
+
+    //DISPLAY STATEMENT:
+    //The computer chose ${computerChoice}. You chose ${yourChoice}. You {winOrLose}.
+    var myOutputValue =
+      "The computer chose " +
+      storeRollDice +
+      "<br>" +
+      "You chose " +
+      input +
+      "<br>" +
+      checkWinOrLose(input, storeRollDice) +
+      "<br>" +
+      "<br>" +
+      "<br>" +
+      userName +
+      "'s Stats:" +
+      "<br>" +
+      "Number of Wins:" +
+      winCount +
+      "<br>" +
+      "Number of Losses:" +
+      loseCount +
+      "<br>" +
+      "Number of Draws:" +
+      drawCount +
+      "<br>" +
+      "Win Rate:" +
+      winPercentage() +
+      "%" +
+      "<br>" +
+      "Number of games played:" +
+      totalGamesCount(winCount, loseCount, drawCount) +
+      "<br>" +
+      "<br>" +
+      writeExtraMessage();
+  }
+  return myOutputValue;
+};
+
+//refactor function: SPS REVERSE GAME
+var spsReverseGame = function (input, userName) {
+  //invalid input repsonse
+  if (
+    input != scissors &&
+    input != paper &&
+    input != stone &&
+    input != "reverse"
+  ) {
+    var myOutputValue = `What is "${input}" ??!$? Noob${userName}69, please enter either 'scissors' or 'paper' or 'stone'.`;
+  }
+  // activate regular SPS mode
+  else if (input == "reverse") {
+    gameMode = "sps game";
+    var myOutputValue = "You have activated NORMIE SCISSORS PAPER STONE!!!";
+  } else {
+    //calls the roll function which updates the global variable of the stored roll value.
+    storeRollDice = rollDice();
+
+    //DISPLAY STATEMENT:
+    //The computer chose ${computerChoice}. You chose ${yourChoice}. You {winOrLose}.
+    var myOutputValue =
+      "The computer chose " +
+      storeRollDice +
+      "<br>" +
+      "You chose " +
+      input +
+      "<br>" +
+      checkWinOrLoseReverse(input, storeRollDice) +
+      "<br>" +
+      "<br>" +
+      "<br>" +
+      userName +
+      "'s Stats:" +
+      "<br>" +
+      "Number of Wins:" +
+      winCount +
+      "<br>" +
+      "Number of Losses:" +
+      loseCount +
+      "<br>" +
+      "Number of Draws:" +
+      drawCount +
+      "<br>" +
+      "Win Rate:" +
+      winPercentage() +
+      "%" +
+      "<br>" +
+      "Number of games played:" +
+      totalGamesCount(winCount, loseCount, drawCount) +
+      "<br>" +
+      "<br>" +
+      writeExtraMessage() +
+      "... but in reverse.";
+  }
+  return myOutputValue;
+};
+
+var main = function (input) {
+  if (gameMode == "enter username") {
+    return chooseUsername(input);
+  } else if (gameMode == "sps game") {
+    return spsGame(input, userName);
+  } else if ((gameMode = "spsReverse")) {
+    return spsReverseGame(input, userName);
+  }
   return myOutputValue;
 };
