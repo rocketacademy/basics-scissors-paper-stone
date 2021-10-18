@@ -11,7 +11,7 @@ var main = function (input) {
   // input username
   if (username == 0){
     username = input
-    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean)"
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean/computer)"
   } else{   
   // select game mode
   if (gamemode == 0 && input == "normal"){
@@ -23,9 +23,27 @@ var main = function (input) {
   }else if (gamemode == 0 && input == "korean"){
       gamemode = input
       return "Korean mode selected. Please enter scissors paper or stone"
+  }else if (gamemode == 0 && input == "computer"){
+      gamemode = input
+      return "Computer mode selected. Computer will choose your input, please press submit again"
   }else if (gamemode == 0 && (input != "normal" || input != "reversed")){
-    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean)"
+    return "Hi "+username+" :) <br> Please select game mode  (normal/reversed/korean/computer)"
   }
+  }
+
+  //Computer Version
+  if (gamemode == "computer"){
+    programHand = chooseHand();
+    input = chooseHand();
+    gameStatus = checkWin(input, programHand);
+    return (
+      "You selected "+ gamemode +" mode"+
+      "<br>Computer selected " +
+      programHand +
+      "<br>" +username+" selected " +
+      input +
+      "<br><br>" +
+      gameStatus)
   }
 
   //korean version
