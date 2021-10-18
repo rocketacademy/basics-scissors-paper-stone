@@ -4,6 +4,16 @@ var STONE = "stone";
 var REVERSEDSCISSORS = "reversed scissors";
 var REVERSEDPAPER = "reversed paper";
 var REVERSEDSTONE = "reversed stone";
+var WIN = "win";
+var LOST = "lost";
+var DRAW = "draw";
+
+//Gloval variable for counting
+var playerWinCount = 0;
+var comWinCount = 0;
+var drawCount = 0;
+var rounds = 0;
+var winLose = "";
 
 var randomNumber = function () {
   var randomDecimal = Math.random() * 3;
@@ -27,11 +37,34 @@ var computerChoice = function () {
   return choice;
 };
 
+var winRate = function () {
+  var percentage = Math.floor((playerWinCount / rounds) * 100);
+  return percentage;
+};
+
+var countRound = function () {
+  if (winLose == LOST) {
+    comWinCount += 1;
+  }
+
+  if (winLose == WIN) {
+    playerWinCount += 1;
+  }
+
+  if (winLose == DRAW) {
+    drawCount += 1;
+  }
+
+  return winLose;
+};
+
 var main = function (input) {
   var computer = computerChoice();
   var player = input;
   console.log("Computer Choice", computer);
   console.log("User Choice", input);
+  rounds += 1;
+  winLose = LOST;
   var myOutputValue = `You have chosen ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type scissors, paper or stone to start a new game `;
 
   //check for invalid inputs
@@ -56,13 +89,23 @@ var main = function (input) {
     (player == REVERSEDSTONE && computer == PAPER) ||
     (player == REVERSEDSCISSORS && computer == STONE)
   ) {
-    myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> good job! <br> Now you can type "scissors, paper or stone to start new game <br>`;
+    winLose = WIN;
+    console.log("Num of player wins", playerWinCount);
+    myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
   }
 
   //check for draw
   if (player == computer) {
-    myOutputValue = `You have played ${input} and its the same as the computer's choice ${computer}! <br> Its a draw!!`;
+    winLose = DRAW;
+    myOutputValue = `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
   }
+
+  var adjustCount = countRound();
+  var winrate = winRate();
+
+  myOutputValue =
+    myOutputValue +
+    `<br><br> Statistics <br> Player win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone to start new game`;
 
   return myOutputValue;
 };
