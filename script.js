@@ -62,39 +62,44 @@ var genRandHand = function () {
 
 var main = function (input) {
   var randHand = genRandHand();
-
   var myOutPutValue = `Play "scissors", "paper", or "stone".`;
 
-  if (!userName) {
+  if (userName == "") {
     if (!input) {
-      return `Eh, input user name`;
+      myOutPutValue = `Eh, input user name`;
+    } else {
+      userName = input;
+      myOutPutValue = `Welcome ${userName}!`;
     }
-    userName = input;
-  }
-  if (input == randHand) {
-    myOutPutValue = `You played ${input}<br>I played ${randHand}<br>We DRAW.`;
-    numOfGame += 1;
-  }
-  if (
-    (input == "scissors" && randHand == "paper") ||
-    (input == "paper" && randHand == "stone") ||
-    (input == "stone" && randHand == "scissors")
-  ) {
-    numOfWins += 1;
-    myOutPutValue = `You played ${input}<br>I played ${randHand}<br>You WIN`;
-    numOfGame += 1;
-  }
-  if (
-    (input == "scissors" && randHand == "stone") ||
-    (input == "paper" && randHand == "scissors") ||
-    (input == "stone" && randHand == "paper")
-  ) {
-    myOutPutValue = `You played ${input} <br>I played ${randHand}<br>You LOSE`;
-    numOfGame += 1;
-  }
+    return myOutPutValue;
+  } else if (userName !== "") {
+    if (!input) {
+      myOutPutValue = `Play scissors, paper or stone.`;
+    }
 
-  if (!input) {
-    return `Eh say something leh!`;
+    if (input == randHand) {
+      myOutPutValue = `You played ${input}<br>I played ${randHand}<br>We DRAW.`;
+      numOfGame += 1;
+    }
+    if (
+      (input == "scissors" && randHand == "paper") ||
+      (input == "paper" && randHand == "stone") ||
+      (input == "stone" && randHand == "scissors")
+    ) {
+      numOfWins += 1;
+      numOfGame += 1;
+      myOutPutValue = `You played ${input}<br>I played ${randHand}<br>You WIN`;
+    }
+
+    if (
+      (input == "scissors" && randHand == "stone") ||
+      (input == "paper" && randHand == "scissors") ||
+      (input == "stone" && randHand == "paper")
+    ) {
+      numOfGame += 1;
+      myOutPutValue = `You played ${input} <br>I played ${randHand}<br>You LOSE`;
+    }
+
+    return `Dear ${userName}<br>${myOutPutValue}<br> You have won ${numOfWins}/${numOfGame} games.`;
   }
-  return `Dear ${userName}<br>${myOutPutValue}<br> You have won ${numOfWins}/${numOfGame} games.`;
 };
