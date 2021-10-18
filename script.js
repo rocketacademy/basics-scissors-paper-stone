@@ -14,15 +14,21 @@ var computerguess = function () {
   return "stone";
 };
 
+var showplayercomputerSPS = function (playerSPS, computerSPS) {
+  return "You picked " + playerSPS + ". The computer chose " + computerSPS;
+};
+
 var playerwins = function (playerSPS, computerSPS) {
+  console.log("playerwins");
   return (
     (playerSPS == "scissors" && computerSPS == "paper") ||
     (playerSPS == "paper" && computerSPS == "stone") ||
-    (playerSPS == "stone" && computerSPS == "scissor")
+    (playerSPS == "stone" && computerSPS == "scissors")
   );
 };
 
 var draw = function (playerSPS, computerSPS) {
+  console.log("draw");
   return playerSPS == computerSPS;
 };
 
@@ -50,10 +56,6 @@ var main = function (input) {
       ". it's a draw"
     );
   }
-
-  var showplayercomputerSPS = function (playerSPS, computerSPS) {
-    return "You picked " + playerSPS + ". The computer chose " + computerSPS;
-  };
   return (
     showplayercomputerSPS +
     "you entered " +
