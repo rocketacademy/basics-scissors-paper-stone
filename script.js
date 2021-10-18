@@ -17,7 +17,6 @@
 var currentGameMode = "waiting for user name";
 var totalNumOfRounds = 0;
 var numOfUserWins = 0;
-var numOfUsersWinRate = numOfUserWins / totalNumOfRounds;
 var numOfComWins = 0;
 var numOfDraws = 0;
 var numOfUserLosses = 0;
@@ -79,7 +78,8 @@ var playSPSGame = function (userName, input) {
     console.log("win!");
     numOfUserWins += 1;
     numOfComLosses += 1;
-    message += `<br> ${userName}, You chose ${input}. <br><br> You win! <br><br> Now you can type "scissors" "paper" or "stone" to play another round! <br><br> Number of User wins is ${numOfUserWins}. <br><br> Number of computer losses is ${numOfComLosses}`;
+    totalNumOfRounds += 1;
+    message += `<br> ${userName}, You chose ${input}. <br><br> You win! <br><br> Number of User wins is ${numOfUserWins}. <br><br> Number of computer losses is ${numOfComLosses}. <br><br> so far ${userName}, you've been winning ${numOfUserWins}/${totalNumOfRounds} turns. Pretty good!`;
     return message;
   }
 
@@ -93,6 +93,7 @@ var playSPSGame = function (userName, input) {
     console.log(computerChoice);
     console.log("draw!");
     numOfDraws += 1;
+    totalNumOfRounds += 1;
     message += `<br>${userName}, You chose ${input}. <br><br> It's a draw! <br><br> Try again!<br><br> Number of Draws is ${numOfDraws}.`;
     return message;
   }
@@ -108,7 +109,8 @@ var playSPSGame = function (userName, input) {
     console.log("lost!");
     numOfUserLosses += 1;
     numOfComWins += 1;
-    message += `<br>${userName}, You chose ${input}. <br><br> You lose! Bummer. <br><br> Now you can type "scissors" "paper" or "stone" to play another round!<br><br> Number of Computer wins is ${numOfComWins}. <br><br> Number of UsersLosses is ${numOfUserLosses}`;
+    totalNumOfRounds += 1;
+    message += `<br>${userName}, You chose ${input}. <br><br> You lose! Bummer.<br><br> Number of Computer wins is ${numOfComWins}. <br><br> Number of UsersLosses is ${numOfUserLosses}. <br><br> so far ${userName}, you've been lossing ${numOfUserLosses}/${totalNumOfRounds} turns. Try harder!`;
     return message;
   }
 };
