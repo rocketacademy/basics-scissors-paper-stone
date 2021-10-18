@@ -25,16 +25,16 @@ var promptForName = function () {
 
 // function that dials a random number up to a preset maximum
 var diceRoll = function (num) {
-  var randomDecimal = Math.random() * num; //random number generator. num will be a preset parsed argument.
-  var randomNumber = Math.floor(randomDecimal) + 1; // to remove decimal, but add "one" to ensure to count up to parsed "num"
+  var randomDecimal = Math.random() * num; //random number generator.
+  var randomNumber = Math.floor(randomDecimal) + 1; // remove decimal. Add one to include num.
   return randomNumber;
 };
 
-// create players function that creates player objects that can store scores won; name of players ; identity or an array of cards if needed.
+// create players function that creates player objects that can store as properties.
 var createPlayers = function (nameOfPlayer) {
   var playerNames = [nameOfPlayer, "Computer"];
   console.log(nameOfPlayer);
-  var playerIdentity = ["player--1", "player--2"]; // extra stuff, not needed in this project but useful for more complex situations
+  var playerIdentity = ["player--1", "player--2"]; // extra stuff
   // for loop
   for (
     var currentIndex = 0;
@@ -49,7 +49,7 @@ var createPlayers = function (nameOfPlayer) {
     var playerObject = {
       player: playerName, // stores player names or whatever you wish to call them
       score: scores, // scores are stored in here within the objects
-      ID: currentPlayer, // not highly useful in this project, but can be utilised in more complex situations
+      ID: currentPlayer, // not highly useful in this project
       card: card, // object card that can be configured to hold an array of objects e.g. cards
     };
     players.push(playerObject); // add object to players = []
@@ -58,9 +58,9 @@ var createPlayers = function (nameOfPlayer) {
 
 // function that randomly selects either scissors, paper or stone
 var randomObjectSelect = function () {
-  randomNumber = diceRoll(3); // number "3" parsed and to count up and including 3 ====BEWARE==== @ line 41
+  var randomNumber = diceRoll(3); // number "3" parsed and to count up and including 3.
   var cardArray = ["scissors", "paper", "stone"];
-  var cardPicked = cardArray[randomNumber - 1]; // very common issue. =====BEWARE======, decide whether "- 1 " is needed as diceRoll is used.
+  var cardPicked = cardArray[randomNumber - 1]; // watch for -1 bug
   return cardPicked;
 };
 // InitGame function resets game to ground zero
@@ -95,6 +95,13 @@ var whoWinsEndGame = function (numOfPlays) {
   }
   return winner;
 };
+// function to output to browser in template literal format of latest scores
+var playersScoreDisplay = function () {
+  var humanPlayerScore = players[0].score; // extracts human player score
+  var computerPlayerScore = players[1].score; // extracts computer player score
+  numOfGames += 1; // acts as a counter to end the game at preset game number "tenth".
+  return `${promptPlayer} score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
+};
 
 // input scissors function that determines win or lose condition
 var inputScissors = function (input) {
@@ -103,8 +110,8 @@ var inputScissors = function (input) {
   if (randomObject == "paper") {
     var human = players[0];
     human.score += 1; // increases human score by one for game won
-    scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
+    var scores = playersScoreDisplay();
+    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
     scores = playersScoreDisplay();
@@ -122,20 +129,20 @@ var inputScissors = function (input) {
 
 // input paper function that determines win or lose result
 var inputPaper = function (input) {
-  randomObject = randomObjectSelect();
+  var randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "stone") {
-    human = players[0];
+    var human = players[0];
     human.score += 1; // increases human score by one for the game won
-    scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} win. <br/><br/> ${scores}`;
+    var scores = playersScoreDisplay();
+    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} win. <br/><br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
     scores = playersScoreDisplay();
     myOutputValue = `☠ Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } //computer wins
   else {
-    computer = players[1];
+    var computer = players[1];
     computer.score += 1; // increases computer score by one when wins
     scores = playersScoreDisplay();
     myOutputValue = `💢Computer picks ${randomObject}. <br/><br/> Computer wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
@@ -145,33 +152,25 @@ var inputPaper = function (input) {
 
 // input stone function that determines win or lose result
 var inputStone = function (input) {
-  randomObject = randomObjectSelect();
+  var randomObject = randomObjectSelect();
   // human wins
   if (randomObject == "scissors") {
-    human = players[0]; // extract object human in array
+    var human = players[0]; // extract object human in array
     human.score += 1; // increase human score by one for the game won
-    scores = playersScoreDisplay();
-    myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> ${promptPlayer} win.<br/> <br/> ${scores}`;
+    var scores = playersScoreDisplay();
+    var myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> ${promptPlayer} win.<br/> <br/> ${scores}`;
   } // draw game
   else if (input == randomObject) {
     scores = playersScoreDisplay();
     myOutputValue = `🥱Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
   } // computer wins
   else {
-    computer = players[1]; //extract object computer in array
+    var computer = players[1]; //extract object computer in array
     computer.score += 1; // increases computers score by one for game won
     scores = playersScoreDisplay();
     myOutputValue = `💢Computer picks ${randomObject} and wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
   }
   return myOutputValue;
-};
-
-// function to output to browser in template literal format of latest scores
-var playersScoreDisplay = function () {
-  var humanPlayerScore = players[0].score; // extracts human player score
-  var computerPlayerScore = players[1].score; // extracts computer player score
-  numOfGames += 1; // acts as a counter to end the game at preset game number "tenth". One game is worth "one"
-  return `${promptPlayer} score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
 };
 
 // function that outputs to the browser
@@ -181,7 +180,7 @@ var main = function (input) {
     initGame();
     promptPlayer = promptForName();
     createPlayers(promptPlayer);
-    myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
+    var myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
   // flow control to start game and introduce the inputs
   if (input == "" && mode == "green") {
@@ -221,7 +220,7 @@ var main = function (input) {
     myOutputValue = inputStone(input);
   }
   // decides whether to end the game and declare the winner
-  whoWinsEnd = whoWinsEndGame(numOfGames);
+  var whoWinsEnd = whoWinsEndGame(numOfGames);
   var myImage =
     '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
   // to give value to main to output to browser
