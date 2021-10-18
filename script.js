@@ -1,11 +1,6 @@
-/* Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw.
-Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw. */
-
-// Add state to your program such that it keeps track of the number of times the user has won and the number of times the computer has won. Output this win-loss record in a format you like in the program output. You can also output the number of draws and/or each party's winning percentage if you'd like.
-
-// Ensuring the input is correct
-
 // Pseudo: Creating variable for scissors, paper and stone and also the results.
+var currentGameMode = "Insert username.";
+var userName = "";
 var scissors = "scissors";
 var paper = "paper";
 var stone = "stone";
@@ -16,6 +11,15 @@ var invalid =
   "Invalid input. You can only choose scissors, paper or stone. Please try again. ";
 var numbOfGames = NaN || 0;
 var win = 0;
+
+//Username function
+var userNameGenerator = function (input) {
+  if (input == " ") {
+    username = input;
+    return username;
+  }
+  return "Please input a username.";
+};
 
 // Reversed input
 var reversedScissors = "reversed scissors";
@@ -107,34 +111,33 @@ var getResults = function (userChoice, computerChoice) {
 };
 
 // Print out results.
-var main = function (userChoice, computerChoice) {
-  var computerChoice = randomSPSGenerator();
-  var iconComputer = getInputIcon(computerChoice);
-  var iconUser = getInputIcon(userChoice);
-  var results = getResults(userChoice, computerChoice);
-  numbOfGames += 1;
-  var winPercentage = calcWinLossPerc();
-  var myOutputValue = `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
-  if (
-    userChoice != "stone" &&
-    userChoice != "scissors" &&
-    userChoice != "paper" &&
-    userChoice != "reversed stone" &&
-    userChoice != "reversed scissors" &&
-    userChoice != "reversed paper"
-  ) {
-    return invalid;
+var main = function (input) {
+  var myOutputValue = "";
+  //Setting the username
+  if (currentGameMode == "Insert username.") {
+    userName = input;
+    currentGameMode = "Dice Game";
+    myOutputValue = `Hello ${userName}. You may now choose scissors, paper or stone to start the game!`;
+  } else if (currentGameMode == "Dice Game") {
+    var userChoice = input;
+    var computerChoice = randomSPSGenerator();
+    var iconComputer = getInputIcon(computerChoice);
+    var iconUser = getInputIcon(userChoice);
+    var results = getResults(userChoice, computerChoice);
+    numbOfGames += 1;
+    var winPercentage = calcWinLossPerc();
+    myOutputValue = `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+    if (
+      userChoice != "stone" &&
+      userChoice != "scissors" &&
+      userChoice != "paper" &&
+      userChoice != "reversed stone" &&
+      userChoice != "reversed scissors" &&
+      userChoice != "reversed paper"
+    ) {
+      return invalid;
+    }
   }
-  console.log("User Choice");
-  console.log(userChoice);
-  console.log("");
-  console.log("Computer Choice");
-  console.log(computerChoice);
-  console.log("");
-  console.log("Number of games");
-  console.log(numbOfGames);
-  console.log("");
-  console.log("Wins");
-  console.log(win);
+
   return myOutputValue;
 };
