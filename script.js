@@ -1,8 +1,13 @@
+var n = null;
 var winCount = 0;
 var lostCount = 0;
 var drawCount = 0;
 var count = 0;
 var main = function (input) {
+  if (n == null) {
+    n = input;
+    return 'Hello ' +  input;
+  }
   ++count;
   if ((input == 'scissors') || (input == 'stone') || (input == 'paper')) {
     var myOutputValue = getResult(input);
