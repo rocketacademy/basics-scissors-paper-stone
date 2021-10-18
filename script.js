@@ -21,28 +21,26 @@ var addIcone = function (object) {
 
 // Check if the input is one of the three words
 var validInput = function (userWord) {
-  if (
+  return (
     userWord == "scissors" ||
     userWord == "paper" ||
     userWord == "stone" ||
     userWord == " reverse scissors" ||
     userWord == "reverse paper" ||
     userWord == "reverse stone"
-  )
-    return true;
+  );
 };
 
 // The rules of Scissors Paper Stone game and reverse Scissors Paper Stone game
 var gameRules = function (userWord, computerWord) {
-  if (
+  return (
     (userWord == "scissors" && computerWord == "paper") ||
     (userWord == "paper" && computerWord == "stone") ||
     (userWord == "stone" && computerWord == "scissors") ||
     (userWord == "reverse paper" && computerWord == "scissors") ||
     (userWord == "reverse stone" && computerWord == "paper") ||
     (userWord == "reverse scissors" && computerWord == "stone")
-  )
-    return true;
+  );
 };
 
 //Check if the game mode exist
@@ -56,11 +54,13 @@ var main = function (input) {
   var iconComputer = addIcone(programChoice);
   var totalParty = numberUserWon + numberDraws + numberComputerWon;
 
+  //The user adds its name
   if (userName === "") {
     userName = input;
     return `Hello ${userName}, welcome to the game.<br><br>Please choose your game mode : normal or reverse.`;
   }
 
+  //The user chooses its game mode
   if (gameMode == "") {
     if (!validGameMode(input)) {
       return "Please choose a valid game mode : normal or reverse.";
