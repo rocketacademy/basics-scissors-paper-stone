@@ -1,4 +1,4 @@
-var Code01 = "PROJECT PART 1: SCISSORS PAPER STONE -STANDARD MODE";
+var Code01 = "PROJECT PART 1: SCISSORS PAPER STONE: PART 1-STANDARD MODE";
 
 // random number generator
 
@@ -74,8 +74,8 @@ var main = function (input) {
 
 //============================================================================================================================================================================
 
-var Code02 = "PROJECT 1: SCISSORS PAPER STONE REVERSED MODE";
-
+var Code02 = "PROJECT 1: SCISSORS PAPER STONE PART 1: REVERSED MODE";
+/* 
 var main = function (input) {
   var gameHand = readGameHandNmbr(randomNumber());
   var win = `The computer chose ${gameHand.toUpperCase()}.<br><br>You chose ${input.toUpperCase()}.<br><br> ***You WIN!***`;
@@ -86,18 +86,18 @@ var main = function (input) {
 
   var myOutputValue = errorMessage;
 
+// Code Block for reversing
   if (input.toLowerCase() == "reversed scissors") {
     input = "paper";
   }
-
   if (input.toLowerCase() == "reversed paper") {
     input = "stone";
   }
-
   if (input.toLowerCase() == "reversed stone") {
     input = "scissors";
   }
 
+//code Block for judging who wins
   if (
     (input.toLowerCase() == "scissors" && gameHand == "paper") ||
     (input.toLowerCase() == "paper" && gameHand == "stone") ||
@@ -142,4 +142,113 @@ var readGameHandNmbr = function (gameHandNmbr) {
     gameHandPlayed = "stone";
   }
   return gameHandPlayed;
+}; */
+
+//============================================================================================================================================================================
+
+var Code02 = "PROJECT 1: SCISSORS PAPER STONE;- PART 2 BASE- WIN-LOSE";
+
+// read random Number and OutputString for Computer's Hand.
+var genComputerHand = function (gameHandNmbr) {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var gameHandNmbr = randomInteger + 1;
+  var gameHandPlayed = "";
+  if (gameHandNmbr == 1) {
+    gameHandPlayed = "scissors";
+  }
+  if (gameHandNmbr == 2) {
+    gameHandPlayed = "paper";
+  }
+  if (gameHandNmbr == 3) {
+    gameHandPlayed = "stone";
+  }
+  return gameHandPlayed;
 };
+
+var percentage = function (a, b) {
+  var result = (a / b) * 100;
+  return result;
+};
+
+var totalGamesPlayed = 0;
+var nmbrOfWins = 0;
+var nmbrOfLosses = 0;
+var nmbrOfDraws = 0;
+
+var main = function (input) {
+  var gameHand = genComputerHand();
+
+  var errorMessage = `xxxxxxxxx INPUT ERROR xxxxxxxxxx. <br><br> 
+                    Please only input from the following:<br>
+                     'scissors', 'paper' or 'stone'.`;
+
+  var draw = `The computer chose ${gameHand.toUpperCase()}.
+              <br><br>You chose ${input.toUpperCase()}.<br><br> =It's a DRAW!=`;
+
+  var lose = `The computer chose ${gameHand.toUpperCase()}.
+             <br><br>You chose ${input.toUpperCase()}.<br><br> ~You LOSE~`;
+
+  var win = `The computer chose ${gameHand.toUpperCase()}.
+             <br><br>You chose ${input.toUpperCase()}.<br><br> ***You WIN!***`;
+
+  var myOutputValue = "";
+
+  // code block for reversing
+  /*   if (input.toLowerCase() == "reversed scissors") {
+    input = "paper";
+  }
+
+  if (input.toLowerCase() == "reversed paper") {
+    input = "stone";
+  }
+
+  if (input.toLowerCase() == "reversed stone") {
+    input = "scissors";
+  } */
+
+  //code Block for judging who wins
+  /* 
+  if (Number.isNaN(Number(input)) == false) {
+    myOutputValue = errorMessage;
+  } */
+
+  if (input.toLowerCase() == gameHand) {
+    myOutputValue = draw;
+    nmbrOfDraws = nmbrOfDraws + 1;
+  } else if (
+    (input.toLowerCase() == "scissors" && gameHand == "stone") ||
+    (input.toLowerCase() == "paper" && gameHand == "scissors") ||
+    (input.toLowerCase() == "stone" && gameHand == "paper")
+  ) {
+    myOutputValue = lose;
+    nmbrOfLosses = nmbrOfLosses + 1;
+  } else if (
+    (input.toLowerCase() == "scissors" && gameHand == "paper") ||
+    (input.toLowerCase() == "paper" && gameHand == "stone") ||
+    (input.toLowerCase() == "stone" && gameHand == "scissors")
+  ) {
+    myOutputValue = win;
+    nmbrOfWins = nmbrOfWins + 1;
+  } else {
+    myOutputValue = errorMessage;
+  }
+
+  var endingMessage = `<br><br> To play the next game, please type 'scissors', 'paper' or stone'`;
+
+  var totalGamesPlayed = nmbrOfDraws + nmbrOfLosses + nmbrOfWins;
+
+  var scoreDisplay = `<br><br> Wins-Losses <br>   ${nmbrOfWins} - ${nmbrOfLosses}<br>Number of ties(draw) = ${nmbrOfDraws}<br>Number of Games Played = ${totalGamesPlayed}<br> Win Percentage =${percentage(
+    nmbrOfWins,
+    totalGamesPlayed
+  ).toFixed(1)}% . `;
+
+  if (myOutputValue == errorMessage) {
+    scoreDisplay = "<br>";
+    endingMessage = "<br>";
+  }
+
+  return myOutputValue + scoreDisplay + endingMessage;
+};
+
+// random number generator
