@@ -106,22 +106,15 @@ var scissorsPaperStoneCheck = function (SPS) {
   var computerSelection = randomObjectSelect();
   var humanSelection = players[0].player;
   // human wins
-  if (computerSelection == "paper" && SPS == "scissors") {
+  if (
+    (computerSelection == "paper" && SPS == "scissors") ||
+    (computerSelection == "stone" && SPS == "paper") ||
+    (computerSelection == "scissors" && SPS == "stone")
+  ) {
     var human = players[0];
     human.score += 1; // increases human score by one for game won
     var scores = playersScoreDisplay();
     var myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
-  } // human wins
-  else if (computerSelection == "stone" && SPS == "paper") {
-    human = players[0];
-    human.score += 1; // increases human score by one for game won
-    scores = playersScoreDisplay();
-    myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
-  } else if (computerSelection == "scissors" && SPS == "stone") {
-    human = players[0];
-    human.score += 1; // increases human score by one for game won
-    scores = playersScoreDisplay();
-    myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
   }
   // draw game
   else if (computerSelection == SPS) {
