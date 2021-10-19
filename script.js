@@ -7,7 +7,7 @@ var userName = "";
 
 var rollDice = function () {
   // Generate a decimal from 0 through 2, inclusive of 0 and exclusive of 2.
-  var randomDecimal = Math.random() * 2;
+  var randomDecimal = Math.random() * 3;
 
   // Remove the decimal with the floor operation.
   // This will be an integer from 0 to 2 inclusive.
