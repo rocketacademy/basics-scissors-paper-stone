@@ -357,7 +357,7 @@ var main = function (input) {
 var Code04 =
   "PROJECT 1: SCISSORS PAPER STONE;PART 2 - REVERSE MODE Selectable  More Comfortable -";
 
-// read random Number and OutputString for Computer's Hand.
+/* // read random Number and OutputString for Computer's Hand.
 var genComputerHand = function (gameHandNmbr) {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
@@ -506,6 +506,197 @@ var playJanKenPo = function (userName, userGuess) {
 var main = function (input) {
   var myOutputValue = "";
   var welcomeMsg = `, welcome to the Normal Mode of Scissors, Paper, Stone. <br><br> Scissors > Paper > Stone and Stone > Scissors. <br><br> You get 1 point for every round won, no points are awarded for draws. <br><br> Type '<i>reverse</i>' to enable reverse mode and '<i>normal</i>' to go back to normal mode. `;
+  if (currentMode == "waiting for username") {
+    userName = input;
+    currentMode = "JanKenPo";
+    myOutputValue = "Hello " + userName + welcomeMsg + endingMessage;
+  } else if (currentMode == "JanKenPo") {
+    myOutputValue = playJanKenPo(userName, input);
+  }
+  return myOutputValue;
+};
+ */
+//============================================================================================================================================================================
+
+var Code05 =
+  "PROJECT 1: SCISSORS PAPER STONE;PART 2 - KOREAN Mode /Normal Mode selectable -";
+
+// read random Number and OutputString for Computer's Hand.
+var genComputerHand = function (gameHandNmbr) {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var gameHandNmbr = randomInteger + 1;
+  var gameHandPlayed = "";
+  if (gameHandNmbr == 1) {
+    gameHandPlayed = "scissors";
+  }
+  if (gameHandNmbr == 2) {
+    gameHandPlayed = "paper";
+  }
+  if (gameHandNmbr == 3) {
+    gameHandPlayed = "stone";
+  }
+  return gameHandPlayed;
+};
+
+var percentage = function (a, b) {
+  var result = (a / b) * 100;
+  return result;
+};
+
+var runInstance = 0;
+var currentMode = "waiting for username";
+var userName = "";
+var totalGamesPlayed = 0;
+var nmbrOfWins = 0;
+var nmbrOfLosses = 0;
+var nmbrOfDraws = 0;
+var endingMessage = `<br><br> To play the next game, please type 'scissors', 'paper' or stone'`;
+var gameMode = "normal";
+var normalMode = `MODE: Normal Scissors Paper Stone<br><br>`;
+var koreanMode = `MODE: KOREAN / MUK-JJU-PPA <br><br>`;
+var modeTitle = normalMode;
+var winner = "";
+var prevWinner = "";
+
+var playJanKenPo = function (userName, userGuess) {
+  var runInstance = runInstance + 1;
+  var gameHand = genComputerHand();
+  var errorMessage = `xxxxxxxxx INPUT ERROR xxxxxxxxxx. <br><br> 
+                ${userName} please only input from the following:<br>
+                  'scissors', 'paper' or 'stone'.`;
+
+  var draw = `Computer chose ${gameHand.toUpperCase()}.
+          <br><br>${userName} chose ${userGuess.toUpperCase()}.<br><br> =It's a DRAW!=`;
+
+  var lose = `Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ~${userName} LOSES~`;
+
+  var win = `Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ***${userName} WINS!***`;
+
+  var tryAgain = `<br><br>Please Try Again`;
+
+  var koreanModeWarning =
+    ">>>>>>>>> KOREAN / MUK-JJU-PPA <br><br> please type 'scissors', 'paper' or stone";
+
+  var normalModeWarning =
+    ">>>>>>>>> Revert to Normal Mode <br><br> please type 'scissors', 'paper' or stone";
+
+  var koreanTryAgain = `Attacker = ${prevWinner}. <br><br>Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ATTACK FAILED, please Try Again`;
+
+  var koreanWin = `Attacker = ${prevWinner}.  <br><br>Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ***${userName} WINS!***`;
+
+  var messsageOutput = "";
+
+  if (gameMode == "normal" && userGuess.toLowerCase() == gameHand) {
+    messsageOutput = draw;
+    nmbrOfDraws = nmbrOfDraws + 1;
+  } else if (
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "stone") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "scissors") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "paper")
+  ) {
+    modeTitle = normalMode;
+    messsageOutput = lose;
+    nmbrOfLosses = nmbrOfLosses + 1;
+    prevWinner = "Computer";
+  } else if (
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "paper") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "stone") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "scissors")
+  ) {
+    modeTitle = normalMode;
+    messsageOutput = win;
+    nmbrOfWins = nmbrOfWins + 1;
+    prevWinner = userName;
+  } else if (userGuess.toLowerCase() == "korean") {
+    gameMode = "korean";
+    messsageOutput = koreanModeWarning;
+  } else if (gameMode == "korean" && userGuess.toLowerCase() != gameHand) {
+    modeTitle = koreanMode;
+    messsageOutput = koreanTryAgain;
+  } else if (
+    gameMode == "korean" &&
+    userGuess.toLowerCase() == gameHand &&
+    prevWinner == "Computer"
+  ) {
+    modeTitle = koreanMode;
+    messsageOutput = lose;
+    prevWinner = "Computer";
+    nmbrOfWins = nmbrOfWins + 1;
+  } else if (
+    gameMode == "korean" &&
+    userGuess.toLowerCase() == gameHand &&
+    prevWinner == userName
+  ) {
+    modeTitle = koreanMode;
+    messsageOutput = koreanWin;
+    prevWinner = userName;
+    nmbrOfWins = nmbrOfWins + 1;
+  } else if (gameMode == "korean" && userGuess.toLowerCase() == "normal") {
+    gameMode = "normal";
+    messsageOutput = normalModeWarning;
+  } else if (gameMode == "normal" && userGuess.toLowerCase() == "normal") {
+    gameMode = "normal";
+    messsageOutput = errorMessage;
+  }
+
+  console.log("prevWinner=");
+  console.log(prevWinner);
+
+  var totalGamesPlayed = nmbrOfDraws + nmbrOfLosses + nmbrOfWins;
+
+  var scoreDisplay = `<br><br> Wins - Losses <br> *** ${nmbrOfWins} - ${nmbrOfLosses} ***<br>Number of ties(draw) = ${nmbrOfDraws}<br>Number of Games Played = ${totalGamesPlayed}<br> Win Percentage =${percentage(
+    nmbrOfWins,
+    totalGamesPlayed
+  ).toFixed(1)}% . `;
+
+  var prevWinnerDisplay = `<br>Winner of Most Recent Round = ${prevWinner}<br>`;
+
+  if (messsageOutput == errorMessage) {
+    scoreDisplay = "";
+    prevWinnerDisplay = "";
+    endingMessage = "";
+  } else if (
+    messsageOutput == koreanModeWarning ||
+    messsageOutput == normalModeWarning ||
+    messsageOutput == tryAgain
+  ) {
+    scoreDisplay = "";
+    endingMessage = "";
+  } else if (messsageOutput == koreanTryAgain) {
+    scoreDisplay = "";
+    endingMessage = "";
+  }
+
+  return (
+    modeTitle +
+    messsageOutput +
+    scoreDisplay +
+    prevWinnerDisplay +
+    endingMessage
+  );
+  // add line for most recent winner/previous winner and adjust the korean mode winning display?
+};
+
+var main = function (input) {
+  var myOutputValue = "";
+  var welcomeMsg = `, welcome to the Normal Mode of Scissors, Paper, Stone. <br><br> Scissors > Paper > Stone and Stone > Scissors. <br><br> You get 1 point for every round won, no points are awarded for draws. <br><br> Type '<i>korean</i>' to enable MUK-JJI-PPA mode and '<i>normal</i>' to go back to normal mode. `;
   if (currentMode == "waiting for username") {
     userName = input;
     currentMode = "JanKenPo";
