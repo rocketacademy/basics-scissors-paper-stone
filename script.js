@@ -134,53 +134,38 @@ var scissorsPaperStoneCheck = function (SPS) {
 
 // function that outputs to the browser
 var main = function (input) {
-  // only allows SUBMIT to restart game when mode is "red"
-  if (input == "" && mode == "red") {
-    initGame();
-    promptPlayer = promptForName();
+  if ((input == "" && mode == "red") || (input == "" && mode == "green")) {
+    // red mode means manual restart which then prompts player's name
+    if (mode == "red") {
+      initGame();
+      promptPlayer = promptForName();
+    } // green mode means auto player name prompt when browser first starts
+    if (mode == "green") {
+      mode = "red";
+      // while @green mode, guides player to press submit to start
+      if (input !== "") {
+        return `😠😅 Please press SUBMIT to start the game.`;
+      }
+    }
     createPlayers(promptPlayer);
     var myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
-  // flow control to start game and introduce the inputs
-  if (input == "" && mode == "green") {
-    createPlayers(promptPlayer);
-    mode = "red";
-    myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
-  }
-  // to guide player at outset i.e green mode to press SUBMIT and nothing else to start game
-  if (mode == "green" && input !== "") {
-    return `😠😅 Please press SUBMIT to start the game.`;
-  }
 
-  // to guide player when incorrect input inserted, playing is a boolean which is "true"
-  if (
-    playing &&
-    !(
-      input == "scissors" ||
-      input == "paper" ||
-      input == "stone" ||
-      input == ""
-    )
-  ) {
-    myOutputValue = `Please only input "scissors" ; "paper" or "stone" in small caps`;
-  }
-
-  // to guide player to restart game when game ends
   if (!playing && input !== "") {
     myOutputValue = `😒😒😒 Please press submit to restart`;
-  } // when "scissors" is input
-
-  if (
-    playing &&
-    (input == "scissors" || input == "paper" || input == "stone")
-  ) {
-    var winResult = scissorsPaperStoneCheck(input);
-    return winResult;
+  }
+  if (playing) {
+    if (input == "scissors" || input == "paper" || input == "stone") {
+      var winResult = scissorsPaperStoneCheck(input);
+      return winResult;
+    } else if (input !== "") {
+      myOutputValue = `Please only input "scissors" ; "paper" or "stone" in small caps`;
+    }
   }
 
   var myImage =
     '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
-  // to give value to main to output to browser
+
   return myImage + myOutputValue;
 };
 
