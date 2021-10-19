@@ -59,6 +59,7 @@ var drawConclusion = function (playerChoice, computerChoice) {
   ((playerChoice == stone) && (computerChoice == scissors))) {
     conclusion = "win";
   } else {
+    // other combinations result in a loss
     conclusion = "lose";
   }
   return conclusion;
