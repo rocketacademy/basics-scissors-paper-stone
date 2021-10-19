@@ -1,23 +1,23 @@
-// app.js contains fe button logic
+import { main } from "./script.js";
+
 var buttons = document.querySelectorAll(".img-buttons");
-var rock = document.querySelector("#rock-button");
-var paper = document.querySelector("#paper-button");
-var scissors = document.querySelector("#scissors-button");
 var resultString = "";
 
 buttons.forEach((btn) => {
-  btn.addEventListener("click", function (e) {
+  btn.addEventListener("click", (e) => {
     var input = e.target.title;
-    console.log(input);
+    // console.log(input);
     var res = main(input);
-    var result = res.result;
-    var comChoice = res.comChoice;
+
     //TODO: Add color formatting for results
     resultString = `Your choice : ${input}
     <br>
-    Computer choice : ${comChoice}
+    Computer choice : ${res.comChoice}
     <br> 
-    Result : ${result}`;
+    Result : ${res.result}
+    <br>
+    ${res.userName} Win-loss Record: ${res.userWins}/${res.tries}
+    `;
 
     var output = document.querySelector("#output-div");
     output.innerHTML = resultString;

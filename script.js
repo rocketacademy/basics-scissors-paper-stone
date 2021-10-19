@@ -1,5 +1,11 @@
 // script.js contains logic for rock paper scissors game
 
+// global vars for win-loss record
+var userWins = 0;
+var comWins = 0;
+var tries = 0;
+var userName = prompt("Enter your name to play Rock-Paper-Scissors", "User");
+
 // random computer generator for rock paper scissors
 var computerChoice = function () {
   var words = ["rock", "paper", "scissors"];
@@ -54,29 +60,39 @@ var SPSLogic = (input, comInput) => {
       lose = false;
       draw = false;
       break;
+    default:
+      // default case draw
+      lose = false;
+      win = false;
+      draw = true;
+      break;
   }
 
   // console.log(win, lose, draw);
   return { win, lose, draw };
 };
 
-var main = function (input) {
-  console.log(input);
+export function main(input) {
+  // console.log(input);
   var result = "";
   var comChoice = computerChoice();
   var output = SPSLogic(input, comChoice);
 
   if (output.win) {
     result = "win";
+    userWins += 1;
   }
 
   if (output.lose) {
     result = "loss";
+    comWins += 1;
   }
 
   if (output.draw) {
     result = "draw";
   }
 
-  return { comChoice, result };
-};
+  tries += 1;
+
+  return { comChoice, result, userWins, comWins, tries, userName };
+}
