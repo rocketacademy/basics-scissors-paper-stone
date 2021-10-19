@@ -19,61 +19,120 @@ var rollDice = function () {
   return diceNumber;
 };
 
+//Win-loss record
+var wins = 0;
+var loses = 0;
+var draws = 0;
+
+//Name Input
+var currentGameMode = "waiting for user name";
+var userName = "";
+
 var main = function (input) {
-  var hand = input;
-  var randomSPS = rollDice();
+  var myOutputValue = "";
 
-  // If function for Output
-  if (randomSPS == 1) {
-    var comValue = "scissors";
-  }
+  // do this if game mode is ....
+  if (currentGameMode == "waiting for user name") {
+    //set the name
+    userName = input;
 
-  if (randomSPS == 2) {
-    var comValue = "paper";
-  }
+    // now that we have the name, switch to other mode
+    currentGameMode = "SPS game";
 
-  if (randomSPS == 3) {
-    var comValue = "stone";
-  }
-  console.log("The system chose " + comValue);
-  // Draw
-  if (
-    (randomSPS == 1 && hand == "scissors") ||
-    (randomSPS == 2 && hand == "paper") ||
-    (randomSPS == 3 && hand == "stone")
-  ) {
-    var myOutputValue =
-      "Draw! You guessed " + hand + "." + " The computer guessed " + comValue;
-
-    console.log("draw response");
-  }
-  // Win
-  if (
-    (randomSPS == 1 && hand == "stone") ||
-    (randomSPS == 2 && hand == "scissors") ||
-    (randomSPS == 3 && hand == "paper")
-  ) {
     myOutputValue =
-      "You Win! You guessed " +
-      hand +
-      "." +
-      " The computer guessed " +
-      comValue;
-    console.log("win response");
-  }
+      "Hello " +
+      userName +
+      "! <br>Please input scissors, paper or stone to start the game.";
+  } else if (currentGameMode == "SPS game") {
+    var hand = input;
+    var randomSPS = rollDice();
 
-  // Lose
-  if (
-    (randomSPS == 1 && hand == "paper") ||
-    (randomSPS == 2 && hand == "stone") ||
-    (randomSPS == 3 && hand == "scissors")
-  ) {
-    myOutputValue =
-      "You Lose! You guessed " +
-      hand +
-      "." +
-      " The computer guessed " +
-      comValue;
+    // If function for Output
+    if (randomSPS == 1) {
+      var comValue = "scissors";
+    }
+
+    if (randomSPS == 2) {
+      var comValue = "paper";
+    }
+
+    if (randomSPS == 3) {
+      var comValue = "stone";
+    }
+    console.log("The system chose " + comValue);
+
+    // Draw
+    if (
+      (randomSPS == 1 && hand == "scissors") ||
+      (randomSPS == 2 && hand == "paper") ||
+      (randomSPS == 3 && hand == "stone")
+    ) {
+      draws = draws + 1;
+
+      var myOutputValue =
+        "Draw! <br>You guessed " +
+        hand +
+        "." +
+        " <br> The computer guessed " +
+        comValue +
+        "." +
+        " <br><br>Wins = " +
+        wins +
+        " <br>Loses = " +
+        loses +
+        " <br>Draws = " +
+        draws;
+
+      console.log("draw response");
+    }
+    // Win
+
+    if (
+      (randomSPS == 1 && hand == "stone") ||
+      (randomSPS == 2 && hand == "scissors") ||
+      (randomSPS == 3 && hand == "paper")
+    ) {
+      wins = wins + 1;
+
+      myOutputValue =
+        "You Win! <br>You guessed " +
+        hand +
+        "." +
+        " <br> The computer guessed " +
+        comValue +
+        "." +
+        " <br><br> Wins = " +
+        wins +
+        " <br> Loses = " +
+        loses +
+        " <br> Draws = " +
+        draws;
+
+      console.log("win response");
+    }
+
+    // Lose
+    if (
+      (randomSPS == 1 && hand == "paper") ||
+      (randomSPS == 2 && hand == "stone") ||
+      (randomSPS == 3 && hand == "scissors")
+    ) {
+      loses = loses + 1;
+
+      myOutputValue =
+        "You Lose! <br>You guessed " +
+        hand +
+        "." +
+        " <br> The computer guessed " +
+        comValue +
+        "." +
+        " <br><br> Wins = " +
+        wins +
+        " <br> Loses = " +
+        loses +
+        " <br> Draws = " +
+        draws;
+    }
     console.log("lose response");
   }
 
