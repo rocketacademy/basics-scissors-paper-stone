@@ -148,7 +148,7 @@ var main = function (input) {
   if (youWon < computerWon) {
     var yourGamePerformance =
       userName +
-      ", time to catch up. You are running behind! computer won" +
+      ", time to catch up. You are running behind! computer won " +
       computerWon +
       "/" +
       totalGamesPlayed +
