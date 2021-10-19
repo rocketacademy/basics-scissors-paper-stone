@@ -8,6 +8,7 @@
 [x] Format the output to make it look nicer.
 [x] Create algorithm for a reverse scissors, paper, stone game. 
 [x] Add state to program to track player wins, computer wins and draws.
+[x] Add function for reverse paper scissors stone game
 */
 
 var playerWins = 0;
