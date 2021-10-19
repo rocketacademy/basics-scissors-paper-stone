@@ -167,7 +167,7 @@ var main = function (input) {
 
     myOutputValue =
       myOutputValue +
-      `<br><br> Statistics <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone to start new game`;
+      `<br><br> Statistics <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> No of draws ${drawCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone to start new game`;
 
     return myOutputValue;
   }
@@ -254,6 +254,11 @@ var main = function (input) {
     if (player == computer) {
       console.log(mostrecentwinner);
 
+      if (!mostrecentwinner) {
+        winLose = DRAW;
+        myOutputValue = `<br> You have drawed! <br>`;
+      }
+
       if (mostrecentwinner == PLAYER) {
         winLose = WIN;
         myOutputValue = `<br> You have won! <br>`;
@@ -264,11 +269,6 @@ var main = function (input) {
         winLose = LOST;
         myOutputValue = `<br> You have LOST! <br>`;
         mostrecentwinner = "";
-      }
-
-      if (!mostrecentwinner) {
-        winLose = DRAW;
-        myOutputValue = `<br> You have drawed! <br>`;
       }
     }
 
