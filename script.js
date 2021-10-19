@@ -89,9 +89,8 @@ var whoWinsEndGame = function (numOfPlays) {
       winner = `It is a draw 🥱, click SUBMIT to restart.`;
       playing = false;
     }
-    // just for show to eliminate output "undefined"
   } else {
-    winner = `<br/><br/>📣 Oh goody!!`;
+    winner = ` Nice one !`;
   }
   return winner;
 };
@@ -102,75 +101,42 @@ var playersScoreDisplay = function () {
   numOfGames += 1; // acts as a counter to end the game at preset game number "tenth".
   return `${promptPlayer} score is ${humanPlayerScore}, Computer score is ${computerPlayerScore}. <br/><br/> ${numOfGames} of 10 games.`;
 };
-
-// input scissors function that determines win or lose condition
-var inputScissors = function (input) {
-  var randomObject = randomObjectSelect();
+// function deciding winner
+var scissorsPaperStoneCheck = function (SPS) {
+  var computerSelection = randomObjectSelect();
+  var humanSelection = players[0].player;
   // human wins
-  if (randomObject == "paper") {
+  if (computerSelection == "paper" && SPS == "scissors") {
     var human = players[0];
     human.score += 1; // increases human score by one for game won
     var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
-  } // draw game
-  else if (input == randomObject) {
+    var myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
+  } // human wins
+  else if (computerSelection == "stone" && SPS == "paper") {
+    human = players[0];
+    human.score += 1; // increases human score by one for game won
     scores = playersScoreDisplay();
-    myOutputValue = `😒Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
-  } // computer wins
+    myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
+  } else if (computerSelection == "scissors" && SPS == "stone") {
+    human = players[0];
+    human.score += 1; // increases human score by one for game won
+    scores = playersScoreDisplay();
+    myOutputValue = `${humanSelection} picked ${SPS}. 💯Computer picks ${computerSelection}. <br/><br/> ${promptPlayer} wins. <br/><br/> ${scores}`;
+  }
+  // draw game
+  else if (computerSelection == SPS) {
+    scores = playersScoreDisplay();
+    myOutputValue = `${humanSelection} picked ${SPS}. 😒Computer picks ${computerSelection}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
+  }
+  // computer wins
   else {
     var computer = players[1];
     computer.score += 1;
     scores = playersScoreDisplay();
-    myOutputValue = `💢Computer picks ${randomObject} and wins. ${promptPlayer} lose !! <br/><br/> ${scores}`;
+    myOutputValue = `${humanSelection} picked ${SPS}. 💢Computer picks ${computerSelection} and wins. .<br/><br/>${promptPlayer} loses !! <br/><br/> ${scores}`;
   }
-
-  return myOutputValue;
-};
-
-// input paper function that determines win or lose result
-var inputPaper = function (input) {
-  var randomObject = randomObjectSelect();
-  // human wins
-  if (randomObject == "stone") {
-    var human = players[0];
-    human.score += 1; // increases human score by one for the game won
-    var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}. <br/><br/> ${promptPlayer} win. <br/><br/> ${scores}`;
-  } // draw game
-  else if (input == randomObject) {
-    scores = playersScoreDisplay();
-    myOutputValue = `☠ Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
-  } //computer wins
-  else {
-    var computer = players[1];
-    computer.score += 1; // increases computer score by one when wins
-    scores = playersScoreDisplay();
-    myOutputValue = `💢Computer picks ${randomObject}. <br/><br/> Computer wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
-  }
-  return myOutputValue;
-};
-
-// input stone function that determines win or lose result
-var inputStone = function (input) {
-  var randomObject = randomObjectSelect();
-  // human wins
-  if (randomObject == "scissors") {
-    var human = players[0]; // extract object human in array
-    human.score += 1; // increase human score by one for the game won
-    var scores = playersScoreDisplay();
-    var myOutputValue = `💯Computer picks ${randomObject}.<br/><br/> ${promptPlayer} win.<br/> <br/> ${scores}`;
-  } // draw game
-  else if (input == randomObject) {
-    scores = playersScoreDisplay();
-    myOutputValue = `🥱Computer picks ${randomObject}. <br/><br/> It is a draw. <br/><br/> ${scores}`;
-  } // computer wins
-  else {
-    var computer = players[1]; //extract object computer in array
-    computer.score += 1; // increases computers score by one for game won
-    scores = playersScoreDisplay();
-    myOutputValue = `💢Computer picks ${randomObject} and wins. ${promptPlayer} lose ! <br/><br/> ${scores}`;
-  }
-  return myOutputValue;
+  var whoWinsEnd = whoWinsEndGame(numOfGames);
+  return myOutputValue + whoWinsEnd;
 };
 
 // function that outputs to the browser
@@ -210,21 +176,19 @@ var main = function (input) {
   if (!playing && input !== "") {
     myOutputValue = `😒😒😒 Please press submit to restart`;
   } // when "scissors" is input
-  if (playing && input == "scissors") {
-    myOutputValue = inputScissors(input);
-  } // when "paper" is input
-  if (playing && input == "paper") {
-    myOutputValue = inputPaper(input);
-  } //when "stone" is input
-  if (playing && input == "stone") {
-    myOutputValue = inputStone(input);
+
+  if (
+    playing &&
+    (input == "scissors" || input == "paper" || input == "stone")
+  ) {
+    var winResult = scissorsPaperStoneCheck(input);
+    return winResult;
   }
-  // decides whether to end the game and declare the winner
-  var whoWinsEnd = whoWinsEndGame(numOfGames);
+
   var myImage =
     '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
   // to give value to main to output to browser
-  return myImage + myOutputValue + whoWinsEnd;
+  return myImage + myOutputValue;
 };
 
 promptPlayer = promptForName();
