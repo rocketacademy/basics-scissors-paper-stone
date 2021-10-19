@@ -1,122 +1,127 @@
-var main = function (input) {
-  // setting variables to avoid typo
-  var PAPER_OPTION = "paper";
-  var SCISSOR_OPTION = "scissor";
-  var STONE_OPTION = "stone";
+// setting variables to avoid typo
+var PAPER_OPTION = "paper";
+var SCISSOR_OPTION = "scissor";
+var STONE_OPTION = "stone";
+var REVERSE_OPTION = "reverse";
+var previousGameWinner = " its a draw ";
 
-  // seetting variables for reverse SPS Game
+// seetting variables for reverse SPS Game
+var currentGameMode = "waiting for user name";
+var userName = "";
+var youWon = "";
+var computerWon = "";
+var totalGamesPlayed = youWon + computerWon;
+var yourWinPercent = (youWon / totalGamesPlayed) * 100;
 
-  var REV_STONE = "reversed stone";
-  var REV_PAPER = "reversed paper";
-  var REV_SCISSOR = "reversed scissor";
+// generating computer option function
+var generateComputerOption = function () {
+  var RandomNo = Math.random() * 3;
+  var randomSelection = Math.ceil(RandomNo);
 
-  var generateComputerOption = function () {
-    var RandomNo = Math.random() * 3;
-    var randomSelection = Math.ceil(RandomNo);
-
-    if (randomSelection == 1) {
-      return SCISSOR_OPTION;
-    }
-    if (randomSelection == 2) {
-      return PAPER_OPTION;
-    }
-
-    return STONE_OPTION;
-  };
-
-  var computerOption = generateComputerOption();
-
-  // reversed SPS game winning conditions
-  // paper beats scissor
-  // stone beats paper
-  // scissor beats stone
-
-  if (
-    (input == REV_SCISSOR && computerOption == STONE_OPTION) ||
-    (input == REV_PAPER && computerOption == SCISSOR_OPTION) ||
-    (input == REV_STONE && computerOption == PAPER_OPTION)
-  ) {
-    return (
-      " The computer chose '" +
-      computerOption +
-      "' " +
-      "<br>" +
-      "You chose '" +
-      input +
-      "' " +
-      "<br>" +
-      " you won the reverse SPS game !"
-    );
+  if (randomSelection == 1) {
+    return SCISSOR_OPTION;
+  }
+  if (randomSelection == 2) {
+    return PAPER_OPTION;
   }
 
-  if (input == REV_PAPER || input == REV_SCISSOR || input == REV_STONE) {
-    return (
-      " The computer chose '" +
-      computerOption +
-      "'" +
-      "<br>" +
-      "You chose '" +
-      input +
-      "'" +
-      "<br>" +
-      " you lost the reverse SPS game! Bummer"
-    );
-  }
+  return STONE_OPTION;
+};
 
-  // input validation
-  if (
-    input !== PAPER_OPTION &&
-    input !== SCISSOR_OPTION &&
-    input !== STONE_OPTION
-  ) {
-    return (
-      " You chose '" +
-      input +
-      "', which is not a valid input option." +
-      "<br>" +
-      'There are only three valid input options "paper", "scissor" and "stone". Please try again! '
-    );
-  }
-  var myOutputValue = "you lost! Bummer";
+// SPS Game decision function
 
-  console.log("you " + input);
-  console.log("computer " + computerOption);
-
-  // draw condition
-
-  if (input == computerOption) {
-    myOutputValue = "Draw!";
-    console.log("draw condition " + myOutputValue);
-  }
-
-  // winning conditions
-  // scissor beats paper
-  // paper beats stone
-  // stone beats scissor
-
+var SPSGameDecision = function (input, computerOption) {
+  SPSDecision = "lost";
   if (
     (input == PAPER_OPTION && computerOption == STONE_OPTION) ||
     (input == STONE_OPTION && computerOption == SCISSOR_OPTION) ||
     (input == SCISSOR_OPTION && computerOption == PAPER_OPTION)
   ) {
-    myOutputValue = "You Won! Great";
-    console.log("winning condition " + myOutputValue);
+    SPSDecision = "won";
+  } else if (input == computerOption) {
+    SPSDecision = "draw";
+  }
+  return SPSDecision;
+};
+
+// Reverse SPS Game decision function
+
+var reverseSPSGameDecision = function (input, computerOption) {
+  reverseSPSDecision = "lost";
+
+  if (
+    (input == SCISSOR_OPTION && computerOption == STONE_OPTION) ||
+    (input == PAPER_OPTION && computerOption == SCISSOR_OPTION) ||
+    (input == STONE_OPTION && computerOption == PAPER_OPTION)
+  ) {
+    reverseSPSDecision = "won";
+  } else if (input == computerOption) {
+    reverseSPSDecision = "draw";
+  }
+  return reverseSPSDecision;
+};
+
+var main = function (input) {
+  var computerOption = generateComputerOption();
+
+  if (currentGameMode == "waiting for user name") {
+    userName = input;
+    myOutputValue = "Hello " + userName;
+    currentGameMode = "SPS-game";
+    return myOutputValue;
   }
 
-  // display output in desired format
-  var showOutput =
-    " The computer chose '" +
-    computerOption +
-    "'" +
-    "<br>" +
-    "You chose '" +
-    input +
-    "'" +
-    "<br>" +
-    myOutputValue +
-    "<br>" +
-    'Now you can type "paper" 🧾, "scissor" ✂ or "stone" 🪨to play another round!';
+  if (currentGameMode == "SPS-game") {
+    if (input == REVERSE_OPTION) {
+      currentGameMode = "Reverse-SPS-Game";
 
-  return showOutput;
+      myOutputValue = " starting reverse SPS game";
+      return myOutputValue;
+    }
+    if (
+      input == PAPER_OPTION ||
+      input == STONE_OPTION ||
+      input == SCISSOR_OPTION
+    ) {
+      var gameResult = SPSGameDecision(input, computerOption);
+      console.log("input" + input + "computer" + computerOption);
+      myOutputValue = gameResult;
+    }
+    if (
+      input !== PAPER_OPTION &&
+      input !== STONE_OPTION &&
+      input !== SCISSOR_OPTION
+    ) {
+      return userName + " invalid input";
+    }
+  }
+
+  if (currentGameMode == "Reverse-SPS-Game") {
+    reverseGameResult = reverseSPSGameDecision(input, computerOption);
+
+    myOutputValue = reverseGameResult;
+  }
+
+  if (myOutputValue == "won") {
+    previousGameWinner = userName;
+    console.log(myOutputValue + previousGameWinner);
+  } else if (myOutputValue == "lost") {
+    previousGameWinner = " computer";
+  }
+  if (myOutputValue == "draw") {
+    currentGameMode = "SPS-game";
+    return " Game Ends, result is  " + previousGameWinner;
+  }
+
+  return userName + myOutputValue;
 };
-// random generate : scissor paper stone
+
+// winning conditions
+// scissor beats paper
+// paper beats stone
+// stone beats scissor
+
+// reversed winning conditions
+// paper beats scissor
+// stone beats paper
+// scissor beats stone
