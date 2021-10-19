@@ -50,16 +50,18 @@ var setChoice = function() {
 }
 
 var drawConclusion = function (playerChoice, computerChoice) {
+  var conclusion = "";
   if (playerChoice == computerChoice) {
-    return "draw";
+    conclusion = "draw";
   }
   if (((playerChoice == scissors) && (computerChoice == paper)) ||
   ((playerChoice == paper) && (computerChoice == stone)) ||
   ((playerChoice == stone) && (computerChoice == scissors))) {
-    return "win";
+    conclusion = "win";
   } else {
-    return "lose";
+    conclusion = "lose";
   }
+  return conclusion;
 }
 
 var runGame = function(input, userName) {
