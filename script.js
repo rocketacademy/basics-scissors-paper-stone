@@ -63,10 +63,6 @@ var getWinsMessage = function (playerName) {
   return winsMessage;
 };
 
-/* var validateUser = function (userInput){
-  if ()
-}; */
-
 //Function to validate SRS input
 var validateRoshamboInput = function (roshamboInput) {
   return (
@@ -100,6 +96,7 @@ var main = function (input) {
     var playerRoshambo = input.toLowerCase();
   }
 
+  //Draw
   if (
     playerRoshambo == randomRoshambo ||
     (playerRoshambo == reversedScissors && randomRoshambo == scissors) ||
@@ -112,6 +109,7 @@ var main = function (input) {
       randomRoshambo
     )} <br><br>It's a draw! <br><br>${getWinsMessage(playerName)}`;
   }
+  //Win
   if (
     (playerRoshambo == scissors && randomRoshambo == paper) ||
     (playerRoshambo == reversedScissors && randomRoshambo == stone) ||
@@ -126,6 +124,7 @@ var main = function (input) {
       randomRoshambo
     )} <br><br>You win! <br><br>${getWinsMessage(playerName)}`;
   }
+  //Lose
   if (
     (playerRoshambo == scissors && randomRoshambo == stone) ||
     (playerRoshambo == reversedScissors && randomRoshambo == paper) ||
