@@ -2,71 +2,48 @@
 // Project 1: scissors paper stone 
 // user input scissors or paper, or stone
 // input validation for "scissors" "paper" "stone"
-// assign 0,1,2 to scissors, paper, stone
-// random generate number 0,1,2
-// check input vs comPlay
-// winCondition: scissors > paper || paper > stone || stone > scissors 
-// drawCondition: input == computerRandom
-// updated for formatting 
+// check input vs randomSign 
+// each attempt = attempt + 1
+// each win = numberOfWins + 1 
 
+var attempt = 0;
+var numberOfWins = 0;
 
 var main = function (input) {
   input = input.toLowerCase();
-  var myOutputValue = "";
-  var input1 = "";
+  var randomSign = randomGenerateSign();
+  console.log (randomSign);
+  attempt = attempt + 1
+  var myOutputValue = "";  
+ 
 
-//input validation
-if (input != "scissors" || 
-input != "paper" ||
-input != "stone") { 
-  myOutputValue = "Please try again, type 'scissors' 'paper' or 'stone'"
-  return myOutputValue;
-}  
-  var comPlay = randomNumber()
-console.log (comPlay);
-
-// scissors = 0
-// paper = 1
-// stone = 2 
-
-if(comPlay == 0) {
-  input1 = "scissors"
-}
-
-if(comPlay == 1) {
-  input1 = "paper"
-}
-
-if(comPlay == 2) {
-  input1 = "stone"
-}
-
-// check user vs. computer outomce
-if (input == "scissors" && comPlay == 1||
-input == "paper" && comPlay == 2 ||
-input == "stone" && comPlay == 0) {
+// check user vs. randomSign
+if (input == "scissors" && randomSign == "paper"||
+input == "paper" && randomSign == "stone" ||
+input == "stone" && randomSign == "scissors") {
+numberOfWins = numberOfWins + 1;
 var outcome = "you win"
 }
 
-if (input == "scissors" && comPlay == 2||
-input == "paper" && comPlay == 0 ||
-input == "stone" && comPlay == 1) {
+if (input == "scissors" && randomSign == "stone"||
+input == "paper" && randomSign == "scissors" ||
+input == "stone" && randomSign == "paper") {
 outcome = "you lose"
 }
 
-if (input == "scissors" && comPlay == 0||
-input == "paper" && comPlay == 1 ||
-input == "stone" && comPlay == 2) {
+if (input == randomSign) {
 outcome = "you draw"
 }
 
-myOutputValue = "You chose " + input + '<br>' + "The computer chose " + input1 + '<br>' + " Result " + outcome;
+myOutputValue = "You chose " + input + '<br>' + "The computer chose " + randomSign + '<br>' + " Result " + outcome + '<br>' + "You've won " + numberOfWins + " out of " + attempt + " times";
 return myOutputValue;
 };
 
-//generate random number for comPlay
-var randomNumber = function() {
+//generate randomSign
+var randomGenerateSign = function() {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
-  return randomInteger;
+  var listSign = ["scissors", "paper", "stone"];
+  var playedSign = listSign[randomInteger];
+  return playedSign;
 }
