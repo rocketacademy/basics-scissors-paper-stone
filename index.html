@@ -18,7 +18,7 @@
       }
 
       #container {
-        background-color: pink;
+        background-color: rgb(230, 168, 70);
         margin: 40px auto;
         max-width: 800px;
         padding: 38px 31px;
@@ -66,10 +66,12 @@
       button.addEventListener("click", function () {
         // Set result to input value
         var input = document.querySelector("#input-field");
+
         var result = main(input.value);
 
         // Display result in output element
         var output = document.querySelector("#output-div");
+
         output.innerHTML = result;
 
         // Reset input value
