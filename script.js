@@ -38,7 +38,7 @@ var createPlayers = function (nameOfPlayer) {
   for (
     var currentIndex = 0;
     currentIndex < playerNames.length;
-    currentIndex++
+    currentIndex += 1
   ) {
     var playerName = playerNames[currentIndex];
     var currentPlayer = playerIdentity[currentIndex];
