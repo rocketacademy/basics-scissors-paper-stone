@@ -1,8 +1,15 @@
+// Add state to your program such that it keeps track of the number of times the user has won and the number of times the computer has won. Output this win-loss record in a format you like in the program output. You can also output the number of draws and/or each party's winning percentage if you'd like.
+
 var ROCK = "rock";
 var PAPER = "paper";
 var SCISSORS = "scissors";
 var REPLAY_INSTRUCTIONS =
   'Now you can type "rock" "paper" or "scissors" to play another round!';
+
+// initialize winning points for player, computer, and draw
+var numPlayerWins = 0;
+var numCompWins = 0;
+var numDraws = 0;
 
 // generate random number to assign to rock, paper, scissors
 var getRandomObject = function () {
@@ -47,9 +54,17 @@ var getDefaultObjectsMessage = function (playerObject, computerObject) {
   );
 };
 
-// condition if player draw
-var PlayerDraws = function (playerObject, computerObject) {
-  return playerObject == computerObject;
+// Message for loss-draw record
+
+var getDefaultWinLossMessage = function () {
+  return (
+    "Player: " +
+    numPlayerWins +
+    "; Computer: " +
+    numCompWins +
+    "; Draw: " +
+    numDraws
+  );
 };
 
 // Checking if player doesn't input these words, will show specific instruction
@@ -66,24 +81,34 @@ var main = function (input) {
     computerObject
   );
 
-  if (PlayerDraws(playerObject, computerObject)) {
-    return defaultObjectsMessage + "<br><br> It's a draw! <br><br> ";
-  }
-
-  // If not a draw, check if player wins
-  if (playerWins(playerObject, computerObject)) {
+  // draw condition
+  if (playerObject == computerObject) {
+    numDraws += 1;
     return (
       defaultObjectsMessage +
-      "<br><br>" +
-      " You win! <br><br>" +
-      REPLAY_INSTRUCTIONS +
-      "<br>"
+      "its a draw " +
+      getDefaultWinLossMessage() +
+      REPLAY_INSTRUCTIONS
     );
   }
 
+  // Player wins condition
+  if (playerWins(playerObject, computerObject)) {
+    numPlayerWins += 1;
+    return (
+      defaultObjectsMessage +
+      "you win!" +
+      getDefaultWinLossMessage() +
+      REPLAY_INSTRUCTIONS
+    );
+  }
+
+  // Computer wins condition
+  numCompWins += 1;
   return (
     defaultObjectsMessage +
-    "<br><br> You lose! Bummer <br><br>" +
+    "you lose! " +
+    getDefaultWinLossMessage() +
     REPLAY_INSTRUCTIONS
   );
 };
