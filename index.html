@@ -18,7 +18,7 @@
       }
 
       #container {
-        background-color: pink;
+        background-color: rgb(192, 255, 216);
         margin: 40px auto;
         max-width: 800px;
         padding: 38px 31px;
@@ -40,7 +40,7 @@
       }
 
       #output-div {
-        background-color: lightgrey;
+        background-color: rgb(211, 228, 216);
         margin: 20px auto;
         padding: 20px;
         width: 100%;
@@ -51,11 +51,14 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
-      <p>Input:</p>
+      <p>Input Player Name:</p>
+      <input id="input-name" />
+      <br />
+      <p>Input Your Choice (Scissors, Paper or Stone):</p>
       <input id="input-field" />
       <br />
-      <button id="submit-button">Submit</button>
-      <p>Output:</p>
+      <button id="submit-button">PLAY</button>
+      <p>Game Result & Cumulative Score:</p>
       <div id="output-div"></div>
     </div>
     <!-- Import program logic -->
@@ -64,6 +67,8 @@
     <script>
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
+        // Take in user name
+        var userName = document.querySelector("#input-name");
         // Set result to input value
         var input = document.querySelector("#input-field");
         var result = main(input.value);
