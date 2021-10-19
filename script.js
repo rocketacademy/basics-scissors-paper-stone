@@ -134,6 +134,7 @@ var scissorsPaperStoneCheck = function (SPS) {
 
 // function that outputs to the browser
 var main = function (input) {
+  // initiates game, prompts players name and guide appropriate inputs
   if ((input == "" && mode == "red") || (input == "" && mode == "green")) {
     // red mode means manual restart which then prompts player's name
     if (mode == "red") {
@@ -150,7 +151,7 @@ var main = function (input) {
     createPlayers(promptPlayer);
     var myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
-
+  // if statements to guide players to input relevant fields into appropriate context
   if (!playing && input !== "") {
     myOutputValue = `😒😒😒 Please press submit to restart`;
   }
@@ -162,11 +163,11 @@ var main = function (input) {
       myOutputValue = `Please only input "scissors" ; "paper" or "stone" in small caps`;
     }
   }
-
+  // fancy image for fun
   var myImage =
     '<img src="https://c.tenor.com/EnRojaH2AH4AAAAM/confused-meme.gif"/><br/><br/>';
 
   return myImage + myOutputValue;
 };
-
+// required for auto prompt when browser initial start
 promptPlayer = promptForName();
