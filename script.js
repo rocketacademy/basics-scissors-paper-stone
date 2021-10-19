@@ -1,5 +1,26 @@
+//prompt for name
+var user = prompt("Please enter your name");
+
+if (user == null) {
+  var user = prompt("No name recorded. Please enter your name");
+}
+
+if (user != null) {
+  alert(
+    "Hi " +
+      user +
+      "!" +
+      "  Please input Rock, Paper or Scissors in the Input Box to start playing"
+  );
+}
+
+//declare global variable
+var winCounter = 0;
+var loseCounter = 0;
+var totalTries = 0;
+
 var main = function (input) {
-  var myOutputValue = "hello world";
+  var myOutputValue = "Please input Rock, Paper or Scissors";
 
   var computerShows = computerGuess();
   //if user chooses rock,  computer chooses scissors, user wins
@@ -10,11 +31,25 @@ var main = function (input) {
     (input == "paper" && computerShows == "rock") ||
     (input == "scissors" && computerShows == "paper")
   ) {
+    winCounter = winCounter + 1;
+    var winPercentage = (
+      100 *
+      (winCounter / (winCounter + loseCounter))
+    ).toFixed(2);
+    totalTries = totalTries + 1;
+    console.log("winCount");
+    console.log(winCounter);
     var myOutputValue =
-      "you win! <br><br> you guessed " +
+      user +
+      " wins! <br><br> You guessed " +
       input +
-      " while computer guessed " +
-      computerShows;
+      " while Computer guessed " +
+      computerShows +
+      "<br> Out of " +
+      totalTries +
+      " tries, you have won " +
+      winCounter +
+      " times";
   }
 
   //if user chooses rock, computer chooses paper, user loses
@@ -25,11 +60,25 @@ var main = function (input) {
     (input == "paper" && computerShows == "scissors") ||
     (input == "scissors" && computerShows == "rock")
   ) {
+    loseCounter = loseCounter + 1;
+    console.log("loseCount");
+    console.log(loseCounter);
+    var winPercentage = (
+      100 *
+      (winCounter / (winCounter + loseCounter))
+    ).toFixed(2);
+    totalTries = totalTries + 1;
     var myOutputValue =
-      "you lose! <br><br> you guessed " +
+      user +
+      " loses! <br><br> You guessed " +
       input +
-      " while computer guessed " +
-      computerShows;
+      " while Computer guessed " +
+      computerShows +
+      "<br> Out of " +
+      totalTries +
+      " tries, you have won " +
+      winCounter +
+      " times";
   }
 
   //if user chooses rock, computer chooses rock, they draw
@@ -40,11 +89,17 @@ var main = function (input) {
     (input == "paper" && computerShows == "paper") ||
     (input == "scissors" && computerShows == "scissors")
   ) {
+    totalTries = totalTries + 1;
     var myOutputValue =
-      "its a draw! <br><br> you guessed " +
+      "It's a draw! <br><br> You guessed " +
       input +
-      " while computer guessed " +
-      computerShows;
+      " while Computer guessed " +
+      computerShows +
+      "<br> Out of " +
+      totalTries +
+      " tries, you have won " +
+      winCounter +
+      " times";
   }
 
   return myOutputValue;
