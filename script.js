@@ -33,7 +33,6 @@ var diceRoll = function (num) {
 // create players function that creates player objects that can store as properties.
 var createPlayers = function (nameOfPlayer) {
   var playerNames = [nameOfPlayer, "Computer"];
-  console.log(nameOfPlayer);
   var playerIdentity = ["player--1", "player--2"]; // extra stuff
   // for loop
   for (
@@ -44,13 +43,13 @@ var createPlayers = function (nameOfPlayer) {
     var playerName = playerNames[currentIndex];
     var currentPlayer = playerIdentity[currentIndex];
     var scores = 0;
-    var card;
+    var cards;
 
     var playerObject = {
       player: playerName, // stores player names or whatever you wish to call them
       score: scores, // scores are stored in here within the objects
       ID: currentPlayer, // not highly useful in this project
-      card: card, // object card that can be configured to hold an array of objects e.g. cards
+      card: cards, // object card that can be configured to hold an array of objects e.g. cards
     };
     players.push(playerObject); // add object to players = []
   }
