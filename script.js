@@ -1,4 +1,6 @@
 var computerChoice = "";
+var gamesPlayed = 0;
+var gamesWon = 0;
 
 var computerPlay = function () {
   var randomDecimal = Math.random() * 3;
@@ -20,6 +22,8 @@ var main = function (input) {
     return myOutputValue;
   }
 
+  gamesPlayed = gamesPlayed + 1;
+
   computerChoice = computerPlay();
 
   var Result = "It's a draw.";
@@ -30,6 +34,7 @@ var main = function (input) {
 
   if (input == "Stone" && computerChoice == "Scissors") {
     var Result = "You Won.";
+    gamesWon = gamesWon + 1;
   }
 
   if (input == "Scissors" && computerChoice == "Stone") {
@@ -38,10 +43,12 @@ var main = function (input) {
 
   if (input == "Scissors" && computerChoice == "Paper") {
     var Result = "You Won.";
+    gamesWon = gamesWon + 1;
   }
 
   if (input == "Paper" && computerChoice == "Stone") {
     var Result = "You Won.";
+    gamesWon = gamesWon + 1;
   }
 
   if (input == "Paper" && computerChoice == "Scissors") {
@@ -54,6 +61,11 @@ var main = function (input) {
     " and you chose " +
     input +
     ". " +
-    Result;
+    Result +
+    " You've won " +
+    gamesWon +
+    "/" +
+    gamesPlayed +
+    " games.";
   return myOutputValue;
 };
