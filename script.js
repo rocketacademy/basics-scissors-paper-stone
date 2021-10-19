@@ -3,15 +3,14 @@ var PAPER_OPTION = "paper";
 var SCISSOR_OPTION = "scissor";
 var STONE_OPTION = "stone";
 var REVERSE_OPTION = "reverse";
-var previousGameWinner = " its a draw ";
+var previousGameWinner = "  draw ";
 
 // seetting variables for reverse SPS Game
 var currentGameMode = "waiting for user name";
 var userName = "";
-var youWon = "";
-var computerWon = "";
-var totalGamesPlayed = youWon + computerWon;
-var yourWinPercent = (youWon / totalGamesPlayed) * 100;
+var youWon = 0;
+var computerWon = 0;
+var gameDraw = 0;
 
 // generating computer option function
 var generateComputerOption = function () {
@@ -26,6 +25,22 @@ var generateComputerOption = function () {
   }
 
   return STONE_OPTION;
+};
+
+// input validation check
+
+var wrongInputCheck = function (input) {
+  var wrongInput = false;
+  if (
+    input !== PAPER_OPTION &&
+    input !== SCISSOR_OPTION &&
+    input !== STONE_OPTION &&
+    input !== REVERSE_OPTION
+  ) {
+    var wrongInput = true;
+
+    return wrongInput;
+  }
 };
 
 // SPS Game decision function
@@ -71,6 +86,12 @@ var main = function (input) {
     return myOutputValue;
   }
 
+  // input validation check after username input
+  var inputNotValid = wrongInputCheck(input);
+  if (inputNotValid == true) {
+    return userName + " input not valid";
+  }
+
   if (currentGameMode == "SPS-game") {
     if (input == REVERSE_OPTION) {
       currentGameMode = "Reverse-SPS-Game";
@@ -78,42 +99,83 @@ var main = function (input) {
       myOutputValue = " starting reverse SPS game";
       return myOutputValue;
     }
-    if (
-      input == PAPER_OPTION ||
-      input == STONE_OPTION ||
-      input == SCISSOR_OPTION
-    ) {
-      var gameResult = SPSGameDecision(input, computerOption);
-      console.log("input" + input + "computer" + computerOption);
-      myOutputValue = gameResult;
-    }
-    if (
-      input !== PAPER_OPTION &&
-      input !== STONE_OPTION &&
-      input !== SCISSOR_OPTION
-    ) {
-      return userName + " invalid input";
-    }
+
+    var gameResult = SPSGameDecision(input, computerOption);
+    console.log("input" + input + "computer" + computerOption);
+    myOutputValue = gameResult;
   }
 
   if (currentGameMode == "Reverse-SPS-Game") {
     reverseGameResult = reverseSPSGameDecision(input, computerOption);
 
     myOutputValue = reverseGameResult;
+
+    // in reverse SPS mode - if againtype "reverse" - it switches back to normal sps mode
+
+    if (input == REVERSE_OPTION) {
+      currentGameMode = "SPS-game";
+      return " Back to Normal SPS game";
+    }
   }
 
+  // korean mode
   if (myOutputValue == "won") {
-    previousGameWinner = userName;
+    youWon = youWon + 1;
+    previousGameWinner = userName + ", won";
     console.log(myOutputValue + previousGameWinner);
   } else if (myOutputValue == "lost") {
-    previousGameWinner = " computer";
+    computerWon = computerWon + 1;
+    previousGameWinner = " computer won ";
   }
   if (myOutputValue == "draw") {
+    gameDraw = gameDraw + 1;
     currentGameMode = "SPS-game";
-    return " Game Ends, result is  " + previousGameWinner;
+    return " Korean SPS Game Ends, result is  " + previousGameWinner;
+  }
+  var totalGamesPlayed = youWon + computerWon + gameDraw;
+
+  if (youWon > computerWon) {
+    var yourGamePerformance =
+      userName +
+      ", you are doing good, you won " +
+      youWon +
+      "/" +
+      totalGamesPlayed +
+      " Note: Draw " +
+      gameDraw;
+    (" rounds");
+  }
+  if (youWon < computerWon) {
+    var yourGamePerformance =
+      userName +
+      ", time to catch up. You are running behind! computer won" +
+      computerWon +
+      "/" +
+      totalGamesPlayed +
+      " rounds";
+  }
+  if (youWon == computerWon) {
+    var yourGamePerformance =
+      userName +
+      ", you both are neck to neck! both won " +
+      youWon +
+      " each, out of total " +
+      totalGamesPlayed +
+      " rounds";
   }
 
-  return userName + myOutputValue;
+  return (
+    userName +
+    " " +
+    myOutputValue +
+    "<br>" +
+    "you chose " +
+    input +
+    "  and computer chose " +
+    computerOption +
+    "<br>" +
+    yourGamePerformance
+  );
 };
 
 // winning conditions
