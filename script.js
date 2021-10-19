@@ -75,10 +75,9 @@ var main = function (input) {
       userWinCounter = userWinCounter + 1;
       console.log(userWinCounter);
       console.log("Winning actions");
-      myOutputValue =
-        `${userName}, you chose ${input} and won ` +
-        userWinCounter +
-        ` turn(s)! The computer chose ${computer} and lost! So far ${userName} you've been winning ${userWinCounter} turn(s). Keep it up!`;
+      myOutputValue = `${userName}, you chose ${input} and won! <br><br>
+        The computer chose ${computer} and lost! <br><br>
+        Bravo, keep it up ${userName}! You've won ${userWinCounter} turn(s) so far!`;
     }
 
     if (
@@ -90,9 +89,11 @@ var main = function (input) {
       console.log(computerWinCounter);
       console.log("Losing actions");
       myOutputValue =
-        `${userName}, you chose ${input} and lost! The computer chose ${computer} and won ` +
+        `${userName}, you chose ${input} and lost! <br><br>
+        The computer chose ${computer} and won ` +
         computerWinCounter +
-        ` turn(s)! So far ${userName} you've been winning ${userWinCounter} turn(s). Keep it up!`;
+        ` turn(s)! <br><br>
+        Good try ${userName}! You've won ${userWinCounter} turn(s) so far, keep going!`;
     }
   }
   return myOutputValue;
