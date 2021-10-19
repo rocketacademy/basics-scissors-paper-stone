@@ -1,3 +1,8 @@
+// Adding state to the user & computer's game score
+var userWin = 0;
+var computerWin = 0;
+var userName = "";
+
 var main = function (input) {
   // Creating a variable for a user input of scissors, paper or stone
   var userChoice = input;
@@ -16,39 +21,45 @@ var main = function (input) {
   }
 
   // Writing a function that would produce who wins or loses through the game rules
-  var SPS = function (userChoice) {
-    // If user's choice and computer's choice are the same, the game is drawn.
+  var gamePlay = function (userChoice) {
+    // If user's choice and computer's choice are the same, the game is drawn. Therefore adding no value to the user's and the computer's game score.
     if (userChoice == computerChoice) {
-      var gameResult = `Draw! You and computer both choose the same; ${userChoice} and ${computerChoice}.`;
+      var gameResult = `Draw! You and computer both choose the same; ${userChoice} and ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose scissors and computer chose paper, user wins.
+      // If user chose scissors and computer chose paper, user wins. Therefore adding +1 to the user's game score.
     } else if (userChoice == "scissors" && computerChoice == "paper") {
-      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      userWin = userWin + 1;
+      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose scissors and computer chose stone, computer wins.
+      // If user chose scissors and computer chose stone, computer wins. Therefore, adding +1 to computer's game score.
     } else if (userChoice == "scissors" && computerChoice == "stone") {
-      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      computerWin = computerWin + 1;
+      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose paper and computer chose scissors, computer wins.
+      // If user chose paper and computer chose scissors, computer wins. Therefore, adding +1 to computer's game score.
     } else if (userChoice == "paper" && computerChoice == "scissors") {
-      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      computerWin = computerWin + 1;
+      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose papaer and computer chose stone, user wins.
+      // If user chose papaer and computer chose stone, user wins. Therefore, adding +1 to the user's game score.
     } else if (userChoice == "paper" && computerChoice == "stone") {
-      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      userWin = userWin + 1;
+      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose stone and computer chose paper, computer wins.
+      // If user chose stone and computer chose paper, computer wins. Therefore, adding +1 to the computer's game score.
     } else if (userChoice == "stone" && computerChoice == "paper") {
-      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      computerWin = computerWin + 1;
+      var gameResult = `You lose! Computer wins! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
 
-      // If user chose stone and computer chose scissors, user wins.
+      // If user chose stone and computer chose scissors, user wins. Therefore, adding +1 to the user's game score.
     } else if (userChoice == "stone" && computerChoice == "scissors") {
-      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}.`;
+      userWin = userWin + 1;
+      var gameResult = `You win! Computer loses! You chose ${userChoice} and computer chose ${computerChoice}. Your score is ${userWin} and the computer score is ${computerWin}.`;
     }
     return gameResult;
   };
 
-  // Outputing the result
-  var myOutputValue = SPS(userChoice);
+  // Outputing the result including the game scores
+  var myOutputValue = gamePlay(userChoice);
   return myOutputValue;
 };
