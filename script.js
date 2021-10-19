@@ -3,6 +3,9 @@
 // How will the computer's option be randomly generated? Using math.random to generate a number between 0-2
 // How many different cases are there? 3 (win, lose, draw)
 
+//Record game mode
+var gameMode = "normal";
+
 //String constant variable names
 var SCISSORS = "scissors";
 var PAPER = "paper";
@@ -41,60 +44,52 @@ var generateComputerTurn = function () {
   }
 };
 
-// Perform input validation
-var performInputValidation = function () {
-  if (
-    input != "stone" &&
-    input != "paper" &&
-    input != "scissors" &&
-    input != "reversed stone" &&
-    input != "reversed paper" &&
-    input != "reversed scissors"
-  ) {
-    myOutputValue =
-      yourname +
-      " you played " +
-      input +
-      " which is invalid, please only play stone, paper or scissors.<br> You can also try playing reversed stone or reversed paper or reversed scissors.";
-    // Return output.
-    console.log("input validation: ", input);
+var main = function (input) {
+  //Change gamemode
+  if (input == "reverse" && gameMode == "normal") {
+    gameMode = "reverse";
+    console.log("Game Mode: ", gameMode);
+    myOutputValue = "The game mode has now been reversed.";
     return myOutputValue;
   }
-};
+  if (input == "reverse" && gameMode == "reverse") {
+    gameMode = "normal";
+    console.log("Game Mode: ", gameMode);
+    myOutputValue = "The game mode has now been reversed.";
+    return myOutputValue;
+  }
 
-var main = function (input) {
-  // Assign a play to each dice number
-  var computerTurn = generateComputerTurn();
   // Input Validation
   if (
     input != "stone" &&
     input != "paper" &&
     input != "scissors" &&
-    input != "reversed stone" &&
-    input != "reversed paper" &&
-    input != "reversed scissors"
+    input != "reverse"
   ) {
     myOutputValue =
       yourname +
       " you played " +
       input +
-      " which is invalid, please only play stone, paper or scissors.<br> You can also try playing reversed stone or reversed paper or reversed scissors.";
+      " which is invalid, please only play stone, paper or scissors.<br> You can also try playing the reversed mode by typing 'reverse'.";
     // Return output.
     console.log("input validation: ", input);
     return myOutputValue;
   }
+
+  // Assign a play to each dice number
+  var computerTurn = generateComputerTurn();
 
   // WIN SCENARIOS
   // stone vs Scissors (win) / reversed stone vs paper (win)
   // Paper vs stone (win) / reversed paper vs scissors (win)
   // Scissors vs paper (win) or reversed scissors vs stone (win)
   if (
-    (input == "stone" && computerTurn == "scissors") ||
-    (input == "reversed stone" && computerTurn == "paper") ||
-    (input == "paper" && computerTurn == "stone") ||
-    (input == "reversed paper" && computerTurn == "scissors") ||
-    (input == "scissors" && computerTurn == "paper") ||
-    (input == "reversed scissors" && computerTurn == "stone")
+    (gameMode == "normal" && input == "stone" && computerTurn == "scissors") ||
+    (gameMode == "reverse" && input == "stone" && computerTurn == "paper") ||
+    (gameMode == "normal" && input == "paper" && computerTurn == "stone") ||
+    (gameMode == "reverse" && input == "paper" && computerTurn == "scissors") ||
+    (gameMode == "normal" && input == "scissors" && computerTurn == "paper") ||
+    (gameMode == "reverse" && input == "scissors" && computerTurn == "stone")
   ) {
     userWins = userWins + 1;
     myOutputValue =
@@ -167,12 +162,12 @@ var main = function (input) {
   // scissors vs stone (lose) / reversed scissors vs paper (lose)
 
   if (
-    (input == "stone" && computerTurn == "paper") ||
-    (input == "reversed stone" && computerTurn == "scissors") ||
-    (input == "paper" && computerTurn == "scissors") ||
-    (input == "reversed paper" && computerTurn == "stone") ||
-    (input == "scissors" && computerTurn == "stone") ||
-    (input == "reversed scissors" && computerTurn == "paper")
+    (gameMode == "normal" && input == "stone" && computerTurn == "paper") ||
+    (gameMode == "reverse" && "stone" && computerTurn == "scissors") ||
+    (gameMode == "normal" && input == "paper" && computerTurn == "scissors") ||
+    (gameMode == "reverse" && input == "paper" && computerTurn == "stone") ||
+    (gameMode == "normal" && input == "scissors" && computerTurn == "stone") ||
+    (gameMode == "reverse" && input == "scissors" && computerTurn == "paper")
   ) {
     compWins = compWins + 1;
     myOutputValue =
