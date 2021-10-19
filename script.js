@@ -4,45 +4,6 @@
 // Rules: scissors beats paper, paper beats stone, and stone beats scissors.
 // If both parties choose the same object, it's a draw.
 
-// reverse scissors paper stone game
-var main = function (input) {
-  var computer = generateScissorsPaperStone();
-  console.log("Computer is choosing");
-  console.log(computer);
-
-  var myOutputValue =
-    "You can only input 'reversed scissors', 'reversed paper' or 'reversed stone'. Please try again!";
-
-  if (
-    (input == "reversed scissors" && computer == "scissors") ||
-    (input == "reversed paper" && computer == "paper") ||
-    (input == "reversed stone" && computer == "stone")
-  ) {
-    console.log("draw!");
-    myOutputValue = "It's a draw!";
-  }
-
-  if (
-    (input == "reversed scissors" && computer == "paper") ||
-    (input == "reversed paper" && computer == "stone") ||
-    (input == "reversed stone" && computer == "scissors")
-  ) {
-    console.log("Winning actions");
-    myOutputValue = "You lost! Computer won!";
-  }
-
-  if (
-    (input == "reversed scissors" && computer == "stone") ||
-    (input == "reversed paper" && computer == "scissors") ||
-    (input == "reversed stone" && computer == "paper")
-  ) {
-    console.log("Winning actions");
-    myOutputValue = "You win! Computer lost!";
-  }
-
-  return myOutputValue;
-};
-
 // HELPER FUNCTIONS HERE
 var chooseScissorsPaperStone = function () {
   var randomDecimal = Math.random() * 3; // computer random selection
@@ -64,4 +25,57 @@ var generateScissorsPaperStone = function () {
   if (scissorsPaperStone == 3) {
     return "stone";
   }
+};
+
+var userWinCounter = 0;
+var computerWinCounter = 0;
+var drawCounter = 0;
+
+var main = function (input) {
+  var myOutputValue =
+    "You can only input 'scissors', 'paper' or 'stone'. Please input valid option!";
+  var computer = generateScissorsPaperStone();
+  console.log("Computer chooses", computer);
+
+  if (
+    (input == "scissors" && computer == "scissors") ||
+    (input == "paper" && computer == "paper") ||
+    (input == "stone" && computer == "stone")
+  ) {
+    drawCounter = drawCounter + 1;
+    console.log(drawCounter);
+    console.log("draw!");
+    myOutputValue =
+      "It's a draw! You have drawn for " + drawCounter + " time(s)!";
+  }
+
+  if (
+    (input == "scissors" && computer == "paper") ||
+    (input == "paper" && computer == "stone") ||
+    (input == "stone" && computer == "scissors")
+  ) {
+    userWinCounter = userWinCounter + 1;
+    console.log(userWinCounter);
+    console.log("Winning actions");
+    myOutputValue =
+      `You chose ${input} and won ` +
+      userWinCounter +
+      ` time(s)! The computer chose ${computer} and lost!`;
+  }
+
+  if (
+    (input == "scissors" && computer == "stone") ||
+    (input == "paper" && computer == "scissors") ||
+    (input == "stone" && computer == "paper")
+  ) {
+    computerWinCounter = computerWinCounter + 1;
+    console.log(computerWinCounter);
+    console.log("Losing actions");
+    myOutputValue =
+      `You chose ${input} and lost! The computer chose ${computer} and won ` +
+      computerWinCounter +
+      ` time(s)!`;
+  }
+
+  return myOutputValue;
 };
