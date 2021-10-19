@@ -1,91 +1,74 @@
-var currentGameMode = 'waiting for user name';
-var userName = '';
-var myOutputValue = 'waiting for user name'
+var currentGameMode = "waiting for user name";
+var userName = "";
+var myOutputValue = "waiting for user name";
+var numberOfWins = 0;
+var numberOfGames = 0;
 
 var main = function (input) {
-  if (currentGameMode == 'waiting for user name') {
+  if (currentGameMode == "waiting for user name") {
     // set the name
     userName = input;
-  }
-  
-    // now that we have the name, switch the mode
-    currentGameMode = 'generateRandomScissorsPaperStone';
+    currentGameMode = "game on";
 
-    myOutputValue = 'Hello ' + userName;
-  }else if (currentGameMode == 'generateRandomScissorsPaperStone') {
+    console.log(currentGameMode);
+    myOutputValue = "Hello " + userName;
+  } else if (currentGameMode == "game on") {
     // generateRandomScissorsPaperStone logic
-  
-  // generated SPS
+    var userPlays1 = input;
+    var computerPlays1 = generateRandomScissorsPaperStone();
+    console.log(userPlays1);
+    console.log(computerPlays1);
+    console.log(currentGameMode);
 
-var generateRandomScissorsPaperStone = function(){
-var randomDecimal = Math.random() * 3
-var randomInteger = Math.floor(randomDecimal)
-var diceNumber = randomInteger + 1 
-var RandomScissorsPaperStone = "undefined"
+    var result = getResults(userPlays1, computerPlays1);
 
-if (diceNumber == 1){
-  RandomScissorsPaperStone = 'scissors' 
+    myOutputValue = "tada!" + result;
+  }
+  return myOutputValue;
 };
 
-if (diceNumber == 2){
-  RandomScissorsPaperStone = 'paper'
+var generateRandomScissorsPaperStone = function () {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var diceNumber = randomInteger + 1;
+  var RandomScissorsPaperStone = "undefined";
 
-};
-if (diceNumber == 3){
-  RandomScissorsPaperStone = 'stone'
- 
-};
-console.log (RandomScissorsPaperStone);
-return RandomScissorsPaperStone
+  if (diceNumber == 1) {
+    RandomScissorsPaperStone = "scissors";
+  }
 
+  if (diceNumber == 2) {
+    RandomScissorsPaperStone = "paper";
+  }
+  if (diceNumber == 3) {
+    RandomScissorsPaperStone = "stone";
+  }
+  console.log(RandomScissorsPaperStone);
+  return RandomScissorsPaperStone;
 };
 
 // win or lose
-​
-var getResults = function(){
+var getResults = function (userPlays, computerPlays) {
   var result = "undefined";
 
+  if (userPlays == computerPlays) {
+    result = "It's a tie!";
+  }
 
-if (userPlays == computerPlays){
-  result = "It's a tie!"
+  if (
+    (userPlays == "scissors" && computerPlays == "paper") ||
+    (userPlays == "paper" && computerPlays == "stone") ||
+    (userPlays == "stone" && computerPlays == "scissors")
+  ) {
+    result = "You win!";
+    numberOfWins++;
+  }
+
+  if (
+    (userPlays == "scissors" && computerPlays == "stone") ||
+    (userPlays == "paper" && computerPlays == "scissors") ||
+    (userPlays == "stone" && computerPlays == "paper")
+  )
+    result = "You lose!";
+  return result;
 };
-
-if (userPlays == "scissors" && computerPlays == "paper"){
-  result = "You win!"
-};
-
-if (userPlays == "scissors" && computerPlays == "stone"){
-  result = "You lose!"
-};
-
-if (userPlays == "paper" && computerPlays == "scissors"){
-  result = "You lose!"
-};
-
-if (userPlays == "paper" && computerPlays == "stone"){
-  result = "You win!"
-};
-
-if (userPlays == "stone" && computerPlays == "paper"){
-  result = "You lose!"
-};
-
-if (userPlays == "stone" && computerPlays == "scissors"){
-  result = "You win!"
-};
-
-
-console.log (result);
-return result;
-};
-
-var main = function (input) {
-  var userPlays =  input;
-  var computerPlays = generateRandomScissorsPaperStone();
-  var results = getResults();
-  var output = "User plays: " + userPlays + ". " + "Computer plays: " + computerPlays + ". " 
-  + results;
-
-  return output;
-};
-
