@@ -4,7 +4,7 @@
 var generateRandomScissorsPaperStone = function(){
 var randomDecimal = Math.random() * 3
 var randomInteger = Math.floor (randomDecimal)
-var diceNumber = randomInteger +1 
+var diceNumber = randomInteger + 1 
 var RandomScissorsPaperStone = "undefined"
 
 if (diceNumber == 1){
@@ -24,57 +24,51 @@ return RandomScissorsPaperStone
 
 };
 
-
-/*
-
 // win or lose
 ​
-var getResults = function(a, b){
+var getResults = function(){
   var result = "undefined";
 
-if (a == b){
+
+if (userPlays == computerPlays){
   result = "It's a tie!"
-}
+};
 
-if (a == "scissors" && b == "paper"){
+if (userPlays == "scissors" && computerPlays == "paper"){
   result = "You win!"
-}
+};
 
-if (a == "scissors" && b == "stone"){
+if (userPlays == "scissors" && computerPlays == "stone"){
   result = "You lose!"
-}
+};
 
-if (a == "paper" && b == "scissors"){
+if (userPlays == "paper" && computerPlays == "scissors"){
   result = "You lose!"
-}
+};
 
-if (a == "paper" && b == "stone"){
+if (userPlays == "paper" && computerPlays == "stone"){
   result = "You win!"
-}
+};
 
-if (a == "stone" && b == "paper"){
+if (userPlays == "stone" && computerPlays == "paper"){
   result = "You lose!"
-}
+};
 
-if (a == "stone" && b == "scissors"){
+if (userPlays == "stone" && computerPlays == "scissors"){
   result = "You win!"
-}
+};
+
 
 console.log (result);
 return result;
-
 };
-
-*/
-
 
 var main = function (input) {
   var userPlays =  input;
   var computerPlays = generateRandomScissorsPaperStone();
-  // var results = getResults(userPlays, computerPlays);
+  var results = getResults();
   var output = "User plays: " + userPlays + ". " + "Computer plays: " + computerPlays + ". " 
-  
-  //+ results;
+  + results;
 
   return output;
 }
