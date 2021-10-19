@@ -147,7 +147,7 @@ var readGameHandNmbr = function (gameHandNmbr) {
 //============================================================================================================================================================================
 
 var Code02 = "PROJECT 1: SCISSORS PAPER STONE;- PART 2 BASE- WIN-LOSE";
-
+/* 
 // read random Number and OutputString for Computer's Hand.
 var genComputerHand = function (gameHandNmbr) {
   var randomDecimal = Math.random() * 3;
@@ -207,11 +207,11 @@ var main = function (input) {
     input = "scissors";
   } */
 
-  //code Block for judging who wins
-  /* 
+//code Block for judging who wins
+/* 
   if (Number.isNaN(Number(input)) == false) {
     myOutputValue = errorMessage;
-  } */
+  } 
 
   if (input.toLowerCase() == gameHand) {
     myOutputValue = draw;
@@ -249,6 +249,105 @@ var main = function (input) {
   }
 
   return myOutputValue + scoreDisplay + endingMessage;
+}; */
+
+//============================================================================================================================================================================
+
+var Code02 = "PROJECT 1: SCISSORS PAPER STONE;- PART 2 BASE- User Name Input";
+
+// read random Number and OutputString for Computer's Hand.
+var genComputerHand = function (gameHandNmbr) {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var gameHandNmbr = randomInteger + 1;
+  var gameHandPlayed = "";
+  if (gameHandNmbr == 1) {
+    gameHandPlayed = "scissors";
+  }
+  if (gameHandNmbr == 2) {
+    gameHandPlayed = "paper";
+  }
+  if (gameHandNmbr == 3) {
+    gameHandPlayed = "stone";
+  }
+  return gameHandPlayed;
 };
 
-// random number generator
+var percentage = function (a, b) {
+  var result = (a / b) * 100;
+  return result;
+};
+
+var currentMode = "waiting for username";
+var userName = "";
+var totalGamesPlayed = 0;
+var nmbrOfWins = 0;
+var nmbrOfLosses = 0;
+var nmbrOfDraws = 0;
+var endingMessage = `<br><br> To play the next game, please type 'scissors', 'paper' or stone'`;
+
+var playJanKenPo = function (userName, userGuess) {
+  var gameHand = genComputerHand();
+  var errorMessage = `xxxxxxxxx INPUT ERROR xxxxxxxxxx. <br><br> 
+                ${userName} please only input from the following:<br>
+                  'scissors', 'paper' or 'stone'.`;
+
+  var draw = `Computer chose ${gameHand.toUpperCase()}.
+          <br><br>${userName} chose ${userGuess.toUpperCase()}.<br><br> =It's a DRAW!=`;
+
+  var lose = `Computer chose ${gameHand.toUpperCase()}.
+          <br><br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ~${userName} LOSES~`;
+
+  var win = `Computer chose ${gameHand.toUpperCase()}.
+          <br><br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ***${userName} WINS!***`;
+
+  var messsageOutput = "";
+  if (userGuess.toLowerCase() == gameHand) {
+    messsageOutput = draw;
+    nmbrOfDraws = nmbrOfDraws + 1;
+  } else if (
+    (userGuess.toLowerCase() == "scissors" && gameHand == "stone") ||
+    (userGuess.toLowerCase() == "paper" && gameHand == "scissors") ||
+    (userGuess.toLowerCase() == "stone" && gameHand == "paper")
+  ) {
+    messsageOutput = lose;
+    nmbrOfLosses = nmbrOfLosses + 1;
+  } else if (
+    (userGuess.toLowerCase() == "scissors" && gameHand == "paper") ||
+    (userGuess.toLowerCase() == "paper" && gameHand == "stone") ||
+    (userGuess.toLowerCase() == "stone" && gameHand == "scissors")
+  ) {
+    messsageOutput = win;
+    nmbrOfWins = nmbrOfWins + 1;
+  } else {
+    messsageOutput = errorMessage;
+  }
+
+  var totalGamesPlayed = nmbrOfDraws + nmbrOfLosses + nmbrOfWins;
+
+  var scoreDisplay = `<br><br> Wins - Losses <br>___${nmbrOfWins} - ${nmbrOfLosses} ___<br>Number of ties(draw) = ${nmbrOfDraws}<br>Number of Games Played = ${totalGamesPlayed}<br> Win Percentage =${percentage(
+    nmbrOfWins,
+    totalGamesPlayed
+  ).toFixed(1)}% . `;
+
+  if (messsageOutput == errorMessage) {
+    scoreDisplay = "<br>";
+    endingMessage = "<br>";
+  }
+
+  return messsageOutput + scoreDisplay + endingMessage;
+};
+
+var main = function (input) {
+  var myOutputValue = "";
+  var welcomeMsg = `, welcome to the Normal Mode of Scissors, Paper, Stone. <br><br> Scissors > Paper > Stone and Stone > Scissors. <br><br> You get 1 point for every round won, no points are awarded for draws.`;
+  if (currentMode == "waiting for username") {
+    userName = input;
+    currentMode = "JanKenPo";
+    myOutputValue = "Hello " + userName + welcomeMsg + endingMessage;
+  } else if (currentMode == "JanKenPo") {
+    myOutputValue = playJanKenPo(userName, input);
+  }
+
+  return myOutputValue;
+};
