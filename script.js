@@ -1,16 +1,19 @@
+// PROJECT 1 PART 1 (Incl More Comfortable) + PART 2 (Base)
+// Global values used
+
 var scissors = "scissors";
-console.log("variable scissors");
 var paper = "paper";
-console.log("variable paper");
 var stone = "stone";
-console.log("variable stone");
 
 var reverseScissors = "reversed scissors";
-console.log("variable REVstone");
 var reversePaper = "reversed paper";
-console.log("variable REVstone");
 var reverseStone = "reversed stone";
-console.log("variable REVstone");
+
+var playerWinCount = 0;
+var gameCount = 0;
+var winRate = Math.round((playerWinCount / gameCount) * 100) + "%";
+var gameMode = "waiting for username";
+var userName = "";
 
 // Creating functions to randomly output "scissors", "paper", or "stone"
 
@@ -19,7 +22,6 @@ var rollingRandomNumber = function (input) {
   var randomOutput = Math.floor(Math.random() * 3) + 1;
   console.log("rolling random number to be assigned to SPS later");
   return randomOutput;
-  console.log("random number rolled is " + randomOutput);
 };
 
 var assignNumberToSPS = function (input) {
@@ -29,7 +31,8 @@ var assignNumberToSPS = function (input) {
   );
   var numberToSPS = "some number was assigned but it wasnt 1 or 2 or 3";
 
-  //assign random number to scissors, paper or stone
+  //Assign random number to scissors, paper or stone
+
   if (rolledNumber == 1) {
     numberToSPS = scissors;
   }
@@ -46,89 +49,102 @@ var assignNumberToSPS = function (input) {
   return numberToSPS;
 };
 
-// Create main function where user inputs "scissors", "paper" or "stone" and receives a result based on the following conditions:
+// Create functions for win, draw and loss;
+
+var userWins = function (userGuess, programmeOutputsSPS) {
+  return (
+    ((userGuess == scissors || userGuess == reverseStone) &&
+      programmeOutputsSPS == paper) ||
+    ((userGuess == paper || userGuess == reverseScissors) &&
+      programmeOutputsSPS == stone) ||
+    ((userGuess == stone || userGuess == reversePaper) &&
+      programmeOutputsSPS == scissors)
+  );
+};
+
+var userDraws = function (userGuess, programmeOutputsSPS) {
+  return (
+    userGuess == programmeOutputsSPS ||
+    (userGuess == reversePaper && programmeOutputsSPS == paper) ||
+    (userGuess == reverseStone && programmeOutputsSPS == stone) ||
+    (userGuess == reverseScissors && programmeOutputsSPS == scissors)
+  );
+};
+
+var userLoses = function (userGuess, programmeOutputsSPS) {
+  return (
+    ((userGuess == scissors || userGuess == reversePaper) &&
+      programmeOutputsSPS == stone) ||
+    ((userGuess == paper || userGuess == reverseStone) &&
+      programmeOutputsSPS == scissors) ||
+    ((userGuess == stone || userGuess == reverseScissors) &&
+      programmeOutputsSPS == paper)
+  );
+};
+
+// Create main function:
 
 var main = function (input) {
   var programmeOutputsSPS = assignNumberToSPS();
   console.log("programe outputs " + programmeOutputsSPS);
-  //creating variable for messages
-  var reversedGame =
-    "Oh and btw - CONGRATS! You found the secret but perhaps not much more thrilling 'reversed' game.";
-  //if user enters invalid input
-  var myOutputValue =
-    "Did you enter 'scissors', 'paper' or 'stone' exactly? This game is case-sensitive and a spelling nazi! :p <br><br> Oh, and here's a tip: add 'reversed' and a space to any of the above options, and see what happens to the game!";
 
-  // Create conditions
-  //Win
-  // If input is Sc and output is P, or if input is P and output is St, or if input is St and output is Sc, user wins
+  // If game mode is "waiting on user name" ...
 
-  if (
-    input !== reverseScissors &&
-    input !== reversePaper &&
-    input !== reverseStone
-  ) {
-    reversedGame = "";
+  if (gameMode == "waiting for username") {
+    userName = input;
+    gameMode = "scissors paper stone mode";
+    return (
+      "Welcome, " +
+      userName +
+      ". Now key in 'scissors', 'paper', or 'stone' to play. Plus, try adding 'reverse' and see what happens'"
+    );
   }
 
-  if (
-    ((input == scissors || input == reverseStone) &&
-      programmeOutputsSPS == paper) ||
-    ((input == paper || input == reverseScissors) &&
-      programmeOutputsSPS == stone) ||
-    ((input == stone || input == reversePaper) &&
-      programmeOutputsSPS == scissors)
-  ) {
-    myOutputValue =
-      "You won! Cheap thrill, eh?  <br><br> You typed in " +
-      input +
+  // If game mode has switched to 'scissors paper stone mode' ...
+  else if (gameMode == "scissors paper stone mode") {
+    var userGuess = input.toLowerCase();
+
+    // Eliminate NaN values for win rate in first round of game
+    if (playerWinCount == 0 || gameCount == 0) {
+      winRate = "0";
+    }
+
+    //Creating messages to be shown
+    var messageWinRate = function (winRate) {
+      if (winRate <= 60) {
+        return " Your win rate is " + winRate + "% - keep trying!";
+      } else return " Your win rate is " + winRate + "% - doing well!";
+    };
+
+    var standardMessage =
+      "<br><br> You chose " +
+      userGuess +
       " and the computer chose " +
       programmeOutputsSPS +
-      ". <br><br>" +
-      reversedGame;
-    console.log("User wins");
+      ". <br><br>";
+
+    //User wins
+    if (userWins(userGuess, programmeOutputsSPS) == true) {
+      playerWinCount = playerWinCount + 1;
+      gameCount = gameCount + 1;
+      winRate = Math.round((playerWinCount / gameCount) * 100);
+      console.log("win rate = " + winRate + " and game no = " + gameCount);
+      return "Congrats! You won." + standardMessage + messageWinRate(winRate);
+
+      //User draws
+    } else if (userDraws(userGuess, programmeOutputsSPS) == true) {
+      gameCount = gameCount + 1;
+      winRate = Math.round((playerWinCount / gameCount) * 100);
+      console.log("win rate = " + winRate + " and game no = " + gameCount);
+      return "It's a tie." + standardMessage + messageWinRate(winRate);
+
+      //User loses
+    } else if (userLoses(userGuess, programmeOutputsSPS) == true) {
+      gameCount = gameCount + 1;
+      winRate = Math.round((playerWinCount / gameCount) * 100);
+      console.log("win rate = " + winRate + " and game no = " + gameCount);
+      return "You lost. " + standardMessage + messageWinRate(winRate);
+    }
+    return "Did you enter 'scissors', 'paper' or 'stone' exactly?";
   }
-
-  // Draw
-  // if input is Sc and output is Sc, or if input is P and output is P, or if input is St and output is St, user ties
-
-  if (
-    input == programmeOutputsSPS ||
-    (input == reversePaper && programmeOutputsSPS == paper) ||
-    (input == reverseStone && programmeOutputsSPS == stone) ||
-    (input == reverseScissors && programmeOutputsSPS == scissors)
-  ) {
-    myOutputValue =
-      "No win no lose - you drew! <br><br> You typed in " +
-      input +
-      " and the computer also chose " +
-      programmeOutputsSPS +
-      ". <br><br>" +
-      reversedGame;
-    console.log("User draws");
-  }
-
-  // Lost
-  // If input is Sc and output is St, or if input is P and output is Sc, or if input is St and output is P, user loses
-
-  if (
-    ((input == scissors || input == reversePaper) &&
-      programmeOutputsSPS == stone) ||
-    ((input == paper || input == reverseStone) &&
-      programmeOutputsSPS == scissors) ||
-    ((input == stone || input == reverseScissors) &&
-      programmeOutputsSPS == paper)
-  ) {
-    myOutputValue =
-      "You lost to a computer, but eh, no biggie! <br><br> You typed in " +
-      input +
-      " and the computer chose " +
-      programmeOutputsSPS +
-      ". <br><br>" +
-      reversedGame;
-    console.log("User loses");
-  }
-
-  console.log("output value");
-  return myOutputValue;
-  console.log("end of programme. outcome is " + myOutputValue);
 };
