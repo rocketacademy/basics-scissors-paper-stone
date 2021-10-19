@@ -1,9 +1,25 @@
+var currentGameMode = 'waiting for user name';
+var userName = '';
+var myOutputValue = 'waiting for user name'
 
-// generated SPS
+var main = function (input) {
+  if (currentGameMode == 'waiting for user name') {
+    // set the name
+    userName = input;
+  }
+  
+    // now that we have the name, switch the mode
+    currentGameMode = 'generateRandomScissorsPaperStone';
+
+    myOutputValue = 'Hello ' + userName;
+  }else if (currentGameMode == 'generateRandomScissorsPaperStone') {
+    // generateRandomScissorsPaperStone logic
+  
+  // generated SPS
 
 var generateRandomScissorsPaperStone = function(){
 var randomDecimal = Math.random() * 3
-var randomInteger = Math.floor (randomDecimal)
+var randomInteger = Math.floor(randomDecimal)
 var diceNumber = randomInteger + 1 
 var RandomScissorsPaperStone = "undefined"
 
@@ -71,5 +87,5 @@ var main = function (input) {
   + results;
 
   return output;
-}
+};
 
