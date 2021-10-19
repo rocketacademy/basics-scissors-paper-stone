@@ -1,5 +1,5 @@
 // Global variables
-var currentGameMode = "Insert username.";
+var currentGameMode = "insert username.";
 var userName = "";
 var scissors = "scissors";
 var paper = "paper";
@@ -9,13 +9,8 @@ var winMessage = "Congratulations, you win!";
 var drawMessage = "It's a tie.";
 var invalid =
   "Invalid input. You can only choose scissors, paper or stone. Please try again. ";
-var numbOfGames = NaN || 0;
+var numbOfGames = 0;
 var win = 0;
-
-// Reversed input
-var reversedScissors = "reversed scissors";
-var reversedPaper = "reversed paper";
-var reversedStone = "reversed stone";
 
 // Creating random generator.
 var randomGenerator = function () {
@@ -38,11 +33,11 @@ var randomSPSGenerator = function () {
 
 // Put in input icon.
 var getInputIcon = function (object) {
-  if (object == scissors || object == reversedScissors) {
+  if (object == scissors) {
     return " ✂️";
-  } else if (object == paper || object == reversedPaper) {
+  } else if (object == paper) {
     return " 🗒";
-  } else if (object == stone || object == reversedStone) {
+  } else if (object == stone) {
     return " 🪨";
   }
 };
@@ -59,44 +54,21 @@ var calcWinLossPerc = function () {
 
 // Rules creation
 var getResults = function (userChoice, computerChoice) {
-  if (
-    computerChoice == userChoice ||
-    (computerChoice == scissors && userChoice == reversedScissors) ||
-    (computerChoice == paper && userChoice == reversedPaper) ||
-    (computerChoice == stone && userChoice == reversedStone)
-  ) {
+  if (computerChoice == userChoice) {
     return drawMessage;
-  } else if (
-    computerChoice == scissors &&
-    (userChoice == paper || userChoice == reversedStone)
-  ) {
+  } else if (computerChoice == scissors && userChoice == paper) {
     return loseMessage;
-  } else if (
-    computerChoice == scissors &&
-    (userChoice == stone || userChoice == reversedPaper)
-  ) {
+  } else if (computerChoice == scissors && userChoice == stone) {
     win += 1;
     return winMessage;
-  } else if (
-    computerChoice == stone &&
-    (userChoice == paper || userChoice == reversedScissors)
-  ) {
+  } else if (computerChoice == stone && userChoice == paper) {
     win += 1;
     return winMessage;
-  } else if (
-    computerChoice == stone &&
-    (userChoice == scissors || userChoice == reversedPaper)
-  ) {
+  } else if (computerChoice == stone && userChoice == scissors) {
     return loseMessage;
-  } else if (
-    computerChoice == paper &&
-    (userChoice == stone || userChoice == reversedScissors)
-  ) {
+  } else if (computerChoice == paper && userChoice == stone) {
     return loseMessage;
-  } else if (
-    computerChoice == paper &&
-    (userChoice == scissors || userChoice == reversedStone)
-  ) {
+  } else if (computerChoice == paper && userChoice == scissors) {
     win += 1;
     return winMessage;
   }
@@ -124,54 +96,63 @@ var reversedGameResults = function (userChoice, computerChoice) {
   }
 };
 
+// normal game mode funtion
+var runNormalMode = function (userChoice) {
+  var computerChoice = randomSPSGenerator();
+  var iconComputer = getInputIcon(computerChoice);
+  var iconUser = getInputIcon(userChoice);
+  var results = reversedGameResults(userChoice, computerChoice);
+  numbOfGames += 1;
+  var winPercentage = calcWinLossPerc();
+  return `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your total game count is ${numbOfGames} and your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+};
+
+// reversed game mode funtion
+var runReversedMode = function (userChoice) {
+  var computerChoice = randomSPSGenerator();
+  var iconComputer = getInputIcon(computerChoice);
+  var iconUser = getInputIcon(userChoice);
+  var results = reversedGameResults(userChoice, computerChoice);
+  numbOfGames += 1;
+  var winPercentage = calcWinLossPerc();
+  return `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your total game count is ${numbOfGames}and your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round. You have played a total of ${numbOfGames}`;
+};
+
 // Print out results.
 var main = function (input) {
   var myOutputValue = "";
   // Setting the username
-  if (currentGameMode == "Insert username.") {
+  if (
+    currentGameMode == "insert username." &&
+    input != "normal" &&
+    input != "reversed"
+  ) {
     if (Number.isNaN(Number(input)) == false) {
       myOutputValue = "Sorry please enter a name.";
     } else {
       userName = input;
-      currentGameMode = "SPS Game";
-      myOutputValue = `Hello ${userName}. You may now choose scissors, paper or stone to start the game!`;
+      myOutputValue = `Hello ${userName}. You can choose "normal" mode or "reversed" mode to begin!`;
     }
-
-    // Setting the game mode
-    // else if is used so that it will run right after the change of game mode
-  } else if (currentGameMode == "SPS Game") {
-    var userChoice = input;
-    var computerChoice = randomSPSGenerator();
-    var iconComputer = getInputIcon(computerChoice);
-    var iconUser = getInputIcon(userChoice);
-    var results = getResults(userChoice, computerChoice);
-    numbOfGames += 1;
-    var winPercentage = calcWinLossPerc();
-    myOutputValue = `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+  }
+  // setting normal game mode
+  if (input == "normal") {
+    myOutputValue =
+      "You are now in normal game mode. Please choose scissors, paper or stone.";
+    currentGameMode = "normal game mode";
+  }
+  if (currentGameMode == "normal game mode" && input != "normal") {
+    myOutputValue = runNormalMode(input);
   }
 
-  // Creating a reversed mode
-  else if (currentGameMode == "Reversed SPS Game") {
-    var userChoice = input;
-    var computerChoice = randomSPSGenerator();
-    var iconComputer = getInputIcon(computerChoice);
-    var iconUser = getInputIcon(userChoice);
-    var results = reversedGameResults(userChoice, computerChoice);
-    numbOfGames += 1;
-    var winPercentage = calcWinLossPerc();
-    myOutputValue = `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
+  //setting reversed game
+  if (input == "reversed") {
+    myOutputValue =
+      "You are now in reversed game mode. Please choose scissors, paper or stone.";
+    currentGameMode = "reversed mode";
   }
-  // if statement for the conditions to output invalid if users enter random inputs
-  else if (
-    userChoice != "stone" &&
-    userChoice != "scissors" &&
-    userChoice != "paper" &&
-    userChoice != "reversed stone" &&
-    userChoice != "reversed scissors" &&
-    userChoice != "reversed paper" &&
-    userChoice != "reversed"
-  ) {
-    return invalid;
+  if (currentGameMode == "reversed mode" && input != "reversed") {
+    myOutputValue = runReversedMode(input);
   }
+
   return myOutputValue;
 };
