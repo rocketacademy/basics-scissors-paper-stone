@@ -22,11 +22,11 @@ var main = function (input) {
     "You lose! Bummer. <br><br>Now you can type 'scissors' 'paper' or 'stone' to play another round!";
 
   if (
-    input != "scissors" ||
-    input != "paper" ||
-    input != "stone" ||
-    input != "reversed scissors" ||
-    input != "reversed paper" ||
+    input != "scissors" &&
+    input != "paper" &&
+    input != "stone" &&
+    input != "reversed scissors" &&
+    input != "reversed paper" &&
     input != "reversed stone"
   ) {
     myOutputValue =
