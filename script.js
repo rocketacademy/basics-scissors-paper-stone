@@ -1,8 +1,14 @@
 // input a choice between scissors paper stone
 // output if the player has won the game against the computer
 // if input is not valid, output will indicate what are the valid choices and remind the player to play them accordingly
+
+// defining game mode
 var currentGameMode = "waiting for user name";
+
+// defining username
 var userName = "";
+
+// function to random computer's choice
 var computerChoice = function () {
   var randomInteger = Math.ceil(Math.random() * 3);
   var computerPlay = "";
@@ -19,10 +25,13 @@ var computerChoice = function () {
   return computerPlay;
 };
 
+// statistic variables
 var numGames = 0;
 var playerWins = 0;
 var comWins = 0;
 var draws = 0;
+
+// function to decide winner
 var decision = function (player, computer) {
   var message = "";
   if (player == "scissors") {
@@ -80,9 +89,11 @@ var decision = function (player, computer) {
   return message;
 };
 
+// variable to store reminder
 var reminder =
   'Now you can type "scissors" "paper" or "stone" to play another round!';
 
+// function to print emoji
 var emoticon = function (play) {
   var emoji = "";
   switch (play) {
@@ -98,6 +109,7 @@ var emoticon = function (play) {
   return emoji;
 };
 
+// function to calculate statistics
 var statistics = function (numGames, playerWins, comWins, draws) {
   var playerWinPercentage = Math.floor((playerWins / numGames) * 100);
   var comWinPercentage = Math.floor((comWins / numGames) * 100);
@@ -105,25 +117,38 @@ var statistics = function (numGames, playerWins, comWins, draws) {
   return `<br> ${numGames} games played. <br> You won: ${playerWinPercentage}% <br> Computer won: ${comWinPercentage}% <br> Draws: ${drawPercentage}%`;
 };
 
+// main script
 var main = function (input) {
+  // initialise username
   if (currentGameMode == "waiting for user name") {
     userName = input;
     currentGameMode = "SPS";
     myOutputValue = `Hello ${userName}, Now you can type "scissors" "paper" or "stone" to play scissors paper stone `;
+
+    // initialise SPS
   } else if ((currentGameMode = "SPS")) {
+    // defining computer choice
     var computer = computerChoice();
     var myOutputValue = "";
+    // deciding outcome
     var outcome = decision(input, computer);
+    // store choice as emoji
     var playerEmoji = emoticon(input);
     var computerEmoji = emoticon(computer);
+
+    // calculate statistics
     var stats = statistics(numGames, playerWins, comWins, draws);
 
+    // validating input
     if (input != "scissors" && input != "paper" && input != "stone") {
       myOutputValue = `${userName}, you did not enter a valid input. <br> Please type and enter either "scissors", "paper" or "stone". ${stats}`;
+
+      // defining gameplay message
     } else {
       myOutputValue = `${userName}, the computer chose ${computer}${computerEmoji}. <br> you chose ${input}${playerEmoji}. <br> ${outcome}  ${stats} <br> ${reminder}  `;
     }
   }
 
+  // returning game play message
   return myOutputValue;
 };
