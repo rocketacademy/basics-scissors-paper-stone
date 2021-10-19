@@ -143,15 +143,11 @@ var main = function (input) {
     } // green mode means auto player name prompt when browser first starts
     if (mode == "green") {
       mode = "red";
-      // while @green mode, guides player to press submit to start
-      if (input !== "") {
-        return `😠😅 Please press SUBMIT to start the game.`;
-      }
     }
     createPlayers(promptPlayer);
     var myOutputValue = `<br/>☀☀ G'day ${promptPlayer} ☀☀<br><br>The game has started.<br/><br/>To restart game, simply click "SUBMIT"<br/><br/>To make a selection, please input either of:<br/><br/> ✂ scissors; 📰 paper; 🥌 stone.`;
   }
-  // if statements to guide players to input relevant fields into appropriate context
+  // guide player to press restart when game ends
   if (!playing && input !== "") {
     myOutputValue = `😒😒😒 Please press submit to restart`;
   }
