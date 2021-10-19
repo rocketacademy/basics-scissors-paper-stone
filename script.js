@@ -119,6 +119,7 @@ var statistics = function (numGames, playerWins, comWins, draws) {
 
 // main script
 var main = function (input) {
+  console.log(currentGameMode);
   // initialise username
   if (currentGameMode == "waiting for user name") {
     userName = input;
@@ -140,12 +141,35 @@ var main = function (input) {
     var stats = statistics(numGames, playerWins, comWins, draws);
 
     // validating input
-    if (input != "scissors" && input != "paper" && input != "stone") {
-      myOutputValue = `${userName}, you did not enter a valid input. <br> Please type and enter either "scissors", "paper" or "stone". ${stats}`;
+    if (
+      input != "scissors" &&
+      input != "paper" &&
+      input != "stone" &&
+      input != "word game"
+    ) {
+      myOutputValue = `${userName}, you did not enter a valid input. <br> Please type and enter either "scissors", "paper" or "stone". ${stats} You can also enter "word game" to play guess the word. `;
 
       // defining gameplay message
+    } else if (input == "word game") {
+      currentGameMode = "wordgame";
+      // defining gameplay message
+      myOutputValue =
+        "Welcome to guess the secret word, type in your guess or type in 'SPS' to play scissors paper stone. ";
     } else {
-      myOutputValue = `${userName}, the computer chose ${computer}${computerEmoji}. <br> you chose ${input}${playerEmoji}. <br> ${outcome}  ${stats} <br> ${reminder}  `;
+      myOutputValue = `${userName}, the computer chose ${computer}${computerEmoji}. <br> you chose ${input}${playerEmoji}. <br> ${outcome}  ${stats} <br> ${reminder} You can also enter "word game" to play guess the word.  `;
+    }
+  } else if (currentGameMode == "wordgame") {
+    console.log(currentGameMode);
+    if (input == "palatable papaya") {
+      myOutputValue =
+        "you wrote the secret phrase! You can also enter 'SPS' to play scissors paper stone.  ";
+    } else if (input == "SPS") {
+      currentGameMode = "SPS";
+      myOutputValue =
+        'Welcome to scissors paper stone. Please input "scissors", "paper" or "stone" to play the game. You can also enter "word game" to play guess the word';
+    } else {
+      myOutputValue =
+        'Loser, you got it wrong.  You can also enter "SPS" to play scissors paper stone.';
     }
   }
 
