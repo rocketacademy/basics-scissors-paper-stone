@@ -38,6 +38,7 @@ var main = function (input) {
   } else if (currentGameMode == "game mode") {
     roundPlayed = roundPlayed + 1;
     var winLossPercentage = getWinLossPercentage();
+
     // generata random action
     var randomAction = rollDice();
     var scissors = 1;
@@ -86,6 +87,8 @@ var main = function (input) {
       (playerAction == stone && randomAction == scissors)
     ) {
       userWon = userWon + 1;
+      winLossPercentage = getWinLossPercentage();
+
       myOutputValue = `${userName} wins with ${emoticonInput} ! <br><br> Computer lost with ${computerAction}. <br><br> ${userName} win counter is ${userWon}. <br><br> Computer win count is ${computerWon}. <br><br> Draw count is ${drawNum}. <br><br> ${userName} win rate is ${winLossPercentage}%.`;
     }
 
@@ -112,12 +115,16 @@ var main = function (input) {
       (randomAction == stone && playerAction == scissors)
     ) {
       computerWon = computerWon + 1;
+      winLossPercentage = getWinLossPercentage();
+
       myOutputValue = `${userName} lose with ${emoticonInput}! <br><br> Computer wins with ${computerAction}. <br><br> ${userName} win count is ${userWon}. <br><br> Computer win count is ${computerWon}. <br><br> Draw count is ${drawNum}. <br><br> ${userName} win rate is ${winLossPercentage}%.`;
     }
 
     //draw , if player action = computer action
     if (playerAction == randomAction) {
       drawNum = drawNum + 1;
+      winLossPercentage = getWinLossPercentage();
+
       myOutputValue = `${userName} and computer draw with ${emoticonInput}. <br><br> ${userName} win count is ${userWon}. <br><br> Computer win count is ${computerWon}. <br><br> Draw count is ${drawNum}. <br><br> ${userName} win rate is ${winLossPercentage} %.`;
     }
   }
