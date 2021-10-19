@@ -53,28 +53,12 @@ var drawConclusion = function (playerChoice, computerChoice) {
   if (playerChoice == computerChoice) {
     return "draw";
   }
-  if (playerChoice == scissors) {
-    if (computerChoice == paper) {
-      return "win";
-    } else {
-      return "lose";
-    } 
-}
-
-  if (playerChoice == paper) {
-    if (computerChoice == stone) {
-      return "win";
-    } else {
-      return "lose";
-  }
-}
-
-  if (playerChoice == stone) {
-    if (computerChoice == scissors) {
-      return "win";
-    } else {
-      return "lose";
-  }
+  if (((playerChoice == scissors) && (computerChoice == paper)) ||
+  ((playerChoice == paper) && (computerChoice == stone)) ||
+  ((playerChoice == stone) && (computerChoice == scissors))) {
+    return "win";
+  } else {
+    return "lose";
   }
 }
 
