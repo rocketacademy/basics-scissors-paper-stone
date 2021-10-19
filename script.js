@@ -253,9 +253,9 @@ var main = function (input) {
 
 //============================================================================================================================================================================
 
-var Code02 = "PROJECT 1: SCISSORS PAPER STONE;- PART 2 BASE- User Name Input";
+var Code03 = "PROJECT 1: SCISSORS PAPER STONE;- PART 2 BASE- User Name Input";
 
-// read random Number and OutputString for Computer's Hand.
+/* // read random Number and OutputString for Computer's Hand.
 var genComputerHand = function (gameHandNmbr) {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
@@ -349,5 +349,169 @@ var main = function (input) {
     myOutputValue = playJanKenPo(userName, input);
   }
 
+  return myOutputValue;
+}; */
+
+//============================================================================================================================================================================
+
+var Code04 =
+  "PROJECT 1: SCISSORS PAPER STONE;PART 2 - REVERSE MODE Selectable  More Comfortable -";
+
+// read random Number and OutputString for Computer's Hand.
+var genComputerHand = function (gameHandNmbr) {
+  var randomDecimal = Math.random() * 3;
+  var randomInteger = Math.floor(randomDecimal);
+  var gameHandNmbr = randomInteger + 1;
+  var gameHandPlayed = "";
+  if (gameHandNmbr == 1) {
+    gameHandPlayed = "scissors";
+  }
+  if (gameHandNmbr == 2) {
+    gameHandPlayed = "paper";
+  }
+  if (gameHandNmbr == 3) {
+    gameHandPlayed = "stone";
+  }
+  return gameHandPlayed;
+};
+
+var percentage = function (a, b) {
+  var result = (a / b) * 100;
+  return result;
+};
+
+var currentMode = "waiting for username";
+var userName = "";
+var totalGamesPlayed = 0;
+var nmbrOfWins = 0;
+var nmbrOfLosses = 0;
+var nmbrOfDraws = 0;
+var endingMessage = `<br><br> To play the next game, please type 'scissors', 'paper' or stone'`;
+var gameMode = "normal";
+var normalMode = `MODE: Normal Scissors Paper Stone<br><br>`;
+var reverseMode = `MODE: ReVeRSed. etonS repaP srossicS <br><br>`;
+var modeTitle = normalMode;
+
+var playJanKenPo = function (userName, userGuess) {
+  var gameHand = genComputerHand();
+  var errorMessage = `xxxxxxxxx INPUT ERROR xxxxxxxxxx. <br><br> 
+                ${userName} please only input from the following:<br>
+                  'scissors', 'paper' or 'stone'.`;
+
+  var draw = `Computer chose ${gameHand.toUpperCase()}.
+          <br><br>${userName} chose ${userGuess.toUpperCase()}.<br><br> =It's a DRAW!=`;
+
+  var lose = `Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ~${userName} LOSES~`;
+
+  var win = `Computer chose ${gameHand.toUpperCase()}.
+          <br>${userName} chose ${userGuess.toUpperCase()}.<br><br> ***${userName} WINS!***`;
+
+  var reverseModeWarning =
+    ">>>>>>>>> REVERSE MODE ACTIVE<br><br> please type 'scissors', 'paper' or stone";
+
+  var normalModeWarning =
+    ">>>>>>>>> Revert to Normal Mode <br><br> please type 'scissors', 'paper' or stone";
+
+  var messsageOutput = "";
+
+  if (userGuess.toLowerCase() == gameHand) {
+    messsageOutput = draw;
+    nmbrOfDraws = nmbrOfDraws + 1;
+  } else if (
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "stone") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "scissors") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "paper")
+  ) {
+    modeTitle = normalMode;
+    messsageOutput = lose;
+    nmbrOfLosses = nmbrOfLosses + 1;
+  } else if (
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "paper") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "stone") ||
+    (gameMode == "normal" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "scissors")
+  ) {
+    modeTitle = normalMode;
+    messsageOutput = win;
+    nmbrOfWins = nmbrOfWins + 1;
+  } else if (userGuess.toLowerCase() == "reverse") {
+    gameMode = "reverse";
+    messsageOutput = reverseModeWarning;
+  } else if (
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "stone") ||
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "scissors") ||
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "paper")
+  ) {
+    modeTitle = reverseMode;
+    messsageOutput = win;
+    nmbrOfWins = nmbrOfWins + 1;
+  } else if (
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "scissors" &&
+      gameHand == "paper") ||
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "paper" &&
+      gameHand == "stone") ||
+    (gameMode == "reverse" &&
+      userGuess.toLowerCase() == "stone" &&
+      gameHand == "scissors")
+  ) {
+    modeTitle = reverseMode;
+    messsageOutput = lose;
+    nmbrOfLosses = nmbrOfLosses + 1;
+  } else if (userGuess.toLowerCase() == "normal") {
+    gameMode = "normal";
+    messsageOutput = normalModeWarning;
+  } else {
+    messsageOutput = errorMessage;
+  }
+
+  var totalGamesPlayed = nmbrOfDraws + nmbrOfLosses + nmbrOfWins;
+
+  var scoreDisplay = `<br><br> Wins - Losses <br> *** ${nmbrOfWins} - ${nmbrOfLosses} ***<br>Number of ties(draw) = ${nmbrOfDraws}<br>Number of Games Played = ${totalGamesPlayed}<br> Win Percentage =${percentage(
+    nmbrOfWins,
+    totalGamesPlayed
+  ).toFixed(1)}% . `;
+
+  if (
+    messsageOutput == errorMessage ||
+    messsageOutput == reverseModeWarning ||
+    messsageOutput == normalModeWarning
+  ) {
+    scoreDisplay = "<br>";
+    endingMessage = "<br>";
+  }
+
+  return modeTitle + messsageOutput + scoreDisplay + endingMessage;
+};
+
+var main = function (input) {
+  var myOutputValue = "";
+  var welcomeMsg = `, welcome to the Normal Mode of Scissors, Paper, Stone. <br><br> Scissors > Paper > Stone and Stone > Scissors. <br><br> You get 1 point for every round won, no points are awarded for draws. <br><br> Type '<i>reverse</i>' to enable reverse mode and '<i>normal</i>' to go back to normal mode. `;
+  if (currentMode == "waiting for username") {
+    userName = input;
+    currentMode = "JanKenPo";
+    myOutputValue = "Hello " + userName + welcomeMsg + endingMessage;
+  } else if (currentMode == "JanKenPo") {
+    myOutputValue = playJanKenPo(userName, input);
+  }
   return myOutputValue;
 };
