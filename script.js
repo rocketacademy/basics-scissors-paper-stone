@@ -4,46 +4,57 @@
 //Input Validation
 //Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again.
 
-var record = 0;
+var scissors = "scissors";
+var paper = "paper";
+var stone = "stone";
+var recordWin = 0;
+var numberOfGames = 0;
 var main = function (input) {
-  var myOutputValue =
-    "you lost! you guessed: " +
-    input +
-    " you rolled: " +
-    randomSPS +
-    " current loss record:" +
-    record;
-
-  var scissors;
-  var paper;
-  var stone;
-
+  // computer random choice
+  var randomSPS = generateRandomSPS();
+  var myOutputValue = "";
+  numberOfGames = numberOfGames + 1;
   if (input == randomSPS) {
-    myOutputValue = "DRAW!";
+    myOutputValue = `DRAW!you guessed ${input}, the program played ${randomSPS} , number of games played: ${numberOfGames}`;
   }
-  if (input == scissors && randomSPS == paper) {
-    myOutputValue = "WIN!";
-  }
-  if (input == stone && randomSPS == scissors) {
-    myOutputValue = "WIN!";
-  }
-  if (input == paper && randomSPS == stone) {
-    myOutputValue = "WIN!";
-  }
-
-  if ((myOutputValue = "WIN!")) {
+  if (
+    (input == scissors && randomSPS == paper) ||
+    (input == stone && randomSPS == scissors) ||
+    (input == paper && randomSPS == stone)
+  ) {
+    recordWin = recordWin + 1;
     myOutputValue =
       " you won! you guessed: " +
       input +
-      " you rolled: " +
+      " computer chose: " +
       randomSPS +
       " current win record:" +
-      record;
+      recordWin +
+      "you played " +
+      numberOfGames +
+      "games";
   }
-  return `${myOutputValue} you guessed ${input}, the program played ${randomSPS}`;
+  return `you lost! you guessed ${input}, the program played ${randomSPS} , number of games played: ${numberOfGames}`;
 };
 
-var generateSPS = function () {
-  var randomSPS = scissors || paper || stone;
-  return randomSPS;
+// Generate a random integer from 1 to max inclusive
+var generateRandomInteger = function (max) {
+  var randomDecimal = Math.random() * max;
+  var randomInteger = Math.floor(randomDecimal) + 1;
+  return randomInteger;
+};
+// Generate random sps item
+var generateRandomSPS = function () {
+  var numSPSoutcome = 3;
+  var randomSPSoutcome = generateRandomInteger(numSPSoutcome);
+  if (randomSPSoutcome == 1) {
+    return scissors;
+  }
+  if (randomSPSoutcome == 2) {
+    return paper;
+  }
+  if (randomSPSoutcome == 3) {
+    return stone;
+  }
+  return "Oops! There may be error!";
 };
