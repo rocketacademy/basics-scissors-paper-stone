@@ -1,3 +1,4 @@
+//Scissors, paper, stone
 var userWinCount = 0;
 var computerWinCount = 0;
 var drawsCount = 0;
@@ -5,87 +6,9 @@ var userWinningPercentage = 0;
 var computerWinningPercentage = 0;
 var totalGameCount = 0;
 
-var main = function (input) {
-  var myOutputValue = "";
-  var mode = gameMode(input);
-  console.log("Game mode :" + mode);
-
-  var userChoice = input;
-  var computerChoice = randomComputerChoiceGenerator();
-
-  console.log("user choice = " + userChoice);
-  console.log("computer choice = " + computerChoice);
-
-  //if the game mode is normal
-  if (mode == "normal") {
-    console.log(
-      "draw? " + checkForDrawInNormalMode(userChoice, computerChoice)
-    );
-
-    console.log("normal");
-    console.log(
-      "check if user wins " + testingConditions(userChoice, computerChoice)
-    );
-
-    totalGameCount = totalGameCount + 1;
-    if (checkForDrawInNormalMode(userChoice, computerChoice)) {
-      myOutputValue = "Its a draw";
-      drawsCount = drawsCount + 1;
-    } else if (testingConditions(userChoice, computerChoice)) {
-      myOutputValue = "User wins";
-      userWinCount = userWinCount + 1;
-      userWinningPercentage = (userWinCount / totalGameCount) * 100;
-      userWinningPercentage = userWinningPercentage.toFixed(2);
-    } else {
-      myOutputValue = "Computer wins";
-      computerWinCount = computerWinCount + 1;
-      computerWinningPercentage = (computerWinCount / totalGameCount) * 100;
-      computerWinningPercentage = computerWinningPercentage.toFixed(2);
-    }
-  } // end of normal mode
-
-  //if the game mode is reversed
-  else if (mode == "reverse") {
-    console.log("reverse");
-    console.log(
-      "draw reversed ? " +
-        checkForDrawInReversedMode(userChoice, computerChoice)
-    );
-
-    totalGameCount = totalGameCount + 1;
-    if (checkForDrawInReversedMode(userChoice, computerChoice)) {
-      myOutputValue = "Its a draw";
-      drawsCount = drawsCount + 1;
-    } else if (testingConditions(userChoice, computerChoice)) {
-      myOutputValue = "Computer wins";
-      computerWinCount = computerWinCount + 1;
-      computerWinningPercentage = (computerWinCount / totalGameCount) * 100;
-      computerWinningPercentage = computerWinningPercentage.toFixed(2);
-    } else {
-      myOutputValue = "User wins";
-      userWinCount = userWinCount + 1;
-      userWinningPercentage = (userWinCount / totalGameCount) * 100;
-      userWinningPercentage = userWinningPercentage.toFixed(2);
-    }
-  } //end of reverse mode
-
-  //if the gamemode is invalid
-  else {
-    console.log("invalid");
-    myOutputValue = "Invalid input";
-  } //end of invalid mode
-
-  return formatResult(
-    myOutputValue,
-    userChoice,
-    computerChoice,
-    userWinCount,
-    computerWinCount,
-    drawsCount,
-    userWinningPercentage,
-    computerWinningPercentage
-  );
-}; // end of main
+var calculatePercentage = function (winCount, totalCount) {
+  return ((winCount / totalCount) * 100).toFixed(2);
+};
 
 var gameMode = function (userInput) {
   var mode = "invalid";
@@ -99,7 +22,7 @@ var gameMode = function (userInput) {
   ) {
     mode = "reverse";
   }
-  console.log(mode);
+
   return mode;
 };
 
@@ -214,3 +137,88 @@ var formatResult = function (
   }
   return result;
 };
+
+var main = function (input) {
+  var myOutputValue = "";
+  var mode = gameMode(input);
+
+  var userChoice = input;
+  var computerChoice = randomComputerChoiceGenerator();
+
+  //if the game mode is normal
+  if (mode == "normal") {
+    totalGameCount = totalGameCount + 1;
+
+    if (checkForDrawInNormalMode(userChoice, computerChoice)) {
+      myOutputValue = "Its a draw";
+      drawsCount = drawsCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    } else if (testingConditions(userChoice, computerChoice)) {
+      myOutputValue = "User wins";
+      userWinCount = userWinCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    } else {
+      myOutputValue = "Computer wins";
+      computerWinCount = computerWinCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    }
+  } // end of normal mode
+
+  //if the game mode is reversed
+  else if (mode == "reverse") {
+    totalGameCount = totalGameCount + 1;
+    if (checkForDrawInReversedMode(userChoice, computerChoice)) {
+      myOutputValue = "Its a draw";
+      drawsCount = drawsCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    } else if (testingConditions(userChoice, computerChoice)) {
+      myOutputValue = "Computer wins";
+      computerWinCount = computerWinCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    } else {
+      myOutputValue = "User wins";
+      userWinCount = userWinCount + 1;
+      userWinningPercentage = calculatePercentage(userWinCount, totalGameCount);
+      computerWinningPercentage = calculatePercentage(
+        computerWinCount,
+        totalGameCount
+      );
+    }
+  } //end of reverse mode
+
+  //if the gamemode is invalid
+  else {
+    myOutputValue = "Invalid input";
+  } //end of invalid mode
+
+  return formatResult(
+    myOutputValue,
+    userChoice,
+    computerChoice,
+    userWinCount,
+    computerWinCount,
+    drawsCount,
+    userWinningPercentage,
+    computerWinningPercentage
+  );
+}; // end of main
