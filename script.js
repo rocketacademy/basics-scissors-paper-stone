@@ -15,6 +15,7 @@ var DRAW = "draw";
 var REVERSE = "reverse";
 var NORMAL = "normal";
 var KOREANSPS = "korean sps";
+var COMPUTERCHOOSES = "computer chooses";
 
 //Global variable for counting
 var playerWinCount = 0;
@@ -29,18 +30,18 @@ var userName = "";
 
 //Message
 var modeInputMessage =
-  "<br> Please input the mode you would like: 'normal', 'korean sps' and 'reverse'";
+  "<br> Please input the mode you would like: 'normal', 'korean sps', 'computer chooses' and 'reverse'";
 var inputMessage = "Please enter scissors, paper, stone to start game!";
-var lossMessage = function (input, computer) {
-  return `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br>`;
+var lossMessage = function (player, computer) {
+  return `${userName}, you have chosen ${player} and you have lost to the computer's choice ${computer}! <br>`;
 };
 
-var drawMessage = function (input, computer) {
-  return `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
+var drawMessage = function (player, computer) {
+  return `You have played ${player} and the computer's choice is ${computer}! <br> Its a draw!!`;
 };
 
-var winMessage = function (input, computer) {
-  return `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+var winMessage = function (player, computer) {
+  return `You have played ${player} and you have won the computer's choice ${computer}! <br>`;
 };
 
 //random number generator
@@ -92,7 +93,12 @@ var countStatistics = function () {
 
 //Validating Mode Chosesn
 var validModeCheck = function (input) {
-  return input == NORMAL || input == REVERSE || input == KOREANSPS;
+  return (
+    input == NORMAL ||
+    input == REVERSE ||
+    input == KOREANSPS ||
+    input == COMPUTERCHOOSES
+  );
 };
 
 //validating input
@@ -120,7 +126,7 @@ var main = function (input) {
     }
     // if there is an input
     userName = input;
-    return "Welcome, " + userName + "<br" + modeInputMessage;
+    return "Welcome, " + userName + "! <br>" + modeInputMessage;
   }
 
   //if there is an user name input
@@ -150,23 +156,50 @@ var main = function (input) {
   console.log("Computer Choice", computer);
   console.log("User Choice", input);
 
-  //Revserse Mode
-
-  if (mode == REVERSE) {
+  //computer chooses
+  if (mode == COMPUTERCHOOSES) {
+    player = computerChoice();
     winLose = LOST;
-    var myOutputValue = lossMessage(input, computer);
+    var myOutputValue = lossMessage(player, computer);
 
     //check for win for reversed game. the player win if they are lose in the normal game
     var wincheck = winCheck(computer, player);
     if (wincheck == true) {
       winLose = WIN;
-      myOutputValue = winMessage(input, computer);
+      myOutputValue = winMessage(player, computer);
     }
 
     //check for draw
     if (player == computer) {
       winLose = DRAW;
-      myOutputValue = drawMessage(input, computer);
+      myOutputValue = drawMessage(player, computer);
+    }
+
+    var statisticsboard = countStatistics();
+    myOutputValue =
+      myOutputValue +
+      statisticsboard +
+      "! <br> Note that the computer will be choosing for you no matter what you type";
+    return myOutputValue;
+  }
+
+  //Revserse Mode
+
+  if (mode == REVERSE) {
+    winLose = LOST;
+    var myOutputValue = lossMessage(player, computer);
+
+    //check for win for reversed game. the player win if they are lose in the normal game
+    var wincheck = winCheck(computer, player);
+    if (wincheck == true) {
+      winLose = WIN;
+      myOutputValue = winMessage(player, computer);
+    }
+
+    //check for draw
+    if (player == computer) {
+      winLose = DRAW;
+      myOutputValue = drawMessage(player, computer);
     }
 
     var statisticsboard = countStatistics();
@@ -178,19 +211,19 @@ var main = function (input) {
 
   if (mode == NORMAL) {
     winLose = LOST;
-    var myOutputValue = lossMessage(input, computer);
+    var myOutputValue = lossMessage(player, computer);
 
     //check for win
     var wincheck = winCheck(player, computer);
     if (wincheck == true) {
       winLose = WIN;
-      myOutputValue = winMessage(input, computer);
+      myOutputValue = winMessage(player, computer);
     }
 
     //check for draw
     if (player == computer) {
       winLose = DRAW;
-      myOutputValue = drawMessage(input, computer);
+      myOutputValue = drawMessage(player, computer);
     }
 
     var statisticsboard = countStatistics();
@@ -206,7 +239,7 @@ var main = function (input) {
       mostrecentwinner = PLAYER;
       console.log(mostrecentwinner);
       myOutputValue =
-        winMessage(input, computer) + `${userName} shouts Muk-Jji-Ppa!`;
+        winMessage(player, computer) + `${userName} shouts Muk-Jji-Ppa!`;
     }
 
     var losecheck = winCheck(computer, player);
@@ -216,7 +249,7 @@ var main = function (input) {
       mostrecentwinner = COMPUTER;
       console.log(mostrecentwinner);
       myOutputValue =
-        lossMessage(input, computer) + ` Computer shouts Muk-Jji-Ppa!`;
+        lossMessage(player, computer) + ` Computer shouts Muk-Jji-Ppa!`;
     }
 
     //check for win
