@@ -201,6 +201,7 @@ var main = function (input) {
   //Korean SPS Mode
   if (mode == KOREANSPS) {
     var wincheck = winCheck(player, computer);
+    console.log(wincheck);
     if (wincheck == true) {
       mostrecentwinner = PLAYER;
       console.log(mostrecentwinner);
@@ -209,7 +210,9 @@ var main = function (input) {
     }
 
     var losecheck = winCheck(computer, player);
-    if ((losecheck = true)) {
+    console.log(losecheck);
+
+    if (losecheck == true) {
       mostrecentwinner = COMPUTER;
       console.log(mostrecentwinner);
       myOutputValue =
@@ -235,11 +238,10 @@ var main = function (input) {
         winLose = LOST;
         myOutputValue = `<br> You have LOST! <br>`;
         mostrecentwinner = "";
-
-        var statisticsboard = countStatistics();
       }
     }
 
+    var statisticsboard = countStatistics();
     myOutputValue = myOutputValue + statisticsboard;
     return myOutputValue;
   }
