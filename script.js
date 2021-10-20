@@ -55,18 +55,19 @@ var generateRandomChoiceReversed = function () {
 };
 
 var main = function (input) {
+  var guess = input.toLowerCase();
   var myOutputValue = "";
   if (currentGameMode == `awaiting user name`) {
     // set the name
     if (
-      input == "scissors" ||
-      input == "paper" ||
-      input == "rock" ||
-      input == "reversed scissors" ||
-      input == "reversed paper" ||
-      input == "reversed rock"
+      guess == "scissors" ||
+      guess == "paper" ||
+      guess == "rock" ||
+      guess == "reversed scissors" ||
+      guess == "reversed paper" ||
+      guess == "reversed rock"
     ) {
-      myOutputValue = "Please input your name";
+      return (myOutputValue = "Please input your name");
     } else {
       userName = input;
       // now that we have the name, switch the mode
@@ -76,12 +77,12 @@ var main = function (input) {
   } else if (currentGameMode == "dice game") {
     //dice game logic
     if (
-      input != "scissors" ||
-      input != "paper" ||
-      input != "rock" ||
-      input != "reversed scissors" ||
-      input != "reversed paper" ||
-      input != "reversed rock"
+      guess != "scissors" ||
+      guess != "paper" ||
+      guess != "rock" ||
+      guess != "reversed scissors" ||
+      guess != "reversed paper" ||
+      guess != "reversed rock"
     ) {
       myOutputValue =
         "Please try again and input the following : Scissors, Paper, Rock, Reversed Scissors, Reversed Paper, Reversed Rock";
@@ -94,13 +95,13 @@ var main = function (input) {
     console.log(myOutputValue);
 
     // draw scenarios
-    if (input == randomChoice) {
+    if (guess == randomChoice) {
       myOutputValue =
         "The computer chose " +
         randomChoice +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "It's a draw! <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game! <br><br> Your win-loss record is: <br> Your win record: " +
@@ -112,11 +113,11 @@ var main = function (input) {
     // if input wins generateRandomChoice, output = you win
     if (
       // input = scissors, win randomchoice = paper
-      (input == "scissors" && randomChoice == CHOICE_PAPER) ||
-      // input paper, win randomchoice = rock
-      (input == "paper" && randomChoice == CHOICE_ROCK) ||
-      // input rock , win randomchoice = scissors
-      (input == "rock" && randomChoice == CHOICE_SCISSORS)
+      (guess == "scissors" && randomChoice == CHOICE_PAPER) ||
+      // guess paper, win randomchoice = rock
+      (guess == "paper" && randomChoice == CHOICE_ROCK) ||
+      // guess rock , win randomchoice = scissors
+      (guess == "rock" && randomChoice == CHOICE_SCISSORS)
     ) {
       userWonCount = userWonCount + 1; //user win + 1
       myOutputValue =
@@ -124,7 +125,7 @@ var main = function (input) {
         randomChoice +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "Congratulations! It's a win! <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game! <br><br> Your win-loss record is: <br> Your win record: " +
@@ -135,9 +136,9 @@ var main = function (input) {
 
     // lose scenarios
     if (
-      (input == "scissors" && randomChoice == CHOICE_ROCK) ||
-      (input == "paper" && randomChoice == CHOICE_SCISSORS) ||
-      (input == "rock" && randomChoice == CHOICE_PAPER)
+      (guess == "scissors" && randomChoice == CHOICE_ROCK) ||
+      (guess == "paper" && randomChoice == CHOICE_SCISSORS) ||
+      (guess == "rock" && randomChoice == CHOICE_PAPER)
     ) {
       cpuWonCount = cpuWonCount + 1; // cpu win +1
       myOutputValue =
@@ -145,7 +146,7 @@ var main = function (input) {
         randomChoice +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "You lose! Bummer. <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game! <br><br> Your win-loss record is: <br> Your win record: " +
@@ -158,13 +159,13 @@ var main = function (input) {
 
     // reversed choices scenarios
     //reversed choice draw
-    if (input == randomChoiceReversed) {
+    if (guess == randomChoiceReversed) {
       myOutputValue =
         "The computer chose " +
         randomChoiceReversed +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "It's a draw! <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game! Your win-loss record is: <br> Your win record: " +
@@ -175,11 +176,11 @@ var main = function (input) {
 
     // reversed win scenarios
     if (
-      (input == "reversed scissors" &&
+      (guess == "reversed scissors" &&
         randomChoiceReversed == REVERSED_CHOICE_ROCK) ||
-      (input == "reversed paper" &&
+      (guess == "reversed paper" &&
         randomChoiceReversed == REVERSED_CHOICE_SCISSORS) ||
-      (input == "reversed rock" &&
+      (guess == "reversed rock" &&
         randomChoiceReversed == REVERSED_CHOICE_PAPER)
     ) {
       userWonCount = userWonCount + 1; //user win + 1
@@ -188,7 +189,7 @@ var main = function (input) {
         randomChoiceReversed +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "Congratulations! It's a win! <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game! Your win-loss record is: <br> Your win record: " +
@@ -199,11 +200,11 @@ var main = function (input) {
 
     // reversed lose scenarios
     if (
-      (input == "reversed scissors" &&
+      (guess == "reversed scissors" &&
         randomChoiceReversed == REVERSED_CHOICE_PAPER) ||
-      (input == "reversed paper" &&
+      (guess == "reversed paper" &&
         randomChoiceReversed == REVERSED_CHOICE_ROCK) ||
-      (input == "reversed rock" &&
+      (guess == "reversed rock" &&
         randomChoiceReversed == REVERSED_CHOICE_SCISSORS)
     ) {
       cpuWonCount = cpuWonCount + 1; //cpu win
@@ -212,7 +213,7 @@ var main = function (input) {
         randomChoiceReversed +
         ". <br>" +
         "You chose " +
-        input +
+        guess +
         ". <br><br>" +
         "You lose! Bummer. <br><br>" +
         "Now you can type scissors, paper or rock to play another round! <br> You can also type Reversed Scissors, Reversed Paper, Reversed Rock to try the Reversed Game!Your win-loss record is: <br> Your win record: " +
