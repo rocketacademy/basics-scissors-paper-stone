@@ -1,0 +1,20 @@
+{
+  "name": "basics-scissors-paper-stone",
+  "version": "1.0.0",
+  "description": "Basics Scissors Paper Stone Game. The best SPS of all!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rocketacademy/basics-scissors-paper-stone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rocketacademy/basics-scissors-paper-stone/issues"
+  },
+  "homepage": "https://github.com/rocketacademy/basics-scissors-paper-stone#readme",
+  "dependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  }
+}
