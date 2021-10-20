@@ -31,9 +31,17 @@ var userName = "";
 var modeInputMessage =
   "<br> Please input the mode you would like: 'normal', 'korean sps' and 'reverse'";
 var inputMessage = "Please enter scissors, paper, stone to start game!";
-var lossMessage = `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br>`;
-var drawMessage = `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
-var winMessage = `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+var lossMessage = function (input, computer) {
+  return `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br>`;
+};
+
+var drawMessage = function (input, computer) {
+  return `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
+};
+
+var winMessage = function (input, computer) {
+  return `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+};
 
 //random number generator
 var randomNumber = function () {
@@ -77,7 +85,7 @@ var countStatistics = function () {
   }
 
   var winrate = winRate();
-  var statistics = `<br><br> ---- Statistics for ${mode} ---- <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Type "scissors, paper or stone for the next game`;
+  var statistics = `<br><br> ---- Statistics for ${mode} ---- <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Please type "scissors", "paper" or "stone" for the next game`;
 
   return statistics;
 };
@@ -90,6 +98,15 @@ var validModeCheck = function (input) {
 //validating input
 var validInputCheck = function (input) {
   return input == SCISSORS || input == STONE || input == PAPER;
+};
+
+//check for win
+var winCheck = function (winner, loser) {
+  return (
+    (winner == STONE && loser == SCISSORS) ||
+    (winner == SCISSORS && loser == PAPER) ||
+    (winner == PAPER && loser == STONE)
+  );
 };
 
 //Main Code
@@ -121,7 +138,7 @@ var main = function (input) {
 
     //if there is a correct input
     mode = input;
-    return `Hello ${userName}, you have entered ${mode}` + inputMessage;
+    return `Hello ${userName}, you have entered ${mode}! <br>` + inputMessage;
   }
 
   var computer = computerChoice();
@@ -137,22 +154,19 @@ var main = function (input) {
 
   if (mode == REVERSE) {
     winLose = LOST;
-    var myOutputValue = lossMessage;
+    var myOutputValue = lossMessage(input, computer);
 
-    //check for win
-    if (
-      (player == PAPER && computer == SCISSORS) ||
-      (player == STONE && computer == PAPER) ||
-      (player == SCISSORS && computer == STONE)
-    ) {
+    //check for win for reversed game. the player win if they are lose in the normal game
+    var wincheck = winCheck(computer, player);
+    if (wincheck == true) {
       winLose = WIN;
-      myOutputValue = winMessage;
+      myOutputValue = winMessage(input, computer);
     }
 
     //check for draw
     if (player == computer) {
       winLose = DRAW;
-      myOutputValue = drawMessage;
+      myOutputValue = drawMessage(input, computer);
     }
 
     var statisticsboard = countStatistics();
@@ -164,22 +178,19 @@ var main = function (input) {
 
   if (mode == NORMAL) {
     winLose = LOST;
-    var myOutputValue = lossMessage;
+    var myOutputValue = lossMessage(input, computer);
 
     //check for win
-    if (
-      (player == STONE && computer == SCISSORS) ||
-      (player == SCISSORS && computer == PAPER) ||
-      (player == PAPER && computer == STONE)
-    ) {
+    var wincheck = winCheck(player, computer);
+    if (wincheck == true) {
       winLose = WIN;
-      myOutputValue = winMessage;
+      myOutputValue = winMessage(input, computer);
     }
 
     //check for draw
     if (player == computer) {
       winLose = DRAW;
-      myOutputValue = drawMessage;
+      myOutputValue = drawMessage(input, computer);
     }
 
     var statisticsboard = countStatistics();
@@ -189,24 +200,20 @@ var main = function (input) {
 
   //Korean SPS Mode
   if (mode == KOREANSPS) {
-    if (
-      (player == STONE && computer == SCISSORS) ||
-      (player == SCISSORS && computer == PAPER) ||
-      (player == PAPER && computer == STONE)
-    ) {
+    var wincheck = winCheck(player, computer);
+    if (wincheck == true) {
       mostrecentwinner = PLAYER;
       console.log(mostrecentwinner);
-      myOutputValue = winMessage + `${userName} Muk-Jji-Ppa!`;
+      myOutputValue =
+        winMessage(input, computer) + `${userName} shouts Muk-Jji-Ppa!`;
     }
 
-    if (
-      (computer == STONE && player == SCISSORS) ||
-      (computer == SCISSORS && player == PAPER) ||
-      (computer == PAPER && player == STONE)
-    ) {
+    var losecheck = winCheck(computer, player);
+    if ((losecheck = true)) {
       mostrecentwinner = COMPUTER;
       console.log(mostrecentwinner);
-      myOutputValue = lossMessage + ` Computer:Muk-Jji-Ppa!`;
+      myOutputValue =
+        lossMessage(input, computer) + ` Computer shouts Muk-Jji-Ppa!`;
     }
 
     //check for win
@@ -228,10 +235,11 @@ var main = function (input) {
         winLose = LOST;
         myOutputValue = `<br> You have LOST! <br>`;
         mostrecentwinner = "";
+
+        var statisticsboard = countStatistics();
       }
     }
 
-    var statisticsboard = countStatistics();
     myOutputValue = myOutputValue + statisticsboard;
     return myOutputValue;
   }
