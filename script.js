@@ -1,15 +1,12 @@
 var SCISSORS = "scissors";
 var PAPER = "paper";
 var STONE = "stone";
-var REVERSEDSCISSORS = "reversed scissors";
-var REVERSEDPAPER = "reversed paper";
-var REVERSEDSTONE = "reversed stone";
 
 //PLAYERS
 var PLAYER = "player";
 var COMPUTER = "computer";
 
-//outcomes
+//Outcomes
 var WIN = "win";
 var LOST = "lost";
 var DRAW = "draw";
@@ -17,12 +14,11 @@ var DRAW = "draw";
 //Game Modes
 var REVERSE = "reverse";
 var NORMAL = "normal";
-var KOREANSPS = "koreansps";
+var KOREANSPS = "korean sps";
 
 //Global variable for counting
 var playerWinCount = 0;
 var comWinCount = 0;
-var drawCount = 0;
 var rounds = 0;
 var winLose = "";
 var mode = "";
@@ -31,6 +27,15 @@ var mostrecentwinner = "";
 //Username
 var userName = "";
 
+//Message
+var modeInputMessage =
+  "<br> Please input the mode you would like: 'normal', 'korean sps' and 'reverse'";
+var inputMessage = "Please enter scissors, paper, stone to start game!";
+var lossMessage = `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br>`;
+var drawMessage = `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
+var winMessage = `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+
+//random number generator
 var randomNumber = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
@@ -39,6 +44,7 @@ var randomNumber = function () {
   return randNumber;
 };
 
+//Computer chooses based on random number
 var computerChoice = function () {
   var number = randomNumber();
   var choice = SCISSORS;
@@ -53,12 +59,15 @@ var computerChoice = function () {
   return choice;
 };
 
+//Win Percentage
 var winRate = function () {
   var percentage = Math.floor((playerWinCount / rounds) * 100);
   return percentage;
 };
 
-var countRound = function () {
+//Statistic Board
+var countStatistics = function () {
+  rounds += 1;
   if (winLose == LOST) {
     comWinCount += 1;
   }
@@ -67,11 +76,10 @@ var countRound = function () {
     playerWinCount += 1;
   }
 
-  if (winLose == DRAW) {
-    drawCount += 1;
-  }
+  var winrate = winRate();
+  var statistics = `<br><br> ---- Statistics for ${mode} ---- <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Type "scissors, paper or stone for the next game`;
 
-  return winLose;
+  return statistics;
 };
 
 //Validating Mode Chosesn
@@ -81,18 +89,10 @@ var validModeCheck = function (input) {
 
 //validating input
 var validInputCheck = function (input) {
-  if (mode == REVERSE) {
-    return (
-      input == REVERSEDSCISSORS ||
-      input == REVERSEDSTONE ||
-      input == REVERSEDPAPER
-    );
-  }
-
-  if (mode == NORMAL || mode == KOREANSPS) {
-    return input == SCISSORS || input == STONE || input == PAPER;
-  }
+  return input == SCISSORS || input == STONE || input == PAPER;
 };
+
+//Main Code
 
 var main = function (input) {
   // if there is no user name
@@ -103,90 +103,68 @@ var main = function (input) {
     }
     // if there is an input
     userName = input;
-    return "Welcome, " + userName;
+    return "Welcome, " + userName + "<br" + modeInputMessage;
   }
 
   //if there is an user name input
   //if there is no mode chosen
   if (!mode) {
     if (!input) {
-      return "Please input the mode (either normal/ korean SPS/reverse)";
+      return modeInputMessage;
     }
 
     //if there is an incorrect input
     var validmodeinput = validModeCheck(input);
     if (validmodeinput == false) {
-      return "you have entered an incorrect mode, please choose either normal/korean SPS/ reverse";
+      return "Incorrect mode chosen" + modeInputMessage;
     }
 
     //if there is a correct input
     mode = input;
-    return `Hello ${userName}, you have entered ${mode} `;
+    return `Hello ${userName}, you have entered ${mode}` + inputMessage;
   }
 
+  var computer = computerChoice();
+  var checkforvalidinput = validInputCheck(input);
+  if (checkforvalidinput == false) {
+    return "you have entered an incorrect input," + inputMessage;
+  }
+  var player = input;
+  console.log("Computer Choice", computer);
+  console.log("User Choice", input);
+
+  //Revserse Mode
+
   if (mode == REVERSE) {
-    var computer = computerChoice();
-    var checkforvalidinput = validInputCheck(input);
-
-    //if invalid input
-    if (checkforvalidinput == false) {
-      return "you have entered an incorrect input, please choose either reversed scissors, reversed stone or reversed paper";
-    }
-
-    // if valid input
-    var player = input;
-    console.log("Computer Choice", computer);
-    console.log("User Choice", input);
     winLose = LOST;
-    var myOutputValue = `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type reversed scissors, reversed paper or reversed stone to start a new game `;
+    var myOutputValue = lossMessage;
 
     //check for win
     if (
-      (player == REVERSEDPAPER && computer == SCISSORS) ||
-      (player == REVERSEDSTONE && computer == PAPER) ||
-      (player == REVERSEDSCISSORS && computer == STONE)
+      (player == PAPER && computer == SCISSORS) ||
+      (player == STONE && computer == PAPER) ||
+      (player == SCISSORS && computer == STONE)
     ) {
       winLose = WIN;
-      console.log("Num of player wins", playerWinCount);
-      myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+      myOutputValue = winMessage;
     }
 
     //check for draw
-    if (
-      (player == REVERSEDPAPER && computer == PAPER) ||
-      (player == REVERSEDSCISSORS && computer == SCISSORS) ||
-      (player == REVERSEDSTONE && computer == STONE)
-    ) {
+    if (player == computer) {
       winLose = DRAW;
-      myOutputValue = `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
+      myOutputValue = drawMessage;
     }
 
-    var adjustCount = countRound();
-    rounds += 1;
-    var winrate = winRate();
-
-    myOutputValue =
-      myOutputValue +
-      `<br><br> Statistics <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> No of draws ${drawCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone to start new game`;
-
+    var statisticsboard = countStatistics();
+    myOutputValue = myOutputValue + statisticsboard;
     return myOutputValue;
   }
 
+  //Normal Mode
+
   if (mode == NORMAL) {
-    var computer = computerChoice();
-    var checkforvalidinput = validInputCheck(input);
-
-    //if invalid input
-    if (checkforvalidinput == false) {
-      return "you have entered an incorrect input, please choose either scissors, stone or paper";
-    }
-
-    // if valid input
-    var player = input;
-    console.log("Computer Choice", computer);
-    console.log("User Choice", input);
     winLose = LOST;
-    var myOutputValue = `${userName}, you have chosen ${input} and you have lost to the computer's choice ${computer}! <br> you lose! <br> Please type scissors, paper or stone to start a new game `;
+    var myOutputValue = lossMessage;
 
     //check for win
     if (
@@ -195,41 +173,22 @@ var main = function (input) {
       (player == PAPER && computer == STONE)
     ) {
       winLose = WIN;
-      console.log("Num of player wins", playerWinCount);
-      myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br>`;
+      myOutputValue = winMessage;
     }
 
     //check for draw
     if (player == computer) {
       winLose = DRAW;
-      myOutputValue = `You have played ${input} and the computer's choice is ${computer}! <br> Its a draw!!`;
+      myOutputValue = drawMessage;
     }
 
-    var adjustCount = countRound();
-    rounds += 1;
-    var winrate = winRate();
-
-    myOutputValue =
-      myOutputValue +
-      `<br><br> Statistics <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone to start new game`;
-
+    var statisticsboard = countStatistics();
+    myOutputValue = myOutputValue + statisticsboard;
     return myOutputValue;
   }
 
+  //Korean SPS Mode
   if (mode == KOREANSPS) {
-    var computer = computerChoice();
-    var checkforvalidinput = validInputCheck(input);
-
-    //if invalid input
-    if (checkforvalidinput == false) {
-      return "you have entered an incorrect input, please choose either scissors, stone or paper";
-    }
-
-    // if valid input
-    var player = input;
-    console.log("Computer Choice", computer);
-    console.log("User Choice", input);
-
     if (
       (player == STONE && computer == SCISSORS) ||
       (player == SCISSORS && computer == PAPER) ||
@@ -237,7 +196,7 @@ var main = function (input) {
     ) {
       mostrecentwinner = PLAYER;
       console.log(mostrecentwinner);
-      myOutputValue = `You have played ${input} and you have won the computer's choice ${computer}! <br> you have to draw the next round with the computer in order to win!`;
+      myOutputValue = winMessage + `${userName} Muk-Jji-Ppa!`;
     }
 
     if (
@@ -247,7 +206,7 @@ var main = function (input) {
     ) {
       mostrecentwinner = COMPUTER;
       console.log(mostrecentwinner);
-      myOutputValue = `You have played ${input} and you have lost to the computer's choice ${computer}! <br> if you draw with the computer for the next round, you will lose!`;
+      myOutputValue = lossMessage + ` Computer:Muk-Jji-Ppa!`;
     }
 
     //check for win
@@ -272,13 +231,8 @@ var main = function (input) {
       }
     }
 
-    var adjustCount = countRound();
-    rounds += 1;
-    var winrate = winRate();
-    myOutputValue =
-      myOutputValue +
-      `<br><br> Statistics <br> ${userName} win count: ${playerWinCount} <br> Computer win count: ${comWinCount} <br> Win rate: ${winrate}% <br> <br> Now you can type "scissors, paper or stone for the next game`;
-
+    var statisticsboard = countStatistics();
+    myOutputValue = myOutputValue + statisticsboard;
     return myOutputValue;
   }
 };
