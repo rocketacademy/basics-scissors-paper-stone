@@ -127,7 +127,7 @@ var main = function (input) {
     myOutputValue = `Hello ${userName}, Now you can type "scissors" "paper" or "stone" to play scissors paper stone `;
 
     // initialise SPS
-  } else if ((currentGameMode = "SPS")) {
+  } else if (currentGameMode == "SPS") {
     // defining computer choice
     var computer = computerChoice();
     var myOutputValue = "";
