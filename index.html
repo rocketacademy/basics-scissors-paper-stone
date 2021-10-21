@@ -81,9 +81,15 @@
         // Reset input value
         input.value = "";
 
-        if (userName.length !== 0) {
+        if (
+          userName.length !== 0 &&
+          (gameMode == "normal" || gameMode == "reverse")
+        ) {
           console.log("here");
           document.getElementById("computer-submit-button").style.display = "";
+        } else {
+          document.getElementById("computer-submit-button").style.display =
+            "none";
         }
       });
       var computerButton = document.querySelector("#computer-submit-button");
