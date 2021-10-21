@@ -1,3 +1,12 @@
+// Number of games won
+var numGamesWon = 0;
+
+// Number of games lost
+var numGamesLost = 0;
+
+// Number of games drew
+var numGamesDrew = 0;
+
 var main = function (input) {
   var randomOutcome = generateSPS();
   console.log(randomOutcome);
@@ -5,35 +14,143 @@ var main = function (input) {
 
   // input is scissors
   if (input == "scissors" && randomOutcome == "paper") {
-    myOutputValue = "you win";
+    numGamesWon = numGamesWon + 1;
+    myOutputValue =
+      "You win! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "scissors" && randomOutcome == "stone") {
-    myOutputValue = "you lose";
+    numGamesLost = numGamesLost + 1;
+    myOutputValue =
+      "You lose! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "scissors" && randomOutcome == "scissors") {
-    myOutputValue = "you draw";
+    numGamesDrew = numGamesDrew + 1;
+    myOutputValue =
+      "You drew! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
 
   // input is paper
   if (input == "paper" && randomOutcome == "paper") {
-    myOutputValue = "you draw";
+    numGamesDrew = numGamesDrew + 1;
+    myOutputValue =
+      "You drew! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "paper" && randomOutcome == "stone") {
-    myOutputValue = "you win";
+    numGamesWon = numGamesWon + 1;
+    myOutputValue =
+      "You win! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "paper" && randomOutcome == "scissors") {
-    myOutputValue = "you lose";
+    numGamesLost = numGamesLost + 1;
+    myOutputValue =
+      "You lose! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
 
   // input is stone
   if (input == "stone" && randomOutcome == "paper") {
-    myOutputValue = "you lose";
+    numGamesLost = numGamesLost + 1;
+    myOutputValue =
+      "You lose! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "stone" && randomOutcome == "stone") {
-    myOutputValue = "you draw";
+    numGamesDrew = numGamesDrew + 1;
+    myOutputValue =
+      "You drew! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
   if (input == "stone" && randomOutcome == "scissors") {
-    myOutputValue = "you win";
+    numGamesWon = numGamesWon + 1;
+    myOutputValue =
+      "You win! You picked " +
+      input +
+      " and computer picked " +
+      randomOutcome +
+      ". You've won " +
+      numGamesWon +
+      " times, lost " +
+      numGamesLost +
+      " times, and drew " +
+      numGamesDrew +
+      " times.";
   }
 
   return myOutputValue;
