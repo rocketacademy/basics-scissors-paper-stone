@@ -1,13 +1,3 @@
-// Basic Scissors Paper Stone
-// Create a basic version of Scissors Paper Stone where the user inputs one of "scissors", "paper", or "stone", the program internally randomly chooses scissors, paper, or stone, and the program outputs whether the user won, the program won, or it's a draw.
-// Rules: scissors beats paper, paper beats stone, and stone beats scissors. If both parties choose the same object, it's a draw.
-// Input Validation
-// Sometimes the user types bad and types something other than "scissors", "paper", or "stone" during gameplay. Add input validation to kindly let the user know that there are only 3 input options, and ask them to try again.
-
-//input scissors, paper or stone
-//output you win, computer wins, draw
-//computer draws randomly
-
 var SCISSORS = `scissors`;
 var PAPER = `paper`;
 var STONE = `stone`;
@@ -15,53 +5,14 @@ var REVERSED_SCISSORS = `reversed scissors`;
 var REVERSED_PAPER = `reversed paper`;
 var REVERSED_STONE = `reversed stone`;
 
-var main = function (input) {
-  var computerAnswer = getComputerAnswers();
-  if (
-    !(
-      input == SCISSORS ||
-      input == PAPER ||
-      input == STONE ||
-      input == REVERSED_SCISSORS ||
-      input == REVERSED_PAPER ||
-      input == REVERSED_STONE
-    )
-  ) {
-    return `Please type in 'scissors', 'paper', or 'stone' only.`;
-  } else {
-    if (
-      input == SCISSORS ||
-      (input == REVERSED_SCISSORS && computerAnswer == SCISSORS) ||
-      input == PAPER ||
-      (input == REVERSED_PAPER && computerAnswer == PAPER) ||
-      input == STONE ||
-      (input == REVERSED_STONE && computerAnswer == STONE)
-    ) {
-      myOutputValue = `It's a draw!`;
-    }
-    if (
-      input == SCISSORS ||
-      (input == REVERSED_STONE && computerAnswer == PAPER) ||
-      input == STONE ||
-      (input == REVERSED_PAPER && computerAnswer == SCISSORS) ||
-      input == PAPER ||
-      (input == SCISSORS && computerAnswer == STONE)
-    ) {
-      myOutputValue = `You win!`;
-    }
-    if (
-      input == SCISSORS ||
-      (input == REVERSED_PAPER && computerAnswer == STONE) ||
-      input == STONE ||
-      (input == REVERSED_SCISSORS && computerAnswer == PAPER) ||
-      input == PAPER ||
-      (input == REVERSED_STONE && computerAnswer == SCISSORS)
-    ) {
-      myOutputValue = `The computer wins!`;
-    }
-  }
-  return `${myOutputValue} <br><br> You chose ${input}, and the computer chose ${computerAnswer}.`;
-};
+var numberOfUserWins = 0;
+var numberOfComputerWins = 0;
+
+var currentGameMode = "username";
+var userName = "";
+
+// generate random computer answer
+
 var getRandomInteger = function () {
   var randomInteger = Math.floor(Math.random() * 3);
   return randomInteger;
@@ -76,4 +27,62 @@ var getComputerAnswers = function () {
     return PAPER;
   }
   return STONE;
+};
+
+// main function
+
+var main = function (input) {
+  var myOutputValue = "";
+
+  if (currentGameMode == "username") {
+    userName = input;
+    currentGameMode = "scissors paper stone";
+    return `Welcome, ${userName}! You may now play <i>Scissors Paper Stone</i> by entering 1 of the 3 objects.`;
+  } else if (currentGameMode == "scissors paper stone") {
+    var computerAnswer = getComputerAnswers();
+    if (
+      !(
+        input == SCISSORS ||
+        input == PAPER ||
+        input == STONE ||
+        input == REVERSED_SCISSORS ||
+        input == REVERSED_PAPER ||
+        input == REVERSED_STONE
+      )
+    ) {
+      return `Please type in 'scissors', 'paper', or 'stone' only.`;
+    } else {
+      if (
+        ((input == SCISSORS || input == REVERSED_SCISSORS) &&
+          computerAnswer == SCISSORS) ||
+        ((input == PAPER || input == REVERSED_PAPER) &&
+          computerAnswer == PAPER) ||
+        ((input == STONE || input == REVERSED_STONE) && computerAnswer == STONE)
+      ) {
+        myOutputValue = `It's a draw, ${userName}! Try again!`;
+      }
+      if (
+        ((input == SCISSORS || input == REVERSED_STONE) &&
+          computerAnswer == PAPER) ||
+        ((input == STONE || input == REVERSED_PAPER) &&
+          computerAnswer == SCISSORS) ||
+        ((input == PAPER || input == SCISSORS) && computerAnswer == STONE)
+      ) {
+        numberOfUserWins = numberOfUserWins + 1;
+        myOutputValue = `You win, ${userName}! You have won ${numberOfUserWins} time(s).`;
+      }
+      if (
+        ((input == SCISSORS || input == REVERSED_PAPER) &&
+          computerAnswer == STONE) ||
+        ((input == STONE || input == REVERSED_SCISSORS) &&
+          computerAnswer == PAPER) ||
+        ((input == PAPER || input == REVERSED_STONE) &&
+          computerAnswer == SCISSORS)
+      ) {
+        numberOfComputerWins = numberOfComputerWins + 1;
+        myOutputValue = `The computer wins, ${userName}! It has won ${numberOfComputerWins} time(s).`;
+      }
+    }
+  }
+  return `${myOutputValue} <br><br> You chose ${input}, and the computer chose ${computerAnswer}.`;
 };
