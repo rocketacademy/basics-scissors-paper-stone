@@ -6,10 +6,11 @@ var numOfDraws = 0;
 var numOfPlays = 0;
 var userName = "";
 var gameMode = "normal SPS";
+var output = "";
 
 var main = function (input) {
   var result = "";
-  var output = "";
+  output = "";
 
   if (input.length !== 0 && userName.length == 0) {
     // the very first time user starts game, the first word submitted will be user's name
@@ -24,6 +25,8 @@ var main = function (input) {
     // if mode is normal SPS and user types in normal SPS,
     // or change in mode, return output immediately
     if (checkChangeInMode(input, gameMode)) {
+      console.log("inside checkChangeInMode");
+      console.log("output: " + output);
       return output;
     }
 
@@ -232,6 +235,8 @@ var checkChangeInMode = function (input, gameMode) {
   ) {
     gameMode = input;
     output = `The current mode is ${gameMode}. You have to enter something.<br><br>You have 6 options "paper", "scissors", "stone", "reversed paper", "reversed scissors", "reversed stone".`;
+    console.log("updated game mode to reverse SPS");
+    console.log("output: " + output);
     return true;
   } else if (
     (gameMode == "normal SPS" && input == "word game") ||
