@@ -5,11 +5,11 @@ var numOfCompLosses = 0;
 var numOfDraws = 0;
 var numOfPlays = 0;
 var userName = "";
-var output = "";
 var gameMode = "normal SPS";
 
 var main = function (input) {
   var result = "";
+  var output = "";
 
   if (input.length !== 0 && userName.length == 0) {
     // the very first time user starts game, the first word submitted will be user's name
