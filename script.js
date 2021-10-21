@@ -4,11 +4,23 @@ var drawCount = 0;
 var userName = "";
 
 var main = function (input) {
-  // input validation check
-  if (!(input == "scissors" || input == "paper" || input == "stone")) {
-    // var myOutputValue = `sorry, there are only 3 input options. please try again.`;
+  // on first run, anything that user writes shall be the username and it will be stored permanently
+
+  // first run: true          true
+  // second run: false        true
+  if (userName.length == 0 && input != null) {
     userName = input;
     var myOutputValue = `Hi there ${input}, let's start the first round. Please input 'scissors', 'paper' or 'stone'.`;
+    return myOutputValue;
+  }
+
+  // input validation check
+  if (
+    !(input == "scissors" || input == "paper" || input == "stone") &&
+    userName.length !== 0
+  ) {
+    var myOutputValue = `sorry, there are only 3 input options. Please try again with 'scissors', 'paper' or 'stone'.`;
+    return myOutputValue;
   }
   console.log(`user chooses `);
   console.log(input);
