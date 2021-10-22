@@ -28,28 +28,30 @@ var randomChoice = function() {
     rngRoll = "paper"
   } else {rngRoll = "stone"};
 
-  console.log(rngRoll);
+  console.log("Random Choice:", rngRoll);
   return rngRoll;
 };
 
 // Game function
 
 var playSpsGame = function(userName, userChoice) {
+
   var message = "";
 
   var randomSps = randomChoice();
+  var programChoice = randomSps;
+
   if (
-    userChoice !== "scissors" ||
-    userChoice !== "paper" ||
-    userChoice !== "stone"
+    userChoice !== "scissors" &&
+    userChoice !== "paper" &&
+    userChoice !== "stone" &&
+    userChoice !== "reverse scissors" &&
+    userChoice !== "reverse paper" &&
+    userChoice !== "reverse stone"
   ) {
-    myOutputValue =
-      "Wrong input detected, please enter 'scissors', 'paper' or 'stone'!";
-  }
-
-  var programChoice = randomChoice();
-
-  if (userChoice === programChoice) {
+    message =
+      "Wrong input detected, please enter 'scissors', 'paper' or 'stone'! (or secret reverse game choices of 'reverse scissors', 'reverse paper' or 'reverse stone').";
+  } else if (userChoice === programChoice) {
     gameDraws++;
     message = `${userName}! You and the computer chose ${userChoice}.<br>It's a draw! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
   } else if (
@@ -65,22 +67,26 @@ var playSpsGame = function(userName, userChoice) {
     (programChoice === "scissors" && userChoice === "paper")
   ) {
     computerWins++;
-    message = `${userName}! You lose!<br>Your choice of ${programChoice} beats computer's ${userChoice}! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
+    message = `${userName}! You lose!<br>Computer choice of ${programChoice} beats yours ${userChoice}! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
   } else if (
-    (programChoice === "rock" && userChoice === "reverse scissors") ||
-    (programChoice === "paper" && userChoice === "reverse rock") ||
+    (programChoice === "stone" && userChoice === "reverse scissors") ||
+    (programChoice === "paper" && userChoice === "reverse stone") ||
     (programChoice === "scissors" && userChoice === "reverse paper")
   ) {
     playerWins++;
     message = `${userName}! You win!<br>${userChoice} beats ${programChoice}! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
   } else if (
-    (userChoice === "reverse rock" && programChoice === "scissors") ||
-    (userChoice === "reverse paper" && programChoice === "rock") ||
+    (userChoice === "reverse stone" && programChoice === "scissors") ||
+    (userChoice === "reverse paper" && programChoice === "stone") ||
     (userChoice === "reverse scissors" && programChoice === "paper")
   ) {
     computerWins++;
-    mmessage = `${userName}! You lose!<br>${programChoice} beats ${userChoice}! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
+    message = `${userName}! You lose!<br> Computer choice ${programChoice} beats yours ${userChoice}! Player Wins: ${playerWins} - Computer Wins: ${computerWins} - Draws: ${gameDraws}.`;
   }
+  console.log(userChoice, "user Choice");
+  console.log(programChoice, "program choice");
+  console.log(userChoice !== "scissors", "is user choice not scissors");
+  
   return message;
 
 }
