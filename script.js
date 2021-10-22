@@ -1,7 +1,10 @@
-// What is the input going to be? Stone or Paper or Scissors
-// What should the output be? You played {input} and the computer played {stone/paper/scissors} so you {won/lost/drew}
+// What is the input going to be? STONE or PAPER or SCISSORS
+// What should the output be? You played {input} and the computer played {STONE/PAPER/SCISSORS} so you {won/lost/drew}
 // How will the computer's option be randomly generated? Using math.random to generate a number between 0-2
 // How many different cases are there? 3 (win, lose, draw)
+
+// Grab userName from index.html
+var userName = yourName;
 
 //Record game mode
 var gameMode = "normal";
@@ -15,6 +18,18 @@ var STONE = "stone";
 var userWins = 0;
 var compWins = 0;
 var draws = 0;
+var previousWinner = "";
+
+// Calculate Win Loss Percentages
+var calculateUserWinPercent = function (userWins, compWins, draws) {
+  userWinPercent = ((userWins / (userWins + compWins + draws)) * 100).toFixed(2);
+  return userWinPercent;
+};
+
+var calculateCompWinPercent = function (userWins, compWins, draws) {
+  compWinPercent = ((compWins / (userWins + compWins + draws)) * 100).toFixed(2);
+  return compWinPercent;
+};
 
 //Generate a computer turn based on a dice roll
 var generateComputerTurn = function () {
@@ -26,172 +41,166 @@ var generateComputerTurn = function () {
   console.log("dice rolls: ", randomInteger);
 
   if (randomInteger == 0) {
-    console.log("computer played 0 - stone");
+    console.log("computer played 0 - STONE");
     console.log(randomInteger == 0);
     return STONE;
   }
 
   if (randomInteger == 1) {
-    console.log("computer played 1 - paper");
+    console.log("computer played 1 - PAPER");
     console.log(randomInteger == 1);
     return PAPER;
   }
 
   if (randomInteger == 2) {
-    console.log("computer played 2 - scissors");
+    console.log("computer played 2 - SCISSORS");
     console.log(randomInteger == 2);
     return SCISSORS;
   }
 };
 
-var main = function (input) {
-  //Change gamemode
-  if (input == "reverse" && gameMode == "normal") {
-    gameMode = "reverse";
-    console.log("Game Mode: ", gameMode);
-    myOutputValue = "The game mode has now been reversed.";
-    return myOutputValue;
-  }
-  if (input == "reverse" && gameMode == "reverse") {
-    gameMode = "normal";
-    console.log("Game Mode: ", gameMode);
-    myOutputValue = "The game mode has now been reversed.";
-    return myOutputValue;
-  }
-
-  // Input Validation
-  if (
-    input != "stone" &&
-    input != "paper" &&
-    input != "scissors" &&
-    input != "reverse"
-  ) {
-    myOutputValue =
-      yourname +
-      " you played " +
-      input +
-      " which is invalid, please only play stone, paper or scissors.<br> You can also try playing the reversed mode by typing 'reverse'.";
-    // Return output.
-    console.log("input validation: ", input);
-    return myOutputValue;
-  }
-
+// Refactor actual game logic
+var playGame = function (gameMode, userGuess) {
+  var message = "";
   // Assign a play to each dice number
   var computerTurn = generateComputerTurn();
 
   // WIN SCENARIOS
-  // stone vs Scissors (win) / reversed stone vs paper (win)
-  // Paper vs stone (win) / reversed paper vs scissors (win)
-  // Scissors vs paper (win) or reversed scissors vs stone (win)
+  // STONE vs SCISSORS (win) / reversed STONE vs PAPER (win)
+  // PAPER vs STONE (win) / reversed PAPER vs SCISSORS (win)
+  // SCISSORS vs PAPER (win) or reversed SCISSORS vs STONE (win)
   if (
-    (gameMode == "normal" && input == "stone" && computerTurn == "scissors") ||
-    (gameMode == "reverse" && input == "stone" && computerTurn == "paper") ||
-    (gameMode == "normal" && input == "paper" && computerTurn == "stone") ||
-    (gameMode == "reverse" && input == "paper" && computerTurn == "scissors") ||
-    (gameMode == "normal" && input == "scissors" && computerTurn == "paper") ||
-    (gameMode == "reverse" && input == "scissors" && computerTurn == "stone")
+    (gameMode == "normal" && userGuess == STONE && computerTurn == SCISSORS) ||
+    (gameMode == "reverse" && userGuess == STONE && computerTurn == PAPER) ||
+    (gameMode == "normal" && userGuess == PAPER && computerTurn == STONE) ||
+    (gameMode == "reverse" && userGuess == PAPER && computerTurn == SCISSORS) ||
+    (gameMode == "normal" && userGuess == SCISSORS && computerTurn == PAPER) ||
+    (gameMode == "reverse" && userGuess == SCISSORS && computerTurn == STONE)
   ) {
     userWins = userWins + 1;
-    myOutputValue =
-      yourname +
+    previousWinner = "user";
+    message =
+      userName +
       ", you played " +
-      input +
+      userGuess +
       " and the computer played " +
       computerTurn +
       " so you win. <br>" +
-      yourname +
+      userName +
       " Wins:" +
       userWins +
       "(" +
-      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")" +
-      "<br> Computer Wins: " +
+      calculateUserWinPercent(userWins, compWins, draws) +
+      "%) <br> Computer Wins: " +
       compWins +
       "(" +
-      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")";
+      calculateCompWinPercent(userWins, compWins, draws) +
+      "%)";
     // Return output.
-    console.log("you played ", input, " and computer played ", computerTurn);
-    return myOutputValue;
+    console.log("you played ", userGuess, " and computer played ", computerTurn);
+    console.log("previous winner is user");
+    return message;
   }
 
   // DRAW SCENARIOS
-  // stone vs stone (draw)
-  // Paper vs paper (draw)
-  // Scissors vs Scissors (draw)
-
-  if (
-    ((input == "stone" || input == "reversed stone") &&
-      computerTurn == "stone") ||
-    ((input == "paper" || input == "reversed paper") &&
-      computerTurn == "paper") ||
-    ((input == "scissors" || input == "reversed scissors") &&
-      computerTurn == "scissors")
-  ) {
+  if ((gameMode == "normal" || gameMode == "reverse") && userGuess == computerTurn) {
     draws = draws + 1;
-    myOutputValue =
-      yourname +
+    message =
+      userName +
       " you played " +
-      input +
+      userGuess +
       " and the computer played " +
       computerTurn +
       " so you drew. <br>" +
-      yourname +
+      userName +
       " Wins:" +
       userWins +
       "(" +
-      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")" +
-      "<br> Computer Wins: " +
+      calculateUserWinPercent(userWins, compWins, draws) +
+      "%) <br> Computer Wins: " +
       compWins +
       "(" +
-      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")";
+      calculateCompWinPercent(userWins, compWins, draws) +
+      "%)";
     // Return output.
-    console.log("you played ", input, " and computer played ", computerTurn);
-    return myOutputValue;
+    console.log("you played ", userGuess, " and computer played ", computerTurn);
+    return message;
   }
 
   // LOSE SCENARIOS
-  // stone vs Paper (lose) / reversed stone vs scissors (lose)
-  // Paper vs Scissors (lose) / reversed paper vs stone (lose)
-  // scissors vs stone (lose) / reversed scissors vs paper (lose)
+  // STONE vs PAPER (lose) / reversed STONE vs SCISSORS (lose)
+  // PAPER vs SCISSORS (lose) / reversed PAPER vs STONE (lose)
+  // SCISSORS vs STONE (lose) / reversed SCISSORS vs PAPER (lose)
 
   if (
-    (gameMode == "normal" && input == "stone" && computerTurn == "paper") ||
-    (gameMode == "reverse" && "stone" && computerTurn == "scissors") ||
-    (gameMode == "normal" && input == "paper" && computerTurn == "scissors") ||
-    (gameMode == "reverse" && input == "paper" && computerTurn == "stone") ||
-    (gameMode == "normal" && input == "scissors" && computerTurn == "stone") ||
-    (gameMode == "reverse" && input == "scissors" && computerTurn == "paper")
+    (gameMode == "normal" && userGuess == STONE && computerTurn == PAPER) ||
+    (gameMode == "reverse" && userGuess == STONE && computerTurn == SCISSORS) ||
+    (gameMode == "normal" && userGuess == PAPER && computerTurn == SCISSORS) ||
+    (gameMode == "reverse" && userGuess == PAPER && computerTurn == STONE) ||
+    (gameMode == "normal" && userGuess == SCISSORS && computerTurn == STONE) ||
+    (gameMode == "reverse" && userGuess == SCISSORS && computerTurn == PAPER)
   ) {
     compWins = compWins + 1;
-    myOutputValue =
-      yourname +
+    previousWinner = "computer";
+    message =
+      userName +
       " you played " +
-      input +
+      userGuess +
       " and the computer played " +
       computerTurn +
       " so you lose. <br>" +
-      yourname +
+      userName +
       " Wins:" +
       userWins +
       "(" +
-      ((userWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")" +
-      "<br> Computer Wins: " +
+      calculateUserWinPercent(userWins, compWins, draws) +
+      "%) <br> Computer Wins: " +
       compWins +
       "(" +
-      ((compWins / (draws + compWins + userWins)) * 100).toFixed(2) +
-      "%" +
-      ")";
+      calculateCompWinPercent(userWins, compWins, draws) +
+      "%)";
     // Return output.
-    console.log("you played ", input, " and computer played ", computerTurn);
+    console.log("you played ", userGuess, " and computer played ", computerTurn);
+    return message;
+  }
+};
+
+//Input Validation
+var performInputValidation = function (userinput) {
+  return userinput == STONE || userinput == PAPER || userinput == SCISSORS || userinput == "reverse";
+};
+
+var inputInvalidMessage = function (userName, userinput) {
+  message = userName + " you played " + userinput + " which is invalid, please only play stone, paper or scissors.<br> You can also try playing the reversed mode by typing 'reverse'.";
+  return message;
+};
+
+var main = function (input) {
+  var myOutputValue = "";
+  // First check if input is an acceptable option
+  var inputIsValid = performInputValidation(input);
+  console.log("input validation: ", performInputValidation(input));
+  if (inputIsValid == false) {
+    myOutputValue = inputInvalidMessage(userName, input);
+    return myOutputValue;
+  } else {
+    //Then check if user is trying to change gamemode
+    if (input == "reverse" && gameMode == "normal") {
+      gameMode = "reverse";
+      console.log("Game Mode: ", gameMode);
+      myOutputValue = "The game mode has now been reversed. It is now in " + gameMode + " mode.";
+      return myOutputValue;
+    } else if (input == "reverse" && gameMode == "reverse") {
+      gameMode = "normal";
+      console.log("Game Mode: ", gameMode);
+      myOutputValue = "The game mode has now been reversed. It is now in " + gameMode + " mode.";
+      return myOutputValue;
+    } else if (input == "korean") {
+      gameMode = "korean";
+      console.log("Game Mode: ", gameMode);
+      myOutputValue = "The game mode has now been changed. It is now in " + gameMode + " mode.";
+      return myOutputValue;
+    } else myOutputValue = playGame(gameMode, input);
     return myOutputValue;
   }
 };
