@@ -34,7 +34,34 @@ var main = function (input) {
       "<br><br> Please try again";
     console.log("If the player does not enter valid input");
   }
-
+  // output for draws
+  if (
+    (input == "scissors" && computerChoice == "scissors") ||
+    (input == "paper" && computerChoice == "paper") ||
+    (input == "stone" && computerChoice == "stone")
+  ) {
+    myOutputValue =
+      "The computer chose " +
+      computerChoice +
+      "<br><br> You chose " +
+      input +
+      "<br><br> Its a draw" +
+      "<br><br> Try again";
+  }
+  // if the input wins
+  if (
+    (input == "scissors" && computerChoice == "paper") ||
+    (input == "paper" && computerChoice == "stone") ||
+    (input == "stone" && computerChoice == "scissors")
+  ) {
+    myOutputValue =
+      "The computer chose " +
+      computerChoice +
+      "<br><br> You chose " +
+      input +
+      "<br><br> You did it! You Won!" +
+      "<br><br> Try again";
+  }
   return myOutputValue;
 };
 // // What is the input going to be?
