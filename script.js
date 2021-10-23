@@ -39,3 +39,4 @@ var main = function (input){
   myOutputValue = 'You lose! Please play again';
   }
 }
+//test completed
