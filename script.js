@@ -1,33 +1,50 @@
-var main = function (input) {
-  var lowercaseinput = input.toLowerCase();
-  var opponent = rollDice();
-  console.log("opponent: " + opponent);
-  console.log("test if random number is 2: " + (opponent == 2));
-  var move = "";
-  console.log("before move is changed: " + move);
-  if (opponent == 1) {
-    move = "scissors";
-  }
-  if (opponent == 2) {
-    console.log("should enter if opponent is 2");
-    move = "paper";
-  }
-  if (opponent == 3) {
-    move = "stone";
-  }
+var winRecord = 0;
+var loseRecord = 0;
+var drawRecord = 0;
 
-  console.log("after move is changed: " + move);
-  var myOutputValue = "Ops. Try again! The opponent's move was " + move;
-  if (lowercaseinput == move) {
-    myOutputValue = "You win!";
-  }
+var main = function (input) {
+  var myChoice = input.toLowerCase();
+  var COM = rollDice();
+  var myOutputValue = "";
+  myOutputValue = win_lose_draw(myChoice, COM);
+  // myOutputValue = "Ops. Try again! The opponent's move was " + COM;
   return myOutputValue;
 };
 
 var rollDice = function () {
   var randomDecimal = Math.random() * 3;
   var randomInteger = Math.floor(randomDecimal);
-  var diceNumber = randomInteger + 2;
+  var opponent = randomInteger + 1;
+  if (opponent == 1) {
+    sps = "scissors";
+  }
+  if (opponent == 2) {
+    console.log("should enter if opponent is 2");
+    sps = "paper";
+  }
+  if (opponent == 3) {
+    sps = "stone";
+  }
+  return sps;
+};
 
-  return diceNumber;
+var win_lose_draw = function (own, computer) {
+  myOutputValue = `You lose. Your move is ${own}. Your opponent's move is ${computer}`;
+  // it's a draw
+  if (own == computer) {
+    // the same as <drawRecord = drawRecord + 1>
+    drawRecord += 1;
+    myOutputValue = `It's a draw! Your move is ${own}. Your opponent's move is ${computer}`;
+  }
+  // winning conditions
+  if (
+    (own == "scissors" && computer == "paper") ||
+    (own == "paper" && computer == "stone") ||
+    (own == "stone" && computer == "scissors")
+  ) {
+    winRecord += 1;
+    myOutputValue = `You win! Your move is ${own}. Your opponent's move is ${computer}`;
+  }
+  loseRecord += 1;
+  return myOutputValue;
 };
