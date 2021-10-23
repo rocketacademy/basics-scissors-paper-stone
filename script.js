@@ -179,6 +179,7 @@ var reverseGameMode = function (input) {
   ) {
     numProgWon += 1;
     numGamesPlayed += 1;
+    winRateInfo = getWinRateInfo();
     return `${genericOutput} ${userName}, you lose! <br><br> You won ${numUserWon} times and program won ${numProgWon} times. ${winRateInfo} <br><br> ${gameInstruction}`;
   }
   //input validation: if user input other than reversed SPS, remind user to input correct word
@@ -188,20 +189,24 @@ var reverseGameMode = function (input) {
 var main = function (input) {
   var myOutputValue = "";
   if (currentGameMode == "waiting for user name") {
-    //set username
-    userName = input;
-    console.log(`user name: ${userName}`);
-    //switch to waiting for game mode
-    currentGameMode = "waiting for game mode";
-    return `Hi ${userName}, please input "regular" or "reverse" to select game mode!`;
-  } //user to select game mode
-  else if (currentGameMode == "waiting for game mode") {
+    if (input != "") {
+      //set username
+      userName = input;
+      console.log(`user name: ${userName}`);
+      //switch to waiting for game mode
+      currentGameMode = "waiting for game mode";
+      return `Hi ${userName}, please input "regular" or "reverse" to select game mode!`;
+    } // if name input is empty
+    return `Please input your name to start game.`;
+  }
+  //user to select game mode
+  if (currentGameMode == "waiting for game mode") {
     myOutputValue = selectGameMode(input);
   } //regular game
   else if (currentGameMode == "regular SPS") {
     myOutputValue = regGameMode(input);
   } //reverse game
-  else if ((currentGameMode = "reversed SPS")) {
+  else if (currentGameMode == "reversed SPS") {
     myOutputValue = reverseGameMode(input);
   }
   return myOutputValue;
