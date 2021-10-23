@@ -19,7 +19,6 @@ var main = function (input) {
       "<br>" +
       "Start by choosing 'scissors', 'paper' or 'stone'.";
   } else if (currentGameMode == "spsgame") {
-    console.log();
     // start game
     var number = chooseobject();
 
@@ -43,7 +42,9 @@ var main = function (input) {
     ) {
       systemwins = systemwins + 1;
       myOutputValue =
-        "Ops, you lost. " +
+        "Ops, you lost " +
+        username +
+        " ." +
         "<br>" +
         "My " +
         systemobject +
@@ -65,7 +66,9 @@ var main = function (input) {
     ) {
       userwins = userwins + 1;
       myOutputValue =
-        "Dang, you won!" +
+        "Dang, you won " +
+        username +
+        "!" +
         "<br>" +
         "Your " +
         lowercaseinput +
@@ -82,7 +85,9 @@ var main = function (input) {
     // lets define a draw
     if (lowercaseinput == systemobject) {
       myOutputValue =
-        "Ooo, you read my mind." +
+        "Ooo, you read my mind " +
+        username +
+        " ." +
         "<br>" +
         "I chose " +
         systemobject +
@@ -103,6 +108,16 @@ var main = function (input) {
       myOutputValue =
         "Huh? I didn't get that. You're supposed to choose either 'scissors', 'paper' or 'stone'. Let's try again!";
     }
+
+    if (input == "word game") {
+      currentGameMode = "wordgame";
+      myOutputValue = "Let's play the secret word game!";
+    }
+  } else if ((currentGameMode = "wordgame")) {
+    var guessoutcome = playsecretword(input);
+    //console.log("definition of function: " + playsecretword);
+    //console.log("execution of function: " + playsecretword(input));
+    myOutputValue = guessoutcome;
   }
 
   return myOutputValue;
@@ -116,5 +131,12 @@ var chooseobject = function () {
 
   return randomNumber;
 };
-console.log("is random number generated");
-console.log(randomNumber);
+
+var playsecretword = function (input) {
+  var lowercase = input.toLowerCase(input);
+  var myOutputValue = "Ops, thats not the secret word";
+  if (lowercase == "papaya") {
+    myOutputValue = "Yay! You guessed the secret word!";
+  }
+  return myOutputValue;
+};
