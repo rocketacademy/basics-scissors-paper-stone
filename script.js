@@ -101,7 +101,7 @@ var runNormalMode = function (userChoice) {
   var computerChoice = randomSPSGenerator();
   var iconComputer = getInputIcon(computerChoice);
   var iconUser = getInputIcon(userChoice);
-  var results = reversedGameResults(userChoice, computerChoice);
+  var results = getResults(userChoice, computerChoice);
   numbOfGames += 1;
   var winPercentage = calcWinLossPerc();
   return `${results} <br><br> The computer chose ${computerChoice}${iconComputer} <br><br> You chose ${userChoice}${iconUser}.<br><br> Hey ${userName}! Your total game count is ${numbOfGames} and your win percentage is ${winPercentage}%. <br> <br> Now you can type again "scissors", "paper" or "stone" to play another round.`;
