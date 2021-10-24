@@ -1,3 +1,7 @@
+var playerWinCount = 0;
+var computerWinCount = 0;
+var numberOfDraws = 0;
+
 var main = function (input) {
   var opponentSelection = scissorsPaperStone();
   var lowerCaseOpponentSelection = opponentSelection.toLowerCase();
@@ -8,6 +12,18 @@ var main = function (input) {
     " but the opponent selected " +
     opponentSelection +
     ". Please try again!";
+  // You lose under the following conditions:
+  // 1. You select Scissors, and opponent select Stone,
+  // 2. OR you select Paper, and opponent select Scissors,
+  // 3. OR you select Stone, and opponent select Paper.
+  // If player loses, add 1 to number of times computer has won.
+  if (
+    (lowerCaseInput == "scissors" && lowerCaseOpponentSelection == "stone") ||
+    (lowerCaseInput == "paper" && lowerCaseOpponentSelection == "scissors") ||
+    (lowerCaseInput == "stone" && lowerCaseOpponentSelection == "paper")
+  ) {
+    computerWinCount = computerWinCount + 1;
+  }
   // You win under the following conditions:
   // 1. You select Scissors, and opponent select Paper,
   // 2. OR you select Paper, and opponent select Stone,
@@ -17,6 +33,8 @@ var main = function (input) {
     (lowerCaseInput == "paper" && lowerCaseOpponentSelection == "stone") ||
     (lowerCaseInput == "stone" && lowerCaseOpponentSelection == "scissors")
   ) {
+    // If player wins, add 1 to the number of times player has won.
+    playerWinCount = playerWinCount + 1;
     myOutputValue =
       "Congratulations, you win! You selected " +
       input +
@@ -34,6 +52,8 @@ var main = function (input) {
     (lowerCaseInput == "paper" && lowerCaseOpponentSelection == "paper") ||
     (lowerCaseInput == "stone" && lowerCaseOpponentSelection == "stone")
   ) {
+    // If it's a draw, add 1 to the number of times a draw has occurred.
+    numberOfDraws = numberOfDraws + 1;
     myOutputValue = "It's a draw!";
   }
   // If user types anything other than a valid choice, he/she will be asked to try again.
@@ -49,7 +69,15 @@ var main = function (input) {
       input +
       " is not a valid choice. Please input only scissors, paper or stone.";
   }
-  return myOutputValue;
+  return (
+    myOutputValue +
+    "<br> Player win count: " +
+    playerWinCount +
+    " | Computer win count: " +
+    computerWinCount +
+    " | Number of draws: " +
+    numberOfDraws
+  );
 };
 
 var opponentRNG = function () {
