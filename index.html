@@ -52,7 +52,12 @@
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
       <p>Input:</p>
-      <input id="input-field" />
+
+      <input
+        type="text"
+        id="input-field"
+        placeholder="Please enter your name."
+      />
       <br />
       <button id="submit-button">Submit</button>
       <p>Output:</p>
@@ -67,13 +72,12 @@
         // Set result to input value
         var input = document.querySelector("#input-field");
         var result = main(input.value);
+        // Reset input value & show different placeholder text to prompt player to start game
+        input.value = "Please enter scissors, paper or stone.";
 
         // Display result in output element
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
-
-        // Reset input value
-        input.value = "";
       });
     </script>
   </body>
