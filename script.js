@@ -51,6 +51,7 @@ const resetGame = function () {
   playerScoreEl.textContent = playerScore;
   computerScoreEl.textContent = computerScore;
   drawScoreEl.textContent = drawScore;
+  outputEl.textContent = '';
 };
 // random number generator
 const randomNumberGen = function () {
