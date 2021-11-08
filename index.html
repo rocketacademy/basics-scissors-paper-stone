@@ -51,6 +51,11 @@
   <body>
     <h1 id="header">Basics: Scissors Paper Stone 🚀</h1>
     <div id="container">
+      <p id="p1"></p>
+      <button id="scissors-button">Scissors</button>
+      <button id="paper-button">Paper</button>
+      <button id="stone-button">Stone</button>
+      <p id="p2"></p>
       <p>Input:</p>
       <input id="input-field" />
       <br />
@@ -67,13 +72,28 @@
         // Set result to input value
         var input = document.querySelector("#input-field");
         var result = main(input.value);
-
-        // Display result in output element
+        var winLose = (document.querySelector(
+          "#p2"
+        ).innerHTML = `Win/Loss/Draw = ${winRecord}/${loseRecord}/${drawRecord}`);
         var output = document.querySelector("#output-div");
         output.innerHTML = result;
-
         // Reset input value
         input.value = "";
+      });
+      var button2 = document.querySelector("#scissors-button");
+      button2.addEventListener("click", function () {
+        var input = document.querySelector("#input-field");
+        input.value = "scissors";
+      });
+      var button3 = document.querySelector("#paper-button");
+      button3.addEventListener("click", function () {
+        var input = document.querySelector("#input-field");
+        input.value = "paper";
+      });
+      var button4 = document.querySelector("#stone-button");
+      button4.addEventListener("click", function () {
+        var input = document.querySelector("#input-field");
+        input.value = "stone";
       });
     </script>
   </body>
