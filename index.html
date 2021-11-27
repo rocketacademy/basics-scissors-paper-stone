@@ -54,6 +54,9 @@
       <p>Input:</p>
       <input id="input-field" />
       <br />
+      <button id="computer-submit-button" style="display: none">
+        Computer, help me!
+      </button>
       <button id="submit-button">Submit</button>
       <p>Output:</p>
       <div id="output-div"></div>
@@ -62,6 +65,9 @@
     <script src="script.js"></script>
     <!-- Define button click functionality -->
     <script>
+      document.querySelector("#output-div").innerHTML =
+        "Enter your name to play!";
+
       var button = document.querySelector("#submit-button");
       button.addEventListener("click", function () {
         // Set result to input value
@@ -74,6 +80,21 @@
 
         // Reset input value
         input.value = "";
+
+        if (
+          userName.length !== 0 &&
+          (gameMode == "normal SPS" || gameMode == "reverse SPS")
+        ) {
+          document.getElementById("computer-submit-button").style.display = "";
+        } else {
+          document.getElementById("computer-submit-button").style.display =
+            "none";
+        }
+      });
+      var computerButton = document.querySelector("#computer-submit-button");
+      computerButton.addEventListener("click", function () {
+        var computerAidedHand = generateHand("normal SPS");
+        document.querySelector("#input-field").value = computerAidedHand;
       });
     </script>
   </body>
