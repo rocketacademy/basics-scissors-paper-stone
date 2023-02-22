@@ -42,7 +42,6 @@ var main = function (input) {
     return myOutputValue;
   }
 
-  //console.log("start of program");
   // clean user input
   var userInputCleaned = cleanStr(input);
 
@@ -99,7 +98,6 @@ var validateInput = function (userInputPara) {
   // check whether user input is one of the game options: Scissors, Paper or Stone
   // if it is not, highlight to user and end the program
 
-  // console.log("validate input start");
   if (
     !(
       userInputPara == "scissors" ||
@@ -107,11 +105,9 @@ var validateInput = function (userInputPara) {
       userInputPara == "stone"
     )
   ) {
-    //console.log("validate false input end");
     return false;
   }
 
-  //console.log("validate true input end");
   return true;
 };
 
