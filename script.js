@@ -24,6 +24,8 @@ var getPcChoice = function () {
   }
 };
 
+// including emoji in the options' string variables names will not work as the user will have to input the choice with emoji too
+// including emoji in the output message will not work too. For eg under winning conditions, the computer may choose paper or stone or scissors, where each choice has a different emoji
 var getEmoji = function (choice) {
   if (choice == SCISSORS || choice == REVERSEDSCISSORS) {
     return "✂️";
@@ -137,15 +139,19 @@ var main = function (input) {
       return (myOutputValue = `Hi, ${userName}. Please choose a game mode: normal or reverse?`);
     }
   }
+  // the codes below will only run if user has typed the username
   // if game mode is still not set
   if (!gameMode) {
     // prompt the user for game mode
     if (!input) {
-      return (myOutputValue = `Hi, ${userName}. Please choose a game mode: normal or reverse?`);
+      return (myOutputValue = `You have to enter either normal or reverse to continue.`);
     }
     // set the game mode
-    gameMode = input;
+    else {
+      gameMode = input;
+    }
   }
+  // the codes below will only run if user has typed the username and chosen the mode
   if (input == "normal") {
     gameMode = "normal";
   } else if (input == "reverse") {
@@ -161,7 +167,7 @@ var main = function (input) {
     playerChoice != REVERSEDSCISSORS ||
     playerChoice != REVERSEDPAPER ||
     playerChoice != REVERSEDSTONE
-  )
+  ) {
     if (gameMode == "normal") {
       // show the 3 possible input options for each game mode
       myOutputValue = `There are only 3 input options: please enter either "scissors", "paper", "stone" for <b> normal </b> mode.`;
@@ -169,6 +175,7 @@ var main = function (input) {
       myOutputValue =
         'There are only 3 input options: please enter either "reversed scissors", "reversed paper", "reversed stone" for <b> reverse </b> mode.';
     }
+  }
   // run the normal OR reverse game mode depending on the input
   if (gameMode == "normal") {
     myOutputValue = playNormalSPS(playerChoice);
