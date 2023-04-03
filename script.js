@@ -36,7 +36,7 @@ var getEmoji = function (choice) {
   }
 };
 
-var playNormalSPS = function (playerChoice) {
+var playNormalSps = function (playerChoice) {
   var pcChoice = getPcChoice();
   var playerEmoji = getEmoji(playerChoice);
   var pcEmoji = getEmoji(pcChoice);
@@ -79,7 +79,7 @@ var playNormalSPS = function (playerChoice) {
   return myOutputValue;
 };
 
-var playReversedSPS = function (playerChoice) {
+var playReversedSps = function (playerChoice) {
   var pcChoice = getPcChoice();
   var playerEmoji = getEmoji(playerChoice);
   var pcEmoji = getEmoji(pcChoice);
@@ -126,6 +126,17 @@ var playReversedSPS = function (playerChoice) {
   return myOutputValue;
 };
 
+var playWordGuessing = function (input) {
+  // Set a default value for myOutputValue
+  myOutputValue = "hello world";
+  // If input is our secret phrase, change the value of myOutputValue
+  if (input == "palatable papaya") {
+    myOutputValue = "you wrote the secret phrase!";
+  }
+  // return myOutputValue as output
+  return myOutputValue;
+};
+
 var main = function (input) {
   // if the username is not set
   if (!userName) {
@@ -152,35 +163,30 @@ var main = function (input) {
     }
   }
   // the codes below will only run if user has typed the username and chosen the mode
-  if (input == "normal") {
-    gameMode = "normal";
-  } else if (input == "reverse") {
-    gameMode = "reverse";
-  }
   // reassign input to represent player's choice
   var playerChoice = input;
-  // if player enters an invalid input
-  if (
-    playerChoice != SCISSORS ||
-    playerChoice != PAPER ||
-    playerChoice != STONE ||
-    playerChoice != REVERSEDSCISSORS ||
-    playerChoice != REVERSEDPAPER ||
-    playerChoice != REVERSEDSTONE
-  ) {
-    if (gameMode == "normal") {
-      // show the 3 possible input options for each game mode
-      myOutputValue = `There are only 3 input options: please enter either "scissors", "paper", "stone" for <b> normal </b> mode.`;
-    } else if (gameMode == "reverse") {
-      myOutputValue =
-        'There are only 3 input options: please enter either "reversed scissors", "reversed paper", "reversed stone" for <b> reverse </b> mode.';
-    }
-  }
-  // run the normal OR reverse game mode depending on the input
   if (gameMode == "normal") {
-    myOutputValue = playNormalSPS(playerChoice);
+    if (
+      playerChoice == SCISSORS ||
+      playerChoice == PAPER ||
+      playerChoice == STONE
+    ) {
+      myOutputValue = playNormalSps(playerChoice);
+    } else {
+      myOutputValue = `There are only 3 input options: please enter either "scissors", "paper", "stone" for <b> normal </b> mode.`;
+    }
   } else if (gameMode == "reverse") {
-    myOutputValue = playReversedSPS(playerChoice);
+    if (
+      playerChoice == REVERSEDSCISSORS ||
+      playerChoice == REVERSEDPAPER ||
+      playerChoice == REVERSEDSTONE
+    ) {
+      myOutputValue = playReversedSps(playerChoice);
+    } else {
+      myOutputValue = `There are only 3 input options: please enter either "reversed scissors", "reversed paper", "reversed stone" for <b> reverse </b> mode.`;
+    }
+  } else if (gameMode == "word") {
+    myOutputValue = playWordGuessing(playerChoice);
   }
   return myOutputValue;
 };
